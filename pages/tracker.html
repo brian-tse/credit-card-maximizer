@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benefit Tracker - CardMax</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="../index.html" class="logo">💳 CardMax</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Cards</a></li>
+        <li><a href="tracker.html" class="active">Tracker</a></li>
+        <li><a href="compare.html">Compare</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Header -->
+    <section class="hero" style="padding: 2rem;">
+      <h1 style="font-size: 2rem;">📋 Benefit Tracker</h1>
+      <p>Track your monthly and annual card benefits. Never miss a credit again.</p>
+    </section>
+
+    <!-- Summary Stats -->
+    <section class="stats-bar" id="tracker-stats">
+      <div class="stat-card">
+        <div class="stat-value" id="credits-used">$0</div>
+        <div class="stat-label">Credits Used This Month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="credits-remaining">$0</div>
+        <div class="stat-label">Credits Remaining</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="annual-value">$0</div>
+        <div class="stat-label">Annual Value Captured</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="completion-rate">0%</div>
+        <div class="stat-label">Completion Rate</div>
+      </div>
+    </section>
+
+    <!-- Add Card Selection -->
+    <div style="margin-bottom: 2rem;">
+      <h3 style="margin-bottom: 1rem;">Your Cards</h3>
+      <div class="filter-bar" id="my-cards-selector">
+        <!-- Card selection buttons will be inserted here -->
+      </div>
+      <p class="text-muted" style="font-size: 0.875rem; margin-top: 0.5rem;">
+        Click cards to add/remove them from your tracker. Your selections are saved locally.
+      </p>
+    </div>
+
+    <!-- Monthly Benefits -->
+    <section id="monthly-tracker">
+      <h2 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+        📅 Monthly Credits
+        <span class="text-muted" style="font-size: 0.875rem; font-weight: 400;" id="current-month"></span>
+      </h2>
+      <div id="monthly-benefits-container">
+        <!-- Monthly benefit trackers will be inserted here -->
+      </div>
+    </section>
+
+    <!-- Annual Benefits -->
+    <section id="annual-tracker" style="margin-top: 3rem;">
+      <h2 style="margin-bottom: 1.5rem;">📆 Annual Credits</h2>
+      <div id="annual-benefits-container">
+        <!-- Annual benefit trackers will be inserted here -->
+      </div>
+    </section>
+
+    <!-- One-Time Benefits -->
+    <section id="onetime-tracker" style="margin-top: 3rem;">
+      <h2 style="margin-bottom: 1.5rem;">✅ One-Time Perks</h2>
+      <div id="onetime-benefits-container">
+        <!-- One-time benefit trackers will be inserted here -->
+      </div>
+    </section>
+
+    <!-- Renewal Dates -->
+    <section id="renewals-tracker" style="margin-top: 3rem;">
+      <h2 style="margin-bottom: 1.5rem;">🔔 Renewal Dates</h2>
+      <div id="renewals-container">
+        <!-- Renewal dates will be inserted here -->
+      </div>
+    </section>
+
+    <!-- Save/Restore Section -->
+    <section style="margin-top: 3rem;">
+      <div id="save-restore-ui">
+        <!-- Save/restore UI will be inserted here -->
+      </div>
+    </section>
+  </div>
+
+  <script src="../data/cards.js"></script>
+  <script src="../js/save-code.js"></script>
+  <script src="../js/tracker.js"></script>
+</body>
+</html>

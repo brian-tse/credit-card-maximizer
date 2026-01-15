@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CardMax - Credit Card Benefits Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="index.html" class="logo">💳 CardMax</a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Cards</a></li>
+        <li><a href="pages/tracker.html">Tracker</a></li>
+        <li><a href="pages/compare.html">Compare</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Maximize Your Credit Card Rewards</h1>
+      <p>Track benefits, compare cards, and never miss out on valuable perks. Your complete guide to credit card optimization.</p>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-value" id="total-cards">5</div>
+        <div class="stat-label">Cards in Database</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="total-partners">20+</div>
+        <div class="stat-label">Transfer Partners</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="total-credits">$3,500+</div>
+        <div class="stat-label">Annual Credits Available</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="last-updated">Jan 2026</div>
+        <div class="stat-label">Last Updated</div>
+      </div>
+    </section>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All Cards</button>
+      <button class="filter-btn" data-filter="Chase">Chase</button>
+      <button class="filter-btn" data-filter="American Express">Amex</button>
+      <button class="filter-btn" data-filter="Capital One">Capital One</button>
+      <button class="filter-btn" data-filter="premium">Premium ($400+)</button>
+      <button class="filter-btn" data-filter="midtier">Mid-Tier ($100-$399)</button>
+    </div>
+
+    <!-- Card Grid -->
+    <section class="card-grid" id="cards-container">
+      <!-- Cards will be dynamically inserted here -->
+    </section>
+  </div>
+
+  <!-- Card Detail Modal -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-card-name">Card Name</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-tab="overview">Overview</button>
+        <button class="tab" data-tab="earning">Earning</button>
+        <button class="tab" data-tab="partners">Partners</button>
+        <button class="tab" data-tab="credits">Credits</button>
+        <button class="tab" data-tab="perks">Perks</button>
+      </div>
+      <div id="modal-content">
+        <!-- Modal content will be dynamically inserted -->
+      </div>
+    </div>
+  </div>
+
+  <script src="data/cards.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
