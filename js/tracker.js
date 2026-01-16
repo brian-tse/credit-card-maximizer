@@ -128,7 +128,7 @@ function renderMonthlyBenefits() {
               ${completedCount} of ${cardBenefits.length} credits used
             </div>
           </div>
-          <div class="tracker-progress">$${usedValue} / $${totalValue}</div>
+          <div class="tracker-progress" style="color: var(--accent-green);">$${usedValue} / $${totalValue}</div>
         </div>
 
         <ul class="benefit-checklist">
@@ -140,7 +140,7 @@ function renderMonthlyBenefits() {
                 <div class="benefit-text">${benefit.name}</div>
                 <div class="benefit-description">${benefit.description}</div>
               </div>
-              <div class="benefit-value">$${benefit.monthlyAmount}</div>
+              <div class="benefit-value" style="color: var(--accent-green);">$${benefit.monthlyAmount}</div>
             </li>
           `).join('')}
         </ul>
@@ -151,7 +151,7 @@ function renderMonthlyBenefits() {
           </div>
           <div class="progress-text">
             <span>${Math.round((usedValue / totalValue) * 100)}% used</span>
-            <span>$${totalValue - usedValue} remaining</span>
+            <span style="color: var(--accent-green);">$${totalValue - usedValue} remaining</span>
           </div>
         </div>
       </div>
@@ -211,7 +211,7 @@ function renderSemiannualBenefits() {
               ${completedCount} of ${cardBenefits.length} credits used this half
             </div>
           </div>
-          <div class="tracker-progress">$${usedValue} / $${totalValue}</div>
+          <div class="tracker-progress" style="color: var(--accent-green);">$${usedValue} / $${totalValue}</div>
         </div>
 
         <ul class="benefit-checklist">
@@ -226,7 +226,7 @@ function renderSemiannualBenefits() {
                   ${currentHalf === 'H1' ? 'Jan-Jun' : 'Jul-Dec'} ${currentYear}
                 </div>
               </div>
-              <div class="benefit-value">$${benefit.periodValue}</div>
+              <div class="benefit-value" style="color: var(--accent-green);">$${benefit.periodValue}</div>
             </li>
           `).join('')}
         </ul>
@@ -308,11 +308,23 @@ function renderAnnualBenefits() {
               ${completedCount} of ${cardBenefits.length} annual credits used
             </div>
           </div>
-          <div class="tracker-progress">${progressDisplay}</div>
+          <div class="tracker-progress" style="color: var(--accent-green);">${progressDisplay}</div>
         </div>
 
         <ul class="benefit-checklist">
-          ${cardBenefits.map(benefit => `
+          ${cardBenefits.map(benefit => {
+            // Determine display value - special handling for Free Night Awards
+            let displayValue;
+            if (benefit.type === 'hotel' && benefit.amount === 1) {
+              displayValue = '1 night';
+            } else if (typeof benefit.amount === 'number') {
+              displayValue = benefit.type === 'points'
+                ? benefit.amount.toLocaleString() + ' pts'
+                : '<span style="color: var(--accent-green);">$' + benefit.amount.toLocaleString() + '</span>';
+            } else {
+              displayValue = benefit.amount;
+            }
+            return `
             <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
                 onclick="toggleBenefit('${benefit.benefitKey}', event)">
               <div class="benefit-checkbox"></div>
@@ -320,9 +332,9 @@ function renderAnnualBenefits() {
                 <div class="benefit-text">${benefit.name}</div>
                 <div class="benefit-description">${benefit.description}</div>
               </div>
-              <div class="benefit-value">${typeof benefit.amount === 'number' ? (benefit.type === 'points' ? benefit.amount.toLocaleString() + ' pts' : '$' + benefit.amount.toLocaleString()) : benefit.amount}</div>
+              <div class="benefit-value">${displayValue}</div>
             </li>
-          `).join('')}
+          `}).join('')}
         </ul>
       </div>
     `;
@@ -366,7 +378,19 @@ function renderOnetimeBenefits() {
         </div>
 
         <ul class="benefit-checklist">
-          ${cardBenefits.map(benefit => `
+          ${cardBenefits.map(benefit => {
+            // Determine display value - special handling for Free Night Awards
+            let displayValue;
+            if (benefit.type === 'hotel' && benefit.amount === 1) {
+              displayValue = '1 night';
+            } else if (typeof benefit.amount === 'number') {
+              displayValue = benefit.type === 'points'
+                ? benefit.amount.toLocaleString() + ' pts'
+                : '<span style="color: var(--accent-green);">$' + benefit.amount.toLocaleString() + '</span>';
+            } else {
+              displayValue = benefit.amount;
+            }
+            return `
             <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
                 onclick="toggleBenefit('${benefit.benefitKey}', event)">
               <div class="benefit-checkbox"></div>
@@ -377,9 +401,9 @@ function renderOnetimeBenefits() {
                   Renews ${benefit.frequency}
                 </div>
               </div>
-              <div class="benefit-value">${typeof benefit.amount === 'number' ? (benefit.type === 'points' ? benefit.amount.toLocaleString() + ' pts' : '$' + benefit.amount.toLocaleString()) : benefit.amount}</div>
+              <div class="benefit-value">${displayValue}</div>
             </li>
-          `).join('')}
+          `}).join('')}
         </ul>
       </div>
     `;
@@ -511,8 +535,6 @@ function switchView(view) {
 
 // Helper: Check if a credit is "actionable" (requires user action to redeem)
 function isActionableCredit(credit) {
-  // Passive benefits that don't need checkboxes (automatic):
-  const passiveKeywords = ['anniversary', 'bonus', 'free night', 'status', 'elite'];
   const nameLower = credit.name.toLowerCase();
 
   // If it's a points-type credit with "anniversary" or "bonus" it's passive
@@ -520,9 +542,10 @@ function isActionableCredit(credit) {
     return false;
   }
 
-  // Free night awards are passive (posted automatically)
+  // Free night awards ARE actionable - user needs to book/redeem them
+  // Even though they're posted automatically, user must USE them
   if (nameLower.includes('free night')) {
-    return false;
+    return true;
   }
 
   // Everything else is actionable
@@ -571,7 +594,7 @@ function renderByCardView() {
       ...credit,
       benefitKey: `monthly_${monthKey}_${cardId}_${credit.name.replace(/\s+/g, '_')}`,
       isCompleted: trackedBenefits[`monthly_${monthKey}_${cardId}_${credit.name.replace(/\s+/g, '_')}`] || false,
-      displayValue: `$${credit.monthlyAmount}/mo`
+      displayValue: `<span style="color: var(--accent-green);">$${credit.monthlyAmount}/mo</span>`
     }));
 
     // Semiannual credits - create TWO checkboxes (H1 and H2)
@@ -587,7 +610,7 @@ function renderByCardView() {
         isCompleted: trackedBenefits[h1Key] || false,
         period: 'Jan-Jun',
         periodValue: periodValue,
-        displayValue: `$${periodValue}`
+        displayValue: `<span style="color: var(--accent-green);">$${periodValue}</span>`
       });
       // H2: Jul-Dec
       const h2Key = `semiannual_${currentYear}_H2_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
@@ -597,7 +620,7 @@ function renderByCardView() {
         isCompleted: trackedBenefits[h2Key] || false,
         period: 'Jul-Dec',
         periodValue: periodValue,
-        displayValue: `$${periodValue}`
+        displayValue: `<span style="color: var(--accent-green);">$${periodValue}</span>`
       });
     });
 
@@ -607,13 +630,23 @@ function renderByCardView() {
     const passiveAnnual = [];
 
     annualCreditsRaw.forEach(credit => {
+      // Special display value for Free Night Awards (type === 'hotel' and amount === 1)
+      let displayValue;
+      if (credit.type === 'hotel' && credit.amount === 1) {
+        displayValue = '1 night';
+      } else if (typeof credit.amount === 'number') {
+        displayValue = credit.type === 'points'
+          ? credit.amount.toLocaleString() + ' pts'
+          : `<span style="color: var(--accent-green);">$${credit.amount.toLocaleString()}</span>`;
+      } else {
+        displayValue = credit.amount;
+      }
+
       const creditData = {
         ...credit,
         benefitKey: `annual_${currentYear}_${cardId}_${credit.name.replace(/\s+/g, '_')}`,
         isCompleted: trackedBenefits[`annual_${currentYear}_${cardId}_${credit.name.replace(/\s+/g, '_')}`] || false,
-        displayValue: typeof credit.amount === 'number'
-          ? (credit.type === 'points' ? credit.amount.toLocaleString() + ' pts' : '$' + credit.amount.toLocaleString())
-          : credit.amount
+        displayValue: displayValue
       };
 
       if (isActionableCredit(credit)) {
@@ -629,7 +662,7 @@ function renderByCardView() {
       benefitKey: `multiyear_${cardId}_${credit.name.replace(/\s+/g, '_')}`,
       isCompleted: trackedBenefits[`multiyear_${cardId}_${credit.name.replace(/\s+/g, '_')}`] || false,
       displayValue: typeof credit.amount === 'number'
-        ? (credit.type === 'points' ? credit.amount.toLocaleString() + ' pts' : '$' + credit.amount.toLocaleString())
+        ? (credit.type === 'points' ? credit.amount.toLocaleString() + ' pts' : `<span style="color: var(--accent-green);">$${credit.amount.toLocaleString()}</span>`)
         : credit.amount
     }));
 
@@ -665,7 +698,7 @@ function renderByCardView() {
               </div>
             </div>
           </div>
-          <div class="tracker-progress">$${usedDollarValue.toLocaleString()} / $${totalDollarValue.toLocaleString()}</div>
+          ${totalDollarValue > 0 ? `<div class="tracker-progress" style="color: var(--accent-green);">$${usedDollarValue.toLocaleString()} / $${totalDollarValue.toLocaleString()}</div>` : ''}
         </div>
 
         ${monthlyCredits.length > 0 ? `
@@ -776,15 +809,17 @@ function renderByCardView() {
           </div>
         ` : ''}
 
+        ${totalDollarValue > 0 ? `
         <div class="progress-container" style="margin-top: 1rem;">
           <div class="progress-bar">
-            <div class="progress-fill" style="width: ${totalDollarValue > 0 ? (usedDollarValue / totalDollarValue) * 100 : 0}%"></div>
+            <div class="progress-fill" style="width: ${(usedDollarValue / totalDollarValue) * 100}%"></div>
           </div>
           <div class="progress-text">
-            <span>${totalDollarValue > 0 ? Math.round((usedDollarValue / totalDollarValue) * 100) : 0}% captured</span>
-            <span>$${(totalDollarValue - usedDollarValue).toLocaleString()} remaining</span>
+            <span>${Math.round((usedDollarValue / totalDollarValue) * 100)}% captured</span>
+            <span style="color: var(--accent-green);">$${(totalDollarValue - usedDollarValue).toLocaleString()} remaining</span>
           </div>
         </div>
+        ` : ''}
       </div>
     `;
   });

@@ -68,6 +68,46 @@
     <section class="card-grid" id="cards-container">
       <!-- Cards will be dynamically inserted here -->
     </section>
+
+    <!-- Card Suggestion Section -->
+    <section id="suggest" style="text-align: center; padding: 2rem; margin-top: 2rem; background: var(--bg-secondary); border-radius: var(--radius); border: 1px solid var(--border-color);">
+      <h3 style="margin-bottom: 0.5rem;">Can't find your card?</h3>
+      <p class="text-muted" style="margin-bottom: 1rem;">Suggest a card to add to our database</p>
+      <button class="btn btn-primary" onclick="openSuggestionForm()">📝 Suggest a Card</button>
+    </section>
+  </div>
+
+  <!-- Card Suggestion Modal -->
+  <div class="modal-overlay" id="suggestion-modal">
+    <div class="modal" style="max-width: 500px;">
+      <div class="modal-header">
+        <h2>Suggest a Card</h2>
+        <button class="modal-close" onclick="closeSuggestionModal()">&times;</button>
+      </div>
+      <form id="card-suggestion-form" onsubmit="submitCardSuggestion(event)">
+        <div style="padding: 1.5rem;">
+          <label style="display: block; margin-bottom: 1rem;">
+            <span style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Card Issuer</span>
+            <input type="text" name="issuer" required placeholder="e.g., Chase, Amex, Capital One"
+                   style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-size: 1rem;">
+          </label>
+          <label style="display: block; margin-bottom: 1rem;">
+            <span style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Card Name</span>
+            <input type="text" name="cardName" required placeholder="e.g., Sapphire Preferred"
+                   style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-size: 1rem;">
+          </label>
+          <label style="display: block; margin-bottom: 1rem;">
+            <span style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Additional Notes (Optional)</span>
+            <textarea name="notes" placeholder="Any additional info about the card..."
+                      style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-size: 1rem; min-height: 80px; resize: vertical;"></textarea>
+          </label>
+        </div>
+        <div style="padding: 1rem 1.5rem; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 1rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeSuggestionModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="suggestion-submit-btn">📧 Submit Suggestion</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <!-- Card Detail Modal -->
@@ -157,6 +197,46 @@
         if (cardCredits > maxCredits) maxCredits = cardCredits;
       });
       document.getElementById('total-credits').textContent = '$' + maxCredits.toLocaleString() + '+';
+    });
+
+    // Card Suggestion Functions
+    function openSuggestionForm() {
+      document.getElementById('suggestion-modal').classList.add('active');
+    }
+
+    function closeSuggestionModal() {
+      document.getElementById('suggestion-modal').classList.remove('active');
+      document.getElementById('card-suggestion-form').reset();
+    }
+
+    function submitCardSuggestion(event) {
+      event.preventDefault();
+      const form = event.target;
+      const issuer = form.issuer.value;
+      const cardName = form.cardName.value;
+      const notes = form.notes.value;
+
+      // Build mailto link
+      const subject = encodeURIComponent(`CardMax Card Suggestion: ${issuer} ${cardName}`);
+      const body = encodeURIComponent(
+        `Card Suggestion for CardMax\n\n` +
+        `Issuer: ${issuer}\n` +
+        `Card Name: ${cardName}\n` +
+        `Notes: ${notes || 'N/A'}\n\n` +
+        `Submitted from cards.briantse.com`
+      );
+
+      // Open email client
+      window.location.href = `mailto:briantse@gmail.com?subject=${subject}&body=${body}`;
+
+      closeSuggestionModal();
+    }
+
+    // Close suggestion modal on overlay click
+    document.getElementById('suggestion-modal').addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-overlay')) {
+        closeSuggestionModal();
+      }
     });
   </script>
 </body>
