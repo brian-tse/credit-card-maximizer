@@ -209,7 +209,7 @@ function getUpcomingRenewals() {
   return upcoming.sort((a, b) => a.date - b.date);
 }
 
-// Render save/restore UI component
+// Render save/restore UI component (collapsible)
 function renderSaveRestoreUI(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -219,54 +219,61 @@ function renderSaveRestoreUI(containerId) {
   const hasData = userCards.length > 0;
 
   container.innerHTML = `
-    <div style="background: var(--bg-secondary); border-radius: var(--radius); padding: 1.5rem; border: 1px solid var(--border-color);">
-      <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+    <details style="background: var(--bg-secondary); border-radius: var(--radius); border: 1px solid var(--border-color);">
+      <summary style="padding: 1rem 1.5rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-weight: 600; list-style: none;">
+        <span style="transition: transform 0.2s;" class="collapse-arrow">▶</span>
         💾 Save & Restore Your Data
-      </h3>
-      <p class="text-muted" style="margin-bottom: 1rem; font-size: 0.875rem;">
-        Your data is saved locally in this browser. Copy your backup code to restore on another device or browser.
-      </p>
-
-      <!-- Backup Section -->
-      <div style="margin-bottom: 1.5rem;">
-        <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Create Backup</div>
-        <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0.75rem;">
-          ${hasData ? `You have ${userCards.length} card${userCards.length > 1 ? 's' : ''} saved. Click below to copy your backup code.` : 'Add cards to your collection first to create a backup.'}
+      </summary>
+      <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+        <p class="text-muted" style="margin-bottom: 1rem; font-size: 0.875rem;">
+          Your data is saved locally in this browser. Copy your backup code to restore on another device or browser.
         </p>
-        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-          <button class="btn btn-primary" onclick="copyBackupCode()" ${!hasData ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
-            📋 Copy Backup Code
-          </button>
-          <button class="btn btn-secondary" onclick="downloadData()" ${!hasData ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
-            ⬇️ Download JSON File
-          </button>
+
+        <!-- Backup Section -->
+        <div style="margin-bottom: 1.5rem;">
+          <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Create Backup</div>
+          <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0.75rem;">
+            ${hasData ? `You have ${userCards.length} card${userCards.length > 1 ? 's' : ''} saved. Click below to copy your backup code.` : 'Add cards to your collection first to create a backup.'}
+          </p>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="copyBackupCode()" ${!hasData ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+              📋 Copy Backup Code
+            </button>
+            <button class="btn btn-secondary" onclick="downloadData()" ${!hasData ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+              ⬇️ Download JSON File
+            </button>
+          </div>
+        </div>
+
+        <!-- Restore Section -->
+        <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+          <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Restore from Backup</div>
+          <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0.75rem;">
+            Paste a backup code to restore your cards and settings.
+          </p>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-start;">
+            <input
+              type="text"
+              id="restore-code-input"
+              placeholder="Paste backup code here (starts with CARDMAX_)"
+              style="flex: 1; min-width: 200px; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-primary); font-family: monospace; font-size: 0.875rem;"
+            >
+            <button class="btn btn-secondary" onclick="handleRestoreFromCode()">
+              ⬆️ Restore
+            </button>
+          </div>
+          <div style="margin-top: 0.75rem;">
+            <button class="btn btn-secondary" onclick="uploadData()" style="font-size: 0.875rem;">
+              📁 Or upload JSON file
+            </button>
+          </div>
         </div>
       </div>
-
-      <!-- Restore Section -->
-      <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
-        <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Restore from Backup</div>
-        <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0.75rem;">
-          Paste a backup code to restore your cards and settings.
-        </p>
-        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-start;">
-          <input
-            type="text"
-            id="restore-code-input"
-            placeholder="Paste backup code here (starts with CARDMAX_)"
-            style="flex: 1; min-width: 200px; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-primary); font-family: monospace; font-size: 0.875rem;"
-          >
-          <button class="btn btn-secondary" onclick="handleRestoreFromCode()">
-            ⬆️ Restore
-          </button>
-        </div>
-        <div style="margin-top: 0.75rem;">
-          <button class="btn btn-secondary" onclick="uploadData()" style="font-size: 0.875rem;">
-            📁 Or upload JSON file
-          </button>
-        </div>
-      </div>
-    </div>
+    </details>
+    <style>
+      details[open] .collapse-arrow { transform: rotate(90deg); }
+      details summary::-webkit-details-marker { display: none; }
+    </style>
   `;
 }
 

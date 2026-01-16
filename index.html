@@ -343,7 +343,10 @@
         <!-- User's selected cards will be shown here -->
       </div>
       <div class="save-actions">
-        <span class="save-status" id="save-status">Changes not saved</span>
+        <div>
+          <span class="save-status" id="save-status">Changes not saved</span>
+          <p class="text-muted" style="font-size: 0.75rem; margin-top: 0.25rem;">Saving generates a backup code that's copied to your clipboard. Store it to restore your data later.</p>
+        </div>
         <button class="btn btn-primary" id="save-btn" onclick="saveMyCards()">💾 Save My Cards</button>
       </div>
 
