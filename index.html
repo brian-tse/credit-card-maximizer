@@ -178,29 +178,36 @@
       color: var(--text-secondary);
     }
 
-    .my-card-item .date-picker-group {
+    .my-card-main {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+    }
+
+    .my-card-main:hover {
+      opacity: 0.9;
+    }
+
+    .card-actions {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      margin-left: auto;
     }
 
-    .my-card-item .date-picker-group label {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
+    .settings-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.25rem;
+      opacity: 0.5;
+      transition: all 0.2s;
     }
 
-    .month-day-year-picker {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .month-day-year-picker select {
-      padding: 0.4rem 0.6rem;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background: var(--bg-secondary);
-      color: var(--text-primary);
-      font-size: 0.8rem;
+    .settings-btn:hover {
+      opacity: 1;
     }
 
     .my-card-item .remove-btn {
@@ -217,6 +224,38 @@
     .my-card-item .remove-btn:hover {
       opacity: 1;
       color: #ef4444;
+    }
+
+    .my-card-settings {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .my-card-settings .date-picker-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .my-card-settings .date-picker-group label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .month-day-year-picker {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .month-day-year-picker select {
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-size: 0.8rem;
     }
 
     /* Save Button Area */
@@ -613,32 +652,51 @@
         const signupDate = cardSignupDates[cardId] || {};
         const shortIssuer = getShortIssuer(card.issuer);
         const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : `<div class="card-color-dot" style="background: ${card.color}"></div>`;
+        const hasDate = signupDate.month || signupDate.day || signupDate.year;
+        const dateDisplay = hasDate
+          ? `${months[signupDate.month] || ''}${signupDate.day ? ' ' + signupDate.day : ''}${signupDate.year ? ', ' + signupDate.year : ''}`.trim()
+          : '';
 
         return `
           <div class="my-card-item">
-            ${cardVisual}
-            <div class="card-info">
-              <div class="card-title">${shortIssuer} ${getShortCardName(card.name)}</div>
-              <div class="card-subtitle">$${card.annualFee}/year</div>
-            </div>
-            <div class="date-picker-group">
-              <label>Sign-Up Date (Optional):</label>
-              <div class="month-day-year-picker">
-                <select onchange="updateSignupDate('${cardId}', 'month', this.value)">
-                  ${months.map((m, i) => `<option value="${i}" ${signupDate.month === i ? 'selected' : ''}>${m || 'Month'}</option>`).join('')}
-                </select>
-                <select onchange="updateSignupDate('${cardId}', 'day', this.value)">
-                  ${days.map(d => `<option value="${d}" ${signupDate.day == d ? 'selected' : ''}>${d || 'Day'}</option>`).join('')}
-                </select>
-                <select onchange="updateSignupDate('${cardId}', 'year', this.value)">
-                  ${years.map(y => `<option value="${y}" ${signupDate.year == y ? 'selected' : ''}>${y || 'Year'}</option>`).join('')}
-                </select>
+            <div class="my-card-main" onclick="toggleCardSettings('${cardId}')">
+              ${cardVisual}
+              <div class="card-info">
+                <div class="card-title">${shortIssuer} ${getShortCardName(card.name)}</div>
+                <div class="card-subtitle">$${card.annualFee}/year${dateDisplay ? ' · ' + dateDisplay : ''}</div>
+              </div>
+              <div class="card-actions">
+                <button class="settings-btn" title="Settings">⚙️</button>
+                <button class="remove-btn" onclick="event.stopPropagation(); removeCard('${cardId}')" title="Remove card">✕</button>
               </div>
             </div>
-            <button class="remove-btn" onclick="removeCard('${cardId}')" title="Remove card">✕</button>
+            <div class="my-card-settings" id="settings-${cardId}" style="display: none;">
+              <div class="date-picker-group">
+                <label>Sign-Up Date:</label>
+                <div class="month-day-year-picker">
+                  <select onchange="updateSignupDate('${cardId}', 'month', this.value)">
+                    ${months.map((m, i) => `<option value="${i}" ${signupDate.month === i ? 'selected' : ''}>${m || 'Month'}</option>`).join('')}
+                  </select>
+                  <select onchange="updateSignupDate('${cardId}', 'day', this.value)">
+                    ${days.map(d => `<option value="${d}" ${signupDate.day == d ? 'selected' : ''}>${d || 'Day'}</option>`).join('')}
+                  </select>
+                  <select onchange="updateSignupDate('${cardId}', 'year', this.value)">
+                    ${years.map(y => `<option value="${y}" ${signupDate.year == y ? 'selected' : ''}>${y || 'Year'}</option>`).join('')}
+                  </select>
+                </div>
+              </div>
+            </div>
           </div>
         `;
       }).join('');
+    }
+
+    // Toggle card settings panel
+    function toggleCardSettings(cardId) {
+      const settingsEl = document.getElementById(`settings-${cardId}`);
+      if (settingsEl) {
+        settingsEl.style.display = settingsEl.style.display === 'none' ? 'block' : 'none';
+      }
     }
 
     // Update signup date
@@ -654,6 +712,9 @@
       localStorage.setItem('cardmax_signup_dates', JSON.stringify(cardSignupDates));
       hasUnsavedChanges = false;
       updateSaveStatus();
+
+      // Re-render to update date display in subtitle
+      renderMyCards();
     }
 
     // Update quick stats

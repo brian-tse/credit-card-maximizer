@@ -660,8 +660,9 @@ body {
 
   .sub-navbar {
     padding: 0.5rem 1rem;
-    top: auto;
-    position: relative;
+    position: sticky;
+    top: 49px; /* Height of mobile navbar */
+    z-index: 99;
   }
 
   .sub-nav-links {
@@ -690,16 +691,11 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Collapsible sign-up date section on mobile */
-  .my-card-item {
-    flex-wrap: wrap;
-  }
-
-  .my-card-item .date-picker-group {
-    width: 100%;
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--border-color);
+  /* Card settings on mobile */
+  .my-card-settings .date-picker-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 
   .month-day-year-picker select {
