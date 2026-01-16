@@ -189,12 +189,12 @@
       color: var(--text-secondary);
     }
 
-    .month-year-picker {
+    .month-day-year-picker {
       display: flex;
       gap: 0.5rem;
     }
 
-    .month-year-picker select {
+    .month-day-year-picker select {
       padding: 0.4rem 0.6rem;
       border-radius: 6px;
       border: 1px solid var(--border-color);
@@ -578,6 +578,10 @@
       }
 
       const months = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const days = [''];
+      for (let d = 1; d <= 31; d++) {
+        days.push(d);
+      }
       const currentYear = new Date().getFullYear();
       const years = [''];
       for (let y = currentYear; y >= currentYear - 20; y--) {
@@ -600,9 +604,12 @@
             </div>
             <div class="date-picker-group">
               <label>Sign-Up Date (Optional):</label>
-              <div class="month-year-picker">
+              <div class="month-day-year-picker">
                 <select onchange="updateSignupDate('${cardId}', 'month', this.value)">
                   ${months.map((m, i) => `<option value="${i}" ${signupDate.month === i ? 'selected' : ''}>${m || 'Month'}</option>`).join('')}
+                </select>
+                <select onchange="updateSignupDate('${cardId}', 'day', this.value)">
+                  ${days.map(d => `<option value="${d}" ${signupDate.day == d ? 'selected' : ''}>${d || 'Day'}</option>`).join('')}
                 </select>
                 <select onchange="updateSignupDate('${cardId}', 'year', this.value)">
                   ${years.map(y => `<option value="${y}" ${signupDate.year == y ? 'selected' : ''}>${y || 'Year'}</option>`).join('')}
