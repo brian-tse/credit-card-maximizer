@@ -251,7 +251,7 @@ function renderAnnualBenefits() {
                 <div class="benefit-text">${benefit.name}</div>
                 <div class="benefit-description">${benefit.description}</div>
               </div>
-              <div class="benefit-value">${typeof benefit.amount === 'number' ? '$' + benefit.amount : benefit.amount}</div>
+              <div class="benefit-value">${typeof benefit.amount === 'number' ? (benefit.type === 'points' ? benefit.amount.toLocaleString() + ' pts' : '$' + benefit.amount.toLocaleString()) : benefit.amount}</div>
             </li>
           `).join('')}
         </ul>
@@ -308,7 +308,7 @@ function renderOnetimeBenefits() {
                   Renews ${benefit.frequency}
                 </div>
               </div>
-              <div class="benefit-value">${typeof benefit.amount === 'number' ? '$' + benefit.amount : benefit.amount}</div>
+              <div class="benefit-value">${typeof benefit.amount === 'number' ? (benefit.type === 'points' ? benefit.amount.toLocaleString() + ' pts' : '$' + benefit.amount.toLocaleString()) : benefit.amount}</div>
             </li>
           `).join('')}
         </ul>

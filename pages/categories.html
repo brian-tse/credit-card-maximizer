@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bonus Categories - CardMax</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .category-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .category-icon {
+      font-size: 1.5rem;
+    }
+
+    .category-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .card-ranking {
+      list-style: none;
+    }
+
+    .card-ranking-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--bg-card);
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-ranking-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .rank-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; }
+    .rank-2 { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); color: #000; }
+    .rank-3 { background: linear-gradient(135deg, #CD7F32, #B87333); color: #fff; }
+    .rank-other { background: var(--border-color); color: var(--text-secondary); }
+
+    .card-ranking-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-ranking-name {
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-ranking-name .card-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .card-ranking-description {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    .multiplier-badge {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent-green);
+      flex-shrink: 0;
+    }
+
+    .empty-category {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary);
+    }
+
+    .empty-category p {
+      margin-top: 0.5rem;
+    }
+
+    .page-intro {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .page-intro h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-intro p {
+      color: var(--text-secondary);
+      margin-bottom: 0;
+    }
+
+    .no-cards-message {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+    }
+
+    .no-cards-message h2 {
+      margin-bottom: 1rem;
+    }
+
+    .no-cards-message p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="../index.html" class="logo">💳 CardMax</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">My Cards</a></li>
+        <li><a href="cards.html">All Cards</a></li>
+        <li><a href="tracker.html">Benefits</a></li>
+        <li><a href="categories.html" class="active">Categories</a></li>
+        <li><a href="compare.html">Compare</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero" style="padding: 2rem;">
+      <h1 style="font-size: 2rem;">🏆 Bonus Categories</h1>
+      <p>See which of your cards earns the most in each spending category.</p>
+    </section>
+
+    <!-- Main Content Area -->
+    <div id="main-content">
+      <!-- Will be populated by JavaScript -->
+    </div>
+  </div>
+
+  <script src="../data/cards.js"></script>
+  <script>
+    // Get user's cards
+    const userCardIds = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
+    const userCards = userCardIds.map(id => CARDS_DATABASE.find(c => c.id === id)).filter(Boolean);
+
+    // Category icons
+    const categoryIcons = {
+      'dining': '🍽️',
+      'restaurant': '🍽️',
+      'travel': '✈️',
+      'flight': '✈️',
+      'airline': '✈️',
+      'hotel': '🏨',
+      'grocery': '🛒',
+      'supermarket': '🛒',
+      'gas': '⛽',
+      'streaming': '📺',
+      'transit': '🚇',
+      'rideshare': '🚗',
+      'online': '🛍️',
+      'entertainment': '🎬',
+      'drugstore': '💊',
+      'pharmacy': '💊',
+      'rent': '🏠',
+      'mortgage': '🏠',
+      'ev charging': '⚡',
+      'car rental': '🚙',
+      'mobile wallet': '📱',
+      'foreign': '🌍',
+      'default': '💳'
+    };
+
+    // Get icon for category
+    function getCategoryIcon(category) {
+      const lower = category.toLowerCase();
+      for (const [key, icon] of Object.entries(categoryIcons)) {
+        if (lower.includes(key)) return icon;
+      }
+      return categoryIcons.default;
+    }
+
+    // Get short card name
+    function getShortName(card) {
+      const shortIssuers = {
+        'Chase': 'Chase',
+        'American Express': 'Amex',
+        'Capital One': 'C1',
+        'Citi': 'Citi',
+        'Bank of America': 'BoA',
+        'Wells Fargo': 'WF',
+        'US Bank': 'USB',
+        'Discover': 'Disc',
+        'Cardless': 'Bilt'
+      };
+      const shortIssuer = shortIssuers[card.issuer] || card.issuer;
+      const shortName = card.name
+        .replace(/^Chase /, '')
+        .replace(/^American Express /, '')
+        .replace(/^Capital One /, '')
+        .replace(/^Citi /, '')
+        .replace(/^Bank of America /, '')
+        .replace(/^Wells Fargo /, '')
+        .replace(/^US Bank /, '')
+        .replace(/^Discover /, '')
+        .replace(/^Bilt /, '');
+      return `${shortIssuer} ${shortName}`;
+    }
+
+    // Build categories from user's cards
+    function buildCategories() {
+      const categories = {};
+
+      userCards.forEach(card => {
+        // Add base earning
+        if (!categories['All Purchases']) {
+          categories['All Purchases'] = [];
+        }
+        categories['All Purchases'].push({
+          card: card,
+          multiplier: card.earning.base,
+          description: 'Base earning rate'
+        });
+
+        // Add bonus categories
+        card.earning.categories.forEach(cat => {
+          const categoryName = cat.category;
+          if (!categories[categoryName]) {
+            categories[categoryName] = [];
+          }
+          categories[categoryName].push({
+            card: card,
+            multiplier: cat.multiplier,
+            description: cat.description
+          });
+        });
+      });
+
+      // Sort each category by multiplier (highest first)
+      Object.keys(categories).forEach(cat => {
+        categories[cat].sort((a, b) => b.multiplier - a.multiplier);
+      });
+
+      return categories;
+    }
+
+    // Render the page
+    function render() {
+      const container = document.getElementById('main-content');
+
+      if (userCards.length === 0) {
+        container.innerHTML = `
+          <div class="no-cards-message">
+            <h2>No cards in your collection</h2>
+            <p>Add some cards to see which ones earn the most in each category.</p>
+            <a href="../index.html" class="btn btn-primary">➕ Add Cards</a>
+          </div>
+        `;
+        return;
+      }
+
+      const categories = buildCategories();
+
+      // Sort category names (put "All Purchases" first, then alphabetically)
+      const sortedCategoryNames = Object.keys(categories).sort((a, b) => {
+        if (a === 'All Purchases') return -1;
+        if (b === 'All Purchases') return 1;
+        return a.localeCompare(b);
+      });
+
+      let html = `
+        <div class="page-intro">
+          <h2>📊 Your Card Rankings by Category</h2>
+          <p>Based on the ${userCards.length} card${userCards.length > 1 ? 's' : ''} in your collection. Cards are ranked by earning multiplier for each spending category.</p>
+        </div>
+        <div class="category-grid">
+      `;
+
+      sortedCategoryNames.forEach(categoryName => {
+        const cards = categories[categoryName];
+        const icon = getCategoryIcon(categoryName);
+
+        html += `
+          <div class="category-card">
+            <div class="category-header">
+              <span class="category-icon">${icon}</span>
+              <span class="category-title">${categoryName}</span>
+            </div>
+            <ul class="card-ranking">
+        `;
+
+        cards.forEach((item, index) => {
+          const rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : 'rank-other';
+
+          html += `
+            <li class="card-ranking-item">
+              <div class="rank-badge ${rankClass}">${index + 1}</div>
+              <div class="card-ranking-info">
+                <div class="card-ranking-name">
+                  <span class="card-dot" style="background: ${item.card.color}"></span>
+                  ${getShortName(item.card)}
+                </div>
+                <div class="card-ranking-description">${item.description}</div>
+              </div>
+              <div class="multiplier-badge">${item.multiplier}x</div>
+            </li>
+          `;
+        });
+
+        html += `
+            </ul>
+          </div>
+        `;
+      });
+
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', render);
+  </script>
+</body>
+</html>

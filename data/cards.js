@@ -899,6 +899,343 @@ const CARDS_DATABASE = [
     ],
     color: "#F9B612",
     lastUpdated: "2026-01-15"
+  },
+
+  // ============ NEW CARDS 2025-2026 ============
+  {
+    id: "citi-strata-premier",
+    name: "Citi Strata Premier",
+    issuer: "Citi",
+    network: "Mastercard",
+    annualFee: 95,
+    signUpBonus: {
+      amount: 75000,
+      currency: "ThankYou Points",
+      spendRequirement: 4000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Citi Travel Hotels/Cars/Attractions", multiplier: 10, description: "Booked on cititravel.com" },
+        { category: "Air Travel", multiplier: 3, description: "Airlines" },
+        { category: "Hotels", multiplier: 3, description: "Hotel stays" },
+        { category: "Restaurants", multiplier: 3, description: "Worldwide dining" },
+        { category: "Supermarkets", multiplier: 3, description: "Grocery stores" },
+        { category: "Gas Stations", multiplier: 3, description: "At the pump" },
+        { category: "EV Charging", multiplier: 3, description: "Electric vehicle charging" }
+      ]
+    },
+    transferPartners: [
+      { name: "American Airlines", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "Eva Air", ratio: "1:1", type: "airline" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [
+      { name: "Annual Hotel Credit", amount: 100, frequency: "annual", type: "travel", description: "$100 off hotel stay of $500+ on cititravel.com" }
+    ],
+    perks: [
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Trip Cancellation Insurance", description: "Coverage for non-refundable expenses", type: "insurance" },
+      { name: "Trip Delay Insurance", description: "Up to $500 per trip after delay", type: "insurance" },
+      { name: "Baggage Insurance", description: "Lost or damaged luggage coverage", type: "insurance" },
+      { name: "Citi Entertainment", description: "Access to presale tickets and events", type: "entertainment" }
+    ],
+    color: "#003B70",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "citi-strata-elite",
+    name: "Citi Strata Elite",
+    issuer: "Citi",
+    network: "Mastercard",
+    annualFee: 595,
+    signUpBonus: {
+      amount: 100000,
+      currency: "ThankYou Points",
+      spendRequirement: 6000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1.5,
+      categories: [
+        { category: "Citi Travel Hotels/Cars/Attractions", multiplier: 12, description: "Booked on cititravel.com" },
+        { category: "Citi Travel Flights", multiplier: 6, description: "Flights booked on cititravel.com" },
+        { category: "Citi Nights Dining", multiplier: 6, description: "Friday & Saturday 6pm-6am ET" },
+        { category: "Restaurants", multiplier: 3, description: "All other times" }
+      ]
+    },
+    transferPartners: [
+      { name: "American Airlines", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "Eva Air", ratio: "1:1", type: "airline" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [
+      { name: "Annual Hotel Credit", amount: 300, frequency: "annual", type: "travel", description: "$300 off 2+ night hotel stay on cititravel.com" },
+      { name: "Splurge Credit", amount: 200, frequency: "annual", type: "lifestyle", description: "Choose 2 brands: AA, Best Buy, ESPN+, Live Nation" },
+      { name: "Blacklane Credit", amount: 200, frequency: "annual", type: "travel", description: "$100 Jan-Jun, $100 Jul-Dec for chauffeur service" },
+      { name: "Global Entry/TSA PreCheck", amount: 120, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
+    ],
+    perks: [
+      { name: "Priority Pass Select", description: "Unlimited lounge visits worldwide", type: "lounge" },
+      { name: "AA Admirals Club Passes", description: "4 passes per year", type: "lounge" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Trip Cancellation Insurance", description: "Enhanced coverage for non-refundable expenses", type: "insurance" },
+      { name: "Trip Delay Insurance", description: "Up to $500 per trip after delay", type: "insurance" }
+    ],
+    color: "#1A1F71",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "us-bank-altitude-reserve",
+    name: "US Bank Altitude Reserve",
+    issuer: "US Bank",
+    network: "Visa",
+    annualFee: 400,
+    signUpBonus: {
+      amount: 50000,
+      currency: "Altitude Points",
+      spendRequirement: 4500,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Mobile Wallet", multiplier: 3, description: "Apple Pay, Google Pay, Samsung Pay (capped $5k/month)" },
+        { category: "Travel", multiplier: 3, description: "Airlines, hotels, car rentals" },
+        { category: "Travel Center Hotels/Cars", multiplier: 10, description: "Prepaid through US Bank Travel Center" },
+        { category: "Travel Center Flights", multiplier: 5, description: "Prepaid through US Bank Travel Center" }
+      ]
+    },
+    transferPartners: [
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Hyatt", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [
+      { name: "Annual Travel Credit", amount: 325, frequency: "annual", type: "travel", description: "US Bank Travel Center bookings only" },
+      { name: "Global Entry/TSA PreCheck", amount: 100, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
+    ],
+    perks: [
+      { name: "Priority Pass Select", description: "8 lounge visits per year + guests", type: "lounge" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Primary Car Rental Insurance", description: "Primary CDW coverage", type: "insurance" },
+      { name: "Trip Cancellation Insurance", description: "Coverage for non-refundable expenses", type: "insurance" },
+      { name: "Visa Infinite Benefits", description: "Premium Visa benefits package", type: "travel" }
+    ],
+    color: "#D32F2F",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "amex-green",
+    name: "American Express Green",
+    issuer: "American Express",
+    network: "American Express",
+    annualFee: 150,
+    signUpBonus: {
+      amount: 40000,
+      currency: "Membership Rewards",
+      spendRequirement: 3000,
+      timeframe: "6 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Travel", multiplier: 3, description: "Flights, hotels, cruises, car rentals, tours" },
+        { category: "Transit", multiplier: 3, description: "Trains, taxis, rideshare, tolls, parking" },
+        { category: "Restaurants", multiplier: 3, description: "Worldwide dining" }
+      ]
+    },
+    transferPartners: [
+      { name: "Delta Airlines", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "ANA", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Hilton", ratio: "1:2", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [
+      { name: "CLEAR Plus Credit", amount: 209, frequency: "annual", type: "travel", description: "Statement credit for CLEAR Plus membership" }
+    ],
+    perks: [
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Trip Delay Insurance", description: "Up to $300 per trip after 12hr delay", type: "insurance" },
+      { name: "Car Rental Insurance", description: "Secondary CDW coverage up to $50,000", type: "insurance" },
+      { name: "Purchase Protection", description: "Up to $1,000 per occurrence for 90 days", type: "insurance" },
+      { name: "Extended Warranty", description: "Extra year on manufacturer warranties", type: "insurance" }
+    ],
+    color: "#006747",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "atmos-rewards-summit",
+    name: "Atmos Rewards Summit",
+    issuer: "Bank of America",
+    network: "Visa",
+    annualFee: 395,
+    signUpBonus: {
+      amount: 80000,
+      currency: "Atmos Points",
+      spendRequirement: 4000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Alaska/Hawaiian Airlines", multiplier: 3, description: "Flights and purchases" },
+        { category: "Dining", multiplier: 3, description: "Restaurants worldwide" },
+        { category: "Foreign Transactions", multiplier: 3, description: "Purchases made abroad" }
+      ]
+    },
+    transferPartners: [
+      { name: "Alaska Airlines", ratio: "1:1", type: "airline" },
+      { name: "Hawaiian Airlines", ratio: "1:1", type: "airline" },
+      { name: "Oneworld Partners", ratio: "varies", type: "airline" },
+      { name: "Multiple Hotels", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [
+      { name: "Global Companion Award (25k)", amount: 25000, frequency: "annual", type: "points", description: "Up to 25,000 points off companion ticket" },
+      { name: "Delay Voucher", amount: 50, frequency: "per occurrence", type: "travel", description: "Instant $50 voucher for 2hr+ delays" }
+    ],
+    perks: [
+      { name: "Alaska Lounge Passes", description: "8 passes per year (2 per quarter)", type: "lounge" },
+      { name: "Free Checked Bags", description: "First bag free for 7 guests on same reservation", type: "travel" },
+      { name: "Priority Boarding", description: "Early group boarding on Alaska flights", type: "travel" },
+      { name: "No Same-Day Change Fees", description: "Free same-day changes on Alaska flights", type: "travel" },
+      { name: "Status Points Earning", description: "1 status point per $2 spent, 10,000 annually", type: "status" }
+    ],
+    color: "#00274C",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "bilt-blue",
+    name: "Bilt Blue Card",
+    issuer: "Cardless",
+    network: "Mastercard",
+    annualFee: 0,
+    signUpBonus: {
+      amount: 0,
+      currency: "Bilt Points",
+      spendRequirement: 0,
+      timeframe: "N/A"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Rent/Mortgage", multiplier: 1, description: "No fee with Bilt Cash, or 3% fee for max points" },
+        { category: "Dining", multiplier: 3, description: "Restaurants worldwide" },
+        { category: "Travel", multiplier: 2, description: "Airlines, hotels, car rentals" }
+      ]
+    },
+    transferPartners: [
+      { name: "American Airlines", ratio: "1:1", type: "airline" },
+      { name: "United Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada", ratio: "1:1", type: "airline" },
+      { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
+      { name: "Hyatt", ratio: "1:1", type: "hotel" },
+      { name: "IHG", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [],
+    perks: [
+      { name: "10% Intro APR", description: "10% APR for first 12 months on purchases", type: "apr" },
+      { name: "Bilt Cash Earning", description: "4% Bilt Cash on everyday spending", type: "rewards" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Rent Rewards", description: "Earn points on rent with no added fee using Bilt Cash", type: "rewards" }
+    ],
+    color: "#000000",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "bilt-obsidian",
+    name: "Bilt Obsidian Card",
+    issuer: "Cardless",
+    network: "Mastercard",
+    annualFee: 95,
+    signUpBonus: {
+      amount: 50000,
+      currency: "Bilt Points",
+      spendRequirement: 4000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Rent/Mortgage", multiplier: 1, description: "No fee with Bilt Cash, or 3% fee for max points" },
+        { category: "Dining", multiplier: 3, description: "Restaurants worldwide" },
+        { category: "Travel", multiplier: 2, description: "Airlines, hotels, car rentals" }
+      ]
+    },
+    transferPartners: [
+      { name: "American Airlines", ratio: "1:1", type: "airline" },
+      { name: "United Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada", ratio: "1:1", type: "airline" },
+      { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
+      { name: "Hyatt", ratio: "1:1", type: "hotel" },
+      { name: "IHG", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [
+      { name: "Bilt Travel Hotel Credit", amount: 100, frequency: "annual", type: "travel", description: "$50 available every 6 months" }
+    ],
+    perks: [
+      { name: "10% Intro APR", description: "10% APR for first 12 months on purchases", type: "apr" },
+      { name: "Bilt Cash Earning", description: "4% Bilt Cash on everyday spending", type: "rewards" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Rent Rewards", description: "Earn points on rent with no added fee using Bilt Cash", type: "rewards" },
+      { name: "Lyft Credits", description: "Credits for Lyft rides", type: "rideshare" }
+    ],
+    color: "#1C1C1C",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "bilt-palladium",
+    name: "Bilt Palladium Card",
+    issuer: "Cardless",
+    network: "Mastercard",
+    annualFee: 495,
+    signUpBonus: {
+      amount: 50000,
+      currency: "Bilt Points",
+      spendRequirement: 4000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Rent/Mortgage", multiplier: 1, description: "No fee with Bilt Cash, or 3% fee for max points" },
+        { category: "Dining", multiplier: 3, description: "Restaurants worldwide" },
+        { category: "Travel", multiplier: 2, description: "Airlines, hotels, car rentals" }
+      ]
+    },
+    transferPartners: [
+      { name: "American Airlines", ratio: "1:1", type: "airline" },
+      { name: "United Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada", ratio: "1:1", type: "airline" },
+      { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
+      { name: "Hyatt", ratio: "1:1", type: "hotel" },
+      { name: "IHG", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [
+      { name: "Bilt Travel Hotel Credit", amount: 400, frequency: "annual", type: "travel", description: "$200 available every 6 months" }
+    ],
+    perks: [
+      { name: "10% Intro APR", description: "10% APR for first 12 months on purchases", type: "apr" },
+      { name: "Bilt Gold Status", description: "Automatic Bilt Gold status", type: "status" },
+      { name: "Bilt Cash Earning", description: "4% Bilt Cash on everyday spending", type: "rewards" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Rent Rewards", description: "Earn points on rent with no added fee using Bilt Cash", type: "rewards" },
+      { name: "Premium Lyft Credits", description: "Enhanced credits for Lyft rides", type: "rideshare" },
+      { name: "Dining Credits", description: "Credits at select Bilt partner restaurants", type: "dining" }
+    ],
+    color: "#C0C0C0",
+    lastUpdated: "2026-01-15"
   }
 ];
 

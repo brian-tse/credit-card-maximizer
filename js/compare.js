@@ -265,7 +265,7 @@ function renderComparison() {
                   ${card.credits.map(credit => `
                     <li>
                       <span>${credit.name}</span>
-                      <span class="amount">${typeof credit.amount === 'number' ? '\$' + credit.amount : credit.amount}</span>
+                      <span class="amount">${typeof credit.amount === 'number' ? (credit.type === 'points' ? credit.amount.toLocaleString() + ' pts' : '\$' + credit.amount.toLocaleString()) : credit.amount}</span>
                     </li>
                   `).join('')}
                 </ul>

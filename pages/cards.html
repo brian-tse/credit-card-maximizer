@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Cards - CardMax</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="../index.html" class="logo">💳 CardMax</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">My Cards</a></li>
+        <li><a href="cards.html" class="active">All Cards</a></li>
+        <li><a href="tracker.html">Benefits</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="compare.html">Compare</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Credit Card Database</h1>
+      <p>Browse all cards in our database. Click on any card to view details or add it to your collection.</p>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-value" id="total-cards">0</div>
+        <div class="stat-label">Cards in Database</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="total-partners">20+</div>
+        <div class="stat-label">Transfer Partners</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="total-credits">$0</div>
+        <div class="stat-label">Max Annual Credits</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="last-updated">Jan 2026</div>
+        <div class="stat-label">Last Updated</div>
+      </div>
+    </section>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All Cards</button>
+      <button class="filter-btn" data-filter="Chase">Chase</button>
+      <button class="filter-btn" data-filter="American Express">Amex</button>
+      <button class="filter-btn" data-filter="Capital One">Capital One</button>
+      <button class="filter-btn" data-filter="Citi">Citi</button>
+      <button class="filter-btn" data-filter="premium">Premium ($400+)</button>
+      <button class="filter-btn" data-filter="midtier">Mid-Tier ($100-$399)</button>
+      <button class="filter-btn" data-filter="nofee">No Fee</button>
+    </div>
+
+    <!-- Card Grid -->
+    <section class="card-grid" id="cards-container">
+      <!-- Cards will be dynamically inserted here -->
+    </section>
+  </div>
+
+  <!-- Card Detail Modal -->
+  <div class="modal-overlay" id="card-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-card-name">Card Name</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-tab="overview">Overview</button>
+        <button class="tab" data-tab="earning">Earning</button>
+        <button class="tab" data-tab="partners">Partners</button>
+        <button class="tab" data-tab="credits">Credits</button>
+        <button class="tab" data-tab="perks">Perks</button>
+      </div>
+      <div id="modal-content">
+        <!-- Modal content will be dynamically inserted -->
+      </div>
+      <div class="modal-footer" style="padding: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 1rem;">
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+        <button class="btn btn-primary" id="add-to-collection-btn" onclick="addToCollection()">➕ Add to My Cards</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../data/cards.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    // Override the card click to also offer "add to collection"
+    let currentModalCardId = null;
+
+    // Extend the openModal function
+    const originalOpenModal = window.openModal;
+    window.openModal = function(cardId) {
+      currentModalCardId = cardId;
+      originalOpenModal(cardId);
+      updateAddButton();
+    };
+
+    function updateAddButton() {
+      const btn = document.getElementById('add-to-collection-btn');
+      const userCards = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
+
+      if (userCards.includes(currentModalCardId)) {
+        btn.textContent = '✓ In My Cards';
+        btn.disabled = true;
+        btn.classList.add('btn-secondary');
+        btn.classList.remove('btn-primary');
+      } else {
+        btn.textContent = '➕ Add to My Cards';
+        btn.disabled = false;
+        btn.classList.remove('btn-secondary');
+        btn.classList.add('btn-primary');
+      }
+    }
+
+    function addToCollection() {
+      const userCards = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
+
+      if (!userCards.includes(currentModalCardId)) {
+        userCards.push(currentModalCardId);
+        localStorage.setItem('cardmax_user_cards', JSON.stringify(userCards));
+        updateAddButton();
+
+        // Show confirmation
+        const card = CARDS_DATABASE.find(c => c.id === currentModalCardId);
+        alert(`${card.name} added to your collection!`);
+      }
+    }
+
+    // Update stats on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Update total cards count
+      document.getElementById('total-cards').textContent = CARDS_DATABASE.length;
+
+      // Calculate max credits
+      let maxCredits = 0;
+      CARDS_DATABASE.forEach(card => {
+        let cardCredits = 0;
+        card.credits.forEach(credit => {
+          if (typeof credit.amount === 'number' && credit.type !== 'points') {
+            cardCredits += credit.amount;
+          }
+        });
+        if (cardCredits > maxCredits) maxCredits = cardCredits;
+      });
+      document.getElementById('total-credits').textContent = '$' + maxCredits.toLocaleString() + '+';
+    });
+  </script>
+</body>
+</html>
