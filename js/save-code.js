@@ -1,42 +1,68 @@
-// CardMax - Anonymous Save Code System
-// Allows users to save/restore their data without full authentication
+// CardMax - Save Code System
+// Allows users to save/restore their data via a self-contained code string
 
-const SAVE_CODE_PREFIX = 'CM';
+const SAVE_CODE_PREFIX = 'CARDMAX_';
 
-// Generate a random save code
-function generateSaveCode() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Removed confusing chars (0,O,1,I)
-  let code = SAVE_CODE_PREFIX;
-  for (let i = 0; i < 6; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return code;
+// Generate a backup code that contains ALL user data (Base64 encoded)
+function generateBackupCode() {
+  const data = {
+    v: 2, // version
+    c: JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]'),
+    b: JSON.parse(localStorage.getItem('cardmax_tracked_benefits') || '{}'),
+    r: JSON.parse(localStorage.getItem('cardmax_renewal_dates') || '{}'),
+    d: JSON.parse(localStorage.getItem('cardmax_signup_dates') || '{}')
+  };
+
+  // Compress by removing empty objects
+  if (Object.keys(data.b).length === 0) delete data.b;
+  if (Object.keys(data.r).length === 0) delete data.r;
+  if (Object.keys(data.d).length === 0) delete data.d;
+
+  const jsonStr = JSON.stringify(data);
+  const base64 = btoa(unescape(encodeURIComponent(jsonStr)));
+  return SAVE_CODE_PREFIX + base64;
 }
 
-// Get or create user's save code
-function getUserSaveCode() {
-  let code = localStorage.getItem('cardmax_save_code');
-  if (!code) {
-    code = generateSaveCode();
-    localStorage.setItem('cardmax_save_code', code);
+// Restore data from a backup code
+function restoreFromCode(code) {
+  if (!code || !code.startsWith(SAVE_CODE_PREFIX)) {
+    throw new Error('Invalid backup code format');
   }
-  return code;
+
+  try {
+    const base64 = code.substring(SAVE_CODE_PREFIX.length);
+    const jsonStr = decodeURIComponent(escape(atob(base64)));
+    const data = JSON.parse(jsonStr);
+
+    if (!data.c || !Array.isArray(data.c)) {
+      throw new Error('Invalid data structure');
+    }
+
+    localStorage.setItem('cardmax_user_cards', JSON.stringify(data.c));
+    localStorage.setItem('cardmax_tracked_benefits', JSON.stringify(data.b || {}));
+    localStorage.setItem('cardmax_renewal_dates', JSON.stringify(data.r || {}));
+    localStorage.setItem('cardmax_signup_dates', JSON.stringify(data.d || {}));
+
+    return true;
+  } catch (err) {
+    throw new Error('Could not decode backup code: ' + err.message);
+  }
 }
 
-// Export user data as JSON
+// Legacy: Export user data as JSON (for file backup)
 function exportUserData() {
   const data = {
-    code: getUserSaveCode(),
-    version: 1,
+    version: 2,
     exportedAt: new Date().toISOString(),
     cards: JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]'),
     benefits: JSON.parse(localStorage.getItem('cardmax_tracked_benefits') || '{}'),
-    renewalDates: JSON.parse(localStorage.getItem('cardmax_renewal_dates') || '{}')
+    renewalDates: JSON.parse(localStorage.getItem('cardmax_renewal_dates') || '{}'),
+    signupDates: JSON.parse(localStorage.getItem('cardmax_signup_dates') || '{}')
   };
   return data;
 }
 
-// Import user data from JSON
+// Legacy: Import user data from JSON file
 function importUserData(data) {
   if (!data || !data.cards) {
     throw new Error('Invalid data format');
@@ -45,38 +71,38 @@ function importUserData(data) {
   localStorage.setItem('cardmax_user_cards', JSON.stringify(data.cards));
   localStorage.setItem('cardmax_tracked_benefits', JSON.stringify(data.benefits || {}));
   localStorage.setItem('cardmax_renewal_dates', JSON.stringify(data.renewalDates || {}));
-
-  if (data.code) {
-    localStorage.setItem('cardmax_save_code', data.code);
-  }
+  localStorage.setItem('cardmax_signup_dates', JSON.stringify(data.signupDates || {}));
 
   return true;
 }
 
-// Copy save code to clipboard
-function copySaveCode() {
-  const code = getUserSaveCode();
+// Copy backup code to clipboard
+function copyBackupCode() {
+  const code = generateBackupCode();
   navigator.clipboard.writeText(code).then(() => {
-    showToast('Save code copied: ' + code);
+    showToast('Backup code copied! Save it somewhere safe.');
+  }).catch(() => {
+    // Fallback for older browsers
+    prompt('Copy this backup code:', code);
   });
 }
 
-// Download data as JSON file
+// Download data as JSON file (alternative backup method)
 function downloadData() {
   const data = exportUserData();
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `cardmax-backup-${data.code}.json`;
+  a.download = `cardmax-backup-${new Date().toISOString().split('T')[0]}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  showToast('Backup downloaded!');
+  showToast('Backup file downloaded!');
 }
 
-// Show file picker to import data
+// Show file picker to import data from JSON file
 function uploadData() {
   const input = document.createElement('input');
   input.type = 'file';
@@ -90,10 +116,9 @@ function uploadData() {
       const data = JSON.parse(text);
       importUserData(data);
       showToast('Data restored successfully!');
-      // Reload the page to reflect changes
       setTimeout(() => window.location.reload(), 1000);
     } catch (err) {
-      showToast('Error importing data: ' + err.message, 'error');
+      showToast('Error importing file: ' + err.message, 'error');
     }
   };
   input.click();
@@ -189,44 +214,89 @@ function renderSaveRestoreUI(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  const code = getUserSaveCode();
+  // Check if user has any cards saved
+  const userCards = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
+  const hasData = userCards.length > 0;
 
   container.innerHTML = `
     <div style="background: var(--bg-secondary); border-radius: var(--radius); padding: 1.5rem; border: 1px solid var(--border-color);">
       <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-        💾 Save Your Data
+        💾 Save & Restore Your Data
       </h3>
       <p class="text-muted" style="margin-bottom: 1rem; font-size: 0.875rem;">
-        Your data is saved locally. Use your save code or download a backup to restore on another device.
+        Your data is saved locally in this browser. Copy your backup code to restore on another device or browser.
       </p>
 
-      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 1rem; background: var(--bg-card); border-radius: 8px;">
-        <div style="flex: 1;">
-          <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Your Save Code</div>
-          <div style="font-size: 1.5rem; font-weight: 700; font-family: monospace; letter-spacing: 2px;">${code}</div>
+      <!-- Backup Section -->
+      <div style="margin-bottom: 1.5rem;">
+        <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Create Backup</div>
+        <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0.75rem;">
+          ${hasData ? `You have ${userCards.length} card${userCards.length > 1 ? 's' : ''} saved. Click below to copy your backup code.` : 'Add cards to your collection first to create a backup.'}
+        </p>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <button class="btn btn-primary" onclick="copyBackupCode()" ${!hasData ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+            📋 Copy Backup Code
+          </button>
+          <button class="btn btn-secondary" onclick="downloadData()" ${!hasData ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+            ⬇️ Download JSON File
+          </button>
         </div>
-        <button class="btn btn-secondary" onclick="copySaveCode()">Copy</button>
       </div>
 
-      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn btn-primary" onclick="downloadData()">
-          ⬇️ Download Backup
-        </button>
-        <button class="btn btn-secondary" onclick="uploadData()">
-          ⬆️ Restore from Backup
-        </button>
+      <!-- Restore Section -->
+      <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+        <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Restore from Backup</div>
+        <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0.75rem;">
+          Paste a backup code to restore your cards and settings.
+        </p>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-start;">
+          <input
+            type="text"
+            id="restore-code-input"
+            placeholder="Paste backup code here (starts with CARDMAX_)"
+            style="flex: 1; min-width: 200px; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-primary); font-family: monospace; font-size: 0.875rem;"
+          >
+          <button class="btn btn-secondary" onclick="handleRestoreFromCode()">
+            ⬆️ Restore
+          </button>
+        </div>
+        <div style="margin-top: 0.75rem;">
+          <button class="btn btn-secondary" onclick="uploadData()" style="font-size: 0.875rem;">
+            📁 Or upload JSON file
+          </button>
+        </div>
       </div>
     </div>
   `;
 }
 
+// Handle restore from pasted code
+function handleRestoreFromCode() {
+  const input = document.getElementById('restore-code-input');
+  const code = input.value.trim();
+
+  if (!code) {
+    showToast('Please paste a backup code first', 'error');
+    return;
+  }
+
+  try {
+    restoreFromCode(code);
+    showToast('Data restored successfully! Reloading...');
+    setTimeout(() => window.location.reload(), 1000);
+  } catch (err) {
+    showToast(err.message, 'error');
+  }
+}
+
 // Export functions
 window.CardMaxSave = {
-  generateSaveCode,
-  getUserSaveCode,
+  generateBackupCode,
+  restoreFromCode,
   exportUserData,
   importUserData,
-  copySaveCode,
+  copyBackupCode,
+  handleRestoreFromCode,
   downloadData,
   uploadData,
   showToast,
