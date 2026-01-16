@@ -4,6 +4,7 @@
 let selectedCards = [];
 let activeFilter = 'all';
 let currentModalCard = null;
+let currentSearchQuery = '';
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,6 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
   updateStats();
 });
 
+// Search cards function
+function searchCards() {
+  const searchInput = document.getElementById('card-search');
+  if (!searchInput) return;
+
+  currentSearchQuery = searchInput.value.toLowerCase().trim();
+  renderCards(activeFilter);
+}
+
 // Render all cards
 function renderCards(filter = 'all') {
   const container = document.getElementById('cards-container');
@@ -20,6 +30,7 @@ function renderCards(filter = 'all') {
 
   let filteredCards = CARDS_DATABASE;
 
+  // Apply category filter
   if (filter === 'premium') {
     filteredCards = CARDS_DATABASE.filter(card => card.annualFee >= 400);
   } else if (filter === 'midtier') {
@@ -32,6 +43,26 @@ function renderCards(filter = 'all') {
     filteredCards = CARDS_DATABASE.filter(card => card.cardType !== 'business');
   } else if (filter !== 'all') {
     filteredCards = CARDS_DATABASE.filter(card => card.issuer === filter);
+  }
+
+  // Apply search filter
+  if (currentSearchQuery) {
+    filteredCards = filteredCards.filter(card => {
+      const searchText = currentSearchQuery;
+      // Search in card name
+      if (card.name.toLowerCase().includes(searchText)) return true;
+      // Search in issuer
+      if (card.issuer.toLowerCase().includes(searchText)) return true;
+      // Search in earning categories
+      if (card.earning.categories.some(cat => cat.category.toLowerCase().includes(searchText))) return true;
+      // Search in credits
+      if (card.credits.some(credit => credit.name.toLowerCase().includes(searchText))) return true;
+      // Search in perks
+      if (card.perks.some(perk => perk.name.toLowerCase().includes(searchText))) return true;
+      // Search in transfer partners
+      if (card.transferPartners.some(partner => partner.name.toLowerCase().includes(searchText))) return true;
+      return false;
+    });
   }
 
   container.innerHTML = filteredCards.map((card, index) => {
@@ -77,6 +108,17 @@ function renderCards(filter = 'all') {
       </div>
     </div>
   `}).join('');
+
+  // Show "no results" message if empty
+  if (filteredCards.length === 0) {
+    container.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--text-secondary);">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+        <h3 style="margin-bottom: 0.5rem;">No cards found</h3>
+        <p>Try adjusting your search or filters</p>
+      </div>
+    `;
+  }
 }
 
 // Setup filter button listeners
@@ -86,8 +128,8 @@ function setupFilterListeners() {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      renderCards(filter);
+      activeFilter = btn.dataset.filter;
+      renderCards(activeFilter);
     });
   });
 }
