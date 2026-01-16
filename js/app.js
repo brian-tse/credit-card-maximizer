@@ -24,6 +24,12 @@ function renderCards(filter = 'all') {
     filteredCards = CARDS_DATABASE.filter(card => card.annualFee >= 400);
   } else if (filter === 'midtier') {
     filteredCards = CARDS_DATABASE.filter(card => card.annualFee >= 100 && card.annualFee < 400);
+  } else if (filter === 'nofee') {
+    filteredCards = CARDS_DATABASE.filter(card => card.annualFee === 0);
+  } else if (filter === 'business') {
+    filteredCards = CARDS_DATABASE.filter(card => card.cardType === 'business');
+  } else if (filter === 'personal') {
+    filteredCards = CARDS_DATABASE.filter(card => card.cardType !== 'business');
   } else if (filter !== 'all') {
     filteredCards = CARDS_DATABASE.filter(card => card.issuer === filter);
   }
@@ -31,7 +37,7 @@ function renderCards(filter = 'all') {
   container.innerHTML = filteredCards.map((card, index) => `
     <div class="credit-card fade-in" style="animation-delay: ${index * 0.1}s" onclick="openCardModal('${card.id}')">
       <div class="card-header" style="background: ${card.color}">
-        <div class="card-issuer">${card.issuer}</div>
+        <div class="card-issuer">${card.issuer}${card.cardType === 'business' ? ' <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem;">BUSINESS</span>' : ''}</div>
         <div class="card-name">${card.name}</div>
       </div>
       <div class="card-body">

@@ -289,7 +289,7 @@ function handleRestoreFromCode() {
   }
 }
 
-// Export functions
+// Export functions to CardMaxSave namespace
 window.CardMaxSave = {
   generateBackupCode,
   restoreFromCode,
@@ -306,3 +306,10 @@ window.CardMaxSave = {
   getUpcomingRenewals,
   renderSaveRestoreUI
 };
+
+// Also expose functions globally for onclick handlers
+window.copyBackupCode = copyBackupCode;
+window.downloadData = downloadData;
+window.uploadData = uploadData;
+window.handleRestoreFromCode = handleRestoreFromCode;
+window.showToast = showToast;

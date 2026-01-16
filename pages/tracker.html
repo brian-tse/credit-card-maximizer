@@ -42,6 +42,12 @@
       <p>Track your monthly and annual card benefits. Never miss a credit again.</p>
     </section>
 
+    <!-- View Toggle -->
+    <div class="filter-bar" style="margin-bottom: 1.5rem;">
+      <button class="filter-btn active" data-view="frequency" onclick="switchView('frequency')">By Frequency</button>
+      <button class="filter-btn" data-view="card" onclick="switchView('card')">By Card (Full Checklist)</button>
+    </div>
+
     <!-- Summary Stats -->
     <section class="stats-bar" id="tracker-stats">
       <div class="stat-card">
@@ -84,6 +90,14 @@
       </div>
     </section>
 
+    <!-- Semiannual Benefits -->
+    <section id="semiannual-tracker" style="margin-top: 3rem;">
+      <h2 style="margin-bottom: 1.5rem;">📆 Semiannual Credits (Every 6 Months)</h2>
+      <div id="semiannual-benefits-container">
+        <!-- Semiannual benefit trackers will be inserted here -->
+      </div>
+    </section>
+
     <!-- Annual Benefits -->
     <section id="annual-tracker" style="margin-top: 3rem;">
       <h2 style="margin-bottom: 1.5rem;">📆 Annual Credits</h2>
@@ -105,6 +119,14 @@
       <h2 style="margin-bottom: 1.5rem;">🔔 Renewal Dates</h2>
       <div id="renewals-container">
         <!-- Renewal dates will be inserted here -->
+      </div>
+    </section>
+
+    <!-- By Card View (hidden by default) -->
+    <section id="by-card-view" style="display: none;">
+      <h2 style="margin-bottom: 1.5rem;">📋 Full Checklist by Card</h2>
+      <div id="by-card-container">
+        <!-- Full card checklists will be inserted here -->
       </div>
     </section>
   </div>

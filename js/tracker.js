@@ -109,6 +109,7 @@ function toggleCard(cardId) {
 // Render all benefit trackers
 function renderBenefitTrackers() {
   renderMonthlyBenefits();
+  renderSemiannualBenefits();
   renderAnnualBenefits();
   renderOnetimeBenefits();
 }
@@ -197,6 +198,88 @@ function renderMonthlyBenefits() {
   `;
 }
 
+// Render semiannual benefits (like Saks $50 every 6 months)
+function renderSemiannualBenefits() {
+  const container = document.getElementById('semiannual-benefits-container');
+  if (!container) return;
+
+  if (userCards.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth(); // 0-11
+  // H1 = Jan-Jun (months 0-5), H2 = Jul-Dec (months 6-11)
+  const currentHalf = currentMonth < 6 ? 'H1' : 'H2';
+  let html = '';
+
+  userCards.forEach(cardId => {
+    const card = CARDS_DATABASE.find(c => c.id === cardId);
+    if (!card) return;
+
+    const semiannualCredits = card.credits.filter(c => c.frequency === 'semiannual');
+    if (semiannualCredits.length === 0) return;
+
+    const cardBenefits = semiannualCredits.map(credit => {
+      const benefitKey = `semiannual_${currentYear}_${currentHalf}_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
+      const isCompleted = trackedBenefits[benefitKey] || false;
+      const periodValue = credit.semiannualAmount || (credit.amount / 2);
+      return { ...credit, benefitKey, isCompleted, periodValue };
+    });
+
+    const completedCount = cardBenefits.filter(b => b.isCompleted).length;
+    const totalValue = cardBenefits.reduce((sum, b) => sum + b.periodValue, 0);
+    const usedValue = cardBenefits.filter(b => b.isCompleted).reduce((sum, b) => sum + b.periodValue, 0);
+
+    html += `
+      <div class="tracker-card">
+        <div class="tracker-header">
+          <div>
+            <div class="tracker-title" style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="width: 12px; height: 12px; border-radius: 50%; background: ${card.color};"></span>
+              ${card.name}
+            </div>
+            <div class="text-muted" style="font-size: 0.875rem; margin-top: 0.25rem;">
+              ${completedCount} of ${cardBenefits.length} credits used this half
+            </div>
+          </div>
+          <div class="tracker-progress">$${usedValue} / $${totalValue}</div>
+        </div>
+
+        <ul class="benefit-checklist">
+          ${cardBenefits.map(benefit => `
+            <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
+                onclick="toggleBenefit('${benefit.benefitKey}')">
+              <div class="benefit-checkbox"></div>
+              <div class="benefit-content">
+                <div class="benefit-text">${benefit.name}</div>
+                <div class="benefit-description">${benefit.description}</div>
+                <div style="font-size: 0.75rem; color: var(--accent-purple); margin-top: 0.25rem;">
+                  ${currentHalf === 'H1' ? 'Jan-Jun' : 'Jul-Dec'} ${currentYear}
+                </div>
+              </div>
+              <div class="benefit-value">$${benefit.periodValue}</div>
+            </li>
+          `).join('')}
+        </ul>
+
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${totalValue > 0 ? (usedValue / totalValue) * 100 : 0}%"></div>
+          </div>
+          <div class="progress-text">
+            <span>${totalValue > 0 ? Math.round((usedValue / totalValue) * 100) : 0}% used</span>
+            <span>$${totalValue - usedValue} remaining</span>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html || '';
+}
+
 // Render annual benefits
 function renderAnnualBenefits() {
   const container = document.getElementById('annual-benefits-container');
@@ -224,8 +307,27 @@ function renderAnnualBenefits() {
     });
 
     const completedCount = cardBenefits.filter(b => b.isCompleted).length;
-    const totalValue = cardBenefits.reduce((sum, b) => sum + (typeof b.amount === 'number' ? b.amount : 0), 0);
-    const usedValue = cardBenefits.filter(b => b.isCompleted).reduce((sum, b) => sum + (typeof b.amount === 'number' ? b.amount : 0), 0);
+
+    // Separate dollar credits from points credits
+    const dollarCredits = cardBenefits.filter(b => b.type !== 'points' && typeof b.amount === 'number');
+    const pointsCredits = cardBenefits.filter(b => b.type === 'points' && typeof b.amount === 'number');
+
+    const totalDollarValue = dollarCredits.reduce((sum, b) => sum + b.amount, 0);
+    const usedDollarValue = dollarCredits.filter(b => b.isCompleted).reduce((sum, b) => sum + b.amount, 0);
+    const totalPointsValue = pointsCredits.reduce((sum, b) => sum + b.amount, 0);
+    const usedPointsValue = pointsCredits.filter(b => b.isCompleted).reduce((sum, b) => sum + b.amount, 0);
+
+    // Build progress display
+    let progressDisplay = '';
+    if (totalDollarValue > 0 && totalPointsValue > 0) {
+      progressDisplay = `$${usedDollarValue.toLocaleString()} / $${totalDollarValue.toLocaleString()} + ${usedPointsValue.toLocaleString()} / ${totalPointsValue.toLocaleString()} pts`;
+    } else if (totalDollarValue > 0) {
+      progressDisplay = `$${usedDollarValue.toLocaleString()} / $${totalDollarValue.toLocaleString()}`;
+    } else if (totalPointsValue > 0) {
+      progressDisplay = `${usedPointsValue.toLocaleString()} / ${totalPointsValue.toLocaleString()} pts`;
+    } else {
+      progressDisplay = `${completedCount} / ${cardBenefits.length}`;
+    }
 
     html += `
       <div class="tracker-card">
@@ -239,7 +341,7 @@ function renderAnnualBenefits() {
               ${completedCount} of ${cardBenefits.length} annual credits used
             </div>
           </div>
-          <div class="tracker-progress">$${usedValue} / $${totalValue}</div>
+          <div class="tracker-progress">${progressDisplay}</div>
         </div>
 
         <ul class="benefit-checklist">
@@ -331,9 +433,12 @@ function toggleBenefit(benefitKey) {
 function updateStats() {
   const monthKey = getCurrentMonthKey();
   const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth();
+  const currentHalf = currentMonth < 6 ? 'H1' : 'H2';
 
   let monthlyUsed = 0;
   let monthlyTotal = 0;
+  let semiannualUsed = 0;
   let annualUsed = 0;
   let totalBenefits = 0;
   let completedBenefits = 0;
@@ -353,6 +458,17 @@ function updateStats() {
       }
     });
 
+    // Semiannual credits
+    card.credits.filter(c => c.frequency === 'semiannual').forEach(credit => {
+      const benefitKey = `semiannual_${currentYear}_${currentHalf}_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
+      const periodValue = credit.semiannualAmount || (credit.amount / 2);
+      totalBenefits++;
+      if (trackedBenefits[benefitKey]) {
+        semiannualUsed += periodValue;
+        completedBenefits++;
+      }
+    });
+
     // Annual credits
     card.credits.filter(c => c.frequency === 'annual' && !c.monthlyAmount).forEach(credit => {
       const benefitKey = `annual_${currentYear}_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
@@ -366,7 +482,7 @@ function updateStats() {
 
   document.getElementById('credits-used').textContent = '$' + monthlyUsed;
   document.getElementById('credits-remaining').textContent = '$' + (monthlyTotal - monthlyUsed);
-  document.getElementById('annual-value').textContent = '$' + (monthlyUsed + annualUsed);
+  document.getElementById('annual-value').textContent = '$' + (monthlyUsed + semiannualUsed + annualUsed);
   document.getElementById('completion-rate').textContent = totalBenefits > 0
     ? Math.round((completedBenefits / totalBenefits) * 100) + '%'
     : '0%';
@@ -459,4 +575,230 @@ function updateRenewalDate(cardId, date) {
     renderRenewalDates();
     CardMaxSave.showToast('Renewal date saved!');
   }
+}
+
+// Current view state
+let currentView = 'frequency';
+
+// Switch between views
+function switchView(view) {
+  currentView = view;
+
+  // Update button states
+  document.querySelectorAll('.filter-btn[data-view]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === view);
+  });
+
+  // Show/hide sections
+  const frequencyElements = ['tracker-stats', 'monthly-tracker', 'semiannual-tracker', 'annual-tracker', 'onetime-tracker', 'renewals-tracker'];
+  const byCardElements = ['by-card-view'];
+
+  if (view === 'frequency') {
+    frequencyElements.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = '';
+    });
+    byCardElements.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+  } else if (view === 'card') {
+    frequencyElements.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+    byCardElements.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = '';
+    });
+    renderByCardView();
+  }
+}
+
+// Render full checklist by card view
+function renderByCardView() {
+  const container = document.getElementById('by-card-container');
+  if (!container) return;
+
+  if (userCards.length === 0) {
+    container.innerHTML = `
+      <div class="tracker-card" style="text-align: center; padding: 3rem;">
+        <h3 style="margin-bottom: 0.5rem;">No cards selected</h3>
+        <p class="text-muted">Select cards above to start tracking your benefits</p>
+      </div>
+    `;
+    return;
+  }
+
+  const monthKey = getCurrentMonthKey();
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth();
+  const currentHalf = currentMonth < 6 ? 'H1' : 'H2';
+  let html = '';
+
+  userCards.forEach(cardId => {
+    const card = CARDS_DATABASE.find(c => c.id === cardId);
+    if (!card) return;
+
+    // Group all benefits: monthly, semiannual, annual, one-time, perks
+    const monthlyCredits = card.credits.filter(c => c.monthlyAmount).map(credit => ({
+      ...credit,
+      benefitKey: `monthly_${monthKey}_${cardId}_${credit.name.replace(/\s+/g, '_')}`,
+      isCompleted: trackedBenefits[`monthly_${monthKey}_${cardId}_${credit.name.replace(/\s+/g, '_')}`] || false,
+      benefitType: 'monthly'
+    }));
+
+    const semiannualCredits = card.credits.filter(c => c.frequency === 'semiannual').map(credit => ({
+      ...credit,
+      benefitKey: `semiannual_${currentYear}_${currentHalf}_${cardId}_${credit.name.replace(/\s+/g, '_')}`,
+      isCompleted: trackedBenefits[`semiannual_${currentYear}_${currentHalf}_${cardId}_${credit.name.replace(/\s+/g, '_')}`] || false,
+      benefitType: 'semiannual',
+      periodValue: credit.semiannualAmount || (credit.amount / 2)
+    }));
+
+    const annualCredits = card.credits.filter(c => c.frequency === 'annual' && !c.monthlyAmount).map(credit => ({
+      ...credit,
+      benefitKey: `annual_${currentYear}_${cardId}_${credit.name.replace(/\s+/g, '_')}`,
+      isCompleted: trackedBenefits[`annual_${currentYear}_${cardId}_${credit.name.replace(/\s+/g, '_')}`] || false,
+      benefitType: 'annual'
+    }));
+
+    const onetimeCredits = card.credits.filter(c => c.frequency.includes('every')).map(credit => ({
+      ...credit,
+      benefitKey: `onetime_${cardId}_${credit.name.replace(/\s+/g, '_')}`,
+      isCompleted: trackedBenefits[`onetime_${cardId}_${credit.name.replace(/\s+/g, '_')}`] || false,
+      benefitType: 'onetime'
+    }));
+
+    const allCredits = [...monthlyCredits, ...semiannualCredits, ...annualCredits, ...onetimeCredits];
+
+    // Calculate totals
+    const completedCount = allCredits.filter(b => b.isCompleted).length;
+    const dollarCredits = allCredits.filter(b => b.type !== 'points' && typeof b.amount === 'number');
+    const totalDollarValue = dollarCredits.reduce((sum, b) => sum + (b.monthlyAmount || b.amount || 0), 0);
+    const usedDollarValue = dollarCredits.filter(b => b.isCompleted).reduce((sum, b) => sum + (b.monthlyAmount || b.amount || 0), 0);
+
+    html += `
+      <div class="tracker-card" style="margin-bottom: 1.5rem;">
+        <div class="tracker-header">
+          <div>
+            <div class="tracker-title" style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="width: 16px; height: 16px; border-radius: 50%; background: ${card.color};"></span>
+              ${card.name}
+            </div>
+            <div class="text-muted" style="font-size: 0.875rem; margin-top: 0.25rem;">
+              ${completedCount} of ${allCredits.length} credits used · $${card.annualFee}/year
+            </div>
+          </div>
+          <div class="tracker-progress">$${usedDollarValue.toLocaleString()} / $${totalDollarValue.toLocaleString()}</div>
+        </div>
+
+        ${monthlyCredits.length > 0 ? `
+          <div style="margin-top: 1rem;">
+            <h4 style="font-size: 0.75rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">📅 Monthly Credits</h4>
+            <ul class="benefit-checklist">
+              ${monthlyCredits.map(benefit => `
+                <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
+                    onclick="toggleBenefit('${benefit.benefitKey}')">
+                  <div class="benefit-checkbox"></div>
+                  <div class="benefit-content">
+                    <div class="benefit-text">${benefit.name}</div>
+                    <div class="benefit-description">${benefit.description}</div>
+                  </div>
+                  <div class="benefit-value">$${benefit.monthlyAmount}/mo</div>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        ` : ''}
+
+        ${semiannualCredits.length > 0 ? `
+          <div style="margin-top: 1rem;">
+            <h4 style="font-size: 0.75rem; color: var(--accent-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">📆 Semiannual Credits (${currentHalf === 'H1' ? 'Jan-Jun' : 'Jul-Dec'})</h4>
+            <ul class="benefit-checklist">
+              ${semiannualCredits.map(benefit => `
+                <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
+                    onclick="toggleBenefit('${benefit.benefitKey}')">
+                  <div class="benefit-checkbox"></div>
+                  <div class="benefit-content">
+                    <div class="benefit-text">${benefit.name}</div>
+                    <div class="benefit-description">${benefit.description}</div>
+                  </div>
+                  <div class="benefit-value">$${benefit.periodValue}</div>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        ` : ''}
+
+        ${annualCredits.length > 0 ? `
+          <div style="margin-top: 1rem;">
+            <h4 style="font-size: 0.75rem; color: var(--accent-green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">📆 Annual Credits</h4>
+            <ul class="benefit-checklist">
+              ${annualCredits.map(benefit => `
+                <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
+                    onclick="toggleBenefit('${benefit.benefitKey}')">
+                  <div class="benefit-checkbox"></div>
+                  <div class="benefit-content">
+                    <div class="benefit-text">${benefit.name}</div>
+                    <div class="benefit-description">${benefit.description}</div>
+                  </div>
+                  <div class="benefit-value">${typeof benefit.amount === 'number' ? (benefit.type === 'points' ? benefit.amount.toLocaleString() + ' pts' : '$' + benefit.amount.toLocaleString()) : benefit.amount}</div>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        ` : ''}
+
+        ${onetimeCredits.length > 0 ? `
+          <div style="margin-top: 1rem;">
+            <h4 style="font-size: 0.75rem; color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">✅ One-Time / Multi-Year</h4>
+            <ul class="benefit-checklist">
+              ${onetimeCredits.map(benefit => `
+                <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
+                    onclick="toggleBenefit('${benefit.benefitKey}')">
+                  <div class="benefit-checkbox"></div>
+                  <div class="benefit-content">
+                    <div class="benefit-text">${benefit.name}</div>
+                    <div class="benefit-description">${benefit.description}</div>
+                    <div style="font-size: 0.7rem; color: var(--accent-purple); margin-top: 0.25rem;">Renews ${benefit.frequency}</div>
+                  </div>
+                  <div class="benefit-value">${typeof benefit.amount === 'number' ? (benefit.type === 'points' ? benefit.amount.toLocaleString() + ' pts' : '$' + benefit.amount.toLocaleString()) : benefit.amount}</div>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        ` : ''}
+
+        ${card.perks.length > 0 ? `
+          <div style="margin-top: 1rem;">
+            <h4 style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">🎁 Perks</h4>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+              ${card.perks.map(perk => `
+                <span style="padding: 0.4rem 0.75rem; background: var(--bg-card); border-radius: 20px; font-size: 0.8rem;" title="${perk.description}">
+                  ${perk.name}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        <div class="progress-container" style="margin-top: 1rem;">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${totalDollarValue > 0 ? (usedDollarValue / totalDollarValue) * 100 : 0}%"></div>
+          </div>
+          <div class="progress-text">
+            <span>${totalDollarValue > 0 ? Math.round((usedDollarValue / totalDollarValue) * 100) : 0}% captured</span>
+            <span>$${(totalDollarValue - usedDollarValue).toLocaleString()} remaining</span>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html || `
+    <div class="tracker-card" style="text-align: center; padding: 2rem;">
+      <p class="text-muted">No benefits to track for selected cards</p>
+    </div>
+  `;
 }

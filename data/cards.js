@@ -30,6 +30,11 @@ const CARDS_DATABASE = [
       { name: "Air France/KLM", ratio: "1:1", type: "airline" },
       { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
       { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aer Lingus", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
       { name: "Hyatt", ratio: "1:1", type: "hotel" },
       { name: "IHG", ratio: "1:1", type: "hotel" },
       { name: "Marriott", ratio: "1:1", type: "hotel" }
@@ -77,13 +82,27 @@ const CARDS_DATABASE = [
       { name: "ANA", ratio: "1:1", type: "airline" },
       { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
       { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aeromexico", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "El Al", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "Hawaiian Airlines", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "5:4", type: "airline" },
+      { name: "Qantas", ratio: "1:1", type: "airline" },
+      { name: "Qatar Airways", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
       { name: "Hilton", ratio: "1:2", type: "hotel" },
-      { name: "Marriott", ratio: "1:1", type: "hotel" }
+      { name: "Marriott", ratio: "1:1", type: "hotel" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
     ],
     credits: [
       { name: "Airline Incidental Credit", amount: 200, frequency: "annual", type: "travel", description: "Select one airline, covers fees" },
       { name: "Uber Credit", amount: 200, frequency: "annual", type: "rideshare", description: "$15/month + $20 December bonus", monthlyAmount: 15 },
-      { name: "Saks Fifth Avenue", amount: 100, frequency: "annual", type: "shopping", description: "$50 Jan-Jun, $50 Jul-Dec", monthlyAmount: 50, periods: ["Jan-Jun", "Jul-Dec"] },
+      { name: "Saks Fifth Avenue", amount: 100, frequency: "semiannual", type: "shopping", description: "$50 Jan-Jun, $50 Jul-Dec", semiannualAmount: 50 },
       { name: "Hotel Credit", amount: 200, frequency: "annual", type: "travel", description: "Fine Hotels + Resorts or Hotel Collection" },
       { name: "Digital Entertainment", amount: 240, frequency: "annual", type: "subscription", description: "$20/month for streaming services", monthlyAmount: 20 },
       { name: "Walmart+ Membership", amount: 155, frequency: "annual", type: "subscription", description: "Statement credit for membership" },
@@ -125,15 +144,25 @@ const CARDS_DATABASE = [
       ]
     },
     transferPartners: [
-      { name: "Air Canada", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
       { name: "Air France/KLM", ratio: "1:1", type: "airline" },
       { name: "British Airways", ratio: "1:1", type: "airline" },
       { name: "Emirates", ratio: "1:1", type: "airline" },
       { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
       { name: "Virgin Red", ratio: "1:1", type: "airline" },
       { name: "Qantas", ratio: "1:1", type: "airline" },
+      { name: "Aeromexico", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "EVA Air", ratio: "2:1.5", type: "airline" },
+      { name: "Finnair", ratio: "1:1", type: "airline" },
+      { name: "Japan Airlines", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
       { name: "Wyndham", ratio: "1:1", type: "hotel" },
-      { name: "Accor", ratio: "1:1", type: "hotel" }
+      { name: "Accor", ratio: "1:1", type: "hotel" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
     ],
     credits: [
       { name: "Annual Travel Credit", amount: 300, frequency: "annual", type: "travel", description: "Capital One Travel bookings" },
@@ -180,6 +209,12 @@ const CARDS_DATABASE = [
       { name: "British Airways", ratio: "1:1", type: "airline" },
       { name: "Air France/KLM", ratio: "1:1", type: "airline" },
       { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aer Lingus", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
       { name: "Hyatt", ratio: "1:1", type: "hotel" },
       { name: "IHG", ratio: "1:1", type: "hotel" },
       { name: "Marriott", ratio: "1:1", type: "hotel" }
@@ -224,8 +259,23 @@ const CARDS_DATABASE = [
       { name: "Air France/KLM", ratio: "1:1", type: "airline" },
       { name: "ANA", ratio: "1:1", type: "airline" },
       { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aeromexico", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "El Al", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "Hawaiian Airlines", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "5:4", type: "airline" },
+      { name: "Qantas", ratio: "1:1", type: "airline" },
+      { name: "Qatar Airways", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
       { name: "Hilton", ratio: "1:2", type: "hotel" },
-      { name: "Marriott", ratio: "1:1", type: "hotel" }
+      { name: "Marriott", ratio: "1:1", type: "hotel" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
     ],
     credits: [
       { name: "Uber Credit", amount: 120, frequency: "annual", type: "rideshare", description: "$10/month for Uber Eats or rides", monthlyAmount: 10 },
@@ -295,7 +345,18 @@ const CARDS_DATABASE = [
     transferPartners: [
       { name: "United Airlines", ratio: "1:1", type: "airline" },
       { name: "Southwest Airlines", ratio: "1:1", type: "airline" },
-      { name: "Hyatt", ratio: "1:1", type: "hotel" }
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aer Lingus", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Hyatt", ratio: "1:1", type: "hotel" },
+      { name: "IHG", ratio: "1:1", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" }
     ],
     credits: [],
     perks: [
@@ -330,7 +391,18 @@ const CARDS_DATABASE = [
     transferPartners: [
       { name: "United Airlines", ratio: "1:1", type: "airline" },
       { name: "Southwest Airlines", ratio: "1:1", type: "airline" },
-      { name: "Hyatt", ratio: "1:1", type: "hotel" }
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aer Lingus", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Hyatt", ratio: "1:1", type: "hotel" },
+      { name: "IHG", ratio: "1:1", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" }
     ],
     credits: [],
     perks: [
@@ -455,12 +527,25 @@ const CARDS_DATABASE = [
       ]
     },
     transferPartners: [
-      { name: "Air Canada", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
       { name: "Air France/KLM", ratio: "1:1", type: "airline" },
       { name: "British Airways", ratio: "1:1", type: "airline" },
       { name: "Emirates", ratio: "1:1", type: "airline" },
       { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
-      { name: "Wyndham", ratio: "1:1", type: "hotel" }
+      { name: "Virgin Red", ratio: "1:1", type: "airline" },
+      { name: "Qantas", ratio: "1:1", type: "airline" },
+      { name: "Aeromexico", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "EVA Air", ratio: "2:1.5", type: "airline" },
+      { name: "Finnair", ratio: "1:1", type: "airline" },
+      { name: "Japan Airlines", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
+      { name: "Wyndham", ratio: "1:1", type: "hotel" },
+      { name: "Accor", ratio: "1:1", type: "hotel" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
     ],
     credits: [
       { name: "Global Entry/TSA PreCheck", amount: 100, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
@@ -931,8 +1016,17 @@ const CARDS_DATABASE = [
       { name: "JetBlue", ratio: "1:1", type: "airline" },
       { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
       { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
-      { name: "Eva Air", ratio: "1:1", type: "airline" },
-      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
+      { name: "EVA Air", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "Qatar Airways", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Thai Airways", ratio: "1:1", type: "airline" },
+      { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" },
+      { name: "Wyndham", ratio: "1:1", type: "hotel" }
     ],
     credits: [
       { name: "Annual Hotel Credit", amount: 100, frequency: "annual", type: "travel", description: "$100 off hotel stay of $500+ on cititravel.com" }
@@ -973,8 +1067,17 @@ const CARDS_DATABASE = [
       { name: "JetBlue", ratio: "1:1", type: "airline" },
       { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
       { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
-      { name: "Eva Air", ratio: "1:1", type: "airline" },
-      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
+      { name: "EVA Air", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "Qatar Airways", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Thai Airways", ratio: "1:1", type: "airline" },
+      { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" },
+      { name: "Wyndham", ratio: "1:1", type: "hotel" }
     ],
     credits: [
       { name: "Annual Hotel Credit", amount: 300, frequency: "annual", type: "travel", description: "$300 off 2+ night hotel stay on cititravel.com" },
@@ -1059,8 +1162,23 @@ const CARDS_DATABASE = [
       { name: "Air France/KLM", ratio: "1:1", type: "airline" },
       { name: "ANA", ratio: "1:1", type: "airline" },
       { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aeromexico", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "El Al", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "Hawaiian Airlines", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "5:4", type: "airline" },
+      { name: "Qantas", ratio: "1:1", type: "airline" },
+      { name: "Qatar Airways", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
       { name: "Hilton", ratio: "1:2", type: "hotel" },
-      { name: "Marriott", ratio: "1:1", type: "hotel" }
+      { name: "Marriott", ratio: "1:1", type: "hotel" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
     ],
     credits: [
       { name: "CLEAR Plus Credit", amount: 209, frequency: "annual", type: "travel", description: "Statement credit for CLEAR Plus membership" }
@@ -1138,10 +1256,26 @@ const CARDS_DATABASE = [
     transferPartners: [
       { name: "American Airlines", ratio: "1:1", type: "airline" },
       { name: "United Airlines", ratio: "1:1", type: "airline" },
-      { name: "Air Canada", ratio: "1:1", type: "airline" },
+      { name: "Alaska Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
       { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Spirit Airlines", ratio: "1:1", type: "airline" },
+      { name: "Aer Lingus", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "Japan Airlines", ratio: "1:1", type: "airline" },
+      { name: "Qatar Airways", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
       { name: "Hyatt", ratio: "1:1", type: "hotel" },
-      { name: "IHG", ratio: "1:1", type: "hotel" }
+      { name: "IHG", ratio: "1:1", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" },
+      { name: "Hilton", ratio: "1:2", type: "hotel" }
     ],
     credits: [],
     perks: [
@@ -1176,10 +1310,26 @@ const CARDS_DATABASE = [
     transferPartners: [
       { name: "American Airlines", ratio: "1:1", type: "airline" },
       { name: "United Airlines", ratio: "1:1", type: "airline" },
-      { name: "Air Canada", ratio: "1:1", type: "airline" },
+      { name: "Alaska Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
       { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Spirit Airlines", ratio: "1:1", type: "airline" },
+      { name: "Aer Lingus", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "Japan Airlines", ratio: "1:1", type: "airline" },
+      { name: "Qatar Airways", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
       { name: "Hyatt", ratio: "1:1", type: "hotel" },
-      { name: "IHG", ratio: "1:1", type: "hotel" }
+      { name: "IHG", ratio: "1:1", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" },
+      { name: "Hilton", ratio: "1:2", type: "hotel" }
     ],
     credits: [
       { name: "Bilt Travel Hotel Credit", amount: 100, frequency: "annual", type: "travel", description: "$50 available every 6 months" }
@@ -1217,10 +1367,26 @@ const CARDS_DATABASE = [
     transferPartners: [
       { name: "American Airlines", ratio: "1:1", type: "airline" },
       { name: "United Airlines", ratio: "1:1", type: "airline" },
-      { name: "Air Canada", ratio: "1:1", type: "airline" },
+      { name: "Alaska Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
       { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Spirit Airlines", ratio: "1:1", type: "airline" },
+      { name: "Aer Lingus", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "Japan Airlines", ratio: "1:1", type: "airline" },
+      { name: "Qatar Airways", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
       { name: "Hyatt", ratio: "1:1", type: "hotel" },
-      { name: "IHG", ratio: "1:1", type: "hotel" }
+      { name: "IHG", ratio: "1:1", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" },
+      { name: "Hilton", ratio: "1:2", type: "hotel" }
     ],
     credits: [
       { name: "Bilt Travel Hotel Credit", amount: 400, frequency: "annual", type: "travel", description: "$200 available every 6 months" }
@@ -1235,6 +1401,875 @@ const CARDS_DATABASE = [
       { name: "Dining Credits", description: "Credits at select Bilt partner restaurants", type: "dining" }
     ],
     color: "#C0C0C0",
+    lastUpdated: "2026-01-15"
+  },
+
+  // ============ BUSINESS CREDIT CARDS ============
+
+  // --- Chase Ink Business Cards ---
+  {
+    id: "chase-ink-business-unlimited",
+    name: "Chase Ink Business Unlimited",
+    issuer: "Chase",
+    network: "Visa",
+    cardType: "business",
+    annualFee: 0,
+    signUpBonus: {
+      amount: 75000,
+      currency: "Ultimate Rewards",
+      spendRequirement: 6000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1.5,
+      categories: [
+        { category: "All Purchases", multiplier: 1.5, description: "Unlimited 1.5% cash back or 1.5x UR points" }
+      ]
+    },
+    transferPartners: [
+      { name: "United Airlines", ratio: "1:1", type: "airline" },
+      { name: "Southwest Airlines", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aer Lingus", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Hyatt", ratio: "1:1", type: "hotel" },
+      { name: "IHG", ratio: "1:1", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [],
+    perks: [
+      { name: "No Annual Fee", description: "No annual fee ever", type: "fee" },
+      { name: "0% Intro APR", description: "0% for 12 months on purchases", type: "apr" },
+      { name: "Employee Cards", description: "Free employee cards at no extra cost", type: "business" },
+      { name: "Purchase Protection", description: "Covers new purchases for 120 days", type: "insurance" },
+      { name: "Extended Warranty", description: "Extra year on eligible items", type: "insurance" }
+    ],
+    color: "#1A4480",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "chase-ink-business-preferred",
+    name: "Chase Ink Business Preferred",
+    issuer: "Chase",
+    network: "Visa",
+    cardType: "business",
+    annualFee: 95,
+    signUpBonus: {
+      amount: 100000,
+      currency: "Ultimate Rewards",
+      spendRequirement: 8000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Travel", multiplier: 3, description: "Airfare, hotels, car rentals, trains" },
+        { category: "Shipping", multiplier: 3, description: "UPS, FedEx, USPS, etc." },
+        { category: "Internet/Cable/Phone", multiplier: 3, description: "Business services" },
+        { category: "Advertising (Social Media/Search)", multiplier: 3, description: "Facebook, Google, LinkedIn ads" }
+      ]
+    },
+    transferPartners: [
+      { name: "United Airlines", ratio: "1:1", type: "airline" },
+      { name: "Southwest Airlines", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aer Lingus", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Hyatt", ratio: "1:1", type: "hotel" },
+      { name: "IHG", ratio: "1:1", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [],
+    perks: [
+      { name: "Cell Phone Protection", description: "Up to $1,000 per claim, 3 claims/year", type: "insurance" },
+      { name: "Trip Cancellation Insurance", description: "Up to $5,000 per person", type: "insurance" },
+      { name: "Purchase Protection", description: "Covers new purchases for 120 days", type: "insurance" },
+      { name: "1.25x Point Value", description: "Points worth 1.25¢ in Chase Travel Portal", type: "redemption" },
+      { name: "Employee Cards", description: "Free employee cards at no extra cost", type: "business" }
+    ],
+    color: "#1A4480",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "chase-ink-business-cash",
+    name: "Chase Ink Business Cash",
+    issuer: "Chase",
+    network: "Visa",
+    cardType: "business",
+    annualFee: 0,
+    signUpBonus: {
+      amount: 75000,
+      currency: "Ultimate Rewards",
+      spendRequirement: 6000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Office Supply Stores", multiplier: 5, description: "Up to $25,000/year combined" },
+        { category: "Internet/Cable/Phone", multiplier: 5, description: "Up to $25,000/year combined" },
+        { category: "Gas Stations", multiplier: 2, description: "Up to $25,000/year combined" },
+        { category: "Restaurants", multiplier: 2, description: "Up to $25,000/year combined" }
+      ]
+    },
+    transferPartners: [
+      { name: "United Airlines", ratio: "1:1", type: "airline" },
+      { name: "Southwest Airlines", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aer Lingus", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Hyatt", ratio: "1:1", type: "hotel" },
+      { name: "IHG", ratio: "1:1", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [],
+    perks: [
+      { name: "No Annual Fee", description: "No annual fee ever", type: "fee" },
+      { name: "0% Intro APR", description: "0% for 12 months on purchases", type: "apr" },
+      { name: "Employee Cards", description: "Free employee cards at no extra cost", type: "business" },
+      { name: "Purchase Protection", description: "Covers new purchases for 120 days", type: "insurance" }
+    ],
+    color: "#1A4480",
+    lastUpdated: "2026-01-15"
+  },
+
+  // --- American Express Business Cards ---
+  {
+    id: "amex-business-platinum",
+    name: "American Express Business Platinum",
+    issuer: "American Express",
+    network: "American Express",
+    cardType: "business",
+    annualFee: 895,
+    signUpBonus: {
+      amount: 150000,
+      currency: "Membership Rewards",
+      spendRequirement: 20000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Flights (direct/Amex Travel)", multiplier: 5, description: "Booked directly or via Amex Travel" },
+        { category: "Hotels (Amex Travel)", multiplier: 5, description: "Prepaid through Amex Travel" },
+        { category: "Purchases $5,000+", multiplier: 1.5, description: "On single purchases of $5K+ (up to 1M MR/year)" }
+      ]
+    },
+    transferPartners: [
+      { name: "Delta Airlines", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "ANA", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aeromexico", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "El Al", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "Hawaiian Airlines", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "5:4", type: "airline" },
+      { name: "Qantas", ratio: "1:1", type: "airline" },
+      { name: "Qatar Airways", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
+      { name: "Hilton", ratio: "1:2", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [
+      { name: "Airline Incidental Credit", amount: 200, frequency: "annual", type: "travel", description: "Select one airline, covers fees" },
+      { name: "Dell Credit", amount: 200, frequency: "semiannual", type: "business", description: "$100 Jan-Jun, $100 Jul-Dec for Dell purchases", semiannualAmount: 100 },
+      { name: "Indeed Credit", amount: 360, frequency: "annual", type: "business", description: "$90/quarter for job posting" },
+      { name: "Adobe Creative Cloud Credit", amount: 150, frequency: "annual", type: "business", description: "Statement credit for Adobe subscription" },
+      { name: "Global Entry/TSA PreCheck", amount: 100, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
+    ],
+    perks: [
+      { name: "Centurion Lounges", description: "Access to Amex Centurion Lounges + 2 guests", type: "lounge" },
+      { name: "Priority Pass Select", description: "Unlimited visits, no guests", type: "lounge" },
+      { name: "Delta Sky Club", description: "Access when flying Delta", type: "lounge" },
+      { name: "Hilton Gold Status", description: "Automatic Gold status", type: "status" },
+      { name: "Marriott Gold Status", description: "Automatic Gold status", type: "status" },
+      { name: "35% Points Rebate", description: "35% back on Pay with Points for flights", type: "redemption" }
+    ],
+    color: "#B0B7BC",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "amex-business-gold",
+    name: "American Express Business Gold",
+    issuer: "American Express",
+    network: "American Express",
+    cardType: "business",
+    annualFee: 375,
+    signUpBonus: {
+      amount: 100000,
+      currency: "Membership Rewards",
+      spendRequirement: 15000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Top 2 Categories", multiplier: 4, description: "Auto-selected from: Airfare, Advertising, Gas, Shipping, Computer hardware/software/cloud, Restaurants (up to $150K/year)" }
+      ]
+    },
+    transferPartners: [
+      { name: "Delta Airlines", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "ANA", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aeromexico", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "El Al", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "Hawaiian Airlines", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "5:4", type: "airline" },
+      { name: "Qantas", ratio: "1:1", type: "airline" },
+      { name: "Qatar Airways", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
+      { name: "Hilton", ratio: "1:2", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [
+      { name: "Flexible Credit", amount: 155, frequency: "annual", type: "business", description: "Use for Grubhub, Boxed, or Office Depot" }
+    ],
+    perks: [
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Purchase Protection", description: "Up to $10,000 per occurrence", type: "insurance" },
+      { name: "Extended Warranty", description: "Extra year on eligible items", type: "insurance" },
+      { name: "25% Points Rebate", description: "25% back on Pay with Points for flights", type: "redemption" }
+    ],
+    color: "#B5985A",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "amex-blue-business-plus",
+    name: "American Express Blue Business Plus",
+    issuer: "American Express",
+    network: "American Express",
+    cardType: "business",
+    annualFee: 0,
+    signUpBonus: {
+      amount: 15000,
+      currency: "Membership Rewards",
+      spendRequirement: 3000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "All Purchases", multiplier: 2, description: "2x MR on first $50,000/year, then 1x" }
+      ]
+    },
+    transferPartners: [
+      { name: "Delta Airlines", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "ANA", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aeromexico", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "El Al", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "Hawaiian Airlines", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "5:4", type: "airline" },
+      { name: "Qantas", ratio: "1:1", type: "airline" },
+      { name: "Qatar Airways", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
+      { name: "Hilton", ratio: "1:2", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [],
+    perks: [
+      { name: "No Annual Fee", description: "No annual fee ever", type: "fee" },
+      { name: "0% Intro APR", description: "0% for 12 months on purchases", type: "apr" },
+      { name: "Expanded Buying Power", description: "Spend beyond your credit limit with eligibility", type: "business" },
+      { name: "Employee Cards", description: "Free employee cards at no extra cost", type: "business" }
+    ],
+    color: "#006FCF",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "amex-blue-business-cash",
+    name: "American Express Blue Business Cash",
+    issuer: "American Express",
+    network: "American Express",
+    cardType: "business",
+    annualFee: 0,
+    signUpBonus: {
+      amount: 250,
+      currency: "Statement Credit",
+      spendRequirement: 3000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "All Purchases", multiplier: 2, description: "2% cash back on first $50,000/year, then 1%" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "No Annual Fee", description: "No annual fee ever", type: "fee" },
+      { name: "0% Intro APR", description: "0% for 12 months on purchases", type: "apr" },
+      { name: "Expanded Buying Power", description: "Spend beyond your credit limit with eligibility", type: "business" },
+      { name: "Employee Cards", description: "Free employee cards at no extra cost", type: "business" },
+      { name: "Purchase Protection", description: "Up to $1,000 per occurrence", type: "insurance" }
+    ],
+    color: "#006FCF",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "amex-business-green",
+    name: "American Express Business Green Rewards",
+    issuer: "American Express",
+    network: "American Express",
+    cardType: "business",
+    annualFee: 95,
+    signUpBonus: {
+      amount: 25000,
+      currency: "Membership Rewards",
+      spendRequirement: 3000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Travel", multiplier: 2, description: "Flights, hotels, trains, cruises" },
+        { category: "U.S. Restaurants", multiplier: 2, description: "Dining at U.S. restaurants" },
+        { category: "Transit", multiplier: 2, description: "Trains, taxis, rideshare, tolls" },
+        { category: "Shipping", multiplier: 2, description: "U.S. shipping purchases" }
+      ]
+    },
+    transferPartners: [
+      { name: "Delta Airlines", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "ANA", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" },
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Aeromexico", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "El Al", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "Hawaiian Airlines", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "JetBlue", ratio: "5:4", type: "airline" },
+      { name: "Qantas", ratio: "1:1", type: "airline" },
+      { name: "Qatar Airways", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
+      { name: "Hilton", ratio: "1:2", type: "hotel" },
+      { name: "Marriott", ratio: "1:1", type: "hotel" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [],
+    perks: [
+      { name: "Annual Fee Waived First Year", description: "$95 fee waived first year", type: "fee" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Purchase Protection", description: "Up to $1,000 per occurrence", type: "insurance" },
+      { name: "Extended Warranty", description: "Extra year on eligible items", type: "insurance" }
+    ],
+    color: "#006747",
+    lastUpdated: "2026-01-15"
+  },
+
+  // --- Capital One Business Cards ---
+  {
+    id: "capital-one-venture-x-business",
+    name: "Capital One Venture X Business",
+    issuer: "Capital One",
+    network: "Visa",
+    cardType: "business",
+    annualFee: 395,
+    signUpBonus: {
+      amount: 150000,
+      currency: "Venture Miles",
+      spendRequirement: 30000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 2,
+      categories: [
+        { category: "Hotels/Cars (Capital One Travel)", multiplier: 10, description: "Booked through Capital One Travel" },
+        { category: "Flights (Capital One Travel)", multiplier: 5, description: "Booked through Capital One Travel" },
+        { category: "Everything Else", multiplier: 2, description: "Unlimited 2x on all purchases" }
+      ]
+    },
+    transferPartners: [
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
+      { name: "Virgin Red", ratio: "1:1", type: "airline" },
+      { name: "Qantas", ratio: "1:1", type: "airline" },
+      { name: "Aeromexico", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "EVA Air", ratio: "2:1.5", type: "airline" },
+      { name: "Finnair", ratio: "1:1", type: "airline" },
+      { name: "Japan Airlines", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
+      { name: "Wyndham", ratio: "1:1", type: "hotel" },
+      { name: "Accor", ratio: "1:1", type: "hotel" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [
+      { name: "Annual Travel Credit", amount: 300, frequency: "annual", type: "travel", description: "Capital One Travel bookings" },
+      { name: "Anniversary Bonus", amount: 10000, frequency: "annual", type: "points", description: "10,000 bonus miles each anniversary" },
+      { name: "Global Entry/TSA PreCheck", amount: 100, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
+    ],
+    perks: [
+      { name: "Capital One Lounges", description: "Access to Capital One Lounges + 2 guests", type: "lounge" },
+      { name: "Priority Pass", description: "Unlimited visits + 2 guests", type: "lounge" },
+      { name: "Plaza Premium Lounges", description: "Unlimited access + 2 guests", type: "lounge" },
+      { name: "Hertz President's Circle", description: "Top-tier rental car status", type: "status" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" }
+    ],
+    color: "#D03027",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "capital-one-spark-miles",
+    name: "Capital One Spark Miles for Business",
+    issuer: "Capital One",
+    network: "Visa",
+    cardType: "business",
+    annualFee: 95,
+    signUpBonus: {
+      amount: 50000,
+      currency: "Venture Miles",
+      spendRequirement: 4500,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 2,
+      categories: [
+        { category: "All Purchases", multiplier: 2, description: "Unlimited 2x miles on everything" },
+        { category: "Hotels (Capital One Travel)", multiplier: 5, description: "Booked through Capital One Travel" }
+      ]
+    },
+    transferPartners: [
+      { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
+      { name: "Air France/KLM", ratio: "1:1", type: "airline" },
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Emirates", ratio: "1:1", type: "airline" },
+      { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
+      { name: "Virgin Red", ratio: "1:1", type: "airline" },
+      { name: "Qantas", ratio: "1:1", type: "airline" },
+      { name: "Aeromexico", ratio: "1:1", type: "airline" },
+      { name: "Avianca LifeMiles", ratio: "1:1", type: "airline" },
+      { name: "Cathay Pacific", ratio: "1:1", type: "airline" },
+      { name: "Etihad", ratio: "1:1", type: "airline" },
+      { name: "EVA Air", ratio: "2:1.5", type: "airline" },
+      { name: "Finnair", ratio: "1:1", type: "airline" },
+      { name: "Japan Airlines", ratio: "1:1", type: "airline" },
+      { name: "Singapore Airlines", ratio: "1:1", type: "airline" },
+      { name: "TAP Portugal", ratio: "1:1", type: "airline" },
+      { name: "Wyndham", ratio: "1:1", type: "hotel" },
+      { name: "Accor", ratio: "1:1", type: "hotel" },
+      { name: "Choice Hotels", ratio: "1:1", type: "hotel" }
+    ],
+    credits: [],
+    perks: [
+      { name: "Annual Fee Waived First Year", description: "$95 fee waived first year", type: "fee" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Free Employee Cards", description: "Unlimited employee cards at no extra cost", type: "business" },
+      { name: "Travel Accident Insurance", description: "Up to $250,000 coverage", type: "insurance" }
+    ],
+    color: "#D03027",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "capital-one-spark-cash-plus",
+    name: "Capital One Spark Cash Plus",
+    issuer: "Capital One",
+    network: "Visa",
+    cardType: "business",
+    annualFee: 150,
+    signUpBonus: {
+      amount: 1200,
+      currency: "Cash Back",
+      spendRequirement: 30000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 2,
+      categories: [
+        { category: "All Purchases", multiplier: 2, description: "Unlimited 2% cash back on everything" },
+        { category: "Hotels/Cars (Capital One Travel)", multiplier: 5, description: "5% back through Capital One Travel" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "No Preset Spending Limit", description: "Flexible spending based on credit profile", type: "business" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Free Employee Cards", description: "Unlimited employee cards at no extra cost", type: "business" },
+      { name: "Purchase Records Download", description: "Easy expense tracking and reporting", type: "business" }
+    ],
+    color: "#D03027",
+    lastUpdated: "2026-01-15"
+  },
+
+  // --- Delta Business Cards ---
+  {
+    id: "delta-skymiles-gold-business",
+    name: "Delta SkyMiles Gold Business",
+    issuer: "American Express",
+    network: "American Express",
+    cardType: "business",
+    annualFee: 150,
+    signUpBonus: {
+      amount: 50000,
+      currency: "SkyMiles",
+      spendRequirement: 3000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Delta Purchases", multiplier: 2, description: "Flights, in-flight, gift cards" },
+        { category: "Restaurants", multiplier: 2, description: "Worldwide" },
+        { category: "U.S. Shipping", multiplier: 2, description: "Shipping services" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "First Checked Bag Free", description: "On Delta flights for you + companions on same reservation", type: "travel" },
+      { name: "Priority Boarding", description: "Zone 5 priority boarding", type: "travel" },
+      { name: "20% Back on Inflight", description: "20% back on drinks, food, and WiFi", type: "travel" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" }
+    ],
+    color: "#003366",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "delta-skymiles-platinum-business",
+    name: "Delta SkyMiles Platinum Business",
+    issuer: "American Express",
+    network: "American Express",
+    cardType: "business",
+    annualFee: 350,
+    signUpBonus: {
+      amount: 90000,
+      currency: "SkyMiles",
+      spendRequirement: 4000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1.5,
+      categories: [
+        { category: "Delta Purchases", multiplier: 3, description: "Flights, in-flight, gift cards" },
+        { category: "Hotels", multiplier: 2, description: "Worldwide hotel stays" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Companion Certificate", amount: 1, frequency: "annual", type: "travel", description: "Round trip Main Cabin domestic" }
+    ],
+    perks: [
+      { name: "First Checked Bag Free", description: "On Delta flights for you + companions on same reservation", type: "travel" },
+      { name: "Priority Boarding", description: "Main Cabin 1 priority boarding", type: "travel" },
+      { name: "20% Back on Inflight", description: "20% back on drinks, food, and WiFi", type: "travel" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Status Boost", description: "Earn MQM with spending", type: "status" }
+    ],
+    color: "#003366",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "delta-skymiles-reserve-business",
+    name: "Delta SkyMiles Reserve Business",
+    issuer: "American Express",
+    network: "American Express",
+    cardType: "business",
+    annualFee: 650,
+    signUpBonus: {
+      amount: 110000,
+      currency: "SkyMiles",
+      spendRequirement: 6000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Delta Purchases", multiplier: 3, description: "Flights, in-flight, gift cards" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Companion Certificate", amount: 1, frequency: "annual", type: "travel", description: "Round trip First Class domestic" },
+      { name: "Global Entry/TSA PreCheck", amount: 100, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
+    ],
+    perks: [
+      { name: "Delta Sky Club", description: "Unlimited access when flying Delta + 2 guests", type: "lounge" },
+      { name: "Centurion Lounge Access", description: "When flying Delta same day", type: "lounge" },
+      { name: "First Checked Bag Free", description: "On Delta flights for you + companions on same reservation", type: "travel" },
+      { name: "Priority Boarding", description: "Zone 1 priority boarding", type: "travel" },
+      { name: "Status Boost", description: "Earn MQM faster with spending", type: "status" }
+    ],
+    color: "#003366",
+    lastUpdated: "2026-01-15"
+  },
+
+  // --- United Business Card ---
+  {
+    id: "united-business-card",
+    name: "United Business Card",
+    issuer: "Chase",
+    network: "Visa",
+    cardType: "business",
+    annualFee: 150,
+    signUpBonus: {
+      amount: 75000,
+      currency: "MileagePlus Miles",
+      spendRequirement: 5000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "United Purchases", multiplier: 2, description: "Flights, in-flight, United TravelBank" },
+        { category: "Dining", multiplier: 2, description: "Restaurants" },
+        { category: "Gas Stations", multiplier: 2, description: "At the pump" },
+        { category: "Office Supply Stores", multiplier: 2, description: "Business supplies" },
+        { category: "Local Transit", multiplier: 2, description: "Trains, subways, rideshare" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "First Checked Bag Free", description: "On United flights for you + companion on same reservation", type: "travel" },
+      { name: "Priority Boarding", description: "Group 2 boarding", type: "travel" },
+      { name: "2 United Club Passes", description: "One-time lounge passes per year", type: "lounge" },
+      { name: "25% Back on United", description: "Food, beverages, and WiFi", type: "travel" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" }
+    ],
+    color: "#0033A0",
+    lastUpdated: "2026-01-15"
+  },
+
+  // --- Southwest Business Cards ---
+  {
+    id: "southwest-performance-business",
+    name: "Southwest Rapid Rewards Performance Business",
+    issuer: "Chase",
+    network: "Visa",
+    cardType: "business",
+    annualFee: 199,
+    signUpBonus: {
+      amount: 80000,
+      currency: "Rapid Rewards Points",
+      spendRequirement: 5000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Southwest Purchases", multiplier: 4, description: "Flights, in-flight, gift cards" },
+        { category: "Hotels/Rentals via Rapid Rewards", multiplier: 3, description: "Booked through Southwest" },
+        { category: "Rideshare", multiplier: 2, description: "Uber, Lyft, etc." },
+        { category: "Social Media/Search Ads", multiplier: 2, description: "Advertising purchases" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Anniversary Points", amount: 9000, frequency: "annual", type: "points", description: "9,000 bonus points each year" },
+      { name: "Upgraded Boardings", amount: 4, frequency: "annual", type: "travel", description: "4 reimbursements for A1-A15 boarding" }
+    ],
+    perks: [
+      { name: "In-Flight WiFi Credits", description: "365 credits per year for WiFi", type: "travel" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Companion Pass Progress", description: "Points count toward Companion Pass", type: "status" },
+      { name: "Employee Cards", description: "Free employee cards at no extra cost", type: "business" }
+    ],
+    color: "#F9B612",
+    lastUpdated: "2026-01-15"
+  },
+  {
+    id: "southwest-premier-business",
+    name: "Southwest Rapid Rewards Premier Business",
+    issuer: "Chase",
+    network: "Visa",
+    cardType: "business",
+    annualFee: 99,
+    signUpBonus: {
+      amount: 60000,
+      currency: "Rapid Rewards Points",
+      spendRequirement: 3000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Southwest Purchases", multiplier: 3, description: "Flights, in-flight, gift cards" },
+        { category: "Hotels via Rapid Rewards", multiplier: 2, description: "Booked through Southwest" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Anniversary Points", amount: 6000, frequency: "annual", type: "points", description: "6,000 bonus points each year" }
+    ],
+    perks: [
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Companion Pass Progress", description: "Points count toward Companion Pass", type: "status" },
+      { name: "Employee Cards", description: "Free employee cards at no extra cost", type: "business" }
+    ],
+    color: "#F9B612",
+    lastUpdated: "2026-01-15"
+  },
+
+  // --- Marriott Business Card ---
+  {
+    id: "marriott-bonvoy-business",
+    name: "Marriott Bonvoy Business",
+    issuer: "American Express",
+    network: "American Express",
+    cardType: "business",
+    annualFee: 125,
+    signUpBonus: {
+      amount: 90000,
+      currency: "Marriott Points",
+      spendRequirement: 4000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 2,
+      categories: [
+        { category: "Marriott Hotels", multiplier: 6, description: "At Marriott portfolio properties" },
+        { category: "U.S. Restaurants", multiplier: 4, description: "Dining at U.S. restaurants" },
+        { category: "U.S. Gas Stations", multiplier: 4, description: "At the pump" },
+        { category: "Wireless/Phone", multiplier: 4, description: "Wireless telephone services from U.S. providers" },
+        { category: "U.S. Shipping", multiplier: 4, description: "Shipping purchases" }
+      ]
+    },
+    transferPartners: [
+      { name: "United Airlines", ratio: "3:1", type: "airline" },
+      { name: "Delta Airlines", ratio: "3:1", type: "airline" },
+      { name: "American Airlines", ratio: "3:1", type: "airline" }
+    ],
+    credits: [
+      { name: "Free Night Award", amount: 1, frequency: "annual", type: "hotel", description: "Up to 35,000 points value" }
+    ],
+    perks: [
+      { name: "Silver Elite Status", description: "Automatic Marriott Bonvoy Silver Elite", type: "status" },
+      { name: "15 Elite Night Credits", description: "Toward next status tier annually", type: "status" },
+      { name: "Gold Status Path", description: "Earn Gold after $35,000 annual spend", type: "status" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" }
+    ],
+    color: "#8B0029",
+    lastUpdated: "2026-01-15"
+  },
+
+  // --- Hilton Business Card ---
+  {
+    id: "hilton-honors-business",
+    name: "Hilton Honors Business",
+    issuer: "American Express",
+    network: "American Express",
+    cardType: "business",
+    annualFee: 195,
+    signUpBonus: {
+      amount: 155000,
+      currency: "Hilton Points",
+      spendRequirement: 3000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 3,
+      categories: [
+        { category: "Hilton Hotels", multiplier: 12, description: "At Hilton portfolio properties" },
+        { category: "U.S. Gas Stations", multiplier: 6, description: "At the pump" },
+        { category: "U.S. Restaurants", multiplier: 6, description: "Dining at U.S. restaurants" },
+        { category: "U.S. Shipping", multiplier: 6, description: "Shipping purchases" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Free Weekend Night", amount: 1, frequency: "annual", type: "hotel", description: "After $15,000 spend in calendar year" }
+    ],
+    perks: [
+      { name: "Gold Status", description: "Automatic Hilton Honors Gold status", type: "status" },
+      { name: "Diamond Status Path", description: "Earn Diamond after $40,000 annual spend", type: "status" },
+      { name: "Priority Pass Select", description: "10 lounge visits per year", type: "lounge" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" }
+    ],
+    color: "#104C97",
+    lastUpdated: "2026-01-15"
+  },
+
+  // --- Bank of America Business Card ---
+  {
+    id: "bofa-business-advantage-unlimited",
+    name: "Bank of America Business Advantage Unlimited Cash Rewards",
+    issuer: "Bank of America",
+    network: "Visa",
+    cardType: "business",
+    annualFee: 0,
+    signUpBonus: {
+      amount: 300,
+      currency: "Cash Back",
+      spendRequirement: 3000,
+      timeframe: "60 days"
+    },
+    earning: {
+      base: 1.5,
+      categories: [
+        { category: "All Purchases", multiplier: 1.5, description: "Unlimited 1.5% cash back (up to 2.62% with Preferred Rewards)" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "No Annual Fee", description: "No annual fee ever", type: "fee" },
+      { name: "0% Intro APR", description: "0% for 9 billing cycles on purchases", type: "apr" },
+      { name: "Preferred Rewards Bonus", description: "Earn up to 75% more with Preferred Rewards", type: "redemption" },
+      { name: "Employee Cards", description: "Free employee cards at no extra cost", type: "business" },
+      { name: "Cash Flow Management", description: "Tools to manage business cash flow", type: "business" }
+    ],
+    color: "#012169",
     lastUpdated: "2026-01-15"
   }
 ];
