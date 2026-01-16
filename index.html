@@ -291,9 +291,19 @@
       <ul class="nav-links">
         <li><a href="index.html" class="active">My Cards</a></li>
         <li><a href="pages/cards.html">All Cards</a></li>
+        <li><a href="pages/compare.html">Compare</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub-Navigation -->
+  <nav class="sub-navbar">
+    <div class="sub-navbar-content">
+      <ul class="sub-nav-links">
+        <li><a href="index.html" class="active">Dashboard</a></li>
         <li><a href="pages/tracker.html">Benefits</a></li>
         <li><a href="pages/categories.html">Categories</a></li>
-        <li><a href="pages/compare.html">Compare</a></li>
+        <li><a href="pages/partners.html">Transfer Partners</a></li>
       </ul>
     </div>
   </nav>
@@ -352,13 +362,15 @@
         <!-- All available cards will be listed here -->
       </div>
     </section>
+
+    <!-- Save/Restore Section -->
+    <section style="margin-top: 2rem;">
+      <div id="save-restore-ui"></div>
+    </section>
   </div>
 
-  <!-- Save/Restore UI -->
-  <div id="save-restore-ui" style="position: fixed; bottom: 1rem; right: 1rem; z-index: 100;"></div>
-
   <script src="data/cards.js"></script>
-  <script src="js/save-restore.js"></script>
+  <script src="js/save-code.js"></script>
   <script>
     // State
     let selectedCards = [];

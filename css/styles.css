@@ -78,6 +78,49 @@ body {
   background: var(--bg-card);
 }
 
+/* Sub-Navigation (for My Cards sub-pages) */
+.sub-navbar {
+  background: var(--bg-primary);
+  padding: 0.75rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 60px;
+  z-index: 99;
+}
+
+.sub-navbar-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.sub-nav-links {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.sub-nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.sub-nav-links a:hover {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+}
+
+.sub-nav-links a.active {
+  color: var(--accent-blue);
+  background: rgba(59, 130, 246, 0.1);
+  border-color: var(--accent-blue);
+}
+
 /* Main Container */
 .container {
   max-width: 1400px;
@@ -599,6 +642,23 @@ body {
   .nav-links {
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  .sub-navbar {
+    padding: 0.5rem 1rem;
+    top: auto;
+    position: relative;
+  }
+
+  .sub-nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .sub-nav-links a {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
   }
 
   .hero h1 {

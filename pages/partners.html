@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transfer Partners - CardMax</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .partner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .partner-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .partner-card:hover {
+      border-color: var(--border-color);
+      background: var(--bg-card);
+    }
+
+    .partner-card.selected {
+      border-color: var(--accent-blue);
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .partner-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .partner-icon {
+      font-size: 1.5rem;
+    }
+
+    .partner-name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .partner-type {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .partner-cards-count {
+      font-size: 0.875rem;
+      color: var(--accent-blue);
+      margin-top: 0.5rem;
+    }
+
+    /* Partner Detail Section */
+    .partner-detail {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .partner-detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .partner-detail-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .close-detail-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .close-detail-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .cards-that-transfer {
+      list-style: none;
+    }
+
+    .transfer-card-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--bg-card);
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .transfer-card-item .card-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .transfer-card-item .card-info {
+      flex: 1;
+    }
+
+    .transfer-card-item .card-name {
+      font-weight: 500;
+    }
+
+    .transfer-card-item .card-issuer {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .transfer-card-item .transfer-ratio {
+      font-weight: 600;
+      color: var(--accent-green);
+      background: rgba(34, 197, 94, 0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+    }
+
+    .filter-section {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .no-cards-message {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary);
+    }
+
+    .page-intro {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .page-intro p {
+      color: var(--text-secondary);
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="../index.html" class="logo">💳 CardMax</a>
+      <ul class="nav-links">
+        <li><a href="../index.html" class="active">My Cards</a></li>
+        <li><a href="cards.html">All Cards</a></li>
+        <li><a href="compare.html">Compare</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub-Navigation -->
+  <nav class="sub-navbar">
+    <div class="sub-navbar-content">
+      <ul class="sub-nav-links">
+        <li><a href="../index.html">Dashboard</a></li>
+        <li><a href="tracker.html">Benefits</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="partners.html" class="active">Transfer Partners</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero" style="padding: 2rem;">
+      <h1 style="font-size: 2rem;">🔄 Transfer Partners</h1>
+      <p>See which of your cards transfer to each airline and hotel program.</p>
+    </section>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <button class="filter-btn active" data-filter="all" onclick="filterPartners('all')">All Partners</button>
+      <button class="filter-btn" data-filter="airline" onclick="filterPartners('airline')">✈️ Airlines</button>
+      <button class="filter-btn" data-filter="hotel" onclick="filterPartners('hotel')">🏨 Hotels</button>
+    </div>
+
+    <!-- Page Intro -->
+    <div class="page-intro" id="page-intro">
+      <p>Click on a transfer partner below to see which of your cards transfer to that program.</p>
+    </div>
+
+    <!-- Partner Detail (shown when a partner is selected) -->
+    <div class="partner-detail" id="partner-detail" style="display: none;">
+      <div class="partner-detail-header">
+        <div class="partner-detail-title" id="partner-detail-title">Partner Name</div>
+        <button class="close-detail-btn" onclick="closePartnerDetail()">×</button>
+      </div>
+      <ul class="cards-that-transfer" id="cards-that-transfer">
+        <!-- Cards will be inserted here -->
+      </ul>
+    </div>
+
+    <!-- Partner Grid -->
+    <div class="partner-grid" id="partner-grid">
+      <!-- Partners will be inserted here -->
+    </div>
+
+    <!-- No Cards Message -->
+    <div class="no-cards-message" id="no-cards-message" style="display: none;">
+      <h3>No cards in your collection</h3>
+      <p>Add some cards to see their transfer partners.</p>
+      <a href="../index.html" class="btn btn-primary" style="margin-top: 1rem;">➕ Add Cards</a>
+    </div>
+  </div>
+
+  <script src="../data/cards.js"></script>
+  <script>
+    // Get user's cards
+    const userCardIds = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
+    const userCards = userCardIds.map(id => CARDS_DATABASE.find(c => c.id === id)).filter(Boolean);
+
+    // Build partner list from user's cards
+    function buildPartnerList() {
+      const partners = {};
+
+      userCards.forEach(card => {
+        if (!card.transferPartners) return;
+
+        card.transferPartners.forEach(partner => {
+          const key = partner.name;
+          if (!partners[key]) {
+            partners[key] = {
+              name: partner.name,
+              type: partner.type,
+              cards: []
+            };
+          }
+          partners[key].cards.push({
+            card: card,
+            ratio: partner.ratio
+          });
+        });
+      });
+
+      return partners;
+    }
+
+    // Get icon for partner type
+    function getPartnerIcon(type) {
+      return type === 'airline' ? '✈️' : '🏨';
+    }
+
+    // Get short issuer name
+    function getShortIssuer(issuer) {
+      const shortNames = {
+        'Chase': 'Chase',
+        'American Express': 'Amex',
+        'Capital One': 'C1',
+        'Citi': 'Citi',
+        'Bank of America': 'BoA',
+        'Wells Fargo': 'WF',
+        'US Bank': 'USB',
+        'Discover': 'Disc',
+        'Cardless': 'Bilt'
+      };
+      return shortNames[issuer] || issuer;
+    }
+
+    // Get short card name
+    function getShortCardName(name) {
+      return name
+        .replace(/^Chase /, '')
+        .replace(/^American Express /, '')
+        .replace(/^Capital One /, '')
+        .replace(/^Citi /, '')
+        .replace(/^Bank of America /, '')
+        .replace(/^Wells Fargo /, '')
+        .replace(/^US Bank /, '')
+        .replace(/^Discover /, '')
+        .replace(/^Bilt /, '');
+    }
+
+    let selectedPartner = null;
+    let currentFilter = 'all';
+
+    // Render partner grid
+    function renderPartners() {
+      const container = document.getElementById('partner-grid');
+      const noCardsMsg = document.getElementById('no-cards-message');
+      const pageIntro = document.getElementById('page-intro');
+
+      if (userCards.length === 0) {
+        container.style.display = 'none';
+        pageIntro.style.display = 'none';
+        noCardsMsg.style.display = 'block';
+        return;
+      }
+
+      const partners = buildPartnerList();
+      const partnerList = Object.values(partners);
+
+      // Sort by number of cards, then alphabetically
+      partnerList.sort((a, b) => {
+        if (b.cards.length !== a.cards.length) {
+          return b.cards.length - a.cards.length;
+        }
+        return a.name.localeCompare(b.name);
+      });
+
+      // Filter by type
+      const filteredPartners = currentFilter === 'all'
+        ? partnerList
+        : partnerList.filter(p => p.type === currentFilter);
+
+      if (filteredPartners.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-secondary);">
+            No ${currentFilter === 'airline' ? 'airline' : 'hotel'} partners found in your cards.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filteredPartners.map(partner => `
+        <div class="partner-card ${selectedPartner === partner.name ? 'selected' : ''}"
+             data-type="${partner.type}"
+             onclick="selectPartner('${partner.name.replace(/'/g, "\\'")}')">
+          <div class="partner-header">
+            <span class="partner-icon">${getPartnerIcon(partner.type)}</span>
+            <div>
+              <div class="partner-name">${partner.name}</div>
+              <div class="partner-type">${partner.type}</div>
+            </div>
+          </div>
+          <div class="partner-cards-count">${partner.cards.length} card${partner.cards.length > 1 ? 's' : ''} transfer here</div>
+        </div>
+      `).join('');
+    }
+
+    // Select a partner and show details
+    function selectPartner(partnerName) {
+      const partners = buildPartnerList();
+      const partner = partners[partnerName];
+
+      if (!partner) return;
+
+      selectedPartner = partnerName;
+      renderPartners();
+
+      const detailSection = document.getElementById('partner-detail');
+      const titleEl = document.getElementById('partner-detail-title');
+      const cardsEl = document.getElementById('cards-that-transfer');
+
+      titleEl.innerHTML = `${getPartnerIcon(partner.type)} ${partner.name}`;
+
+      cardsEl.innerHTML = partner.cards.map(item => `
+        <li class="transfer-card-item">
+          <div class="card-dot" style="background: ${item.card.color}"></div>
+          <div class="card-info">
+            <div class="card-name">${getShortIssuer(item.card.issuer)} ${getShortCardName(item.card.name)}</div>
+            <div class="card-issuer">${item.card.issuer}</div>
+          </div>
+          <div class="transfer-ratio">${item.ratio}</div>
+        </li>
+      `).join('');
+
+      detailSection.style.display = 'block';
+      detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Close partner detail
+    function closePartnerDetail() {
+      selectedPartner = null;
+      document.getElementById('partner-detail').style.display = 'none';
+      renderPartners();
+    }
+
+    // Filter partners by type
+    function filterPartners(type) {
+      currentFilter = type;
+
+      // Update button states
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === type);
+      });
+
+      renderPartners();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', renderPartners);
+  </script>
+</body>
+</html>

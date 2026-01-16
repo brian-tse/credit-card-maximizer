@@ -1207,7 +1207,7 @@ const CARDS_DATABASE = [
       timeframe: "3 months"
     },
     earning: {
-      base: 1,
+      base: 2,
       categories: [
         { category: "Rent/Mortgage", multiplier: 1, description: "No fee with Bilt Cash, or 3% fee for max points" },
         { category: "Dining", multiplier: 3, description: "Restaurants worldwide" },
@@ -1228,7 +1228,7 @@ const CARDS_DATABASE = [
     perks: [
       { name: "10% Intro APR", description: "10% APR for first 12 months on purchases", type: "apr" },
       { name: "Bilt Gold Status", description: "Automatic Bilt Gold status", type: "status" },
-      { name: "Bilt Cash Earning", description: "4% Bilt Cash on everyday spending", type: "rewards" },
+      { name: "2x Everyday Points", description: "2 Bilt points per dollar on all purchases except rent", type: "rewards" },
       { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
       { name: "Rent Rewards", description: "Earn points on rent with no added fee using Bilt Cash", type: "rewards" },
       { name: "Premium Lyft Credits", description: "Enhanced credits for Lyft rides", type: "rideshare" },
