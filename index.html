@@ -346,6 +346,9 @@
         <span class="save-status" id="save-status">Changes not saved</span>
         <button class="btn btn-primary" id="save-btn" onclick="saveMyCards()">💾 Save My Cards</button>
       </div>
+
+      <!-- Save/Restore Data (moved here from bottom) -->
+      <div id="save-restore-ui" style="margin-top: 1.5rem;"></div>
     </section>
 
     <!-- Add Cards Section -->
@@ -363,10 +366,6 @@
       </div>
     </section>
 
-    <!-- Save/Restore Section -->
-    <section style="margin-top: 2rem;">
-      <div id="save-restore-ui"></div>
-    </section>
   </div>
 
   <script src="data/cards.js"></script>
@@ -412,11 +411,24 @@
       hasUnsavedChanges = false;
       updateSaveStatus();
 
-      // Show toast
-      if (typeof CardMaxSave !== 'undefined') {
-        CardMaxSave.showToast('Cards saved successfully!');
+      // Generate and copy backup code automatically
+      if (typeof CardMaxSave !== 'undefined' && selectedCards.length > 0) {
+        const code = CardMaxSave.generateBackupCode();
+        navigator.clipboard.writeText(code).then(() => {
+          CardMaxSave.showToast('Saved! Backup code copied to clipboard.');
+          // Reload after short delay so user sees the toast
+          setTimeout(() => window.location.reload(), 1500);
+        }).catch(() => {
+          // Fallback if clipboard fails
+          CardMaxSave.showToast('Cards saved! Reloading...');
+          setTimeout(() => window.location.reload(), 1000);
+        });
       } else {
-        alert('Cards saved!');
+        // No cards to backup, just reload
+        if (typeof CardMaxSave !== 'undefined') {
+          CardMaxSave.showToast('Cards saved! Reloading...');
+        }
+        setTimeout(() => window.location.reload(), 1000);
       }
     }
 
@@ -584,7 +596,7 @@
               <div class="card-subtitle">$${card.annualFee}/year</div>
             </div>
             <div class="date-picker-group">
-              <label>Sign-up:</label>
+              <label>Sign-Up Date (Optional):</label>
               <div class="month-year-picker">
                 <select onchange="updateSignupDate('${cardId}', 'month', this.value)">
                   ${months.map((m, i) => `<option value="${i}" ${signupDate.month === i ? 'selected' : ''}>${m || 'Month'}</option>`).join('')}
