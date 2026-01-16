@@ -2333,6 +2333,48 @@ const CARDS_DATABASE = [
     ],
     color: "#012169",
     lastUpdated: "2026-01-15"
+  },
+
+  // --- Bank of America Atmos Rewards Ascent ---
+  {
+    id: "boa-atmos-ascent",
+    name: "Atmos Rewards Ascent",
+    issuer: "Bank of America",
+    network: "Visa",
+    cardType: "personal",
+    annualFee: 95,
+    signUpBonus: {
+      amount: 80000,
+      currency: "Atmos Rewards Points",
+      spendRequirement: 4000,
+      timeframe: "120 days",
+      additionalInfo: "Plus $99 Companion Fare"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Alaska Airlines", multiplier: 3, description: "Alaska Airlines purchases" },
+        { category: "Hawaiian Airlines", multiplier: 3, description: "Hawaiian Airlines purchases" },
+        { category: "Gas Stations", multiplier: 2, description: "At the pump" },
+        { category: "EV Charging", multiplier: 2, description: "Electric vehicle charging stations" },
+        { category: "Transit & Rideshare", multiplier: 2, description: "Local transit, Uber, Lyft" },
+        { category: "Cable & Streaming", multiplier: 2, description: "Cable and select streaming services" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Alaska Lounge+ Discount", amount: 100, frequency: "annual", type: "travel", description: "$100 off Alaska Lounge+ membership ($795/year)" },
+      { name: "Inflight Purchase Credit", amount: "20%", frequency: "per transaction", type: "travel", description: "20% back on Alaska/Hawaiian inflight purchases" }
+    ],
+    perks: [
+      { name: "Free Checked Bag", description: "1 free bag for you + up to 6 companions on same reservation", type: "travel" },
+      { name: "Preferred Boarding", description: "Priority boarding on Alaska and Hawaiian flights", type: "travel" },
+      { name: "$99 Companion Fare", description: "Annual benefit after $6k spend; $99 + taxes (~$122 total)", type: "travel" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Status Points", description: "Earn 1 status point per $3 spent (no cap starting 2026)", type: "status" }
+    ],
+    color: "#E31837",
+    lastUpdated: "2026-01-16"
   }
 ];
 
