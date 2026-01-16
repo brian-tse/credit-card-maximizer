@@ -2375,6 +2375,44 @@ const CARDS_DATABASE = [
     ],
     color: "#E31837",
     lastUpdated: "2026-01-16"
+  },
+
+  // --- Amex Blue Cash Preferred ---
+  {
+    id: "amex-blue-cash-preferred",
+    name: "Blue Cash Preferred",
+    issuer: "American Express",
+    network: "American Express",
+    cardType: "personal",
+    annualFee: 95,
+    signUpBonus: {
+      amount: 250,
+      currency: "Statement Credit",
+      spendRequirement: 3000,
+      timeframe: "6 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "U.S. Supermarkets", multiplier: 6, description: "Up to $6,000/year, then 1%" },
+        { category: "Streaming Services", multiplier: 6, description: "Netflix, Hulu, Spotify, Disney+, etc." },
+        { category: "Gas Stations", multiplier: 3, description: "U.S. gas stations" },
+        { category: "Transit", multiplier: 3, description: "Trains, taxis, rideshare, tolls, parking" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Disney Bundle Credit", amount: 120, frequency: "annual", type: "subscription", description: "$10/month back on Disney+, Hulu, ESPN+", monthlyAmount: 10 }
+    ],
+    perks: [
+      { name: "0% Intro APR", description: "0% for 12 months on purchases and balance transfers", type: "apr" },
+      { name: "Purchase Protection", description: "Coverage for eligible purchases against damage/theft", type: "protection" },
+      { name: "Extended Warranty", description: "Extends manufacturer warranty up to 1 year", type: "protection" },
+      { name: "Return Protection", description: "Refund for eligible items merchant won't take back", type: "protection" },
+      { name: "Car Rental Loss & Damage", description: "Secondary coverage when renting a car", type: "insurance" }
+    ],
+    color: "#006FCF",
+    lastUpdated: "2026-01-16"
   }
 ];
 
