@@ -964,6 +964,53 @@ const CARDS_DATABASE = [
     lastUpdated: "2026-01-15"
   },
   {
+    id: "united-quest",
+    name: "United Quest Card",
+    issuer: "Chase",
+    network: "Visa",
+    cardType: "personal",
+    annualFee: 350,
+    signUpBonus: {
+      amount: 70000,
+      currency: "MileagePlus Miles",
+      spendRequirement: 4000,
+      timeframe: "3 months",
+      additionalInfo: "Plus 1,000 Premier Qualifying Points"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "United Flights", multiplier: 8, description: "Flights booked directly with United" },
+        { category: "Renowned Hotels", multiplier: 5, description: "Via MileagePlus portal" },
+        { category: "United Purchases", multiplier: 3, description: "In-flight, United TravelBank, etc." },
+        { category: "Dining", multiplier: 2, description: "Restaurants worldwide" },
+        { category: "Streaming", multiplier: 2, description: "Select streaming services" },
+        { category: "Travel", multiplier: 2, description: "Hotels, car rentals, other travel" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "United TravelBank Credit", amount: 200, frequency: "annual", type: "travel", description: "Use on any United purchase" },
+      { name: "Instacart+ Credit", amount: 180, frequency: "annual", type: "grocery", description: "$15/month for groceries", monthlyAmount: 15 },
+      { name: "JSX Credit", amount: 150, frequency: "annual", type: "travel", description: "Semi-private air travel" },
+      { name: "Renowned Hotels Credit", amount: 150, frequency: "annual", type: "travel", description: "On qualifying bookings" },
+      { name: "Rideshare Credit", amount: 100, frequency: "annual", type: "rideshare", description: "Uber, Lyft, etc." },
+      { name: "Car Rental Credit", amount: 80, frequency: "annual", type: "travel", description: "On car rentals" },
+      { name: "Global Entry/TSA PreCheck", amount: 120, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
+    ],
+    perks: [
+      { name: "First Checked Bag Free", description: "For you on United flights", type: "travel" },
+      { name: "Second Checked Bag Free", description: "For you on United flights", type: "travel" },
+      { name: "Priority Boarding", description: "Group 2 boarding on United", type: "travel" },
+      { name: "Primary Rental Car Insurance", description: "Up to $60,000 coverage", type: "insurance" },
+      { name: "Trip Delay Insurance", description: "$500 per ticket after 12hr delay", type: "insurance" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "25% Back on United", description: "Food, beverages, Wi-Fi purchases", type: "travel" }
+    ],
+    color: "#0033A0",
+    lastUpdated: "2026-01-16"
+  },
+  {
     id: "southwest-priority",
     name: "Southwest Rapid Rewards Priority",
     issuer: "Chase",
