@@ -650,16 +650,19 @@ function renderByCardView() {
       return sum + (b.amount || 0);
     }, 0);
 
+    // Generate card visual if available
+    const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : `<span style="width: 16px; height: 16px; border-radius: 50%; background: ${card.color};"></span>`;
+
     html += `
       <div class="tracker-card" style="margin-bottom: 1.5rem;">
         <div class="tracker-header">
-          <div>
-            <div class="tracker-title" style="display: flex; align-items: center; gap: 0.5rem;">
-              <span style="width: 16px; height: 16px; border-radius: 50%; background: ${card.color};"></span>
-              ${card.name}
-            </div>
-            <div class="text-muted" style="font-size: 0.875rem; margin-top: 0.25rem;">
-              ${completedCount} of ${allActionable.length} credits used · $${card.annualFee}/year
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            ${cardVisual}
+            <div>
+              <div class="tracker-title">${card.name}</div>
+              <div class="text-muted" style="font-size: 0.875rem; margin-top: 0.25rem;">
+                ${completedCount} of ${allActionable.length} credits used · $${card.annualFee}/year
+              </div>
             </div>
           </div>
           <div class="tracker-progress">$${usedDollarValue.toLocaleString()} / $${totalDollarValue.toLocaleString()}</div>

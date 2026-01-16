@@ -34,11 +34,18 @@ function renderCards(filter = 'all') {
     filteredCards = CARDS_DATABASE.filter(card => card.issuer === filter);
   }
 
-  container.innerHTML = filteredCards.map((card, index) => `
+  container.innerHTML = filteredCards.map((card, index) => {
+    const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : '';
+    return `
     <div class="credit-card fade-in" style="animation-delay: ${index * 0.1}s" onclick="openCardModal('${card.id}')">
       <div class="card-header" style="background: ${card.color}">
-        <div class="card-issuer">${card.issuer}${card.cardType === 'business' ? ' <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem;">BUSINESS</span>' : ''}</div>
-        <div class="card-name">${card.name}</div>
+        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;">
+          <div>
+            <div class="card-issuer">${card.issuer}${card.cardType === 'business' ? ' <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem;">BUSINESS</span>' : ''}</div>
+            <div class="card-name">${card.name}</div>
+          </div>
+          ${cardVisual}
+        </div>
       </div>
       <div class="card-body">
         <div class="card-fee">
@@ -69,7 +76,7 @@ function renderCards(filter = 'all') {
         <button class="btn btn-primary btn-full">View Full Details</button>
       </div>
     </div>
-  `).join('');
+  `}).join('');
 }
 
 // Setup filter button listeners

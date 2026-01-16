@@ -708,6 +708,116 @@ body {
   }
 }
 
+/* Credit Card Visual Component */
+.card-visual {
+  width: 85px;
+  height: 54px;
+  border-radius: 6px;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6px 8px;
+  overflow: hidden;
+}
+
+.card-visual::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.card-visual .card-logo {
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-visual .card-chip {
+  width: 16px;
+  height: 12px;
+  background: linear-gradient(135deg, #ffd700 0%, #c5a300 100%);
+  border-radius: 2px;
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.card-visual .card-network {
+  font-size: 0.45rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: right;
+  align-self: flex-end;
+  font-weight: 600;
+}
+
+/* Card issuer-specific styles */
+.card-visual.chase {
+  background: linear-gradient(135deg, #004879 0%, #003366 100%);
+}
+
+.card-visual.amex {
+  background: linear-gradient(135deg, #006FCF 0%, #004B87 100%);
+}
+
+.card-visual.capital-one {
+  background: linear-gradient(135deg, #D03027 0%, #8B0000 100%);
+}
+
+.card-visual.citi {
+  background: linear-gradient(135deg, #1B3668 0%, #0D1F3C 100%);
+}
+
+.card-visual.bilt {
+  background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+}
+
+.card-visual.discover {
+  background: linear-gradient(135deg, #FF6B00 0%, #CC5500 100%);
+}
+
+.card-visual.wells-fargo {
+  background: linear-gradient(135deg, #B71C1C 0%, #8B0000 100%);
+}
+
+.card-visual.us-bank {
+  background: linear-gradient(135deg, #0033A0 0%, #001F5C 100%);
+}
+
+.card-visual.barclays {
+  background: linear-gradient(135deg, #00AEEF 0%, #0072CE 100%);
+}
+
+.card-visual.bofa {
+  background: linear-gradient(135deg, #E31837 0%, #9B1026 100%);
+}
+
+/* Metal card effect for premium cards */
+.card-visual.metal {
+  background: linear-gradient(135deg, #3a3a3a 0%, #5a5a5a 50%, #3a3a3a 100%);
+}
+
+.card-visual.metal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+  pointer-events: none;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }

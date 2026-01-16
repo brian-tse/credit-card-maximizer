@@ -373,6 +373,7 @@
 
   <script src="data/cards.js"></script>
   <script src="js/save-code.js"></script>
+  <script src="js/card-visuals.js"></script>
   <script>
     // State
     let selectedCards = [];
@@ -484,13 +485,14 @@
       container.innerHTML = sortedCards.map(card => {
         const isSelected = selectedCards.includes(card.id);
         const shortIssuer = getShortIssuer(card.issuer);
+        const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : `<div class="card-color-bar" style="background: ${card.color}"></div>`;
         return `
           <div class="card-selector-item ${isSelected ? 'selected' : ''}"
                data-id="${card.id}"
                data-name="${card.name}"
                data-issuer="${card.issuer}"
                onclick="toggleCardSelection('${card.id}')">
-            <div class="card-color-bar" style="background: ${card.color}"></div>
+            ${cardVisual}
             <div class="card-details">
               <div class="card-name">${shortIssuer} ${getShortCardName(card.name)}</div>
               <div class="card-issuer">${card.issuer}</div>
@@ -604,10 +606,11 @@
 
         const signupDate = cardSignupDates[cardId] || {};
         const shortIssuer = getShortIssuer(card.issuer);
+        const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : `<div class="card-color-dot" style="background: ${card.color}"></div>`;
 
         return `
           <div class="my-card-item">
-            <div class="card-color-dot" style="background: ${card.color}"></div>
+            ${cardVisual}
             <div class="card-info">
               <div class="card-title">${shortIssuer} ${getShortCardName(card.name)}</div>
               <div class="card-subtitle">$${card.annualFee}/year</div>
