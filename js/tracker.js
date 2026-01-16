@@ -134,7 +134,7 @@ function renderMonthlyBenefits() {
         <ul class="benefit-checklist">
           ${cardBenefits.map(benefit => `
             <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                onclick="toggleBenefit('${benefit.benefitKey}')">
+                onclick="toggleBenefit('${benefit.benefitKey}', event)">
               <div class="benefit-checkbox"></div>
               <div class="benefit-content">
                 <div class="benefit-text">${benefit.name}</div>
@@ -217,7 +217,7 @@ function renderSemiannualBenefits() {
         <ul class="benefit-checklist">
           ${cardBenefits.map(benefit => `
             <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                onclick="toggleBenefit('${benefit.benefitKey}')">
+                onclick="toggleBenefit('${benefit.benefitKey}', event)">
               <div class="benefit-checkbox"></div>
               <div class="benefit-content">
                 <div class="benefit-text">${benefit.name}</div>
@@ -314,7 +314,7 @@ function renderAnnualBenefits() {
         <ul class="benefit-checklist">
           ${cardBenefits.map(benefit => `
             <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                onclick="toggleBenefit('${benefit.benefitKey}')">
+                onclick="toggleBenefit('${benefit.benefitKey}', event)">
               <div class="benefit-checkbox"></div>
               <div class="benefit-content">
                 <div class="benefit-text">${benefit.name}</div>
@@ -368,7 +368,7 @@ function renderOnetimeBenefits() {
         <ul class="benefit-checklist">
           ${cardBenefits.map(benefit => `
             <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                onclick="toggleBenefit('${benefit.benefitKey}')">
+                onclick="toggleBenefit('${benefit.benefitKey}', event)">
               <div class="benefit-checkbox"></div>
               <div class="benefit-content">
                 <div class="benefit-text">${benefit.name}</div>
@@ -389,10 +389,25 @@ function renderOnetimeBenefits() {
 }
 
 // Toggle benefit completion
-function toggleBenefit(benefitKey) {
-  trackedBenefits[benefitKey] = !trackedBenefits[benefitKey];
+function toggleBenefit(benefitKey, event) {
+  // Prevent event bubbling issues
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  // Explicit toggle to handle undefined vs false properly
+  if (trackedBenefits[benefitKey] === true) {
+    trackedBenefits[benefitKey] = false;
+  } else {
+    trackedBenefits[benefitKey] = true;
+  }
+
   saveUserData();
   renderBenefitTrackers();
+  if (currentView === 'card') {
+    renderByCardView();
+  }
   updateStats();
 }
 
@@ -534,7 +549,18 @@ function renderByCardView() {
   const currentMonth = new Date().getMonth();
   let html = '';
 
-  userCards.forEach(cardId => {
+  // Sort userCards by total benefits count (most benefits first)
+  const sortedUserCards = [...userCards].sort((a, b) => {
+    const cardA = CARDS_DATABASE.find(c => c.id === a);
+    const cardB = CARDS_DATABASE.find(c => c.id === b);
+    if (!cardA || !cardB) return 0;
+
+    const countA = cardA.credits.length + cardA.perks.length;
+    const countB = cardB.credits.length + cardB.perks.length;
+    return countB - countA;  // Descending order (most benefits first)
+  });
+
+  sortedUserCards.forEach(cardId => {
     const card = CARDS_DATABASE.find(c => c.id === cardId);
     if (!card) return;
 
@@ -645,7 +671,7 @@ function renderByCardView() {
             <ul class="benefit-checklist">
               ${monthlyCredits.map(benefit => `
                 <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                    onclick="toggleBenefit('${benefit.benefitKey}')">
+                    onclick="toggleBenefit('${benefit.benefitKey}', event)">
                   <div class="benefit-checkbox"></div>
                   <div class="benefit-content">
                     <div class="benefit-text">${benefit.name}</div>
@@ -664,7 +690,7 @@ function renderByCardView() {
             <ul class="benefit-checklist">
               ${semiannualCredits.map(benefit => `
                 <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                    onclick="toggleBenefit('${benefit.benefitKey}')">
+                    onclick="toggleBenefit('${benefit.benefitKey}', event)">
                   <div class="benefit-checkbox"></div>
                   <div class="benefit-content">
                     <div class="benefit-text">${benefit.name} <span style="color: var(--accent-orange); font-size: 0.8rem;">(${benefit.period})</span></div>
@@ -683,7 +709,7 @@ function renderByCardView() {
             <ul class="benefit-checklist">
               ${actionableAnnual.map(benefit => `
                 <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                    onclick="toggleBenefit('${benefit.benefitKey}')">
+                    onclick="toggleBenefit('${benefit.benefitKey}', event)">
                   <div class="benefit-checkbox"></div>
                   <div class="benefit-content">
                     <div class="benefit-text">${benefit.name}</div>
@@ -702,7 +728,7 @@ function renderByCardView() {
             <ul class="benefit-checklist">
               ${multiYearCredits.map(benefit => `
                 <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                    onclick="toggleBenefit('${benefit.benefitKey}')"
+                    onclick="toggleBenefit('${benefit.benefitKey}', event)"
                     title="Statement credit ${benefit.frequency}">
                   <div class="benefit-checkbox"></div>
                   <div class="benefit-content">

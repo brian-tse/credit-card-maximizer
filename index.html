@@ -543,10 +543,15 @@
         selectedCards.push(cardId);
       }
 
-      markUnsaved();
+      // AUTO-SAVE immediately to localStorage
+      localStorage.setItem('cardmax_user_cards', JSON.stringify(selectedCards));
+      localStorage.setItem('cardmax_signup_dates', JSON.stringify(cardSignupDates));
+      hasUnsavedChanges = false;
+
       renderCardSelector();
       renderMyCards();
       updateQuickStats();
+      updateSaveStatus();
     }
 
     // Remove card from my cards
@@ -557,10 +562,15 @@
         delete cardSignupDates[cardId];
       }
 
-      markUnsaved();
+      // AUTO-SAVE immediately to localStorage
+      localStorage.setItem('cardmax_user_cards', JSON.stringify(selectedCards));
+      localStorage.setItem('cardmax_signup_dates', JSON.stringify(cardSignupDates));
+      hasUnsavedChanges = false;
+
       renderCardSelector();
       renderMyCards();
       updateQuickStats();
+      updateSaveStatus();
     }
 
     // Render my cards list
@@ -629,7 +639,12 @@
       }
 
       cardSignupDates[cardId][field] = parseInt(value) || null;
-      markUnsaved();
+
+      // AUTO-SAVE immediately to localStorage
+      localStorage.setItem('cardmax_user_cards', JSON.stringify(selectedCards));
+      localStorage.setItem('cardmax_signup_dates', JSON.stringify(cardSignupDates));
+      hasUnsavedChanges = false;
+      updateSaveStatus();
     }
 
     // Update quick stats

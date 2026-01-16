@@ -7,20 +7,20 @@ const CARDS_DATABASE = [
     name: "Chase Sapphire Reserve",
     issuer: "Chase",
     network: "Visa",
-    annualFee: 550,
+    annualFee: 795,
     signUpBonus: {
-      amount: 60000,
+      amount: 125000,
       currency: "Ultimate Rewards",
-      spendRequirement: 4000,
+      spendRequirement: 6000,
       timeframe: "3 months"
     },
     earning: {
       base: 1,
       categories: [
-        { category: "Travel", multiplier: 3, description: "After earning $300 travel credit" },
-        { category: "Dining", multiplier: 3, description: "Including takeout and delivery" },
-        { category: "Online Grocery", multiplier: 3, description: "Excludes Target, Walmart" },
-        { category: "Streaming", multiplier: 10, description: "Select services via Pay Yourself Back" }
+        { category: "Chase Travel", multiplier: 8, description: "Including The Edit hotels" },
+        { category: "Flights & Hotels (direct)", multiplier: 4, description: "Booked directly with airline or hotel" },
+        { category: "Dining", multiplier: 3, description: "Worldwide, including takeout and delivery" },
+        { category: "Lyft", multiplier: 5, description: "Through Sept 2027" }
       ]
     },
     transferPartners: [
@@ -40,17 +40,32 @@ const CARDS_DATABASE = [
       { name: "Marriott", ratio: "1:1", type: "hotel" }
     ],
     credits: [
-      { name: "Annual Travel Credit", amount: 300, frequency: "annual", type: "travel", description: "Automatically applied to travel purchases" },
-      { name: "Global Entry/TSA PreCheck", amount: 100, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" },
-      { name: "DoorDash DashPass", amount: 0, frequency: "annual", type: "subscription", description: "Complimentary DashPass membership" },
-      { name: "Lyft Pink", amount: 0, frequency: "annual", type: "subscription", description: "Complimentary Lyft Pink membership" }
+      { name: "Annual Travel Credit", amount: 300, frequency: "annual", type: "travel", description: "Automatic on travel purchases" },
+      { name: "Dining Credit (Exclusive Tables)", amount: 300, frequency: "semiannual", type: "dining", description: "$150 Jan-Jun, $150 Jul-Dec at select restaurants", semiannualAmount: 150 },
+      { name: "The Edit Hotel Credit", amount: 500, frequency: "annual", type: "travel", description: "Luxury boutique hotels, max $250/booking" },
+      { name: "Select Hotels Credit (2026)", amount: 250, frequency: "annual", type: "travel", description: "IHG, Montage, Pendry, Omni, Virgin Hotels via Chase Travel" },
+      { name: "StubHub/viagogo Credit", amount: 300, frequency: "semiannual", type: "entertainment", description: "$150 Jan-Jun, $150 Jul-Dec through Dec 2027", semiannualAmount: 150 },
+      { name: "Lyft Credit", amount: 120, frequency: "annual", type: "rideshare", description: "$10/month through Sept 2027", monthlyAmount: 10 },
+      { name: "DoorDash Credits", amount: 300, frequency: "annual", type: "dining", description: "$25/month in credits + DashPass membership", monthlyAmount: 25 },
+      { name: "Global Entry/TSA PreCheck", amount: 120, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
     ],
     perks: [
-      { name: "Priority Pass Select", description: "Unlimited lounge visits + 2 guests", type: "lounge" },
+      { name: "Chase Sapphire Lounges", description: "Access to all Chase Sapphire Lounges + 2 guests", type: "lounge" },
+      { name: "Priority Pass Select", description: "1,300+ lounges worldwide + 2 guests", type: "lounge" },
+      { name: "Air Canada Lounge Access", description: "Maple Leaf Lounges in US, Canada, Europe", type: "lounge" },
+      { name: "IHG Platinum Elite Status", description: "Through Dec 2027 + Hertz Gold Plus Five Star", type: "status" },
+      { name: "Reserve Travel Designer", description: "Complimentary travel planning (up to $300 value)", type: "travel" },
+      { name: "Apple TV+ & Apple Music", description: "Complimentary through June 2027", type: "subscription" },
       { name: "Trip Delay Insurance", description: "$500 per ticket after 6hr delay", type: "insurance" },
-      { name: "Trip Cancellation Insurance", description: "Up to $10,000 per person", type: "insurance" },
-      { name: "Primary Car Rental Insurance", description: "Primary CDW coverage worldwide", type: "insurance" },
-      { name: "1.5x Point Value", description: "Points worth 1.5¢ in Chase Travel Portal", type: "redemption" }
+      { name: "Trip Cancellation Insurance", description: "Up to $10,000 per person, $20,000 per trip", type: "insurance" },
+      { name: "Primary Car Rental Insurance", description: "Primary CDW up to $75,000", type: "insurance" },
+      { name: "Baggage Delay Insurance", description: "$100/day for 5 days after 6hr delay", type: "insurance" },
+      { name: "Lost Luggage Reimbursement", description: "Up to $3,000 per passenger", type: "insurance" },
+      { name: "Emergency Evacuation", description: "Up to $100,000 coverage", type: "insurance" },
+      { name: "Extended Warranty", description: "Extends manufacturer warranty by 1 year", type: "protection" },
+      { name: "Purchase Protection", description: "Covers theft and accidental damage", type: "protection" },
+      { name: "1.5x Point Value", description: "Points worth 1.5¢ in Chase Travel Portal", type: "redemption" },
+      { name: "Visa Infinite Concierge", description: "24/7 personal assistance", type: "service" }
     ],
     color: "#004879",
     lastUpdated: "2026-01-15"
