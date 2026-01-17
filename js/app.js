@@ -259,12 +259,15 @@ function renderModalContent(tabName) {
       break;
 
     case 'credits':
-      const totalCredits = card.credits.reduce((sum, c) => sum + (typeof c.amount === 'number' ? c.amount : 0), 0);
+      const dollarCredits = card.credits.filter(c => c.type !== 'points');
+      const pointsCredits = card.credits.filter(c => c.type === 'points');
+      const totalDollarCredits = dollarCredits.reduce((sum, c) => sum + (typeof c.amount === 'number' ? c.amount : 0), 0);
+      const totalPointsCredits = pointsCredits.reduce((sum, c) => sum + (typeof c.amount === 'number' ? c.amount : 0), 0);
       content = `
         <div style="margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-card); border-radius: 8px;">
           <div class="text-muted" style="font-size: 0.875rem;">Total Annual Credit Value</div>
-          <div style="font-size: 2rem; font-weight: 700; color: var(--accent-green);">$${totalCredits}</div>
-          <div class="text-muted" style="font-size: 0.875rem;">Net after $${card.annualFee} fee: <strong style="color: ${totalCredits - card.annualFee >= 0 ? 'var(--accent-green)' : 'var(--accent-orange)'}">${totalCredits - card.annualFee >= 0 ? '+' : ''}$${totalCredits - card.annualFee}</strong></div>
+          <div style="font-size: 2rem; font-weight: 700; color: var(--accent-green);">$${totalDollarCredits}${totalPointsCredits > 0 ? ` <span style="font-size: 1rem; color: var(--accent-purple);">+ ${totalPointsCredits.toLocaleString()} pts</span>` : ''}</div>
+          <div class="text-muted" style="font-size: 0.875rem;">Net after $${card.annualFee} fee: <strong style="color: ${totalDollarCredits - card.annualFee >= 0 ? 'var(--accent-green)' : 'var(--accent-orange)'}">${totalDollarCredits - card.annualFee >= 0 ? '+' : ''}$${totalDollarCredits - card.annualFee}</strong></div>
         </div>
         <div>
           ${card.credits.map(credit => `
@@ -276,7 +279,7 @@ function renderModalContent(tabName) {
                   ${credit.frequency}${credit.monthlyAmount ? ` ($${credit.monthlyAmount}/month)` : ''}
                 </div>
               </div>
-              <div class="benefit-value">${typeof credit.amount === 'number' ? '$' + credit.amount : credit.amount}</div>
+              <div class="benefit-value">${credit.type === 'points' ? credit.amount.toLocaleString() + ' pts' : (typeof credit.amount === 'number' ? '$' + credit.amount : credit.amount)}</div>
             </div>
           `).join('')}
         </div>

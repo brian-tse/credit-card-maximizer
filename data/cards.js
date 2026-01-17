@@ -181,7 +181,7 @@ const CARDS_DATABASE = [
     ],
     credits: [
       { name: "Annual Travel Credit", amount: 300, frequency: "annual", type: "travel", description: "Capital One Travel bookings" },
-      { name: "Anniversary Bonus", amount: 10000, frequency: "annual", type: "points", description: "10,000 bonus miles each anniversary" },
+      { name: "Anniversary Bonus", amount: 10000, frequency: "annual", type: "points", description: "10,000 bonus points each anniversary" },
       { name: "Global Entry/TSA PreCheck", amount: 100, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
     ],
     perks: [
@@ -1918,7 +1918,7 @@ const CARDS_DATABASE = [
     ],
     credits: [
       { name: "Annual Travel Credit", amount: 300, frequency: "annual", type: "travel", description: "Capital One Travel bookings" },
-      { name: "Anniversary Bonus", amount: 10000, frequency: "annual", type: "points", description: "10,000 bonus miles each anniversary" },
+      { name: "Anniversary Bonus", amount: 10000, frequency: "annual", type: "points", description: "10,000 bonus points each anniversary" },
       { name: "Global Entry/TSA PreCheck", amount: 100, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
     ],
     perks: [
