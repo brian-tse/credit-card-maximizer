@@ -1316,8 +1316,8 @@ const CARDS_DATABASE = [
       ]
     },
     transferPartners: [
-      { name: "American Airlines", ratio: "1:1", type: "airline" },
       { name: "United Airlines", ratio: "1:1", type: "airline" },
+      { name: "Southwest Airlines", ratio: "1:1", type: "airline" },
       { name: "Alaska Airlines", ratio: "1:1", type: "airline" },
       { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
       { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
@@ -1337,7 +1337,8 @@ const CARDS_DATABASE = [
       { name: "Hyatt", ratio: "1:1", type: "hotel" },
       { name: "IHG", ratio: "1:1", type: "hotel" },
       { name: "Marriott", ratio: "1:1", type: "hotel" },
-      { name: "Hilton", ratio: "1:2", type: "hotel" }
+      { name: "Hilton", ratio: "1:2", type: "hotel" },
+      { name: "Accor", ratio: "3:2", type: "hotel" }
     ],
     credits: [],
     perks: [
@@ -1370,8 +1371,8 @@ const CARDS_DATABASE = [
       ]
     },
     transferPartners: [
-      { name: "American Airlines", ratio: "1:1", type: "airline" },
       { name: "United Airlines", ratio: "1:1", type: "airline" },
+      { name: "Southwest Airlines", ratio: "1:1", type: "airline" },
       { name: "Alaska Airlines", ratio: "1:1", type: "airline" },
       { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
       { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
@@ -1391,7 +1392,8 @@ const CARDS_DATABASE = [
       { name: "Hyatt", ratio: "1:1", type: "hotel" },
       { name: "IHG", ratio: "1:1", type: "hotel" },
       { name: "Marriott", ratio: "1:1", type: "hotel" },
-      { name: "Hilton", ratio: "1:2", type: "hotel" }
+      { name: "Hilton", ratio: "1:2", type: "hotel" },
+      { name: "Accor", ratio: "3:2", type: "hotel" }
     ],
     credits: [
       { name: "Bilt Travel Hotel Credit", amount: 100, frequency: "annual", type: "travel", description: "$50 available every 6 months" }
@@ -1427,8 +1429,8 @@ const CARDS_DATABASE = [
       ]
     },
     transferPartners: [
-      { name: "American Airlines", ratio: "1:1", type: "airline" },
       { name: "United Airlines", ratio: "1:1", type: "airline" },
+      { name: "Southwest Airlines", ratio: "1:1", type: "airline" },
       { name: "Alaska Airlines", ratio: "1:1", type: "airline" },
       { name: "Air Canada Aeroplan", ratio: "1:1", type: "airline" },
       { name: "Turkish Airlines", ratio: "1:1", type: "airline" },
@@ -1448,7 +1450,8 @@ const CARDS_DATABASE = [
       { name: "Hyatt", ratio: "1:1", type: "hotel" },
       { name: "IHG", ratio: "1:1", type: "hotel" },
       { name: "Marriott", ratio: "1:1", type: "hotel" },
-      { name: "Hilton", ratio: "1:2", type: "hotel" }
+      { name: "Hilton", ratio: "1:2", type: "hotel" },
+      { name: "Accor", ratio: "3:2", type: "hotel" }
     ],
     credits: [
       { name: "Bilt Travel Hotel Credit", amount: 400, frequency: "annual", type: "travel", description: "$200 available every 6 months" }
