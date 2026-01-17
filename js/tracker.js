@@ -1,5 +1,8 @@
 // CardMax - Benefit Tracker Logic
 
+// Helper to sanitize credit names for use as keys (remove spaces, apostrophes, special chars)
+const sanitizeCreditName = (name) => name.replace(/[\s'"/\\]+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
+
 // State
 let userCards = [];
 let trackedBenefits = {};
@@ -107,7 +110,7 @@ function renderMonthlyBenefits() {
     if (monthlyCredits.length === 0) return;
 
     const cardBenefits = monthlyCredits.map(credit => {
-      const benefitKey = `monthly_${monthKey}_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
+      const benefitKey = `monthly_${monthKey}_${cardId}_${sanitizeCreditName(credit.name)}`;
       const isCompleted = trackedBenefits[benefitKey] || false;
       return { ...credit, benefitKey, isCompleted };
     });
@@ -189,7 +192,7 @@ function renderSemiannualBenefits() {
     if (semiannualCredits.length === 0) return;
 
     const cardBenefits = semiannualCredits.map(credit => {
-      const benefitKey = `semiannual_${currentYear}_${currentHalf}_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
+      const benefitKey = `semiannual_${currentYear}_${currentHalf}_${cardId}_${sanitizeCreditName(credit.name)}`;
       const isCompleted = trackedBenefits[benefitKey] || false;
       const periodValue = credit.semiannualAmount || (credit.amount / 2);
       return { ...credit, benefitKey, isCompleted, periodValue };
@@ -268,7 +271,7 @@ function renderAnnualBenefits() {
     if (annualCredits.length === 0) return;
 
     const cardBenefits = annualCredits.map(credit => {
-      const benefitKey = `annual_${currentYear}_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
+      const benefitKey = `annual_${currentYear}_${cardId}_${sanitizeCreditName(credit.name)}`;
       const isCompleted = trackedBenefits[benefitKey] || false;
       return { ...credit, benefitKey, isCompleted };
     });
@@ -363,7 +366,7 @@ function renderOnetimeBenefits() {
     if (onetimeCredits.length === 0) return;
 
     const cardBenefits = onetimeCredits.map(credit => {
-      const benefitKey = `onetime_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
+      const benefitKey = `onetime_${cardId}_${sanitizeCreditName(credit.name)}`;
       const isCompleted = trackedBenefits[benefitKey] || false;
       return { ...credit, benefitKey, isCompleted };
     });
@@ -455,7 +458,7 @@ function updateStats() {
 
     // Monthly credits
     card.credits.filter(c => c.monthlyAmount).forEach(credit => {
-      const benefitKey = `monthly_${monthKey}_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
+      const benefitKey = `monthly_${monthKey}_${cardId}_${sanitizeCreditName(credit.name)}`;
       monthlyTotal += credit.monthlyAmount;
       totalBenefits++;
       if (trackedBenefits[benefitKey]) {
@@ -466,7 +469,7 @@ function updateStats() {
 
     // Semiannual credits
     card.credits.filter(c => c.frequency === 'semiannual').forEach(credit => {
-      const benefitKey = `semiannual_${currentYear}_${currentHalf}_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
+      const benefitKey = `semiannual_${currentYear}_${currentHalf}_${cardId}_${sanitizeCreditName(credit.name)}`;
       const periodValue = credit.semiannualAmount || (credit.amount / 2);
       totalBenefits++;
       if (trackedBenefits[benefitKey]) {
@@ -477,7 +480,7 @@ function updateStats() {
 
     // Annual credits
     card.credits.filter(c => c.frequency === 'annual' && !c.monthlyAmount).forEach(credit => {
-      const benefitKey = `annual_${currentYear}_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
+      const benefitKey = `annual_${currentYear}_${cardId}_${sanitizeCreditName(credit.name)}`;
       totalBenefits++;
       if (trackedBenefits[benefitKey]) {
         annualUsed += typeof credit.amount === 'number' ? credit.amount : 0;
@@ -592,8 +595,8 @@ function renderByCardView() {
     // Monthly credits (all actionable)
     const monthlyCredits = card.credits.filter(c => c.monthlyAmount).map(credit => ({
       ...credit,
-      benefitKey: `monthly_${monthKey}_${cardId}_${credit.name.replace(/\s+/g, '_')}`,
-      isCompleted: trackedBenefits[`monthly_${monthKey}_${cardId}_${credit.name.replace(/\s+/g, '_')}`] || false,
+      benefitKey: `monthly_${monthKey}_${cardId}_${sanitizeCreditName(credit.name)}`,
+      isCompleted: trackedBenefits[`monthly_${monthKey}_${cardId}_${sanitizeCreditName(credit.name)}`] || false,
       displayValue: `<span style="color: var(--accent-green);">$${credit.monthlyAmount}/mo</span>`
     }));
 
@@ -603,7 +606,7 @@ function renderByCardView() {
     semiannualCreditsRaw.forEach(credit => {
       const periodValue = credit.semiannualAmount || (credit.amount / 2);
       // H1: Jan-Jun
-      const h1Key = `semiannual_${currentYear}_H1_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
+      const h1Key = `semiannual_${currentYear}_H1_${cardId}_${sanitizeCreditName(credit.name)}`;
       semiannualCredits.push({
         ...credit,
         benefitKey: h1Key,
@@ -613,7 +616,7 @@ function renderByCardView() {
         displayValue: `<span style="color: var(--accent-green);">$${periodValue}</span>`
       });
       // H2: Jul-Dec
-      const h2Key = `semiannual_${currentYear}_H2_${cardId}_${credit.name.replace(/\s+/g, '_')}`;
+      const h2Key = `semiannual_${currentYear}_H2_${cardId}_${sanitizeCreditName(credit.name)}`;
       semiannualCredits.push({
         ...credit,
         benefitKey: h2Key,
@@ -644,8 +647,8 @@ function renderByCardView() {
 
       const creditData = {
         ...credit,
-        benefitKey: `annual_${currentYear}_${cardId}_${credit.name.replace(/\s+/g, '_')}`,
-        isCompleted: trackedBenefits[`annual_${currentYear}_${cardId}_${credit.name.replace(/\s+/g, '_')}`] || false,
+        benefitKey: `annual_${currentYear}_${cardId}_${sanitizeCreditName(credit.name)}`,
+        isCompleted: trackedBenefits[`annual_${currentYear}_${cardId}_${sanitizeCreditName(credit.name)}`] || false,
         displayValue: displayValue
       };
 
@@ -659,8 +662,8 @@ function renderByCardView() {
     // Multi-year credits (like Global Entry) - all actionable
     const multiYearCredits = card.credits.filter(c => c.frequency && c.frequency.includes('every')).map(credit => ({
       ...credit,
-      benefitKey: `multiyear_${cardId}_${credit.name.replace(/\s+/g, '_')}`,
-      isCompleted: trackedBenefits[`multiyear_${cardId}_${credit.name.replace(/\s+/g, '_')}`] || false,
+      benefitKey: `multiyear_${cardId}_${sanitizeCreditName(credit.name)}`,
+      isCompleted: trackedBenefits[`multiyear_${cardId}_${sanitizeCreditName(credit.name)}`] || false,
       displayValue: typeof credit.amount === 'number'
         ? (credit.type === 'points' ? credit.amount.toLocaleString() + ' pts' : `<span style="color: var(--accent-green);">$${credit.amount.toLocaleString()}</span>`)
         : credit.amount
