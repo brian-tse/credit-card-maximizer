@@ -74,6 +74,7 @@ Download the card image and save to `images/cards/`:
    - PNG format preferred
    - Should be a clear product shot of the card face
 4. Verify the image downloaded correctly
+5. **Add card ID to `CARDS_WITH_IMAGES` array in `js/card-visuals.js`** (required for image to display)
 
 ## Data Structure Reference
 
