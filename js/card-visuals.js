@@ -1,32 +1,36 @@
 // CardMax - Card Visual Generator
 // Creates credit card visuals with actual images or CSS fallback
 
-// Cards with downloaded images (37 cards)
+// Cards with downloaded images (55 cards - all cards now have images)
 const CARDS_WITH_IMAGES = [
   // Amex Personal
   'amex-platinum', 'amex-gold', 'amex-green', 'amex-blue-cash-preferred',
   // Amex Business
-  'amex-business-platinum', 'amex-business-gold', 'amex-business-green', 'amex-blue-business-plus',
+  'amex-business-platinum', 'amex-business-gold', 'amex-business-green', 'amex-blue-business-plus', 'amex-blue-business-cash',
   // Bilt
   'bilt-blue', 'bilt-obsidian', 'bilt-palladium',
   // Capital One
-  'capital-one-venture', 'capital-one-venture-x',
+  'capital-one-venture', 'capital-one-venture-x', 'capital-one-venture-x-business', 'capital-one-spark-miles', 'capital-one-spark-cash-plus',
   // Chase Personal
   'chase-sapphire-reserve', 'chase-sapphire-preferred', 'chase-freedom-unlimited', 'chase-freedom-flex',
   // Chase Business
-  'chase-ink-business-unlimited',
+  'chase-ink-business-unlimited', 'chase-ink-business-preferred', 'chase-ink-business-cash',
   // Citi
   'citi-double-cash', 'citi-strata-premier', 'citi-strata-elite', 'citi-costco-anywhere',
-  // Delta
+  // Delta Personal
   'delta-skymiles-gold', 'delta-skymiles-platinum', 'delta-skymiles-reserve',
+  // Delta Business
+  'delta-skymiles-gold-business', 'delta-skymiles-platinum-business', 'delta-skymiles-reserve-business',
   // Hilton
   'hilton-honors-aspire', 'hilton-honors-surpass', 'hilton-honors-business',
   // Hotels
-  'marriott-bonvoy-boundless',
+  'marriott-bonvoy-boundless', 'marriott-bonvoy-business', 'world-of-hyatt', 'ihg-one-rewards-premier',
   // Southwest
   'southwest-priority', 'southwest-performance-business', 'southwest-premier-business',
   // United
-  'united-explorer', 'united-quest',
+  'united-explorer', 'united-quest', 'united-club-infinite', 'united-business-card',
+  // Bank of America
+  'bofa-business-advantage-unlimited', 'boa-atmos-ascent', 'atmos-rewards-summit',
   // Other
   'discover-it-cash-back', 'us-bank-altitude-reserve',
   'wells-fargo-active-cash', 'wells-fargo-autograph-journey'
