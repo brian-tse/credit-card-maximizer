@@ -81,6 +81,41 @@ function getDateBasedBenefitInfo(cardId, benefitName) {
     : cardRules[benefitName].after;
 }
 
+// Estimated point values for free night awards (in points)
+const FREE_NIGHT_POINT_VALUES = {
+  'world-of-hyatt': 12000,      // Cat 1-4 avg ~12,000 pts
+  'marriott-bonvoy-boundless': 35000,
+  'marriott-bonvoy-bold': 35000,
+  'marriott-bonvoy-bountiful': 35000,
+  'hilton-honors-aspire': 80000, // Uncapped, avg ~80k value
+  'hilton-honors-surpass': 60000, // After $15k spend
+  'ihg-one-rewards-premier': 40000
+};
+
+// Calculate estimated dollar value for points-based benefits
+function getEstimatedBenefitValue(card, benefit) {
+  if (typeof Valuations === 'undefined') return null;
+
+  // For points-type benefits (anniversary bonuses, etc.)
+  if (benefit.type === 'points' && typeof benefit.amount === 'number') {
+    const pointValue = Valuations.getCardPointValue(card);
+    return (benefit.amount * pointValue / 100).toFixed(0);
+  }
+
+  // For hotel free night awards
+  if (benefit.type === 'hotel' && benefit.amount === 1) {
+    const pointEstimate = FREE_NIGHT_POINT_VALUES[card.id];
+    if (pointEstimate) {
+      const valuationKey = Valuations.getCardValuationKey(card);
+      const valuations = Valuations.getValuations();
+      const pointValue = valuations[valuationKey]?.value || 0.50;
+      return (pointEstimate * pointValue / 100).toFixed(0);
+    }
+  }
+
+  return null;
+}
+
 // State
 let userCards = [];
 let trackedBenefits = {};
@@ -402,12 +437,20 @@ function renderAnnualBenefits() {
           ${cardBenefits.map(benefit => {
             // Determine display value - special handling for Free Night Awards
             let displayValue;
+            const estimatedValue = getEstimatedBenefitValue(card, benefit);
+
             if (benefit.type === 'hotel' && benefit.amount === 1) {
-              displayValue = '1 night';
+              displayValue = estimatedValue
+                ? `<span style="color: var(--accent-green);">~$${estimatedValue}</span><br><span style="font-size: 0.7rem; color: var(--text-secondary);">1 night</span>`
+                : '1 night';
             } else if (typeof benefit.amount === 'number') {
-              displayValue = benefit.type === 'points'
-                ? benefit.amount.toLocaleString() + ' pts'
-                : '<span style="color: var(--accent-green);">$' + benefit.amount.toLocaleString() + '</span>';
+              if (benefit.type === 'points') {
+                displayValue = estimatedValue
+                  ? `<span style="color: var(--accent-green);">~$${estimatedValue}</span><br><span style="font-size: 0.7rem; color: var(--text-secondary);">${benefit.amount.toLocaleString()} pts</span>`
+                  : benefit.amount.toLocaleString() + ' pts';
+              } else {
+                displayValue = '<span style="color: var(--accent-green);">$' + benefit.amount.toLocaleString() + '</span>';
+              }
             } else {
               displayValue = benefit.amount;
             }
@@ -439,7 +482,7 @@ function renderAnnualBenefits() {
                 <div class="benefit-text">${benefit.name}${badgeHtml}</div>
                 <div class="benefit-description">${description}</div>
               </div>
-              <div class="benefit-value">${displayValue}</div>
+              <div class="benefit-value" style="text-align: right;">${displayValue}</div>
             </li>
           `}).join('')}
         </ul>
@@ -737,14 +780,23 @@ function renderByCardView() {
     const passiveAnnual = [];
 
     annualCreditsRaw.forEach(credit => {
+      // Calculate estimated value for points-based benefits
+      const estimatedValue = getEstimatedBenefitValue(card, credit);
+
       // Special display value for Free Night Awards (type === 'hotel' and amount === 1)
       let displayValue;
       if (credit.type === 'hotel' && credit.amount === 1) {
-        displayValue = '1 night';
+        displayValue = estimatedValue
+          ? `<span style="color: var(--accent-green);">~$${estimatedValue}</span><br><span style="font-size: 0.7rem; color: var(--text-secondary);">1 night</span>`
+          : '1 night';
       } else if (typeof credit.amount === 'number') {
-        displayValue = credit.type === 'points'
-          ? credit.amount.toLocaleString() + ' pts'
-          : `<span style="color: var(--accent-green);">$${credit.amount.toLocaleString()}</span>`;
+        if (credit.type === 'points') {
+          displayValue = estimatedValue
+            ? `<span style="color: var(--accent-green);">~$${estimatedValue}</span><br><span style="font-size: 0.7rem; color: var(--text-secondary);">${credit.amount.toLocaleString()} pts</span>`
+            : credit.amount.toLocaleString() + ' pts';
+        } else {
+          displayValue = `<span style="color: var(--accent-green);">$${credit.amount.toLocaleString()}</span>`;
+        }
       } else {
         displayValue = credit.amount;
       }
@@ -876,7 +928,7 @@ function renderByCardView() {
                     <div class="benefit-text">${benefit.name}${benefit.badgeHtml || ''}</div>
                     <div class="benefit-description">${benefit.description}</div>
                   </div>
-                  <div class="benefit-value">${benefit.displayValue}</div>
+                  <div class="benefit-value" style="text-align: right;">${benefit.displayValue}</div>
                 </li>
               `).join('')}
             </ul>
