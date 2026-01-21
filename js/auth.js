@@ -10,10 +10,8 @@ function initAuth() {
     currentUser = user;
     updateAuthUI();
 
-    if (user) {
-      // User signed in - sync from cloud
-      await syncFromCloud();
-    }
+    // Don't auto-sync on page load - only sync when user explicitly signs in
+    // This prevents reload loops
   });
 }
 
@@ -29,8 +27,8 @@ async function signInWithGoogle() {
       await syncToCloud();
       showAuthToast('Account created! Your data is now synced.');
     } else {
-      // Returning user - sync from cloud
-      await syncFromCloud();
+      // Returning user - sync from cloud and reload to show synced data
+      await syncFromCloud(true);
       showAuthToast('Welcome back! Data synced from your account.');
     }
 
@@ -82,7 +80,7 @@ async function syncToCloud() {
 }
 
 // Sync data from Firestore to local
-async function syncFromCloud() {
+async function syncFromCloud(shouldReload = false) {
   if (!currentUser) return false;
 
   try {
@@ -107,8 +105,10 @@ async function syncFromCloud() {
 
       console.log('Data synced from cloud');
 
-      // Reload page to reflect synced data
-      window.location.reload();
+      // Only reload if explicitly requested (e.g., after sign-in)
+      if (shouldReload) {
+        window.location.reload();
+      }
     } else {
       // No cloud data exists - upload local data
       await syncToCloud();
@@ -125,11 +125,12 @@ async function syncFromCloud() {
 async function autoSyncToCloud() {
   if (!currentUser) return;
 
-  // Debounce to avoid too many writes
+  // Debounce to avoid too many writes - wait 3 seconds of inactivity
   clearTimeout(window.syncTimeout);
   window.syncTimeout = setTimeout(async () => {
+    console.log('Auto-syncing to cloud...');
     await syncToCloud();
-  }, 2000);
+  }, 3000);
 }
 
 // Update UI based on auth state
