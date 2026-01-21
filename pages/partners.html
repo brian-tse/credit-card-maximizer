@@ -6,7 +6,7 @@
   <title>Transfer Partners - CardMax</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
   <style>
     .partner-grid {
@@ -17,22 +17,22 @@
     }
 
     .partner-card {
-      background: var(--bg-secondary);
+      background: var(--surface);
       border-radius: var(--radius);
       padding: 1.25rem;
       border: 2px solid transparent;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s ease;
     }
 
     .partner-card:hover {
-      border-color: var(--border-color);
-      background: var(--bg-card);
+      border-color: var(--border);
+      background: var(--surface-hover);
     }
 
     .partner-card.selected {
-      border-color: var(--accent-blue);
-      background: rgba(59, 130, 246, 0.1);
+      border-color: var(--accent);
+      background: var(--accent-light);
     }
 
     .partner-header {
@@ -60,17 +60,17 @@
 
     .partner-cards-count {
       font-size: 0.875rem;
-      color: var(--accent-blue);
+      color: var(--accent);
       margin-top: 0.5rem;
     }
 
     /* Partner Detail Section */
     .partner-detail {
-      background: var(--bg-secondary);
+      background: var(--surface);
       border-radius: var(--radius);
       padding: 1.5rem;
       margin-top: 2rem;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
     }
 
     .partner-detail-header {
@@ -79,7 +79,7 @@
       align-items: center;
       margin-bottom: 1.5rem;
       padding-bottom: 1rem;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border);
     }
 
     .partner-detail-title {
@@ -99,7 +99,7 @@
     }
 
     .close-detail-btn:hover {
-      color: var(--text-primary);
+      color: var(--text);
     }
 
     .cards-that-transfer {
@@ -111,7 +111,7 @@
       align-items: center;
       gap: 1rem;
       padding: 1rem;
-      background: var(--bg-card);
+      background: var(--bg);
       border-radius: 8px;
       margin-bottom: 0.5rem;
     }
@@ -121,6 +121,19 @@
       height: 12px;
       border-radius: 50%;
       flex-shrink: 0;
+    }
+
+    .transfer-card-item .card-visual {
+      width: 50px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .transfer-card-item .card-visual .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 3px;
     }
 
     .transfer-card-item .card-info {
@@ -138,8 +151,8 @@
 
     .transfer-card-item .transfer-ratio {
       font-weight: 600;
-      color: var(--accent-green);
-      background: rgba(34, 197, 94, 0.1);
+      color: var(--accent);
+      background: var(--accent-light);
       padding: 0.25rem 0.75rem;
       border-radius: 20px;
       font-size: 0.875rem;
@@ -159,11 +172,11 @@
     }
 
     .page-intro {
-      background: var(--bg-secondary);
+      background: var(--surface);
       border-radius: var(--radius);
       padding: 1.5rem;
       margin-bottom: 1.5rem;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
     }
 
     .page-intro p {
@@ -176,7 +189,7 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
-      <a href="../index.html" class="logo">💳 CardMax</a>
+      <a href="../index.html" class="logo">CardMax</a>
       <ul class="nav-links">
         <li><a href="../index.html" class="active">My Cards</a></li>
         <li><a href="cards.html">All Cards</a></li>
@@ -200,9 +213,9 @@
   <!-- Main Content -->
   <div class="container">
     <!-- Hero Section -->
-    <section class="hero" style="padding: 2rem;">
-      <h1 style="font-size: 2rem;">🔄 Transfer Partners</h1>
-      <p>See which of your cards transfer to each airline and hotel program.</p>
+    <section class="hero">
+      <h1>Transfer Partners</h1>
+      <p>See which of your cards transfer to each program</p>
     </section>
 
     <!-- Filter Section -->
@@ -237,11 +250,12 @@
     <div class="no-cards-message" id="no-cards-message" style="display: none;">
       <h3>No cards in your collection</h3>
       <p>Add some cards to see their transfer partners.</p>
-      <a href="../index.html" class="btn btn-primary" style="margin-top: 1rem;">➕ Add Cards</a>
+      <a href="../index.html" class="btn btn-primary" style="margin-top: 1rem;">Add Cards</a>
     </div>
   </div>
 
   <script src="../data/cards.js"></script>
+  <script src="../js/card-visuals.js"></script>
   <script>
     // Get user's cards
     const userCardIds = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
@@ -381,16 +395,20 @@
 
       titleEl.innerHTML = `${getPartnerIcon(partner.type)} ${partner.name}`;
 
-      cardsEl.innerHTML = partner.cards.map(item => `
+      cardsEl.innerHTML = partner.cards.map(item => {
+        const cardVisual = typeof CardVisuals !== 'undefined' && CardVisuals.hasImage(item.card.id)
+          ? CardVisuals.generate(item.card)
+          : `<div class="card-dot" style="background: ${item.card.color}"></div>`;
+        return `
         <li class="transfer-card-item">
-          <div class="card-dot" style="background: ${item.card.color}"></div>
+          ${cardVisual}
           <div class="card-info">
             <div class="card-name">${getShortIssuer(item.card.issuer)} ${getShortCardName(item.card.name)}</div>
             <div class="card-issuer">${item.card.issuer}</div>
           </div>
           <div class="transfer-ratio">${item.ratio}</div>
         </li>
-      `).join('');
+      `}).join('');
 
       detailSection.style.display = 'block';
       detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });

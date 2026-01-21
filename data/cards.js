@@ -520,6 +520,41 @@ const CARDS_DATABASE = [
     color: "#D71E28",
     lastUpdated: "2026-01-15"
   },
+  {
+    id: "gemini-credit-card",
+    name: "Gemini Credit Card",
+    issuer: "WebBank",
+    network: "Mastercard",
+    cardType: "personal",
+    annualFee: 0,
+    signUpBonus: {
+      amount: 200,
+      currency: "Crypto (USD value)",
+      spendRequirement: 3000,
+      timeframe: "90 days"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Gas & EV Charging", multiplier: 4, description: "First $300/month, then 1%" },
+        { category: "Transit & Rideshare", multiplier: 4, description: "First $300/month combined with gas" },
+        { category: "Dining", multiplier: 3, description: "Restaurants worldwide" },
+        { category: "Groceries", multiplier: 2, description: "Supermarkets" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "Real-Time Crypto Rewards", description: "Rewards credited instantly in 40+ cryptocurrencies", type: "service" },
+      { name: "No Foreign Transaction Fees", description: "No fees on international purchases", type: "travel" },
+      { name: "No Exchange Fees", description: "No fees on crypto reward deposits", type: "service" },
+      { name: "Metal Card Design", description: "Black, silver, or rose gold options", type: "service" },
+      { name: "Mastercard World Benefits", description: "Priceless Experiences, ID Theft Protection", type: "protection" },
+      { name: "Security Design", description: "No card number on physical card", type: "protection" }
+    ],
+    color: "#00DCFA",
+    lastUpdated: "2026-01-21"
+  },
 
   // ============ MID-TIER TRAVEL CARDS ============
   {
@@ -787,6 +822,40 @@ const CARDS_DATABASE = [
     ],
     color: "#00857D",
     lastUpdated: "2026-01-15"
+  },
+  {
+    id: "ihg-one-rewards-traveler",
+    name: "IHG One Rewards Traveler",
+    issuer: "Chase",
+    network: "Visa",
+    cardType: "personal",
+    annualFee: 0,
+    signUpBonus: {
+      amount: 80000,
+      currency: "IHG Points",
+      spendRequirement: 2000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 2,
+      categories: [
+        { category: "IHG Hotels", multiplier: 5, description: "At IHG portfolio properties (up to 17x with elite bonuses)" },
+        { category: "Gas", multiplier: 3, description: "Gas stations" },
+        { category: "Dining", multiplier: 3, description: "Restaurants" },
+        { category: "Utilities", multiplier: 3, description: "Monthly bills" },
+        { category: "Streaming", multiplier: 3, description: "Streaming services" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "Silver Elite Status", description: "Complimentary IHG One Rewards Silver Elite", type: "status" },
+      { name: "4th Night Free", description: "On award stays of 4+ nights booked with points", type: "hotel" },
+      { name: "20% Point Discount", description: "Save 20% on IHG point purchases", type: "service" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" }
+    ],
+    color: "#00857D",
+    lastUpdated: "2026-01-21"
   },
 
   // ============ AIRLINE CARDS ============
@@ -2416,6 +2485,41 @@ const CARDS_DATABASE = [
     ],
     color: "#006FCF",
     lastUpdated: "2026-01-16"
+  },
+
+  // --- Citi Costco Anywhere ---
+  {
+    id: "citi-costco-anywhere",
+    name: "Costco Anywhere Visa",
+    issuer: "Citi",
+    network: "Visa",
+    cardType: "personal",
+    annualFee: 0,
+    signUpBonus: null,
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Gas (Costco)", multiplier: 5, description: "At Costco gas stations, up to $7,000/yr combined with other gas" },
+        { category: "Gas & EV Charging", multiplier: 4, description: "Other gas stations and EV charging, up to $7,000/yr combined" },
+        { category: "Restaurants", multiplier: 3, description: "Worldwide dining" },
+        { category: "Travel", multiplier: 3, description: "Flights, hotels, car rentals, Costco Travel" },
+        { category: "Costco", multiplier: 2, description: "Costco warehouse and Costco.com" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "No Foreign Transaction Fees", description: "No fees on international purchases", type: "travel" },
+      { name: "Worldwide Car Rental Insurance", description: "Coverage when renting a car", type: "insurance" },
+      { name: "Travel & Emergency Assistance", description: "24/7 travel assistance services", type: "travel" },
+      { name: "Roadside Assistance", description: "Emergency roadside services", type: "service" },
+      { name: "Purchase Protection", description: "Damage and theft protection within 120 days", type: "protection" },
+      { name: "$0 Fraud Liability", description: "No liability for unauthorized charges", type: "protection" },
+      { name: "Citi Quick Lock", description: "Instantly freeze/unfreeze your card", type: "service" },
+      { name: "Citi Entertainment", description: "Early access to concert and event tickets", type: "service" }
+    ],
+    color: "#1B3668",
+    lastUpdated: "2026-01-21"
   }
 ];
 

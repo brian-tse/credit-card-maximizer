@@ -277,6 +277,47 @@
       color: var(--accent);
     }
 
+    /* Sort Selector */
+    .sort-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .sort-selector label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .sort-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .sort-btn {
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .sort-btn:hover {
+      border-color: var(--text-secondary);
+      color: var(--text-primary);
+    }
+
+    .sort-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
     /* Empty State */
     .empty-state {
       text-align: center;
@@ -386,6 +427,14 @@
     <!-- My Cards Section -->
     <section class="my-cards-section" id="my-cards-section">
       <h2>My Cards</h2>
+      <div class="sort-selector" id="sort-selector">
+        <label>Sort by:</label>
+        <div class="sort-buttons">
+          <button class="sort-btn active" data-sort="issuer" onclick="setSortOption('issuer')">Issuer</button>
+          <button class="sort-btn" data-sort="fee" onclick="setSortOption('fee')">Annual Fee</button>
+          <button class="sort-btn" data-sort="date" onclick="setSortOption('date')">Sign-Up Date</button>
+        </div>
+      </div>
       <div id="my-cards-list">
         <!-- User's selected cards will be shown here -->
       </div>
@@ -433,6 +482,7 @@
     let cardSignupDates = {};
     let hasUnsavedChanges = false;
     let expandedCardId = null; // Track which card's settings are open
+    let currentSortOption = 'issuer'; // Sort option: 'issuer', 'fee', 'date'
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
@@ -451,6 +501,7 @@
     function loadSavedData() {
       const saved = localStorage.getItem('cardmax_user_cards');
       const savedDates = localStorage.getItem('cardmax_signup_dates');
+      const savedSort = localStorage.getItem('cardmax_sort_option');
 
       if (saved) {
         selectedCards = JSON.parse(saved);
@@ -458,6 +509,11 @@
 
       if (savedDates) {
         cardSignupDates = JSON.parse(savedDates);
+      }
+
+      if (savedSort) {
+        currentSortOption = savedSort;
+        updateSortButtons();
       }
     }
 
@@ -506,6 +562,75 @@
         status.textContent = '✓ All changes saved';
         status.classList.add('saved');
       }
+    }
+
+    // Set sort option
+    function setSortOption(option) {
+      currentSortOption = option;
+      localStorage.setItem('cardmax_sort_option', option);
+      updateSortButtons();
+      renderMyCards();
+    }
+
+    // Update sort button active state
+    function updateSortButtons() {
+      const buttons = document.querySelectorAll('.sort-btn');
+      buttons.forEach(btn => {
+        if (btn.dataset.sort === currentSortOption) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    // Sort cards based on current option
+    function sortCards(cardIds) {
+      const cardsWithData = cardIds.map(id => {
+        const card = CARDS_DATABASE.find(c => c.id === id);
+        const signupDate = cardSignupDates[id] || {};
+        return { id, card, signupDate };
+      }).filter(item => item.card);
+
+      switch (currentSortOption) {
+        case 'issuer':
+          // Sort by issuer name, then by card name
+          cardsWithData.sort((a, b) => {
+            const issuerCompare = a.card.issuer.localeCompare(b.card.issuer);
+            if (issuerCompare !== 0) return issuerCompare;
+            return a.card.name.localeCompare(b.card.name);
+          });
+          break;
+
+        case 'fee':
+          // Sort by annual fee (highest first)
+          cardsWithData.sort((a, b) => b.card.annualFee - a.card.annualFee);
+          break;
+
+        case 'date':
+          // Sort by month/day (calendar order), ignoring year
+          // January at top, cards without dates at bottom
+          cardsWithData.sort((a, b) => {
+            const dateA = getCalendarDateValue(a.signupDate);
+            const dateB = getCalendarDateValue(b.signupDate);
+            // Cards without dates go to the end
+            if (dateA === 0 && dateB === 0) return 0;
+            if (dateA === 0) return 1;
+            if (dateB === 0) return -1;
+            return dateA - dateB; // January first
+          });
+          break;
+      }
+
+      return cardsWithData.map(item => item.id);
+    }
+
+    // Get calendar date value for sorting (month/day only, 0 if no month set)
+    function getCalendarDateValue(signupDate) {
+      if (!signupDate.month) return 0;
+      const month = signupDate.month || 1;
+      const day = signupDate.day || 1;
+      return month * 100 + day;
     }
 
     // Filter card selector
@@ -632,8 +757,10 @@
     // Render my cards list
     function renderMyCards() {
       const container = document.getElementById('my-cards-list');
+      const sortSelector = document.getElementById('sort-selector');
 
       if (selectedCards.length === 0) {
+        sortSelector.style.display = 'none';
         container.innerHTML = `
           <div class="empty-state">
             <h3>No cards selected yet</h3>
@@ -642,6 +769,8 @@
         `;
         return;
       }
+
+      sortSelector.style.display = 'flex';
 
       const months = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       const days = [''];
@@ -654,7 +783,10 @@
         years.push(y);
       }
 
-      container.innerHTML = selectedCards.map(cardId => {
+      // Sort cards based on current sort option
+      const sortedCardIds = sortCards(selectedCards);
+
+      container.innerHTML = sortedCardIds.map(cardId => {
         const card = CARDS_DATABASE.find(c => c.id === cardId);
         if (!card) return '';
 

@@ -33,17 +33,21 @@ function renderCardPicker(filter = '') {
     card.issuer.toLowerCase().includes(filterLower)
   );
 
-  container.innerHTML = filteredCards.map(card => `
+  container.innerHTML = filteredCards.map(card => {
+    const cardVisual = typeof CardVisuals !== 'undefined' && CardVisuals.hasImage(card.id)
+      ? CardVisuals.generate(card)
+      : `<div class="card-dot" style="background: ${card.color}"></div>`;
+    return `
     <div class="card-pick-item ${selectedCards.has(card.id) ? 'selected' : ''}"
          onclick="toggleCardSelection('${card.id}')">
-      <div class="card-dot" style="background: ${card.color}"></div>
+      ${cardVisual}
       <div class="card-info">
         <div class="card-name">${card.name}</div>
         <div class="card-fee">$${card.annualFee}/year</div>
       </div>
       <div class="check-icon">${selectedCards.has(card.id) ? '✓' : ''}</div>
     </div>
-  `).join('');
+  `}).join('');
 
   updateSelectedCount();
 }

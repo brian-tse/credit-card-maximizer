@@ -6,16 +6,16 @@
   <title>Compare Cards - CardMax</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
   <style>
     /* Card Selection Grid */
     .card-picker {
-      background: var(--bg-secondary);
+      background: var(--surface);
       border-radius: var(--radius);
       padding: 1.5rem;
       margin-bottom: 2rem;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
     }
 
     .card-picker-header {
@@ -36,7 +36,7 @@
     }
 
     .card-picker-count span {
-      color: var(--accent-blue);
+      color: var(--accent);
       font-weight: 600;
     }
 
@@ -44,16 +44,18 @@
       width: 100%;
       padding: 0.75rem 1rem;
       border-radius: 8px;
-      border: 1px solid var(--border-color);
-      background: var(--bg-card);
-      color: var(--text-primary);
-      font-size: 1rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.9rem;
       margin-bottom: 1rem;
+      font-family: inherit;
     }
 
     .search-box:focus {
       outline: none;
-      border-color: var(--accent-blue);
+      border-color: var(--text);
+      box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.05);
     }
 
     .card-picker-grid {
@@ -67,20 +69,21 @@
       align-items: center;
       gap: 0.75rem;
       padding: 0.75rem 1rem;
-      background: var(--bg-card);
+      background: var(--bg);
       border-radius: 8px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s ease;
       border: 2px solid transparent;
     }
 
     .card-pick-item:hover {
-      background: var(--border-color);
+      background: var(--surface-hover);
+      border-color: var(--border);
     }
 
     .card-pick-item.selected {
-      border-color: var(--accent-blue);
-      background: rgba(59, 130, 246, 0.1);
+      border-color: var(--accent);
+      background: var(--accent-light);
     }
 
     .card-pick-item .card-dot {
@@ -88,6 +91,19 @@
       height: 12px;
       border-radius: 50%;
       flex-shrink: 0;
+    }
+
+    .card-pick-item .card-visual {
+      width: 50px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .card-pick-item .card-visual .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 3px;
     }
 
     .card-pick-item .card-info {
@@ -112,17 +128,17 @@
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      border: 2px solid var(--border-color);
+      border: 2px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: all 0.2s;
+      transition: all 0.15s ease;
     }
 
     .card-pick-item.selected .check-icon {
-      background: var(--accent-blue);
-      border-color: var(--accent-blue);
+      background: var(--accent);
+      border-color: var(--accent);
       color: white;
     }
 
@@ -130,13 +146,13 @@
     .comparison-table-wrapper {
       overflow-x: auto;
       border-radius: var(--radius);
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
     }
 
     .comparison-table {
       width: 100%;
       border-collapse: collapse;
-      background: var(--bg-secondary);
+      background: var(--surface);
       min-width: 600px;
     }
 
@@ -144,12 +160,12 @@
     .comparison-table td {
       padding: 1rem;
       text-align: left;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border);
       vertical-align: top;
     }
 
     .comparison-table th {
-      background: var(--bg-card);
+      background: var(--bg);
       font-weight: 600;
       position: sticky;
       top: 0;
@@ -162,14 +178,14 @@
     }
 
     .comparison-table tbody tr:hover {
-      background: rgba(59, 130, 246, 0.05);
+      background: var(--bg);
     }
 
     .comparison-table .row-label {
       font-weight: 500;
       color: var(--text-secondary);
       font-size: 0.875rem;
-      background: var(--bg-card);
+      background: var(--bg);
       position: sticky;
       left: 0;
     }
@@ -205,7 +221,7 @@
 
     .comparison-table .card-column-header .remove-btn:hover {
       opacity: 1;
-      color: #ef4444;
+      color: var(--warning);
     }
 
     .value-cell {
@@ -218,7 +234,7 @@
     }
 
     .value-best {
-      color: var(--accent-green);
+      color: var(--accent);
     }
 
     .value-note {
@@ -240,7 +256,7 @@
 
     .category-list .multiplier {
       font-weight: 600;
-      color: var(--accent-green);
+      color: var(--accent);
     }
 
     .partner-tags {
@@ -252,14 +268,14 @@
     .partner-tag {
       display: inline-block;
       padding: 0.2rem 0.5rem;
-      background: var(--bg-card);
+      background: var(--bg);
       border-radius: 4px;
       font-size: 0.7rem;
     }
 
     .partner-tag.shared {
-      background: rgba(139, 92, 246, 0.2);
-      color: var(--accent-purple);
+      background: var(--accent-light);
+      color: var(--accent);
     }
 
     .perk-item {
@@ -271,7 +287,7 @@
     }
 
     .perk-item.has {
-      color: var(--accent-green);
+      color: var(--accent);
     }
 
     .perk-item.no {
@@ -292,7 +308,7 @@
 
     .credit-list .amount {
       font-weight: 600;
-      color: var(--accent-blue);
+      color: var(--accent);
     }
 
     /* Actions Bar */
@@ -306,9 +322,9 @@
     .empty-state {
       text-align: center;
       padding: 4rem 2rem;
-      background: var(--bg-secondary);
+      background: var(--surface);
       border-radius: var(--radius);
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
     }
 
     .empty-state h3 {
@@ -324,7 +340,7 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
-      <a href="../index.html" class="logo">💳 CardMax</a>
+      <a href="../index.html" class="logo">CardMax</a>
       <ul class="nav-links">
         <li><a href="../index.html">My Cards</a></li>
         <li><a href="cards.html">All Cards</a></li>
@@ -336,9 +352,9 @@
   <!-- Main Content -->
   <div class="container">
     <!-- Header -->
-    <section class="hero" style="padding: 2rem;">
-      <h1 style="font-size: 2rem;">⚖️ Compare Cards</h1>
-      <p>Select the cards you have and compare them side-by-side.</p>
+    <section class="hero">
+      <h1>Compare Cards</h1>
+      <p>Select cards to compare side-by-side</p>
     </section>
 
     <!-- Card Picker -->
@@ -347,7 +363,7 @@
         <div class="card-picker-title">Select Cards to Compare</div>
         <div class="card-picker-count"><span id="selected-count">0</span> selected</div>
       </div>
-      <input type="text" class="search-box" id="card-search" placeholder="🔍 Search cards..." oninput="filterCards()">
+      <input type="text" class="search-box" id="card-search" placeholder="Search cards..." oninput="filterCards()">
       <div class="card-picker-grid" id="card-picker-grid">
         <!-- Cards will be inserted here -->
       </div>
@@ -359,7 +375,7 @@
       <button class="btn btn-secondary" onclick="quickSelect('chase')">Select Chase</button>
       <button class="btn btn-secondary" onclick="quickSelect('amex')">Select Amex</button>
       <button class="btn btn-secondary" onclick="clearSelection()">Clear All</button>
-      <button class="btn btn-primary" onclick="copyShareLink()" id="share-btn" style="margin-left: auto;">📋 Copy Share Link</button>
+      <button class="btn btn-primary" onclick="copyShareLink()" id="share-btn" style="margin-left: auto;">Copy Share Link</button>
     </div>
 
     <!-- Comparison Table -->
@@ -372,6 +388,7 @@
   </div>
 
   <script src="../data/cards.js"></script>
+  <script src="../js/card-visuals.js"></script>
   <script src="../js/compare.js"></script>
 </body>
 </html>

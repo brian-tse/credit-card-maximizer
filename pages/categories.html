@@ -6,7 +6,7 @@
   <title>Bonus Categories - CardMax</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
   <style>
     .category-grid {
@@ -17,10 +17,10 @@
     }
 
     .category-card {
-      background: var(--bg-secondary);
+      background: var(--surface);
       border-radius: var(--radius);
       padding: 1.5rem;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
     }
 
     .category-header {
@@ -29,7 +29,7 @@
       gap: 0.75rem;
       margin-bottom: 1rem;
       padding-bottom: 1rem;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border);
     }
 
     .category-icon {
@@ -50,7 +50,7 @@
       align-items: center;
       gap: 0.75rem;
       padding: 0.75rem;
-      background: var(--bg-card);
+      background: var(--bg);
       border-radius: 8px;
       margin-bottom: 0.5rem;
     }
@@ -74,7 +74,7 @@
     .rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; }
     .rank-2 { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); color: #000; }
     .rank-3 { background: linear-gradient(135deg, #CD7F32, #B87333); color: #fff; }
-    .rank-other { background: var(--border-color); color: var(--text-secondary); }
+    .rank-other { background: var(--border); color: var(--text-secondary); }
 
     .card-ranking-info {
       flex: 1;
@@ -96,6 +96,19 @@
       flex-shrink: 0;
     }
 
+    .card-ranking-item .card-visual {
+      width: 45px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .card-ranking-item .card-visual .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 3px;
+    }
+
     .card-ranking-description {
       font-size: 0.75rem;
       color: var(--text-secondary);
@@ -105,7 +118,7 @@
     .multiplier-badge {
       font-weight: 700;
       font-size: 1.1rem;
-      color: var(--accent-green);
+      color: var(--accent);
       flex-shrink: 0;
     }
 
@@ -120,11 +133,11 @@
     }
 
     .page-intro {
-      background: var(--bg-secondary);
+      background: var(--surface);
       border-radius: var(--radius);
       padding: 1.5rem;
       margin-bottom: 2rem;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
     }
 
     .page-intro h2 {
@@ -139,9 +152,9 @@
     .no-cards-message {
       text-align: center;
       padding: 4rem 2rem;
-      background: var(--bg-secondary);
+      background: var(--surface);
       border-radius: var(--radius);
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
     }
 
     .no-cards-message h2 {
@@ -158,7 +171,7 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
-      <a href="../index.html" class="logo">💳 CardMax</a>
+      <a href="../index.html" class="logo">CardMax</a>
       <ul class="nav-links">
         <li><a href="../index.html" class="active">My Cards</a></li>
         <li><a href="cards.html">All Cards</a></li>
@@ -182,9 +195,9 @@
   <!-- Main Content -->
   <div class="container">
     <!-- Hero Section -->
-    <section class="hero" style="padding: 2rem;">
-      <h1 style="font-size: 2rem;">🏆 Bonus Categories</h1>
-      <p>See which of your cards earns the most in each spending category.</p>
+    <section class="hero">
+      <h1>Bonus Categories</h1>
+      <p>See which of your cards earns the most in each category</p>
     </section>
 
     <!-- Main Content Area -->
@@ -194,6 +207,7 @@
   </div>
 
   <script src="../data/cards.js"></script>
+  <script src="../js/card-visuals.js"></script>
   <script>
     // Get user's cards
     const userCardIds = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
@@ -308,7 +322,7 @@
           <div class="no-cards-message">
             <h2>No cards in your collection</h2>
             <p>Add some cards to see which ones earn the most in each category.</p>
-            <a href="../index.html" class="btn btn-primary">➕ Add Cards</a>
+            <a href="../index.html" class="btn btn-primary">Add Cards</a>
           </div>
         `;
         return;
@@ -326,7 +340,7 @@
 
       let html = `
         <div class="page-intro">
-          <h2>📊 Your Card Rankings by Category</h2>
+          <h2>Your Card Rankings by Category</h2>
           <p>Based on the ${userCards.length} card${userCards.length > 1 ? 's' : ''} in your collection. Cards are ranked by earning multiplier for each spending category.</p>
         </div>
         <div class="category-grid">
@@ -347,13 +361,16 @@
 
         cards.forEach((item, index) => {
           const rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : 'rank-other';
+          const cardVisual = typeof CardVisuals !== 'undefined' && CardVisuals.hasImage(item.card.id)
+            ? CardVisuals.generate(item.card)
+            : `<span class="card-dot" style="background: ${item.card.color}"></span>`;
 
           html += `
             <li class="card-ranking-item">
               <div class="rank-badge ${rankClass}">${index + 1}</div>
+              ${cardVisual}
               <div class="card-ranking-info">
                 <div class="card-ranking-name">
-                  <span class="card-dot" style="background: ${item.card.color}"></span>
                   ${getShortName(item.card)}
                 </div>
                 <div class="card-ranking-description">${item.description}</div>

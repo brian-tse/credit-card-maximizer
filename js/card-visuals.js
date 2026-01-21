@@ -82,9 +82,13 @@ function hasCardImage(cardId) {
   return CARDS_WITH_IMAGES.includes(cardId);
 }
 
-// Get card image path
+// Get card image path (works from any directory)
 function getCardImagePath(cardId) {
-  return `images/cards/${cardId}.png`;
+  // Determine if we're in a subdirectory (like /pages/)
+  const path = window.location.pathname;
+  const isInSubdir = path.includes('/pages/');
+  const basePath = isInSubdir ? '../' : '';
+  return `${basePath}images/cards/${cardId}.png`;
 }
 
 // Generate card visual HTML
