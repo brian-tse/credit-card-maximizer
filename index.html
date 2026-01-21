@@ -130,13 +130,13 @@
       color: white;
     }
 
-    /* My Cards List */
+    /* My Cards List - Grid Layout */
     .my-cards-section {
-      background: var(--bg-secondary);
+      background: var(--surface);
       border-radius: var(--radius);
       padding: 1.5rem;
       margin-bottom: 2rem;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
     }
 
     .my-cards-section h2 {
@@ -147,119 +147,109 @@
       gap: 0.5rem;
     }
 
-    .my-card-item {
-      display: flex;
-      align-items: center;
+    #my-cards-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 1rem;
-      padding: 1rem;
-      background: var(--bg-card);
-      border-radius: 10px;
+    }
+
+    .my-card-item {
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      position: relative;
+      transition: all 0.15s ease;
+    }
+
+    .my-card-item:hover {
+      border-color: var(--text-secondary);
+    }
+
+    .my-card-item .card-visual {
       margin-bottom: 0.75rem;
     }
 
-    .my-card-item:last-child {
-      margin-bottom: 0;
+    .my-card-item .card-details {
+      padding: 0;
     }
 
-    .my-card-item .card-color-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .my-card-item .card-info {
-      flex: 1;
-    }
-
-    .my-card-item .card-title {
+    .my-card-item .card-name {
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
     }
 
-    .my-card-item .card-subtitle {
+    .my-card-item .card-meta {
       font-size: 0.75rem;
       color: var(--text-secondary);
-    }
-
-    .my-card-main {
       display: flex;
-      align-items: center;
-      gap: 1rem;
-      cursor: pointer;
-    }
-
-    .my-card-main:hover {
-      opacity: 0.9;
-    }
-
-    .card-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-left: auto;
-    }
-
-    .settings-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      padding: 0.25rem;
-      opacity: 0.5;
-      transition: all 0.2s;
-    }
-
-    .settings-btn:hover {
-      opacity: 1;
-    }
-
-    .my-card-item .remove-btn {
-      background: none;
-      border: none;
-      color: var(--text-secondary);
-      cursor: pointer;
-      font-size: 1.25rem;
-      padding: 0.25rem;
-      opacity: 0.5;
-      transition: all 0.2s;
-    }
-
-    .my-card-item .remove-btn:hover {
-      opacity: 1;
-      color: var(--warning);
-    }
-
-    .my-card-settings {
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px dashed var(--border-color);
-    }
-
-    .my-card-settings .date-picker-group {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
       flex-wrap: wrap;
-    }
-
-    .my-card-settings .date-picker-group label {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-    }
-
-    .month-day-year-picker {
-      display: flex;
       gap: 0.5rem;
     }
 
-    .month-day-year-picker select {
-      padding: 0.4rem 0.6rem;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background: var(--bg-secondary);
-      color: var(--text-primary);
-      font-size: 0.8rem;
+    .my-card-item .card-actions {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      display: flex;
+      gap: 0.25rem;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .my-card-item:hover .card-actions {
+      opacity: 1;
+    }
+
+    .my-card-item .action-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      transition: all 0.15s ease;
+    }
+
+    .my-card-item .action-btn:hover {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .my-card-item .action-btn.remove:hover {
+      color: var(--warning);
+      border-color: var(--warning);
+    }
+
+    /* Date picker inline */
+    .my-card-item .date-row {
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+    }
+
+    .my-card-item .date-row select {
+      padding: 0.25rem 0.4rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.7rem;
+      font-family: inherit;
+    }
+
+    .my-card-item .date-row label {
+      color: var(--text-secondary);
     }
 
     /* Save Button Area */
@@ -858,7 +848,7 @@
 
         const signupDate = cardSignupDates[cardId] || {};
         const shortIssuer = getShortIssuer(card.issuer);
-        const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : `<div class="card-color-dot" style="background: ${card.color}"></div>`;
+        const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : `<div class="card-color-bar" style="background: ${card.color}"></div>`;
         const hasDate = signupDate.month || signupDate.day || signupDate.year;
         const dateDisplay = hasDate
           ? `${months[signupDate.month] || ''}${signupDate.day ? ' ' + signupDate.day : ''}${signupDate.year ? ', ' + signupDate.year : ''}`.trim()
@@ -866,58 +856,30 @@
 
         return `
           <div class="my-card-item">
-            <div class="my-card-main" onclick="toggleCardSettings('${cardId}')">
-              ${cardVisual}
-              <div class="card-info">
-                <div class="card-title">${shortIssuer} ${getShortCardName(card.name)}</div>
-                <div class="card-subtitle">$${card.annualFee}/year${dateDisplay ? ' · ' + dateDisplay : ''}</div>
-              </div>
-              <div class="card-actions">
-                <button class="settings-btn" title="Settings">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                </button>
-                <button class="remove-btn" onclick="event.stopPropagation(); removeCard('${cardId}')" title="Remove card">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </button>
+            <div class="card-actions">
+              <button class="action-btn remove" onclick="removeCard('${cardId}')" title="Remove">×</button>
+            </div>
+            ${cardVisual}
+            <div class="card-details">
+              <div class="card-name">${shortIssuer} ${getShortCardName(card.name)}</div>
+              <div class="card-meta">
+                <span>$${card.annualFee}/yr</span>
+                ${dateDisplay ? `<span>${dateDisplay}</span>` : ''}
               </div>
             </div>
-            <div class="my-card-settings" id="settings-${cardId}" style="display: none;">
-              <div class="date-picker-group">
-                <label>Sign-Up Date:</label>
-                <div class="month-day-year-picker">
-                  <select onchange="updateSignupDate('${cardId}', 'month', this.value)">
-                    ${months.map((m, i) => `<option value="${i}" ${signupDate.month === i ? 'selected' : ''}>${m || 'Month'}</option>`).join('')}
-                  </select>
-                  <select onchange="updateSignupDate('${cardId}', 'day', this.value)">
-                    ${days.map(d => `<option value="${d}" ${signupDate.day == d ? 'selected' : ''}>${d || 'Day'}</option>`).join('')}
-                  </select>
-                  <select onchange="updateSignupDate('${cardId}', 'year', this.value)">
-                    ${years.map(y => `<option value="${y}" ${signupDate.year == y ? 'selected' : ''}>${y || 'Year'}</option>`).join('')}
-                  </select>
-                </div>
-              </div>
+            <div class="date-row">
+              <label>Opened:</label>
+              <select onchange="updateSignupDate('${cardId}', 'month', this.value)">
+                ${months.map((m, i) => `<option value="${i}" ${signupDate.month === i ? 'selected' : ''}>${m || 'Mo'}</option>`).join('')}
+              </select>
+              <select onchange="updateSignupDate('${cardId}', 'year', this.value)">
+                ${years.map(y => `<option value="${y}" ${signupDate.year == y ? 'selected' : ''}>${y || 'Yr'}</option>`).join('')}
+              </select>
             </div>
           </div>
         `;
       }).join('');
 
-      // Restore expanded settings panel if one was open
-      if (expandedCardId) {
-        const settingsEl = document.getElementById(`settings-${expandedCardId}`);
-        if (settingsEl) {
-          settingsEl.style.display = 'block';
-        }
-      }
-    }
-
-    // Toggle card settings panel
-    function toggleCardSettings(cardId) {
-      const settingsEl = document.getElementById(`settings-${cardId}`);
-      if (settingsEl) {
-        const isOpening = settingsEl.style.display === 'none';
-        settingsEl.style.display = isOpening ? 'block' : 'none';
-        expandedCardId = isOpening ? cardId : null;
-      }
     }
 
     // Update signup date
