@@ -318,14 +318,15 @@ function renderModalContent(tabName) {
       break;
 
     case 'credits':
-      const dollarCredits = card.credits.filter(c => c.type !== 'points');
+      const dollarCredits = card.credits.filter(c => c.type !== 'points' && c.type !== 'hotel');
       const pointsCredits = card.credits.filter(c => c.type === 'points');
+      const hotelCredits = card.credits.filter(c => c.type === 'hotel');
       const totalDollarCredits = dollarCredits.reduce((sum, c) => sum + (typeof c.amount === 'number' ? c.amount : 0), 0);
       const totalPointsCredits = pointsCredits.reduce((sum, c) => sum + (typeof c.amount === 'number' ? c.amount : 0), 0);
       content = `
         <div style="margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-card); border-radius: 8px;">
           <div class="text-muted" style="font-size: 0.875rem;">Total Annual Credit Value</div>
-          <div style="font-size: 2rem; font-weight: 700; color: var(--accent-green);">$${totalDollarCredits}${totalPointsCredits > 0 ? ` <span style="font-size: 1rem; color: var(--accent-purple);">+ ${totalPointsCredits.toLocaleString()} pts</span>` : ''}</div>
+          <div style="font-size: 2rem; font-weight: 700; color: var(--accent-green);">$${totalDollarCredits}${totalPointsCredits > 0 ? ` <span style="font-size: 1rem; color: var(--accent-purple);">+ ${totalPointsCredits.toLocaleString()} pts</span>` : ''}${hotelCredits.length > 0 ? ` <span style="font-size: 1rem; color: var(--accent-blue);">+ ${hotelCredits.reduce((sum, c) => sum + c.amount, 0)} night${hotelCredits.reduce((sum, c) => sum + c.amount, 0) > 1 ? 's' : ''}</span>` : ''}</div>
           <div class="text-muted" style="font-size: 0.875rem;">Net after $${card.annualFee} fee: <strong style="color: ${totalDollarCredits - card.annualFee >= 0 ? 'var(--accent-green)' : 'var(--accent-orange)'}">${totalDollarCredits - card.annualFee >= 0 ? '+' : ''}$${totalDollarCredits - card.annualFee}</strong></div>
         </div>
         <div>
@@ -338,7 +339,7 @@ function renderModalContent(tabName) {
                   ${credit.frequency}${credit.monthlyAmount ? ` ($${credit.monthlyAmount}/month)` : ''}
                 </div>
               </div>
-              <div class="benefit-value">${credit.type === 'points' ? credit.amount.toLocaleString() + ' pts' : (typeof credit.amount === 'number' ? '$' + credit.amount : credit.amount)}</div>
+              <div class="benefit-value">${credit.type === 'points' ? credit.amount.toLocaleString() + ' pts' : (credit.type === 'hotel' ? (credit.amount === 1 ? '1 night' : credit.amount + ' nights') : (typeof credit.amount === 'number' ? '$' + credit.amount : credit.amount))}</div>
             </div>
           `).join('')}
         </div>

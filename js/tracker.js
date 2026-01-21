@@ -398,7 +398,7 @@ function renderAnnualBenefits() {
     const completedCount = cardBenefits.filter(b => b.isCompleted).length;
 
     // Separate dollar credits from points credits
-    const dollarCredits = cardBenefits.filter(b => b.type !== 'points' && typeof b.amount === 'number');
+    const dollarCredits = cardBenefits.filter(b => b.type !== 'points' && b.type !== 'hotel' && typeof b.amount === 'number');
     const pointsCredits = cardBenefits.filter(b => b.type === 'points' && typeof b.amount === 'number');
 
     const totalDollarValue = dollarCredits.reduce((sum, b) => sum + b.amount, 0);
@@ -848,7 +848,7 @@ function renderByCardView() {
     const completedCount = allActionable.filter(b => b.isCompleted).length;
 
     // Calculate dollar values (excluding points)
-    const dollarCredits = allActionable.filter(b => b.type !== 'points' && typeof b.amount === 'number');
+    const dollarCredits = allActionable.filter(b => b.type !== 'points' && b.type !== 'hotel' && typeof b.amount === 'number');
     const totalDollarValue = dollarCredits.reduce((sum, b) => {
       if (b.monthlyAmount) return sum + (b.monthlyAmount * 12);
       if (b.periodValue) return sum + b.periodValue;
