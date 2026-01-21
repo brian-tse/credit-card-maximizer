@@ -137,6 +137,10 @@ async function autoSyncToCloud() {
 function updateAuthUI() {
   updateNavbarAuth();
   updateAuthContainer();
+  // Update quick save button visibility (hide when signed in)
+  if (typeof updateQuickSaveVisibility === 'function') {
+    updateQuickSaveVisibility();
+  }
 }
 
 // Update navbar auth (top of page)

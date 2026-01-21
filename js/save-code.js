@@ -296,6 +296,66 @@ function handleRestoreFromCode() {
   }
 }
 
+// Floating Quick Save Button (for non-logged-in users)
+function renderQuickSaveButton() {
+  // Don't render if already exists
+  if (document.getElementById('quick-save-fab')) return;
+
+  const userCards = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
+  const hasData = userCards.length > 0;
+
+  // Only show if user has data and is NOT signed in
+  // We'll check auth state and hide/show accordingly
+  const fab = document.createElement('button');
+  fab.id = 'quick-save-fab';
+  fab.className = 'quick-save-fab';
+  fab.setAttribute('aria-label', 'Save backup code');
+  fab.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+      <polyline points="17 21 17 13 7 13 7 21"></polyline>
+      <polyline points="7 3 7 8 15 8"></polyline>
+    </svg>
+    <span class="quick-save-text">Save</span>
+  `;
+
+  fab.onclick = () => {
+    if (!hasData) {
+      showToast('Add some cards first to create a backup', 'error');
+      return;
+    }
+    copyBackupCode();
+  };
+
+  document.body.appendChild(fab);
+
+  // Update visibility based on auth state
+  updateQuickSaveVisibility();
+}
+
+// Update visibility of quick save button based on auth state
+function updateQuickSaveVisibility() {
+  const fab = document.getElementById('quick-save-fab');
+  if (!fab) return;
+
+  const userCards = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
+  const hasData = userCards.length > 0;
+  const isSignedIn = typeof CardMaxAuth !== 'undefined' && CardMaxAuth.isSignedIn();
+
+  // Show only if: has data AND not signed in
+  if (hasData && !isSignedIn) {
+    fab.style.display = 'flex';
+  } else {
+    fab.style.display = 'none';
+  }
+}
+
+// Initialize quick save button on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  // Small delay to let auth initialize first
+  setTimeout(renderQuickSaveButton, 500);
+});
+
 // Export functions to CardMaxSave namespace
 window.CardMaxSave = {
   generateBackupCode,
@@ -311,7 +371,8 @@ window.CardMaxSave = {
   getRenewalDate,
   getAllRenewalDates,
   getUpcomingRenewals,
-  renderSaveRestoreUI
+  renderSaveRestoreUI,
+  updateQuickSaveVisibility
 };
 
 // Also expose functions globally for onclick handlers
@@ -320,3 +381,4 @@ window.downloadData = downloadData;
 window.uploadData = uploadData;
 window.handleRestoreFromCode = handleRestoreFromCode;
 window.showToast = showToast;
+window.updateQuickSaveVisibility = updateQuickSaveVisibility;

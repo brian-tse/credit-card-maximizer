@@ -6,6 +6,59 @@ let activeFilter = 'all';
 let currentModalCard = null;
 let currentSearchQuery = '';
 
+// Get user's cards from localStorage
+function getUserCards() {
+  return JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
+}
+
+// Quick add card to collection
+function quickAddCard(cardId, event) {
+  event.stopPropagation();
+  const userCards = getUserCards();
+
+  if (!userCards.includes(cardId)) {
+    userCards.push(cardId);
+    localStorage.setItem('cardmax_user_cards', JSON.stringify(userCards));
+
+    // Auto-sync to cloud if signed in
+    if (typeof CardMaxAuth !== 'undefined' && CardMaxAuth.isSignedIn()) {
+      CardMaxAuth.autoSync();
+    }
+
+    // Show feedback
+    const card = CARDS_DATABASE.find(c => c.id === cardId);
+    showQuickAddToast(`${card.name} added to My Cards`);
+
+    // Re-render to update button state
+    renderCards(activeFilter);
+  }
+}
+
+// Show toast notification
+function showQuickAddToast(message) {
+  const existing = document.querySelector('.quick-add-toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.className = 'quick-add-toast';
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    z-index: 10000;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  `;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2000);
+}
+
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
   renderCards();
@@ -65,8 +118,11 @@ function renderCards(filter = 'all') {
     });
   }
 
+  const userCards = getUserCards();
+
   container.innerHTML = filteredCards.map((card, index) => {
     const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : '';
+    const isInCollection = userCards.includes(card.id);
     return `
     <div class="credit-card fade-in" style="animation-delay: ${index * 0.1}s" onclick="openCardModal('${card.id}')">
       <div class="card-header" style="background: ${card.color}">
@@ -77,6 +133,9 @@ function renderCards(filter = 'all') {
           </div>
           ${cardVisual}
         </div>
+        <button class="quick-add-btn ${isInCollection ? 'added' : ''}" onclick="quickAddCard('${card.id}', event)" title="${isInCollection ? 'In My Cards' : 'Add to My Cards'}">
+          ${isInCollection ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '+'}
+        </button>
       </div>
       <div class="card-body">
         <div class="card-fee">
