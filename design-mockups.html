@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CardMax Design Mockups</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f5f5;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      color: #333;
+    }
+
+    .intro {
+      text-align: center;
+      color: #666;
+      margin-bottom: 3rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .mockup-grid {
+      display: grid;
+      gap: 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .mockup-container {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .mockup-label {
+      padding: 1.5rem 2rem;
+      background: #333;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mockup-label h2 {
+      font-size: 1.25rem;
+    }
+
+    .mockup-label span {
+      font-size: 0.875rem;
+      opacity: 0.7;
+    }
+
+    .mockup-frame {
+      height: 600px;
+      overflow: hidden;
+    }
+
+    /* ================================
+       THEME 1: MINIMAL NORDIC
+       Clean, light, Scandinavian-inspired
+    ================================ */
+    .theme-nordic {
+      --bg: #FAFAFA;
+      --surface: #FFFFFF;
+      --border: #E8E8E8;
+      --text: #1A1A1A;
+      --text-muted: #6B6B6B;
+      --accent: #2C5F2D;
+      --accent-light: #E8F5E9;
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 0;
+    }
+
+    .theme-nordic .nav {
+      background: var(--surface);
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .theme-nordic .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+    }
+
+    .theme-nordic .nav-links {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    .theme-nordic .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .theme-nordic .nav-links a.active {
+      color: var(--text);
+    }
+
+    .theme-nordic .content {
+      padding: 3rem 2rem;
+    }
+
+    .theme-nordic .hero {
+      margin-bottom: 3rem;
+    }
+
+    .theme-nordic .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .theme-nordic .hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .theme-nordic .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .theme-nordic .stat {
+      background: var(--surface);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .theme-nordic .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+
+    .theme-nordic .stat-value.positive { color: var(--accent); }
+
+    .theme-nordic .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .theme-nordic .card-list {
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .theme-nordic .card-list-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .theme-nordic .card-item {
+      display: flex;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      gap: 1rem;
+    }
+
+    .theme-nordic .card-item:last-child { border-bottom: none; }
+
+    .theme-nordic .card-visual {
+      width: 64px;
+      height: 40px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #1a1a1a, #333);
+    }
+
+    .theme-nordic .card-visual.blue { background: linear-gradient(135deg, #1a365d, #2c5282); }
+    .theme-nordic .card-visual.gold { background: linear-gradient(135deg, #744210, #975a16); }
+
+    .theme-nordic .card-info {
+      flex: 1;
+    }
+
+    .theme-nordic .card-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .theme-nordic .card-issuer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .theme-nordic .card-fee {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* ================================
+       THEME 2: PREMIUM LUXURY
+       Gold accents, glass morphism, elegant
+    ================================ */
+    .theme-luxury {
+      --bg: #0C0C0F;
+      --surface: rgba(255,255,255,0.03);
+      --surface-hover: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.08);
+      --text: #FFFFFF;
+      --text-muted: rgba(255,255,255,0.5);
+      --gold: #C9A962;
+      --gold-light: rgba(201,169,98,0.15);
+      font-family: 'Playfair Display', serif;
+      background: var(--bg);
+      background-image: radial-gradient(ellipse at top, rgba(201,169,98,0.08) 0%, transparent 50%);
+      color: var(--text);
+    }
+
+    .theme-luxury .nav {
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .theme-luxury .logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 2px;
+    }
+
+    .theme-luxury .nav-links {
+      display: flex;
+      gap: 3rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .theme-luxury .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .theme-luxury .nav-links a.active {
+      color: var(--gold);
+    }
+
+    .theme-luxury .content {
+      padding: 4rem 2.5rem;
+    }
+
+    .theme-luxury .hero {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .theme-luxury .hero h1 {
+      font-size: 2.75rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+      letter-spacing: 1px;
+    }
+
+    .theme-luxury .hero p {
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+    }
+
+    .theme-luxury .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .theme-luxury .stat {
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      padding: 2rem 1.5rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .theme-luxury .stat-value {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--gold);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .theme-luxury .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .theme-luxury .card-list {
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .theme-luxury .card-list-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .theme-luxury .card-item {
+      display: flex;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      gap: 1.5rem;
+    }
+
+    .theme-luxury .card-item:last-child { border-bottom: none; }
+
+    .theme-luxury .card-visual {
+      width: 72px;
+      height: 45px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+      border: 1px solid rgba(201,169,98,0.3);
+    }
+
+    .theme-luxury .card-visual.platinum {
+      background: linear-gradient(135deg, #4a4a4a, #2a2a2a);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .theme-luxury .card-visual.gold {
+      background: linear-gradient(135deg, #8B7355, #5C4D3C);
+      border-color: rgba(201,169,98,0.5);
+    }
+
+    .theme-luxury .card-info {
+      flex: 1;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .theme-luxury .card-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .theme-luxury .card-issuer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .theme-luxury .card-fee {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--gold);
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ================================
+       THEME 3: PLAYFUL VIBRANT
+       Bold colors, rounded shapes, energetic
+    ================================ */
+    .theme-playful {
+      --bg: #FFF8F0;
+      --surface: #FFFFFF;
+      --border: #FFE4CC;
+      --text: #2D2D2D;
+      --text-muted: #7A7A7A;
+      --primary: #FF6B35;
+      --secondary: #7B2CBF;
+      --tertiary: #00B4D8;
+      --success: #06D6A0;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .theme-playful .nav {
+      background: var(--surface);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--primary);
+    }
+
+    .theme-playful .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .theme-playful .nav-links {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .theme-playful .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.6rem 1.25rem;
+      border-radius: 50px;
+      transition: all 0.2s;
+    }
+
+    .theme-playful .nav-links a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .theme-playful .content {
+      padding: 2.5rem 2rem;
+    }
+
+    .theme-playful .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      padding: 2.5rem;
+      border-radius: 24px;
+      margin-bottom: 2rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-playful .hero::before {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      top: -50px;
+      right: -50px;
+    }
+
+    .theme-playful .hero h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+
+    .theme-playful .hero p {
+      opacity: 0.9;
+      font-size: 1rem;
+    }
+
+    .theme-playful .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .theme-playful .stat {
+      background: var(--surface);
+      padding: 1.5rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(255,107,53,0.1);
+    }
+
+    .theme-playful .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+
+    .theme-playful .stat:nth-child(1) .stat-value { color: var(--primary); }
+    .theme-playful .stat:nth-child(2) .stat-value { color: var(--secondary); }
+    .theme-playful .stat:nth-child(3) .stat-value { color: var(--tertiary); }
+    .theme-playful .stat:nth-child(4) .stat-value { color: var(--success); }
+
+    .theme-playful .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      font-weight: 500;
+    }
+
+    .theme-playful .card-list {
+      background: var(--surface);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .theme-playful .card-list-header {
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(90deg, var(--tertiary), var(--secondary));
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .theme-playful .card-item {
+      display: flex;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 2px dashed var(--border);
+      gap: 1rem;
+    }
+
+    .theme-playful .card-item:last-child { border-bottom: none; }
+
+    .theme-playful .card-visual {
+      width: 64px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
+    .theme-playful .card-visual.blue { background: linear-gradient(135deg, var(--tertiary), #0077B6); }
+    .theme-playful .card-visual.green { background: linear-gradient(135deg, var(--success), #059669); }
+
+    .theme-playful .card-info { flex: 1; }
+
+    .theme-playful .card-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .theme-playful .card-issuer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .theme-playful .card-fee {
+      font-weight: 700;
+      font-size: 0.9rem;
+      background: var(--secondary);
+      color: white;
+      padding: 0.35rem 0.75rem;
+      border-radius: 50px;
+    }
+
+    /* ================================
+       THEME 4: CORPORATE FINANCE
+       Professional, trustworthy, data-focused
+    ================================ */
+    .theme-corporate {
+      --bg: #F7F9FC;
+      --surface: #FFFFFF;
+      --border: #E2E8F0;
+      --text: #1E293B;
+      --text-muted: #64748B;
+      --primary: #0F4C81;
+      --secondary: #1E88E5;
+      --accent: #00897B;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .theme-corporate .nav {
+      background: var(--primary);
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .theme-corporate .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: white;
+      padding: 1.25rem 0;
+    }
+
+    .theme-corporate .nav-links {
+      display: flex;
+      height: 100%;
+    }
+
+    .theme-corporate .nav-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 3px solid transparent;
+    }
+
+    .theme-corporate .nav-links a.active {
+      color: white;
+      background: rgba(255,255,255,0.1);
+      border-bottom-color: white;
+    }
+
+    .theme-corporate .content {
+      padding: 2rem;
+    }
+
+    .theme-corporate .hero {
+      margin-bottom: 2rem;
+    }
+
+    .theme-corporate .hero h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: var(--text);
+    }
+
+    .theme-corporate .hero p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .theme-corporate .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .theme-corporate .stat {
+      background: var(--surface);
+      padding: 1.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+    }
+
+    .theme-corporate .stat:nth-child(2) { border-left-color: var(--secondary); }
+    .theme-corporate .stat:nth-child(3) { border-left-color: var(--accent); }
+    .theme-corporate .stat:nth-child(4) { border-left-color: #F59E0B; }
+
+    .theme-corporate .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .theme-corporate .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .theme-corporate .card-list {
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .theme-corporate .card-list-header {
+      padding: 1rem 1.5rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: grid;
+      grid-template-columns: 80px 1fr 120px 100px;
+      gap: 1rem;
+    }
+
+    .theme-corporate .card-item {
+      display: grid;
+      grid-template-columns: 80px 1fr 120px 100px;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      gap: 1rem;
+    }
+
+    .theme-corporate .card-item:last-child { border-bottom: none; }
+    .theme-corporate .card-item:hover { background: var(--bg); }
+
+    .theme-corporate .card-visual {
+      width: 60px;
+      height: 38px;
+      border-radius: 4px;
+      background: var(--primary);
+    }
+
+    .theme-corporate .card-visual.blue { background: var(--secondary); }
+    .theme-corporate .card-visual.teal { background: var(--accent); }
+
+    .theme-corporate .card-info { }
+
+    .theme-corporate .card-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .theme-corporate .card-issuer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .theme-corporate .card-status {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .theme-corporate .card-fee {
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: right;
+    }
+
+    /* ================================
+       THEME 5: RETRO BANKING
+       Nostalgic, paper textures, vintage
+    ================================ */
+    .theme-retro {
+      --bg: #F5F1E8;
+      --surface: #FFFEF9;
+      --border: #D4C9B0;
+      --text: #3D3428;
+      --text-muted: #7A6F5D;
+      --primary: #8B4513;
+      --secondary: #2F4F4F;
+      --accent: #B8860B;
+      font-family: 'Libre Baskerville', serif;
+      background: var(--bg);
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.02'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z'/%3E%3C/g%3E%3C/svg%3E");
+      color: var(--text);
+    }
+
+    .theme-retro .nav {
+      background: var(--primary);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 4px solid var(--accent);
+    }
+
+    .theme-retro .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .theme-retro .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .theme-retro .nav-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .theme-retro .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .theme-retro .content {
+      padding: 2.5rem 2rem;
+    }
+
+    .theme-retro .hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding: 2rem;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 0;
+      position: relative;
+    }
+
+    .theme-retro .hero::before,
+    .theme-retro .hero::after {
+      content: '~';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: var(--border);
+    }
+
+    .theme-retro .hero::before { left: 1.5rem; }
+    .theme-retro .hero::after { right: 1.5rem; }
+
+    .theme-retro .hero h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .theme-retro .hero p {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .theme-retro .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .theme-retro .stat {
+      background: var(--surface);
+      padding: 1.5rem;
+      border: 2px solid var(--border);
+      text-align: center;
+    }
+
+    .theme-retro .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .theme-retro .stat-value.positive { color: var(--secondary); }
+
+    .theme-retro .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .theme-retro .card-list {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      overflow: hidden;
+    }
+
+    .theme-retro .card-list-header {
+      padding: 1rem 1.5rem;
+      background: var(--secondary);
+      color: white;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .theme-retro .card-item {
+      display: flex;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px dashed var(--border);
+      gap: 1.5rem;
+    }
+
+    .theme-retro .card-item:last-child { border-bottom: none; }
+
+    .theme-retro .card-visual {
+      width: 70px;
+      height: 44px;
+      border-radius: 0;
+      background: var(--primary);
+      border: 2px solid var(--accent);
+    }
+
+    .theme-retro .card-visual.green { background: var(--secondary); }
+    .theme-retro .card-visual.gold { background: var(--accent); border-color: var(--primary); }
+
+    .theme-retro .card-info { flex: 1; }
+
+    .theme-retro .card-name {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .theme-retro .card-issuer {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .theme-retro .card-fee {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--primary);
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>CardMax Design Mockups</h1>
+  <p class="intro">5 distinct visual directions for your credit card tracker. Each theme has a unique personality and aesthetic. Click to explore each concept.</p>
+
+  <div class="mockup-grid">
+
+    <!-- Theme 1: Minimal Nordic -->
+    <div class="mockup-container">
+      <div class="mockup-label">
+        <h2>1. Minimal Nordic</h2>
+        <span>Clean, light, Scandinavian-inspired simplicity</span>
+      </div>
+      <div class="mockup-frame theme-nordic">
+        <div class="nav">
+          <div class="logo">CardMax</div>
+          <div class="nav-links">
+            <a href="#" class="active">My Cards</a>
+            <a href="#">All Cards</a>
+            <a href="#">Compare</a>
+          </div>
+        </div>
+        <div class="content">
+          <div class="hero">
+            <h1>Your Cards</h1>
+            <p>Track benefits and maximize rewards</p>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-value">4</div>
+              <div class="stat-label">Cards</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">$1,790</div>
+              <div class="stat-label">Annual Fees</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">$2,850</div>
+              <div class="stat-label">Credits</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value positive">+$1,060</div>
+              <div class="stat-label">Net Value</div>
+            </div>
+          </div>
+          <div class="card-list">
+            <div class="card-list-header">My Cards</div>
+            <div class="card-item">
+              <div class="card-visual blue"></div>
+              <div class="card-info">
+                <div class="card-name">Sapphire Reserve</div>
+                <div class="card-issuer">Chase</div>
+              </div>
+              <div class="card-fee">$550/yr</div>
+            </div>
+            <div class="card-item">
+              <div class="card-visual gold"></div>
+              <div class="card-info">
+                <div class="card-name">Gold Card</div>
+                <div class="card-issuer">American Express</div>
+              </div>
+              <div class="card-fee">$250/yr</div>
+            </div>
+            <div class="card-item">
+              <div class="card-visual"></div>
+              <div class="card-info">
+                <div class="card-name">Platinum Card</div>
+                <div class="card-issuer">American Express</div>
+              </div>
+              <div class="card-fee">$695/yr</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 2: Premium Luxury -->
+    <div class="mockup-container">
+      <div class="mockup-label">
+        <h2>2. Premium Luxury</h2>
+        <span>Gold accents, glass morphism, refined elegance</span>
+      </div>
+      <div class="mockup-frame theme-luxury">
+        <div class="nav">
+          <div class="logo">CARDMAX</div>
+          <div class="nav-links">
+            <a href="#" class="active">My Cards</a>
+            <a href="#">Collection</a>
+            <a href="#">Compare</a>
+          </div>
+        </div>
+        <div class="content">
+          <div class="hero">
+            <h1>Your Portfolio</h1>
+            <p>Premium credit card management</p>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-value">4</div>
+              <div class="stat-label">Cards</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">$1,790</div>
+              <div class="stat-label">Annual Fees</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">$2,850</div>
+              <div class="stat-label">Credits</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">+$1,060</div>
+              <div class="stat-label">Net Value</div>
+            </div>
+          </div>
+          <div class="card-list">
+            <div class="card-list-header">My Collection</div>
+            <div class="card-item">
+              <div class="card-visual platinum"></div>
+              <div class="card-info">
+                <div class="card-name">Platinum Card</div>
+                <div class="card-issuer">American Express</div>
+              </div>
+              <div class="card-fee">$695/yr</div>
+            </div>
+            <div class="card-item">
+              <div class="card-visual gold"></div>
+              <div class="card-info">
+                <div class="card-name">Gold Card</div>
+                <div class="card-issuer">American Express</div>
+              </div>
+              <div class="card-fee">$250/yr</div>
+            </div>
+            <div class="card-item">
+              <div class="card-visual"></div>
+              <div class="card-info">
+                <div class="card-name">Sapphire Reserve</div>
+                <div class="card-issuer">Chase</div>
+              </div>
+              <div class="card-fee">$550/yr</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 3: Playful Vibrant -->
+    <div class="mockup-container">
+      <div class="mockup-label">
+        <h2>3. Playful Vibrant</h2>
+        <span>Bold colors, rounded shapes, energetic feel</span>
+      </div>
+      <div class="mockup-frame theme-playful">
+        <div class="nav">
+          <div class="logo">CardMax</div>
+          <div class="nav-links">
+            <a href="#" class="active">My Cards</a>
+            <a href="#">Browse</a>
+            <a href="#">Compare</a>
+          </div>
+        </div>
+        <div class="content">
+          <div class="hero">
+            <h1>Hey there!</h1>
+            <p>Let's maximize your card rewards today</p>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-value">4</div>
+              <div class="stat-label">My Cards</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">$1,790</div>
+              <div class="stat-label">Fees</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">$2,850</div>
+              <div class="stat-label">Credits</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">+$1,060</div>
+              <div class="stat-label">Savings</div>
+            </div>
+          </div>
+          <div class="card-list">
+            <div class="card-list-header">My Card Collection</div>
+            <div class="card-item">
+              <div class="card-visual"></div>
+              <div class="card-info">
+                <div class="card-name">Sapphire Reserve</div>
+                <div class="card-issuer">Chase</div>
+              </div>
+              <div class="card-fee">$550</div>
+            </div>
+            <div class="card-item">
+              <div class="card-visual blue"></div>
+              <div class="card-info">
+                <div class="card-name">Gold Card</div>
+                <div class="card-issuer">American Express</div>
+              </div>
+              <div class="card-fee">$250</div>
+            </div>
+            <div class="card-item">
+              <div class="card-visual green"></div>
+              <div class="card-info">
+                <div class="card-name">Venture X</div>
+                <div class="card-issuer">Capital One</div>
+              </div>
+              <div class="card-fee">$395</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 4: Corporate Finance -->
+    <div class="mockup-container">
+      <div class="mockup-label">
+        <h2>4. Corporate Finance</h2>
+        <span>Professional, trustworthy, data-focused</span>
+      </div>
+      <div class="mockup-frame theme-corporate">
+        <div class="nav">
+          <div class="logo">CardMax</div>
+          <div class="nav-links">
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Cards</a>
+            <a href="#">Analysis</a>
+            <a href="#">Reports</a>
+          </div>
+        </div>
+        <div class="content">
+          <div class="hero">
+            <h1>Card Portfolio Overview</h1>
+            <p>Track and optimize your credit card benefits</p>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-label">Active Cards</div>
+              <div class="stat-value">4</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Annual Fees</div>
+              <div class="stat-value">$1,790</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Available Credits</div>
+              <div class="stat-value">$2,850</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Net Benefit</div>
+              <div class="stat-value">+$1,060</div>
+            </div>
+          </div>
+          <div class="card-list">
+            <div class="card-list-header">
+              <span>Card</span>
+              <span>Details</span>
+              <span>Status</span>
+              <span>Annual Fee</span>
+            </div>
+            <div class="card-item">
+              <div class="card-visual"></div>
+              <div class="card-info">
+                <div class="card-name">Sapphire Reserve</div>
+                <div class="card-issuer">Chase</div>
+              </div>
+              <div class="card-status">Active</div>
+              <div class="card-fee">$550.00</div>
+            </div>
+            <div class="card-item">
+              <div class="card-visual blue"></div>
+              <div class="card-info">
+                <div class="card-name">Platinum Card</div>
+                <div class="card-issuer">American Express</div>
+              </div>
+              <div class="card-status">Active</div>
+              <div class="card-fee">$695.00</div>
+            </div>
+            <div class="card-item">
+              <div class="card-visual teal"></div>
+              <div class="card-info">
+                <div class="card-name">Gold Card</div>
+                <div class="card-issuer">American Express</div>
+              </div>
+              <div class="card-status">Active</div>
+              <div class="card-fee">$250.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme 5: Retro Banking -->
+    <div class="mockup-container">
+      <div class="mockup-label">
+        <h2>5. Retro Banking</h2>
+        <span>Nostalgic, paper textures, vintage charm</span>
+      </div>
+      <div class="mockup-frame theme-retro">
+        <div class="nav">
+          <div class="logo">CardMax</div>
+          <div class="nav-links">
+            <a href="#" class="active">Ledger</a>
+            <a href="#">Catalog</a>
+            <a href="#">Compare</a>
+          </div>
+        </div>
+        <div class="content">
+          <div class="hero">
+            <h1>Your Card Register</h1>
+            <p>A proper accounting of your credit instruments</p>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-value">4</div>
+              <div class="stat-label">Cards</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">$1,790</div>
+              <div class="stat-label">Dues</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">$2,850</div>
+              <div class="stat-label">Credits</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value positive">+$1,060</div>
+              <div class="stat-label">Balance</div>
+            </div>
+          </div>
+          <div class="card-list">
+            <div class="card-list-header">Card Register</div>
+            <div class="card-item">
+              <div class="card-visual"></div>
+              <div class="card-info">
+                <div class="card-name">Sapphire Reserve</div>
+                <div class="card-issuer">Chase Bank</div>
+              </div>
+              <div class="card-fee">$550</div>
+            </div>
+            <div class="card-item">
+              <div class="card-visual green"></div>
+              <div class="card-info">
+                <div class="card-name">Platinum Card</div>
+                <div class="card-issuer">American Express Co.</div>
+              </div>
+              <div class="card-fee">$695</div>
+            </div>
+            <div class="card-item">
+              <div class="card-visual gold"></div>
+              <div class="card-info">
+                <div class="card-name">Gold Card</div>
+                <div class="card-issuer">American Express Co.</div>
+              </div>
+              <div class="card-fee">$250</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
