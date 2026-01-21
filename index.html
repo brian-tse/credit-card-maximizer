@@ -6,7 +6,7 @@
   <title>CardMax - My Cards Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <style>
     /* My Cards Page Specific Styles */
@@ -37,8 +37,8 @@
 
     .search-input:focus {
       outline: none;
-      border-color: var(--accent-blue);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      border-color: var(--text);
+      box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.05);
     }
 
     .search-icon {
@@ -75,8 +75,8 @@
     }
 
     .card-selector-item.selected {
-      border-color: var(--accent-blue);
-      background: rgba(59, 130, 246, 0.1);
+      border-color: var(--accent);
+      background: var(--accent-light);
     }
 
     .card-selector-item .card-color-bar {
@@ -105,7 +105,7 @@
 
     .card-selector-item .card-fee {
       font-size: 0.8rem;
-      color: var(--accent-purple);
+      color: var(--text-secondary);
     }
 
     .card-selector-item .card-checkbox {
@@ -121,8 +121,8 @@
     }
 
     .card-selector-item.selected .card-checkbox {
-      background: var(--accent-blue);
-      border-color: var(--accent-blue);
+      background: var(--accent);
+      border-color: var(--accent);
       color: white;
     }
 
@@ -223,7 +223,7 @@
 
     .my-card-item .remove-btn:hover {
       opacity: 1;
-      color: #ef4444;
+      color: var(--warning);
     }
 
     .my-card-settings {
@@ -274,7 +274,7 @@
     }
 
     .save-status.saved {
-      color: var(--accent-green);
+      color: var(--accent);
     }
 
     /* Empty State */
@@ -302,23 +302,31 @@
     }
 
     .quick-stat-card {
-      background: var(--bg-secondary);
+      background: var(--surface);
       border-radius: var(--radius);
-      padding: 1.25rem;
-      text-align: center;
-      border: 1px solid var(--border-color);
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.15s ease;
+    }
+
+    .quick-stat-card:hover {
+      box-shadow: var(--shadow);
     }
 
     .quick-stat-value {
-      font-size: 1.75rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      color: var(--accent-blue);
+      color: var(--text);
+      letter-spacing: -0.5px;
     }
 
     .quick-stat-label {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
+      font-size: 0.75rem;
+      color: var(--text-muted);
       margin-top: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 500;
     }
   </style>
 </head>
@@ -326,7 +334,7 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
-      <a href="index.html" class="logo">💳 CardMax</a>
+      <a href="index.html" class="logo">CardMax</a>
       <ul class="nav-links">
         <li><a href="index.html" class="active">My Cards</a></li>
         <li><a href="pages/cards.html">All Cards</a></li>
@@ -350,9 +358,9 @@
   <!-- Main Content -->
   <div class="container">
     <!-- Hero Section -->
-    <section class="hero" style="padding: 2rem;">
-      <h1 style="font-size: 2rem;">👋 Welcome to CardMax</h1>
-      <p>Select the credit cards you own to track benefits and maximize your rewards.</p>
+    <section class="hero">
+      <h1>Your Cards</h1>
+      <p>Track benefits and maximize rewards</p>
     </section>
 
     <!-- Quick Stats -->
@@ -377,7 +385,7 @@
 
     <!-- My Cards Section -->
     <section class="my-cards-section" id="my-cards-section">
-      <h2>🗂️ My Cards</h2>
+      <h2>My Cards</h2>
       <div id="my-cards-list">
         <!-- User's selected cards will be shown here -->
       </div>
@@ -386,7 +394,7 @@
           <span class="save-status" id="save-status">Changes not saved</span>
           <p class="text-muted" style="font-size: 0.75rem; margin-top: 0.25rem;">Saving generates a backup code that's copied to your clipboard. Store it to restore your data later.</p>
         </div>
-        <button class="btn btn-primary" id="save-btn" onclick="saveMyCards()">💾 Save My Cards</button>
+        <button class="btn btn-primary" id="save-btn" onclick="saveMyCards()">Save Changes</button>
       </div>
 
       <!-- Save/Restore Data (moved here from bottom) -->
@@ -396,9 +404,9 @@
     <!-- Add Cards Section -->
     <section>
       <div class="my-cards-header">
-        <h2 style="margin: 0;">➕ Add Cards to Your Collection</h2>
+        <h2 style="margin: 0;">Add Cards</h2>
         <div class="search-container">
-          <span class="search-icon">🔍</span>
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           <input type="text" class="search-input" id="card-search" placeholder="Search cards..." oninput="filterCardSelector()">
         </div>
       </div>
@@ -408,7 +416,7 @@
       </div>
 
       <div style="text-align: center; margin-top: 1.5rem;">
-        <a href="pages/cards.html#suggest" style="color: var(--accent-blue); font-size: 0.9rem;">
+        <a href="pages/cards.html#suggest" style="color: var(--text-secondary); font-size: 0.85rem; text-decoration: none;">
           Can't find your card? Suggest one →
         </a>
       </div>
@@ -424,6 +432,7 @@
     let selectedCards = [];
     let cardSignupDates = {};
     let hasUnsavedChanges = false;
+    let expandedCardId = null; // Track which card's settings are open
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
@@ -543,7 +552,7 @@
               <div class="card-issuer">${card.issuer}</div>
               <div class="card-fee">$${card.annualFee}/year</div>
             </div>
-            <div class="card-checkbox">${isSelected ? '✓' : ''}</div>
+            <div class="card-checkbox">${isSelected ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}</div>
           </div>
         `;
       }).join('');
@@ -666,8 +675,12 @@
                 <div class="card-subtitle">$${card.annualFee}/year${dateDisplay ? ' · ' + dateDisplay : ''}</div>
               </div>
               <div class="card-actions">
-                <button class="settings-btn" title="Settings">⚙️</button>
-                <button class="remove-btn" onclick="event.stopPropagation(); removeCard('${cardId}')" title="Remove card">✕</button>
+                <button class="settings-btn" title="Settings">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </button>
+                <button class="remove-btn" onclick="event.stopPropagation(); removeCard('${cardId}')" title="Remove card">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
               </div>
             </div>
             <div class="my-card-settings" id="settings-${cardId}" style="display: none;">
@@ -689,13 +702,23 @@
           </div>
         `;
       }).join('');
+
+      // Restore expanded settings panel if one was open
+      if (expandedCardId) {
+        const settingsEl = document.getElementById(`settings-${expandedCardId}`);
+        if (settingsEl) {
+          settingsEl.style.display = 'block';
+        }
+      }
     }
 
     // Toggle card settings panel
     function toggleCardSettings(cardId) {
       const settingsEl = document.getElementById(`settings-${cardId}`);
       if (settingsEl) {
-        settingsEl.style.display = settingsEl.style.display === 'none' ? 'block' : 'none';
+        const isOpening = settingsEl.style.display === 'none';
+        settingsEl.style.display = isOpening ? 'block' : 'none';
+        expandedCardId = isOpening ? cardId : null;
       }
     }
 
@@ -741,7 +764,7 @@
       document.getElementById('stat-annual-fees').textContent = '$' + totalFees.toLocaleString();
       document.getElementById('stat-total-credits').textContent = '$' + totalCredits.toLocaleString();
       document.getElementById('stat-net-value').textContent = (netValue >= 0 ? '+$' : '-$') + Math.abs(netValue).toLocaleString();
-      document.getElementById('stat-net-value').style.color = netValue >= 0 ? 'var(--accent-green)' : 'var(--accent-orange)';
+      document.getElementById('stat-net-value').style.color = netValue >= 0 ? 'var(--accent)' : 'var(--warning)';
     }
   </script>
 </body>
