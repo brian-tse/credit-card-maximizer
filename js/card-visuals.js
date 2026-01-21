@@ -6,7 +6,7 @@ const CARDS_WITH_IMAGES = [
   // Amex Personal
   'amex-platinum', 'amex-gold', 'amex-green', 'amex-blue-cash-preferred',
   // Amex Business
-  'amex-business-platinum', 'amex-business-gold', 'amex-business-green',
+  'amex-business-platinum', 'amex-business-gold', 'amex-business-green', 'amex-blue-business-plus',
   // Bilt
   'bilt-blue', 'bilt-obsidian', 'bilt-palladium',
   // Capital One
