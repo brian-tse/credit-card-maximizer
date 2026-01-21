@@ -341,16 +341,19 @@ function renderComparison() {
     </div>
 
     <!-- Summary Cards -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
-      ${cards.map(card => {
-        const bestFor = getBestFor(card);
-        return `
-          <div style="background: var(--bg-secondary); border-radius: var(--radius); padding: 1.5rem; text-align: center; border-top: 4px solid ${card.color};">
-            <h4 style="margin-bottom: 0.5rem;">${card.name}</h4>
-            <p style="font-size: 0.875rem; color: var(--text-secondary);">Best for: ${bestFor}</p>
-          </div>
-        `;
-      }).join('')}
+    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+      <div style="width: 140px; min-width: 140px; flex-shrink: 0;"></div>
+      <div style="display: grid; grid-template-columns: repeat(${cards.length}, 1fr); gap: 1rem; flex: 1;">
+        ${cards.map(card => {
+          const bestFor = getBestFor(card);
+          return `
+            <div style="background: var(--surface); border-radius: var(--radius); padding: 1.25rem; text-align: center; border-top: 4px solid ${card.color}; border: 1px solid var(--border);">
+              <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem;">${card.name}</h4>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Best for: ${bestFor}</p>
+            </div>
+          `;
+        }).join('')}
+      </div>
     </div>
   `;
 }

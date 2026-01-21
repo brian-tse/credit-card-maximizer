@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CardMax - My Cards Dashboard</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180x180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -252,6 +257,22 @@
       color: var(--text-secondary);
     }
 
+    /* Add date hint */
+    .my-card-item .add-date-hint {
+      color: var(--text-muted);
+      font-style: italic;
+      font-size: 0.7rem;
+    }
+
+    .my-card-item {
+      cursor: pointer;
+    }
+
+    .my-card-item.expanded {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+
     /* Save Button Area */
     .save-actions {
       display: flex;
@@ -408,7 +429,7 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
-      <a href="index.html" class="logo">CardMax</a>
+      <a href="index.html" class="logo"><img src="images/favicon-32x32.png" alt="CardMax" class="logo-icon">CardMax</a>
       <ul class="nav-links">
         <li><a href="index.html" class="active">My Cards</a></li>
         <li><a href="pages/cards.html">All Cards</a></li>
@@ -699,24 +720,29 @@
       });
     }
 
-    // Render card selector grid
+    // Render card selector grid (only cards NOT in collection)
     function renderCardSelector() {
       const container = document.getElementById('card-selector');
 
-      // Sort cards: selected first, then by issuer
-      const sortedCards = [...CARDS_DATABASE].sort((a, b) => {
-        const aSelected = selectedCards.includes(a.id) ? 0 : 1;
-        const bSelected = selectedCards.includes(b.id) ? 0 : 1;
-        if (aSelected !== bSelected) return aSelected - bSelected;
-        return a.issuer.localeCompare(b.issuer);
-      });
+      // Filter out cards already in collection, then sort by issuer
+      const availableCards = CARDS_DATABASE
+        .filter(card => !selectedCards.includes(card.id))
+        .sort((a, b) => a.issuer.localeCompare(b.issuer));
 
-      container.innerHTML = sortedCards.map(card => {
-        const isSelected = selectedCards.includes(card.id);
+      if (availableCards.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-secondary);">
+            <p>You've added all available cards!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = availableCards.map(card => {
         const shortIssuer = getShortIssuer(card.issuer);
         const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : `<div class="card-color-bar" style="background: ${card.color}"></div>`;
         return `
-          <div class="card-selector-item ${isSelected ? 'selected' : ''}"
+          <div class="card-selector-item"
                data-id="${card.id}"
                data-name="${card.name}"
                data-issuer="${card.issuer}"
@@ -727,7 +753,7 @@
               <div class="card-issuer">${card.issuer}</div>
               <div class="card-fee">$${card.annualFee}/year</div>
             </div>
-            <div class="card-checkbox">${isSelected ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}</div>
+            <div class="card-checkbox"></div>
           </div>
         `;
       }).join('');
@@ -810,6 +836,19 @@
       updateSaveStatus();
     }
 
+    // Toggle date picker for a card
+    function toggleDatePicker(cardId, event) {
+      // Don't toggle if clicking on the remove button or date inputs
+      if (event.target.closest('.action-btn') || event.target.closest('.date-row')) return;
+
+      if (expandedCardId === cardId) {
+        expandedCardId = null;
+      } else {
+        expandedCardId = cardId;
+      }
+      renderMyCards();
+    }
+
     // Render my cards list
     function renderMyCards() {
       const container = document.getElementById('my-cards-list');
@@ -853,9 +892,10 @@
         const dateDisplay = hasDate
           ? `${months[signupDate.month] || ''}${signupDate.day ? ' ' + signupDate.day : ''}${signupDate.year ? ', ' + signupDate.year : ''}`.trim()
           : '';
+        const isExpanded = expandedCardId === cardId;
 
         return `
-          <div class="my-card-item">
+          <div class="my-card-item ${isExpanded ? 'expanded' : ''}" onclick="toggleDatePicker('${cardId}', event)">
             <div class="card-actions">
               <button class="action-btn remove" onclick="removeCard('${cardId}')" title="Remove">×</button>
             </div>
@@ -864,13 +904,16 @@
               <div class="card-name">${shortIssuer} ${getShortCardName(card.name)}</div>
               <div class="card-meta">
                 <span>$${card.annualFee}/yr</span>
-                ${dateDisplay ? `<span>${dateDisplay}</span>` : ''}
+                ${dateDisplay ? `<span>${dateDisplay}</span>` : '<span class="add-date-hint">+ Add date</span>'}
               </div>
             </div>
-            <div class="date-row">
+            <div class="date-row" style="display: ${isExpanded ? 'flex' : 'none'};">
               <label>Opened:</label>
               <select onchange="updateSignupDate('${cardId}', 'month', this.value)">
                 ${months.map((m, i) => `<option value="${i}" ${signupDate.month === i ? 'selected' : ''}>${m || 'Mo'}</option>`).join('')}
+              </select>
+              <select onchange="updateSignupDate('${cardId}', 'day', this.value)">
+                ${days.map(d => `<option value="${d}" ${signupDate.day == d ? 'selected' : ''}>${d || 'Day'}</option>`).join('')}
               </select>
               <select onchange="updateSignupDate('${cardId}', 'year', this.value)">
                 ${years.map(y => `<option value="${y}" ${signupDate.year == y ? 'selected' : ''}>${y || 'Yr'}</option>`).join('')}

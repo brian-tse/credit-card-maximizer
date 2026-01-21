@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Compare Cards - CardMax</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180x180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -157,6 +162,7 @@
       border-collapse: collapse;
       background: var(--surface);
       min-width: 600px;
+      table-layout: fixed;
     }
 
     .comparison-table th,
@@ -175,9 +181,10 @@
       z-index: 10;
     }
 
-    .comparison-table th:first-child {
-      width: 180px;
-      min-width: 180px;
+    .comparison-table th:first-child,
+    .comparison-table td:first-child {
+      width: 140px;
+      min-width: 140px;
     }
 
     .comparison-table tbody tr:hover {
@@ -343,7 +350,7 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
-      <a href="../index.html" class="logo">CardMax</a>
+      <a href="../index.html" class="logo"><img src="../images/favicon-32x32.png" alt="CardMax" class="logo-icon">CardMax</a>
       <ul class="nav-links">
         <li><a href="../index.html">My Cards</a></li>
         <li><a href="cards.html">All Cards</a></li>
