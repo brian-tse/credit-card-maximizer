@@ -128,6 +128,226 @@
       font-size: 1.1rem;
       color: var(--accent);
       flex-shrink: 0;
+      text-align: right;
+    }
+
+    .multiplier-badge .effective-return {
+      font-size: 0.75rem;
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+
+    .multiplier-badge .multiplier-raw {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .settings-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .settings-btn:hover {
+      background: var(--bg);
+      border-color: var(--accent-blue);
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* Valuations Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      border-radius: var(--radius);
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+      padding: 0;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: var(--text);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .valuation-category {
+      margin-bottom: 1.5rem;
+    }
+
+    .valuation-category h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .valuation-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      gap: 1rem;
+    }
+
+    .valuation-name {
+      flex: 1;
+      font-size: 0.9rem;
+    }
+
+    .valuation-input-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .valuation-input {
+      width: 70px;
+      padding: 0.4rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.9rem;
+      text-align: right;
+    }
+
+    .valuation-input:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+
+    .valuation-unit {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      width: 20px;
+    }
+
+    .valuation-reset {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .valuation-item:hover .valuation-reset {
+      opacity: 1;
+    }
+
+    .valuation-reset:hover {
+      color: var(--accent-blue);
+      background: var(--bg);
+    }
+
+    .valuation-modified .valuation-reset {
+      opacity: 1;
+      color: var(--accent-orange);
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .btn-reset-all {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .btn-reset-all:hover {
+      border-color: var(--accent-orange);
+      color: var(--accent-orange);
+    }
+
+    .btn-done {
+      background: var(--accent-blue);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .btn-done:hover {
+      opacity: 0.9;
     }
 
     .empty-category {
@@ -215,7 +435,25 @@
     </div>
   </div>
 
+  <!-- Valuations Modal -->
+  <div id="valuations-modal" class="modal-overlay" onclick="closeValuationsModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Point Valuations</h2>
+        <button class="modal-close" onclick="closeValuationsModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="valuations-list">
+        <!-- Populated by JavaScript -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn-reset-all" onclick="resetAllValuations()">Reset All to Defaults</button>
+        <button class="btn-done" onclick="closeValuationsModal()">Done</button>
+      </div>
+    </div>
+  </div>
+
   <script src="../data/cards.js"></script>
+  <script src="../data/valuations.js"></script>
   <script src="../js/card-visuals.js"></script>
   <script src="../js/save-code.js"></script>
   <script src="../js/firebase-config.js"></script>
@@ -293,13 +531,20 @@
       const categories = {};
 
       userCards.forEach(card => {
+        const pointValue = Valuations.getCardPointValue(card);
+        const currencyName = Valuations.getCardCurrencyName(card);
+
         // Add base earning
         if (!categories['All Purchases']) {
           categories['All Purchases'] = [];
         }
+        const baseEffectiveReturn = card.earning.base * pointValue;
         categories['All Purchases'].push({
           card: card,
           multiplier: card.earning.base,
+          effectiveReturn: baseEffectiveReturn,
+          pointValue: pointValue,
+          currencyName: currencyName,
           description: 'Base earning rate'
         });
 
@@ -309,17 +554,21 @@
           if (!categories[categoryName]) {
             categories[categoryName] = [];
           }
+          const effectiveReturn = cat.multiplier * pointValue;
           categories[categoryName].push({
             card: card,
             multiplier: cat.multiplier,
+            effectiveReturn: effectiveReturn,
+            pointValue: pointValue,
+            currencyName: currencyName,
             description: cat.description
           });
         });
       });
 
-      // Sort each category by multiplier (highest first)
+      // Sort each category by EFFECTIVE RETURN (highest first)
       Object.keys(categories).forEach(cat => {
-        categories[cat].sort((a, b) => b.multiplier - a.multiplier);
+        categories[cat].sort((a, b) => b.effectiveReturn - a.effectiveReturn);
       });
 
       return categories;
@@ -352,8 +601,15 @@
 
       let html = `
         <div class="page-intro">
-          <h2>Your Card Rankings by Category</h2>
-          <p>Based on the ${userCards.length} card${userCards.length > 1 ? 's' : ''} in your collection. Cards are ranked by earning multiplier for each spending category.</p>
+          <div class="page-header">
+            <div>
+              <h2>Your Card Rankings by Category</h2>
+              <p>Based on the ${userCards.length} card${userCards.length > 1 ? 's' : ''} in your collection. Cards are ranked by <strong>effective return rate</strong> (multiplier × point value).</p>
+            </div>
+            <button class="settings-btn" onclick="openValuationsModal()">
+              <span>⚙️</span> Point Values
+            </button>
+          </div>
         </div>
         <div class="category-grid">
       `;
@@ -387,7 +643,10 @@
                 </div>
                 <div class="card-ranking-description">${item.description}</div>
               </div>
-              <div class="multiplier-badge">${item.multiplier}x</div>
+              <div class="multiplier-badge">
+                <div class="effective-return">${item.effectiveReturn.toFixed(1)}%</div>
+                <div class="multiplier-raw">${item.multiplier}x @ ${item.pointValue.toFixed(2)}¢</div>
+              </div>
             </li>
           `;
         });
@@ -400,6 +659,93 @@
 
       html += '</div>';
       container.innerHTML = html;
+    }
+
+    // Open valuations modal
+    function openValuationsModal() {
+      const modal = document.getElementById('valuations-modal');
+      const list = document.getElementById('valuations-list');
+
+      const valuations = Valuations.getValuations();
+      const customValuations = JSON.parse(localStorage.getItem('cardmax_point_valuations') || '{}');
+
+      // Group by category
+      const categories = {};
+      Object.entries(valuations).forEach(([key, val]) => {
+        if (!categories[val.category]) {
+          categories[val.category] = [];
+        }
+        categories[val.category].push({ key, ...val, isModified: customValuations[key] !== undefined });
+      });
+
+      // Define category order
+      const categoryOrder = ['Transferable Bank Points', 'Airline Miles', 'Hotel Points', 'Cash Back'];
+
+      let html = '';
+      categoryOrder.forEach(catName => {
+        if (!categories[catName]) return;
+        const items = categories[catName];
+
+        html += `
+          <div class="valuation-category">
+            <h3>${catName}</h3>
+            ${items.map(item => `
+              <div class="valuation-item ${item.isModified ? 'valuation-modified' : ''}">
+                <span class="valuation-name">${item.name}</span>
+                <div class="valuation-input-group">
+                  <input type="number"
+                         class="valuation-input"
+                         id="val-${item.key}"
+                         value="${item.value.toFixed(2)}"
+                         step="0.01"
+                         min="0"
+                         max="10"
+                         onchange="updateValuation('${item.key}', this.value)">
+                  <span class="valuation-unit">¢</span>
+                  <button class="valuation-reset" onclick="resetSingleValuation('${item.key}')" title="Reset to default">↺</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      });
+
+      list.innerHTML = html;
+      modal.classList.add('active');
+    }
+
+    // Close valuations modal
+    function closeValuationsModal(event) {
+      if (event && event.target !== event.currentTarget) return;
+      document.getElementById('valuations-modal').classList.remove('active');
+      render(); // Re-render with updated valuations
+    }
+
+    // Update a single valuation
+    function updateValuation(key, value) {
+      const numValue = parseFloat(value);
+      if (!isNaN(numValue) && numValue >= 0 && numValue <= 10) {
+        Valuations.saveValuation(key, numValue);
+        // Update the modified state
+        const item = document.getElementById('val-' + key).closest('.valuation-item');
+        item.classList.add('valuation-modified');
+      }
+    }
+
+    // Reset a single valuation to default
+    function resetSingleValuation(key) {
+      Valuations.resetValuation(key);
+      const input = document.getElementById('val-' + key);
+      input.value = Valuations.DEFAULT[key].value.toFixed(2);
+      input.closest('.valuation-item').classList.remove('valuation-modified');
+    }
+
+    // Reset all valuations
+    function resetAllValuations() {
+      if (confirm('Reset all point valuations to their default values?')) {
+        Valuations.resetAllValuations();
+        openValuationsModal(); // Refresh the modal
+      }
     }
 
     // Initialize

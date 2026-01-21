@@ -46,7 +46,7 @@ const CARDS_DATABASE = [
       { name: "Select Hotels Credit (2026)", amount: 250, frequency: "annual", type: "travel", description: "IHG, Montage, Pendry, Omni, Virgin Hotels via Chase Travel" },
       { name: "StubHub/viagogo Credit", amount: 300, frequency: "semiannual", type: "entertainment", description: "$150 Jan-Jun, $150 Jul-Dec through Dec 2027", semiannualAmount: 150 },
       { name: "Lyft Credit", amount: 120, frequency: "annual", type: "rideshare", description: "$10/month through Sept 2027", monthlyAmount: 10 },
-      { name: "DoorDash Credits", amount: 300, frequency: "annual", type: "dining", description: "$25/month in credits + DashPass membership", monthlyAmount: 25 },
+      { name: "DoorDash Credits", amount: 300, frequency: "annual", type: "dining", description: "$25/mo: $5 restaurant + 2×$10 non-restaurant. Includes DashPass", monthlyAmount: 25 },
       { name: "Global Entry/TSA PreCheck", amount: 120, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
     ],
     perks: [

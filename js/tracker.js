@@ -3,9 +3,88 @@
 // Helper to sanitize credit names for use as keys (remove spaces, apostrophes, special chars)
 const sanitizeCreditName = (name) => name.replace(/[\s'"/\\]+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
 
+// Date-based benefits configuration
+// Benefits that vary based on when the user signed up for the card
+const DATE_BASED_BENEFITS = {
+  'ihg-one-rewards-premier': {
+    'Anniversary Free Night': {
+      cutoffDate: '2018-05-01',
+      before: {
+        description: 'Unrestricted free night at any IHG hotel (grandfathered)',
+        badge: 'Grandfathered'
+      },
+      after: {
+        description: 'Free night up to 40,000 points (can top up with points)',
+        badge: null
+      }
+    }
+  },
+  'chase-sapphire-reserve': {
+    'Travel Credit': {
+      cutoffDate: '2017-05-21',
+      before: {
+        description: '$300 annual travel credit (calendar year - grandfathered)',
+        badge: 'Calendar Year'
+      },
+      after: {
+        description: '$300 annual travel credit (cardmember year)',
+        badge: null
+      }
+    }
+  }
+};
+
+// Get user's signup date for a card (returns Date object or null)
+function getCardSignupDate(cardId) {
+  const signupDates = JSON.parse(localStorage.getItem('cardmax_signup_dates') || '{}');
+  const dateInfo = signupDates[cardId];
+
+  if (!dateInfo || !dateInfo.year || !dateInfo.month) {
+    return null;
+  }
+
+  // Month is 1-indexed in our storage, Date expects 0-indexed
+  const day = dateInfo.day || 1;
+  return new Date(dateInfo.year, dateInfo.month - 1, day);
+}
+
+// Check if user is grandfathered for a specific benefit
+function isGrandfathered(cardId, benefitName) {
+  const cardRules = DATE_BASED_BENEFITS[cardId];
+  if (!cardRules || !cardRules[benefitName]) {
+    return null; // No date-based rules for this benefit
+  }
+
+  const signupDate = getCardSignupDate(cardId);
+  if (!signupDate) {
+    return null; // No signup date recorded, can't determine
+  }
+
+  const cutoff = new Date(cardRules[benefitName].cutoffDate);
+  return signupDate < cutoff;
+}
+
+// Get the appropriate benefit info based on signup date
+function getDateBasedBenefitInfo(cardId, benefitName) {
+  const cardRules = DATE_BASED_BENEFITS[cardId];
+  if (!cardRules || !cardRules[benefitName]) {
+    return null;
+  }
+
+  const grandfathered = isGrandfathered(cardId, benefitName);
+  if (grandfathered === null) {
+    return { unknown: true, rules: cardRules[benefitName] };
+  }
+
+  return grandfathered
+    ? cardRules[benefitName].before
+    : cardRules[benefitName].after;
+}
+
 // State
 let userCards = [];
 let trackedBenefits = {};
+let cardSignupDates = {};
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadUserData() {
   const savedCards = localStorage.getItem('cardmax_user_cards');
   const savedBenefits = localStorage.getItem('cardmax_tracked_benefits');
+  const savedSignupDates = localStorage.getItem('cardmax_signup_dates');
 
   if (savedCards) {
     userCards = JSON.parse(savedCards);
@@ -34,6 +114,10 @@ function loadUserData() {
 
   if (savedBenefits) {
     trackedBenefits = JSON.parse(savedBenefits);
+  }
+
+  if (savedSignupDates) {
+    cardSignupDates = JSON.parse(savedSignupDates);
   }
 
   // Clean up old month data
@@ -327,13 +411,33 @@ function renderAnnualBenefits() {
             } else {
               displayValue = benefit.amount;
             }
+
+            // Check for date-based benefit info
+            const dateBasedInfo = getDateBasedBenefitInfo(cardId, benefit.name);
+            let description = benefit.description;
+            let badgeHtml = '';
+
+            if (dateBasedInfo) {
+              if (dateBasedInfo.unknown) {
+                // User hasn't set signup date - show hint
+                badgeHtml = '<span style="display: inline-block; padding: 0.15rem 0.4rem; background: var(--accent-purple); color: white; border-radius: 4px; font-size: 0.65rem; margin-left: 0.5rem;">Set signup date for details</span>';
+              } else if (dateBasedInfo.badge) {
+                // User is grandfathered - show badge and use grandfathered description
+                description = dateBasedInfo.description;
+                badgeHtml = `<span style="display: inline-block; padding: 0.15rem 0.4rem; background: var(--accent-green); color: white; border-radius: 4px; font-size: 0.65rem; margin-left: 0.5rem;">${dateBasedInfo.badge}</span>`;
+              } else {
+                // User is NOT grandfathered - use current description
+                description = dateBasedInfo.description;
+              }
+            }
+
             return `
             <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
                 onclick="toggleBenefit('${benefit.benefitKey}', event)">
               <div class="benefit-checkbox"></div>
               <div class="benefit-content">
-                <div class="benefit-text">${benefit.name}</div>
-                <div class="benefit-description">${benefit.description}</div>
+                <div class="benefit-text">${benefit.name}${badgeHtml}</div>
+                <div class="benefit-description">${description}</div>
               </div>
               <div class="benefit-value">${displayValue}</div>
             </li>
@@ -645,11 +749,29 @@ function renderByCardView() {
         displayValue = credit.amount;
       }
 
+      // Check for date-based benefit info
+      const dateBasedInfo = getDateBasedBenefitInfo(cardId, credit.name);
+      let description = credit.description;
+      let badgeHtml = '';
+
+      if (dateBasedInfo) {
+        if (dateBasedInfo.unknown) {
+          badgeHtml = '<span style="display: inline-block; padding: 0.15rem 0.4rem; background: var(--accent-purple); color: white; border-radius: 4px; font-size: 0.65rem; margin-left: 0.5rem;">Set signup date</span>';
+        } else if (dateBasedInfo.badge) {
+          description = dateBasedInfo.description;
+          badgeHtml = `<span style="display: inline-block; padding: 0.15rem 0.4rem; background: var(--accent-green); color: white; border-radius: 4px; font-size: 0.65rem; margin-left: 0.5rem;">${dateBasedInfo.badge}</span>`;
+        } else {
+          description = dateBasedInfo.description;
+        }
+      }
+
       const creditData = {
         ...credit,
         benefitKey: `annual_${currentYear}_${cardId}_${sanitizeCreditName(credit.name)}`,
         isCompleted: trackedBenefits[`annual_${currentYear}_${cardId}_${sanitizeCreditName(credit.name)}`] || false,
-        displayValue: displayValue
+        displayValue: displayValue,
+        description: description,
+        badgeHtml: badgeHtml
       };
 
       if (isActionableCredit(credit)) {
@@ -751,7 +873,7 @@ function renderByCardView() {
                     onclick="toggleBenefit('${benefit.benefitKey}', event)">
                   <div class="benefit-checkbox"></div>
                   <div class="benefit-content">
-                    <div class="benefit-text">${benefit.name}</div>
+                    <div class="benefit-text">${benefit.name}${benefit.badgeHtml || ''}</div>
                     <div class="benefit-description">${benefit.description}</div>
                   </div>
                   <div class="benefit-value">${benefit.displayValue}</div>
