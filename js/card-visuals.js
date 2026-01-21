@@ -24,7 +24,7 @@ const CARDS_WITH_IMAGES = [
   // Hilton
   'hilton-honors-aspire', 'hilton-honors-surpass', 'hilton-honors-business',
   // Hotels
-  'marriott-bonvoy-boundless', 'marriott-bonvoy-business', 'world-of-hyatt', 'ihg-one-rewards-premier',
+  'marriott-bonvoy-boundless', 'marriott-bonvoy-business', 'world-of-hyatt', 'ihg-one-rewards-premier', 'ihg-one-rewards-traveler',
   // Southwest
   'southwest-priority', 'southwest-performance-business', 'southwest-premier-business',
   // United
@@ -33,7 +33,8 @@ const CARDS_WITH_IMAGES = [
   'bofa-business-advantage-unlimited', 'boa-atmos-ascent', 'atmos-rewards-summit',
   // Other
   'discover-it-cash-back', 'us-bank-altitude-reserve',
-  'wells-fargo-active-cash', 'wells-fargo-autograph-journey'
+  'wells-fargo-active-cash', 'wells-fargo-autograph-journey',
+  'gemini-credit-card'
 ];
 
 // Get issuer class name for styling
