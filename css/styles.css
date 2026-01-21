@@ -962,3 +962,170 @@ select:focus {
 .fade-in {
   animation: fadeIn 0.2s ease forwards;
 }
+
+/* ================================
+   Feedback Widget
+================================ */
+.feedback-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--text);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 1000;
+}
+
+.feedback-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.feedback-fab svg {
+  width: 24px;
+  height: 24px;
+}
+
+.feedback-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  padding: 1rem;
+}
+
+.feedback-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.feedback-modal {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px);
+  transition: transform 0.2s ease;
+}
+
+.feedback-modal-overlay.active .feedback-modal {
+  transform: translateY(0);
+}
+
+.feedback-modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feedback-modal-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.feedback-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem;
+}
+
+.feedback-modal-close:hover {
+  color: var(--text);
+}
+
+.feedback-modal-body {
+  padding: 1.5rem;
+}
+
+.feedback-disclaimer {
+  background: var(--warning-light);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.8rem;
+  color: var(--warning);
+  line-height: 1.5;
+}
+
+.feedback-form-group {
+  margin-bottom: 1rem;
+}
+
+.feedback-form-group label {
+  display: block;
+  font-weight: 500;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-form-group input,
+.feedback-form-group select,
+.feedback-form-group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.15s ease;
+}
+
+.feedback-form-group input:focus,
+.feedback-form-group select:focus,
+.feedback-form-group textarea:focus {
+  outline: none;
+  border-color: var(--text);
+}
+
+.feedback-form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.feedback-modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .feedback-fab {
+    bottom: 1rem;
+    right: 1rem;
+    width: 48px;
+    height: 48px;
+  }
+
+  .feedback-fab svg {
+    width: 20px;
+    height: 20px;
+  }
+}
