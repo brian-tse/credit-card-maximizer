@@ -96,6 +96,79 @@ body {
   background: var(--surface-hover);
 }
 
+/* Navbar Auth */
+.navbar-auth {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: 1rem;
+}
+
+.navbar-auth-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--text);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.navbar-auth-btn:hover {
+  opacity: 0.9;
+}
+
+.navbar-auth-btn.secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.navbar-auth-btn.secondary:hover {
+  background: var(--surface-hover);
+}
+
+.navbar-auth-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.navbar-auth-user img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.navbar-auth-name {
+  color: var(--text-secondary);
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navbar-auth-signout {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.navbar-auth-signout:hover {
+  color: var(--text);
+}
+
 /* Sub-Navigation */
 .sub-navbar {
   background: var(--surface);

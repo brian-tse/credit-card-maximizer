@@ -135,6 +135,35 @@ async function autoSyncToCloud() {
 
 // Update UI based on auth state
 function updateAuthUI() {
+  updateNavbarAuth();
+  updateAuthContainer();
+}
+
+// Update navbar auth (top of page)
+function updateNavbarAuth() {
+  const navbarAuth = document.getElementById('navbar-auth');
+  if (!navbarAuth) return;
+
+  if (currentUser) {
+    const displayName = currentUser.displayName || currentUser.email;
+    const photoURL = currentUser.photoURL;
+
+    navbarAuth.innerHTML = `
+      <div class="navbar-auth-user">
+        ${photoURL ? `<img src="${photoURL}" alt="Profile">` : ''}
+        <span class="navbar-auth-name">${displayName}</span>
+        <button class="navbar-auth-signout" onclick="signOutUser()">Sign out</button>
+      </div>
+    `;
+  } else {
+    navbarAuth.innerHTML = `
+      <button class="navbar-auth-btn" onclick="signInWithGoogle()">Sign In</button>
+    `;
+  }
+}
+
+// Update auth container (original location, if present)
+function updateAuthContainer() {
   const authContainer = document.getElementById('auth-container');
   if (!authContainer) return;
 
