@@ -118,7 +118,7 @@ const CARDS_DATABASE = [
       { name: "Airline Incidental Credit", amount: 200, frequency: "annual", type: "travel", description: "Select one airline, covers fees" },
       { name: "Uber Credit", amount: 200, frequency: "annual", type: "rideshare", description: "$15/month + $20 December bonus", monthlyAmount: 15 },
       { name: "Saks Fifth Avenue", amount: 100, frequency: "semiannual", type: "shopping", description: "$50 Jan-Jun, $50 Jul-Dec", semiannualAmount: 50 },
-      { name: "Hotel Credit", amount: 200, frequency: "annual", type: "travel", description: "Fine Hotels + Resorts or Hotel Collection" },
+      { name: "Hotel Credit", amount: 600, frequency: "semiannual", type: "travel", description: "$300 Jan-Jun, $300 Jul-Dec for FHR or Hotel Collection", semiannualAmount: 300 },
       { name: "Digital Entertainment", amount: 300, frequency: "annual", type: "subscription", description: "$25/month for streaming services", monthlyAmount: 25 },
       { name: "Walmart+ Membership", amount: 155, frequency: "annual", type: "subscription", description: "Statement credit for membership" },
       { name: "Equinox Credit", amount: 300, frequency: "annual", type: "fitness", description: "$25/month at Equinox+ or clubs", monthlyAmount: 25 },
