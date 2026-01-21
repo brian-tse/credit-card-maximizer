@@ -1,18 +1,35 @@
 // CardMax - Card Visual Generator
 // Creates credit card visuals with actual images or CSS fallback
 
-// Cards with downloaded images
+// Cards with downloaded images (37 cards)
 const CARDS_WITH_IMAGES = [
-  'amex-blue-cash-preferred', 'amex-business-gold', 'amex-business-green', 'amex-business-platinum',
-  'amex-gold', 'amex-green', 'amex-platinum', 'bilt-blue', 'bilt-obsidian', 'bilt-palladium',
-  'capital-one-venture', 'capital-one-venture-x', 'chase-freedom-flex', 'chase-freedom-unlimited',
-  'chase-ink-business-unlimited', 'chase-sapphire-preferred', 'chase-sapphire-reserve',
-  'citi-costco-anywhere', 'citi-double-cash', 'citi-strata-elite', 'citi-strata-premier',
-  'delta-skymiles-gold', 'delta-skymiles-platinum', 'delta-skymiles-reserve', 'discover-it-cash-back',
-  'hilton-honors-aspire', 'hilton-honors-business', 'hilton-honors-surpass', 'marriott-bonvoy-boundless',
-  'southwest-performance-business', 'southwest-premier-business', 'southwest-priority',
-  'united-explorer', 'united-quest', 'us-bank-altitude-reserve', 'wells-fargo-active-cash',
-  'wells-fargo-autograph-journey'
+  // Amex Personal
+  'amex-platinum', 'amex-gold', 'amex-green', 'amex-blue-cash-preferred',
+  // Amex Business
+  'amex-business-platinum', 'amex-business-gold', 'amex-business-green',
+  // Bilt
+  'bilt-blue', 'bilt-obsidian', 'bilt-palladium',
+  // Capital One
+  'capital-one-venture', 'capital-one-venture-x',
+  // Chase Personal
+  'chase-sapphire-reserve', 'chase-sapphire-preferred', 'chase-freedom-unlimited', 'chase-freedom-flex',
+  // Chase Business
+  'chase-ink-business-unlimited',
+  // Citi
+  'citi-double-cash', 'citi-strata-premier', 'citi-strata-elite', 'citi-costco-anywhere',
+  // Delta
+  'delta-skymiles-gold', 'delta-skymiles-platinum', 'delta-skymiles-reserve',
+  // Hilton
+  'hilton-honors-aspire', 'hilton-honors-surpass', 'hilton-honors-business',
+  // Hotels
+  'marriott-bonvoy-boundless',
+  // Southwest
+  'southwest-priority', 'southwest-performance-business', 'southwest-premier-business',
+  // United
+  'united-explorer', 'united-quest',
+  // Other
+  'discover-it-cash-back', 'us-bank-altitude-reserve',
+  'wells-fargo-active-cash', 'wells-fargo-autograph-journey'
 ];
 
 // Get issuer class name for styling
