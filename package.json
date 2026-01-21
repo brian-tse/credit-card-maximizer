@@ -4,9 +4,15 @@
   "description": "CardMax - Credit Card Benefits Tracker",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "download-images": "node scripts/download-card-images.js"
   },
   "keywords": ["credit-cards", "benefits", "tracker"],
   "author": "Brian Tse",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "puppeteer": "^21.7.0",
+    "sharp": "^0.33.2"
+  }
 }

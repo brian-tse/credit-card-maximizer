@@ -1,5 +1,19 @@
 // CardMax - Card Visual Generator
-// Creates CSS-based credit card visuals with issuer branding
+// Creates credit card visuals with actual images or CSS fallback
+
+// Cards with downloaded images
+const CARDS_WITH_IMAGES = [
+  'amex-blue-cash-preferred', 'amex-business-gold', 'amex-business-green', 'amex-business-platinum',
+  'amex-gold', 'amex-green', 'amex-platinum', 'bilt-blue', 'bilt-obsidian', 'bilt-palladium',
+  'capital-one-venture', 'capital-one-venture-x', 'chase-freedom-flex', 'chase-freedom-unlimited',
+  'chase-ink-business-unlimited', 'chase-sapphire-preferred', 'chase-sapphire-reserve',
+  'citi-costco-anywhere', 'citi-double-cash', 'citi-strata-elite', 'citi-strata-premier',
+  'delta-skymiles-gold', 'delta-skymiles-platinum', 'delta-skymiles-reserve', 'discover-it-cash-back',
+  'hilton-honors-aspire', 'hilton-honors-business', 'hilton-honors-surpass', 'marriott-bonvoy-boundless',
+  'southwest-performance-business', 'southwest-premier-business', 'southwest-priority',
+  'united-explorer', 'united-quest', 'us-bank-altitude-reserve', 'wells-fargo-active-cash',
+  'wells-fargo-autograph-journey'
+];
 
 // Get issuer class name for styling
 function getIssuerClass(issuer) {
@@ -42,8 +56,33 @@ function getIssuerLogoText(issuer) {
   return logoText[issuer] || issuer.toUpperCase();
 }
 
+// Check if card has an image
+function hasCardImage(cardId) {
+  return CARDS_WITH_IMAGES.includes(cardId);
+}
+
+// Get card image path
+function getCardImagePath(cardId) {
+  return `images/cards/${cardId}.png`;
+}
+
 // Generate card visual HTML
 function generateCardVisual(card) {
+  // If card has an actual image, use it
+  if (hasCardImage(card.id)) {
+    return `
+      <div class="card-visual card-visual-image">
+        <img src="${getCardImagePath(card.id)}" alt="${card.name}" class="card-image" onerror="this.parentElement.innerHTML = CardVisuals.generateFallback(window.CARDS_DATABASE?.find(c => c.id === '${card.id}') || {color: '${card.color}', issuer: '${card.issuer}', network: '${card.network}'})">
+      </div>
+    `;
+  }
+
+  // Fallback to CSS-based visual
+  return generateFallbackVisual(card);
+}
+
+// Generate CSS-based fallback visual
+function generateFallbackVisual(card) {
   const issuerClass = getIssuerClass(card.issuer);
   const metalClass = isPremiumCard(card) ? 'metal' : '';
   const logoText = getIssuerLogoText(card.issuer);
@@ -76,7 +115,10 @@ function adjustColor(color, percent) {
 // Export for use in other files
 window.CardVisuals = {
   generate: generateCardVisual,
+  generateFallback: generateFallbackVisual,
   getIssuerClass,
   isPremiumCard,
-  getIssuerLogoText
+  getIssuerLogoText,
+  hasImage: hasCardImage,
+  getImagePath: getCardImagePath
 };
