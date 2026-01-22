@@ -409,9 +409,16 @@
                   fontSize: '28px',
                   fontWeight: '700',
                   color: theme.text,
-                  marginBottom: '12px',
                 }}>
                   {formatCurrency(spend)}
+                </div>
+                <div style={{
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: housing > 0 ? (spend / housing >= 1 ? theme.option2 : spend / housing >= 0.75 ? theme.accent : theme.option1) : theme.textMuted,
+                  marginBottom: '12px',
+                }}>
+                  {housing > 0 ? Math.round(spend / housing * 100) : 0}% of housing
                 </div>
                 <input
                   type="range"
