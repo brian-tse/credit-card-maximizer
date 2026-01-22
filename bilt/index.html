@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bilt 2.0 Palladium Calculator | CardMax</title>
+  <meta name="description" content="Compare Bilt 2.0 Option 1 (Spend Ratio) vs Option 2 (Bilt Cash) for Palladium cardholders. Find out which option earns you more points.">
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useMemo } = React;
+
+    function BiltCalculator() {
+      const [housing, setHousing] = useState(4000);
+      const [spend, setSpend] = useState(4000);
+      const [showMonthly, setShowMonthly] = useState(false);
+
+      const effectiveMultiplier = 2;
+      const palladiumConfig = {
+        welcomeBiltCash: 300,
+        annualBiltCash: 200,
+      };
+
+      const theme = {
+        bg: '#f7f7f7',
+        cardBg: '#ffffff',
+        border: '#e5e5e5',
+        text: '#1a1a1a',
+        textSecondary: '#6b7280',
+        textMuted: '#9ca3af',
+        accent: '#4d7c4d',
+        accentLight: '#e8f5e8',
+        option1: '#d97706',
+        option1Light: '#fef3c7',
+        option2: '#4d7c4d',
+        option2Light: '#e8f5e8',
+      };
+
+      const monthlyBreakdown = useMemo(() => {
+        const config = palladiumConfig;
+
+        const spendRatio = housing > 0 ? (spend / housing) * 100 : 0;
+        const housingMultiplier = (() => {
+          if (spendRatio >= 100) return 1.25;
+          if (spendRatio >= 75) return 1.0;
+          if (spendRatio >= 50) return 0.75;
+          if (spendRatio >= 25) return 0.5;
+          return 0;
+        })();
+        const housingPointsOpt1 = spendRatio >= 25 ? Math.floor(housing * housingMultiplier) : 250;
+        const baseSpendPoints = spend * effectiveMultiplier;
+        const option1MonthlyPoints = housingPointsOpt1 + baseSpendPoints;
+
+        const biltCashEarned = spend * 0.04;
+        const maxUnlockablePts = housing;
+        const unlockTransactions = Math.floor(biltCashEarned / 30);
+        const ptsUnlockedWithCash = Math.min(unlockTransactions * 1000, maxUnlockablePts);
+        const option2BaseMonthlyPoints = baseSpendPoints + ptsUnlockedWithCash;
+        const transactionsUsed = ptsUnlockedWithCash / 1000;
+        const cashUsedForUnlock = transactionsUsed * 30;
+        const surplusBiltCash = biltCashEarned - cashUsedForUnlock;
+
+        let biltCashBalance = config.welcomeBiltCash;
+        let acceleratorsActivated = 0;
+        let acceleratorSpendRemaining = 0;
+        const maxAccelerators = 5;
+        let milestonesEarned = 0;
+
+        const months = [];
+        let opt1Cumulative = 0;
+        let opt2Cumulative = 0;
+
+        for (let i = 1; i <= 12; i++) {
+          opt1Cumulative += option1MonthlyPoints;
+
+          biltCashBalance += surplusBiltCash;
+
+          if (i === 1) {
+            biltCashBalance += config.annualBiltCash;
+          }
+
+          const acceleratorSpendUsedPreCalc = Math.min(spend, acceleratorSpendRemaining);
+          const acceleratorBonusPtsPreCalc = acceleratorSpendUsedPreCalc * 1;
+          const opt2MonthlyTotalPreCalc = option2BaseMonthlyPoints + acceleratorBonusPtsPreCalc;
+          const projectedCumulative = opt2Cumulative + opt2MonthlyTotalPreCalc;
+
+          const previousMilestones = milestonesEarned;
+          const newMilestoneCount = Math.floor(projectedCumulative / 25000);
+          const milestonesThisMonth = newMilestoneCount - previousMilestones;
+          if (milestonesThisMonth > 0) {
+            biltCashBalance += milestonesThisMonth * 50;
+            milestonesEarned = newMilestoneCount;
+          }
+
+          let activatedThisMonth = false;
+          if (biltCashBalance >= 200 && acceleratorsActivated < maxAccelerators && acceleratorSpendRemaining <= 0) {
+            activatedThisMonth = true;
+            biltCashBalance -= 200;
+            acceleratorsActivated++;
+            acceleratorSpendRemaining = 5000;
+          }
+
+          const acceleratorSpendUsed = Math.min(spend, acceleratorSpendRemaining);
+          const acceleratorBonusPts = acceleratorSpendUsed * 1;
+          acceleratorSpendRemaining -= acceleratorSpendUsed;
+
+          const opt2MonthlyTotal = option2BaseMonthlyPoints + acceleratorBonusPts;
+          opt2Cumulative += opt2MonthlyTotal;
+
+          months.push({
+            month: i,
+            monthName: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][i - 1],
+            opt1Monthly: option1MonthlyPoints,
+            opt1Cumulative,
+            opt2BaseMonthly: option2BaseMonthlyPoints,
+            acceleratorActivated: activatedThisMonth,
+            acceleratorBonusPts,
+            acceleratorSpendRemaining: Math.round(acceleratorSpendRemaining),
+            opt2Monthly: opt2MonthlyTotal,
+            opt2Cumulative,
+            biltCashBalance: Math.round(biltCashBalance),
+            acceleratorsUsed: acceleratorsActivated,
+            milestonesThisMonth,
+            totalMilestones: milestonesEarned,
+          });
+        }
+
+        const option1Annual = opt1Cumulative;
+        const option2Annual = opt2Cumulative;
+        const acceleratorBonus = option2Annual - (option2BaseMonthlyPoints * 12);
+
+        const option1Milestones = Math.floor(option1Annual / 25000);
+        const option2Milestones = Math.floor(option2Annual / 25000);
+        const option1MilestoneCash = option1Milestones * 50;
+        const option2MilestoneCash = option2Milestones * 50;
+
+        const option1TotalBiltCash = config.welcomeBiltCash + option1MilestoneCash;
+
+        const annualBiltCashFrom4Percent = biltCashEarned * 12;
+        const acceleratorCost = acceleratorsActivated * 200;
+        const housingUnlockCost = cashUsedForUnlock * 12;
+
+        const option2BiltCashEarned = config.welcomeBiltCash + annualBiltCashFrom4Percent + option2MilestoneCash;
+        const option2BiltCashBurned = acceleratorCost + housingUnlockCost;
+        const finalMonthBalance = months.length > 0 ? months[months.length - 1].biltCashBalance : 0;
+        const option2TotalBiltCash = finalMonthBalance;
+
+        const biltCashPointValue = 33;
+        const option1BiltCashAsPoints = option1TotalBiltCash * biltCashPointValue;
+        const option2BiltCashAsPoints = option2TotalBiltCash * biltCashPointValue;
+
+        const option1TotalValue = option1Annual + option1BiltCashAsPoints;
+        const option2TotalValue = option2Annual + option2BiltCashAsPoints;
+
+        const winner = option2TotalValue > option1TotalValue ? 'option2' : 'option1';
+        const difference = Math.abs(option2TotalValue - option1TotalValue);
+
+        return {
+          months,
+          option1MonthlyPoints,
+          option2BaseMonthlyPoints,
+          option1Annual,
+          option2Annual,
+          housingPointsOpt1,
+          housingMultiplier,
+          spendRatio,
+          ptsUnlockedWithCash,
+          biltCashEarned,
+          cashUsedForUnlock,
+          surplusBiltCash,
+          acceleratorBonus,
+          acceleratorCost,
+          acceleratorCount: acceleratorsActivated,
+          option1TotalBiltCash,
+          option1MilestoneCash,
+          option2TotalBiltCash,
+          option2BiltCashEarned,
+          option2BiltCashBurned,
+          annualBiltCashFrom4Percent,
+          housingUnlockCost,
+          option1Milestones,
+          option2Milestones,
+          option2MilestoneCash,
+          maxUnlockablePts,
+          biltCashPointValue,
+          option1BiltCashAsPoints,
+          option2BiltCashAsPoints,
+          option1TotalValue,
+          option2TotalValue,
+          winner,
+          difference,
+          config,
+        };
+      }, [housing, spend]);
+
+      const formatNumber = (num) => num.toLocaleString();
+      const formatCurrency = (num) => `$${num.toLocaleString()}`;
+
+      return (
+        <div style={{
+          minHeight: '100vh',
+          background: theme.bg,
+          fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+          color: theme.text,
+          padding: '40px 20px',
+        }}>
+          <style>{`
+            input[type="range"] {
+              -webkit-appearance: none;
+              width: 100%;
+              height: 4px;
+              background: #e5e5e5;
+              border-radius: 2px;
+              outline: none;
+            }
+
+            input[type="range"]::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              width: 18px;
+              height: 18px;
+              background: #4d7c4d;
+              border-radius: 50%;
+              cursor: pointer;
+              box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+              transition: transform 0.15s ease;
+            }
+
+            input[type="range"]::-webkit-slider-thumb:hover {
+              transform: scale(1.1);
+            }
+
+            input[type="range"]::-moz-range-thumb {
+              width: 18px;
+              height: 18px;
+              background: #4d7c4d;
+              border-radius: 50%;
+              cursor: pointer;
+              border: none;
+            }
+
+            .winner-badge {
+              animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+              0%, 100% { opacity: 1; }
+              50% { opacity: 0.8; }
+            }
+
+            .monthly-table {
+              width: 100%;
+              border-collapse: collapse;
+              font-size: 11px;
+            }
+
+            .monthly-table th {
+              text-align: left;
+              padding: 8px 6px;
+              border-bottom: 2px solid #e5e5e5;
+              font-weight: 600;
+              color: #6b7280;
+              text-transform: uppercase;
+              font-size: 10px;
+              letter-spacing: 0.3px;
+            }
+
+            .monthly-table td {
+              padding: 8px 6px;
+              border-bottom: 1px solid #f0f0f0;
+            }
+
+            .monthly-table tr:last-child td {
+              border-bottom: none;
+              font-weight: 600;
+              background: #f9fafb;
+            }
+
+            .accelerator-badge {
+              display: inline-block;
+              background: #4d7c4d;
+              color: white;
+              padding: 2px 6px;
+              border-radius: 4px;
+              font-size: 9px;
+              font-weight: 600;
+            }
+
+            .accelerator-active {
+              display: inline-block;
+              background: #fef3c7;
+              color: #d97706;
+              padding: 2px 6px;
+              border-radius: 4px;
+              font-size: 9px;
+              font-weight: 600;
+            }
+          `}</style>
+
+          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+            {/* Header */}
+            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+              <h1 style={{
+                fontSize: '32px',
+                fontWeight: '700',
+                margin: '0 0 8px 0',
+                color: theme.text,
+                letterSpacing: '-0.5px',
+              }}>
+                Bilt 2.0 Palladium Calculator
+              </h1>
+              <p style={{
+                color: theme.textSecondary,
+                fontSize: '15px',
+                margin: 0,
+              }}>
+                Plug in your numbers. See which option wins.
+              </p>
+            </div>
+
+            {/* Input Cards */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gap: '16px',
+              marginBottom: '24px',
+            }}>
+              {/* Housing Input */}
+              <div style={{
+                background: theme.cardBg,
+                borderRadius: '12px',
+                padding: '20px',
+                border: `1px solid ${theme.border}`,
+              }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '12px',
+                  fontWeight: '500',
+                  color: theme.textSecondary,
+                  marginBottom: '6px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.3px',
+                }}>
+                  Monthly Housing
+                </label>
+                <div style={{
+                  fontSize: '28px',
+                  fontWeight: '700',
+                  color: theme.text,
+                  marginBottom: '12px',
+                }}>
+                  {formatCurrency(housing)}
+                </div>
+                <input
+                  type="range"
+                  min="1000"
+                  max="20000"
+                  step="250"
+                  value={housing}
+                  onChange={(e) => setHousing(Number(e.target.value))}
+                />
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: '10px',
+                  color: theme.textMuted,
+                  marginTop: '6px',
+                }}>
+                  <span>$1K</span>
+                  <span>$20K</span>
+                </div>
+              </div>
+
+              {/* Spend Input */}
+              <div style={{
+                background: theme.cardBg,
+                borderRadius: '12px',
+                padding: '20px',
+                border: `1px solid ${theme.border}`,
+              }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '12px',
+                  fontWeight: '500',
+                  color: theme.textSecondary,
+                  marginBottom: '6px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.3px',
+                }}>
+                  Monthly Card Spend
+                </label>
+                <div style={{
+                  fontSize: '28px',
+                  fontWeight: '700',
+                  color: theme.text,
+                  marginBottom: '12px',
+                }}>
+                  {formatCurrency(spend)}
+                </div>
+                <input
+                  type="range"
+                  min="1000"
+                  max="20000"
+                  step="250"
+                  value={spend}
+                  onChange={(e) => setSpend(Number(e.target.value))}
+                />
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: '10px',
+                  color: theme.textMuted,
+                  marginTop: '6px',
+                }}>
+                  <span>$1K</span>
+                  <span>$20K</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Results Comparison */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '16px',
+              marginBottom: '24px',
+            }}>
+              {/* Option 1 */}
+              <div style={{
+                background: monthlyBreakdown.winner === 'option1' ? theme.option1Light : theme.cardBg,
+                borderRadius: '12px',
+                padding: '24px',
+                border: `1px solid ${monthlyBreakdown.winner === 'option1' ? theme.option1 : theme.border}`,
+                position: 'relative',
+              }}>
+                {monthlyBreakdown.winner === 'option1' && (
+                  <div className="winner-badge" style={{
+                    position: 'absolute',
+                    top: '-10px',
+                    right: '16px',
+                    background: theme.option1,
+                    padding: '4px 12px',
+                    borderRadius: '12px',
+                    fontSize: '10px',
+                    fontWeight: '700',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    color: '#fff',
+                  }}>
+                    Winner
+                  </div>
+                )}
+                <div style={{
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  color: theme.option1,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  marginBottom: '4px',
+                }}>
+                  Option 1
+                </div>
+                <h3 style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  margin: '0 0 16px 0',
+                  color: theme.text,
+                }}>
+                  Spend Ratio
+                </h3>
+
+                {/* Monthly Breakdown */}
+                <div style={{
+                  background: '#fef9f3',
+                  borderRadius: '8px',
+                  padding: '12px',
+                  marginBottom: '16px',
+                  fontSize: '12px',
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <span style={{ color: theme.textSecondary }}>Spend ({effectiveMultiplier}x)</span>
+                    <span style={{ fontWeight: '600' }}>{formatNumber(spend * effectiveMultiplier)} pts</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <span style={{ color: theme.textSecondary }}>Housing ({monthlyBreakdown.housingMultiplier}x @ {Math.round(monthlyBreakdown.spendRatio)}%)</span>
+                    <span style={{ fontWeight: '600' }}>{formatNumber(monthlyBreakdown.housingPointsOpt1)} pts</span>
+                  </div>
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    borderTop: `1px solid ${theme.border}`,
+                    paddingTop: '4px',
+                    marginTop: '4px',
+                  }}>
+                    <span style={{ fontWeight: '600', color: theme.option1 }}>Monthly Total</span>
+                    <span style={{ fontWeight: '700', color: theme.option1 }}>{formatNumber(monthlyBreakdown.option1MonthlyPoints)} pts</span>
+                  </div>
+                </div>
+
+                {/* Annual Breakdown */}
+                <div style={{
+                  background: '#fef9f3',
+                  borderRadius: '8px',
+                  padding: '12px',
+                  marginBottom: '16px',
+                  fontSize: '12px',
+                }}>
+                  <div style={{ fontWeight: '600', color: theme.option1, marginBottom: '6px' }}>Annual Points</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <span style={{ color: theme.textSecondary }}>Monthly ({formatNumber(monthlyBreakdown.option1MonthlyPoints)}) × 12</span>
+                    <span style={{ fontWeight: '600' }}>{formatNumber(monthlyBreakdown.option1Annual)} pts</span>
+                  </div>
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    borderTop: `1px solid ${theme.border}`,
+                    paddingTop: '4px',
+                    marginTop: '4px',
+                  }}>
+                    <span style={{ fontWeight: '600', color: theme.option1 }}>Annual Total</span>
+                    <span style={{ fontWeight: '700', color: theme.option1 }}>{formatNumber(monthlyBreakdown.option1Annual)} pts</span>
+                  </div>
+                </div>
+
+                <div style={{
+                  borderTop: `1px solid ${theme.border}`,
+                  paddingTop: '12px',
+                }}>
+                  {monthlyBreakdown.option1TotalBiltCash > 0 && (
+                    <div style={{
+                      background: '#fef3c7',
+                      padding: '8px 10px',
+                      borderRadius: '6px',
+                      marginTop: '6px',
+                      fontSize: '11px',
+                    }}>
+                      <div style={{ fontWeight: '600', color: theme.option1, marginBottom: '6px' }}>Annual Bilt Cash Summary</div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px' }}>
+                        <span style={{ color: theme.textSecondary }}>Welcome bonus</span>
+                        <span style={{ fontWeight: '500' }}>{formatCurrency(monthlyBreakdown.config.welcomeBiltCash)}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px' }}>
+                        <span style={{ color: theme.textSecondary }}>{monthlyBreakdown.option1Milestones} milestones × $50</span>
+                        <span style={{ fontWeight: '500' }}>{formatCurrency(monthlyBreakdown.option1MilestoneCash)}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #fcd34d', paddingTop: '4px', marginTop: '4px' }}>
+                        <span style={{ color: theme.option1, fontWeight: '600' }}>Total Bilt Cash</span>
+                        <span style={{ fontWeight: '700', color: theme.option1 }}>{formatCurrency(Math.round(monthlyBreakdown.option1TotalBiltCash))}</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Option 2 */}
+              <div style={{
+                background: monthlyBreakdown.winner === 'option2' ? theme.option2Light : theme.cardBg,
+                borderRadius: '12px',
+                padding: '24px',
+                border: `1px solid ${monthlyBreakdown.winner === 'option2' ? theme.option2 : theme.border}`,
+                position: 'relative',
+              }}>
+                {monthlyBreakdown.winner === 'option2' && (
+                  <div className="winner-badge" style={{
+                    position: 'absolute',
+                    top: '-10px',
+                    right: '16px',
+                    background: theme.option2,
+                    padding: '4px 12px',
+                    borderRadius: '12px',
+                    fontSize: '10px',
+                    fontWeight: '700',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    color: '#fff',
+                  }}>
+                    Winner
+                  </div>
+                )}
+                <div style={{
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  color: theme.option2,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  marginBottom: '4px',
+                }}>
+                  Option 2
+                </div>
+                <h3 style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  margin: '0 0 16px 0',
+                  color: theme.text,
+                }}>
+                  Bilt Cash
+                </h3>
+
+                {/* Monthly Breakdown */}
+                <div style={{
+                  background: '#f0f7f0',
+                  borderRadius: '8px',
+                  padding: '12px',
+                  marginBottom: '16px',
+                  fontSize: '12px',
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <span style={{ color: theme.textSecondary }}>Spend ({effectiveMultiplier}x)</span>
+                    <span style={{ fontWeight: '600' }}>{formatNumber(spend * effectiveMultiplier)} pts</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <span style={{ color: theme.textSecondary }}>Bilt Cash (4%)</span>
+                    <span style={{ fontWeight: '600' }}>{formatCurrency(Math.round(monthlyBreakdown.biltCashEarned))}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <span style={{ color: theme.textSecondary }}>→ Housing unlock (cap: {formatNumber(monthlyBreakdown.maxUnlockablePts)})</span>
+                    <span style={{ fontWeight: '600' }}>{formatNumber(monthlyBreakdown.ptsUnlockedWithCash)} pts</span>
+                  </div>
+                  {monthlyBreakdown.surplusBiltCash > 0 && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                      <span style={{ color: theme.option2 }}>→ Surplus Bilt Cash</span>
+                      <span style={{ fontWeight: '600', color: theme.option2 }}>{formatCurrency(Math.round(monthlyBreakdown.surplusBiltCash))}/mo</span>
+                    </div>
+                  )}
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    borderTop: `1px solid ${theme.border}`,
+                    paddingTop: '4px',
+                    marginTop: '4px',
+                  }}>
+                    <span style={{ fontWeight: '600', color: theme.option2 }}>Monthly Base</span>
+                    <span style={{ fontWeight: '700', color: theme.option2 }}>{formatNumber(monthlyBreakdown.option2BaseMonthlyPoints)} pts</span>
+                  </div>
+                </div>
+
+                {/* Annual Breakdown */}
+                <div style={{
+                  background: '#f0f7f0',
+                  borderRadius: '8px',
+                  padding: '12px',
+                  marginBottom: '16px',
+                  fontSize: '12px',
+                }}>
+                  <div style={{ fontWeight: '600', color: theme.option2, marginBottom: '6px' }}>Annual Points</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <span style={{ color: theme.textSecondary }}>Monthly base ({formatNumber(monthlyBreakdown.option2BaseMonthlyPoints)}) × 12</span>
+                    <span style={{ fontWeight: '600' }}>{formatNumber(monthlyBreakdown.option2BaseMonthlyPoints * 12)} pts</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <span style={{ color: theme.textSecondary }}>Points Accelerator ({monthlyBreakdown.acceleratorCount}/5)</span>
+                    <span style={{ fontWeight: '600' }}>+{formatNumber(monthlyBreakdown.acceleratorBonus)} pts</span>
+                  </div>
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    borderTop: `1px solid ${theme.border}`,
+                    paddingTop: '4px',
+                    marginTop: '4px',
+                  }}>
+                    <span style={{ fontWeight: '600', color: theme.option2 }}>Annual Total</span>
+                    <span style={{ fontWeight: '700', color: theme.option2 }}>{formatNumber(monthlyBreakdown.option2Annual)} pts</span>
+                  </div>
+                </div>
+
+                {/* Points Accelerator Detail */}
+                <div style={{
+                  background: '#f0f7f0',
+                  borderRadius: '8px',
+                  padding: '10px 12px',
+                  marginBottom: '16px',
+                  fontSize: '11px',
+                  border: `1px dashed ${theme.option2}`,
+                }}>
+                  <div style={{ fontWeight: '600', color: theme.option2, marginBottom: '4px' }}>
+                    Points Accelerator Detail
+                  </div>
+                  {monthlyBreakdown.acceleratorCount > 0 ? (
+                    <>
+                      <div style={{ color: theme.textSecondary }}>
+                        {monthlyBreakdown.acceleratorCount} activated × +1x on ${formatNumber(5000)} spend each = +{formatNumber(monthlyBreakdown.acceleratorBonus)} pts
+                      </div>
+                      <div style={{ color: theme.textMuted, fontSize: '10px', marginTop: '4px' }}>
+                        At {formatCurrency(spend)}/mo, each Accelerator takes {Math.ceil(5000 / spend)} month{Math.ceil(5000 / spend) > 1 ? 's' : ''} to deplete
+                      </div>
+                      {monthlyBreakdown.acceleratorCount < 5 && (
+                        <div style={{ color: theme.option1, fontSize: '10px', marginTop: '4px' }}>
+                          💡 Only {monthlyBreakdown.acceleratorCount} funded — surplus Bilt Cash ({formatCurrency(Math.round(monthlyBreakdown.surplusBiltCash))}/mo) not enough for all 5
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div style={{ color: theme.textMuted }}>
+                      Not enough surplus Bilt Cash ({formatCurrency(Math.round(monthlyBreakdown.surplusBiltCash))}/mo) to fund any.
+                      <br />Need {formatCurrency(200)} to activate (+1x on next ${formatNumber(5000)} spend).
+                    </div>
+                  )}
+                </div>
+
+                <div style={{
+                  borderTop: `1px solid ${theme.border}`,
+                  paddingTop: '12px',
+                }}>
+                  {/* Bilt Cash Earned vs Burned breakdown */}
+                  <div style={{
+                    background: theme.accentLight,
+                    padding: '8px 10px',
+                    borderRadius: '6px',
+                    marginTop: '6px',
+                    fontSize: '11px',
+                  }}>
+                    <div style={{ fontWeight: '600', color: theme.option2, marginBottom: '6px' }}>Annual Bilt Cash Summary</div>
+
+                    {/* Earned section */}
+                    <div style={{ marginBottom: '6px' }}>
+                      <div style={{ color: theme.textSecondary, fontSize: '10px', marginBottom: '2px' }}>EARNED</div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1px' }}>
+                        <span style={{ color: theme.textSecondary }}>Welcome bonus</span>
+                        <span style={{ fontWeight: '500' }}>{formatCurrency(monthlyBreakdown.config.welcomeBiltCash)}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1px' }}>
+                        <span style={{ color: theme.textSecondary }}>4% on spend ({formatCurrency(spend)}/mo × 12)</span>
+                        <span style={{ fontWeight: '500' }}>{formatCurrency(Math.round(monthlyBreakdown.annualBiltCashFrom4Percent))}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: theme.textSecondary }}>{monthlyBreakdown.option2Milestones} milestones × $50</span>
+                        <span style={{ fontWeight: '500' }}>{formatCurrency(monthlyBreakdown.option2MilestoneCash)}</span>
+                      </div>
+                    </div>
+
+                    {/* Burned section */}
+                    <div style={{ marginBottom: '6px' }}>
+                      <div style={{ color: theme.textSecondary, fontSize: '10px', marginBottom: '2px' }}>BURNED</div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1px' }}>
+                        <span style={{ color: theme.textSecondary }}>Housing unlock ({formatCurrency(Math.round(monthlyBreakdown.cashUsedForUnlock))}/mo × 12)</span>
+                        <span style={{ fontWeight: '500', color: '#dc2626' }}>−{formatCurrency(Math.round(monthlyBreakdown.housingUnlockCost))}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: theme.textSecondary }}>{monthlyBreakdown.acceleratorCount} Accelerators × $200</span>
+                        <span style={{ fontWeight: '500', color: '#dc2626' }}>−{formatCurrency(monthlyBreakdown.acceleratorCost)}</span>
+                      </div>
+                    </div>
+
+                    {/* Net total */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: `1px solid ${theme.option2}`, paddingTop: '4px' }}>
+                      <span style={{ color: theme.option2, fontWeight: '600' }}>Total Bilt Cash</span>
+                      <span style={{ fontWeight: '700', color: theme.option2 }}>{formatCurrency(Math.round(monthlyBreakdown.option2TotalBiltCash))}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Verdict */}
+            <div style={{
+              background: theme.cardBg,
+              borderRadius: '12px',
+              padding: '24px',
+              border: `1px solid ${theme.border}`,
+              marginBottom: '24px',
+            }}>
+              <div style={{
+                fontSize: '11px',
+                fontWeight: '600',
+                color: theme.textSecondary,
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                marginBottom: '8px',
+                textAlign: 'center',
+              }}>
+                Annual Verdict (Points + Bilt Cash Value)
+              </div>
+              <div style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: theme.text,
+                textAlign: 'center',
+              }}>
+                {monthlyBreakdown.winner === 'option2' ? 'Option 2 (Bilt Cash)' : 'Option 1 (Spend Ratio)'} wins by{' '}
+                <span style={{ color: monthlyBreakdown.winner === 'option2' ? theme.option2 : theme.option1 }}>
+                  {formatNumber(Math.round(monthlyBreakdown.difference))} point-equivalents
+                </span>
+              </div>
+
+              {/* Total Value Comparison */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '12px',
+                marginBottom: '12px',
+              }}>
+                {/* Option 1 Total */}
+                <div style={{
+                  background: monthlyBreakdown.winner === 'option1' ? theme.option1Light : '#f9fafb',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  border: monthlyBreakdown.winner === 'option1' ? `2px solid ${theme.option1}` : '1px solid #e5e5e5',
+                }}>
+                  <div style={{ fontSize: '10px', color: theme.textSecondary, textTransform: 'uppercase', marginBottom: '4px' }}>Option 1 Total Value</div>
+                  <div style={{ fontSize: '18px', fontWeight: '700', color: theme.option1, marginBottom: '8px' }}>{formatNumber(Math.round(monthlyBreakdown.option1TotalValue))} pts</div>
+                  <div style={{ fontSize: '10px', color: theme.textSecondary }}>
+                    <div>{formatNumber(monthlyBreakdown.option1Annual)} pts earned</div>
+                    <div>+ {formatCurrency(Math.round(monthlyBreakdown.option1TotalBiltCash))} Bilt Cash × {monthlyBreakdown.biltCashPointValue} = {formatNumber(Math.round(monthlyBreakdown.option1BiltCashAsPoints))} pts</div>
+                  </div>
+                </div>
+
+                {/* Option 2 Total */}
+                <div style={{
+                  background: monthlyBreakdown.winner === 'option2' ? theme.option2Light : '#f9fafb',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  border: monthlyBreakdown.winner === 'option2' ? `2px solid ${theme.option2}` : '1px solid #e5e5e5',
+                }}>
+                  <div style={{ fontSize: '10px', color: theme.textSecondary, textTransform: 'uppercase', marginBottom: '4px' }}>Option 2 Total Value</div>
+                  <div style={{ fontSize: '18px', fontWeight: '700', color: theme.option2, marginBottom: '8px' }}>{formatNumber(Math.round(monthlyBreakdown.option2TotalValue))} pts</div>
+                  <div style={{ fontSize: '10px', color: theme.textSecondary }}>
+                    <div>{formatNumber(monthlyBreakdown.option2Annual)} pts earned</div>
+                    <div>+ {formatCurrency(Math.round(monthlyBreakdown.option2TotalBiltCash))} Bilt Cash × {monthlyBreakdown.biltCashPointValue} = {formatNumber(Math.round(monthlyBreakdown.option2BiltCashAsPoints))} pts</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ color: theme.textMuted, fontSize: '10px', textAlign: 'center' }}>
+                Bilt Cash valued at {monthlyBreakdown.biltCashPointValue} pts per $1 (conservative estimate)
+              </div>
+            </div>
+
+            {/* Monthly Breakdown Toggle */}
+            <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+              <button
+                onClick={() => setShowMonthly(!showMonthly)}
+                style={{
+                  background: theme.cardBg,
+                  border: `1px solid ${theme.border}`,
+                  borderRadius: '8px',
+                  padding: '10px 20px',
+                  color: theme.text,
+                  fontSize: '13px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                {showMonthly ? 'Hide' : 'Show'} Monthly Breakdown →
+              </button>
+            </div>
+
+            {/* Monthly Table */}
+            {showMonthly && (
+              <div style={{
+                background: theme.cardBg,
+                borderRadius: '12px',
+                padding: '24px',
+                border: `1px solid ${theme.border}`,
+                overflowX: 'auto',
+              }}>
+                <h3 style={{
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  margin: '0 0 8px 0',
+                  color: theme.text,
+                }}>
+                  Month-by-Month Breakdown (Option 2 with Optimal Accelerator Timing)
+                </h3>
+                <p style={{
+                  fontSize: '11px',
+                  color: theme.textSecondary,
+                  margin: '0 0 16px 0',
+                }}>
+                  Starting Bilt Cash: ${monthlyBreakdown.config.welcomeBiltCash} welcome + ${monthlyBreakdown.config.annualBiltCash} annual = ${monthlyBreakdown.config.welcomeBiltCash + monthlyBreakdown.config.annualBiltCash} |
+                  Surplus: {formatCurrency(Math.round(monthlyBreakdown.surplusBiltCash))}/mo |
+                  Each Accelerator covers ${formatNumber(5000)} spend ({Math.ceil(5000 / spend)} month{Math.ceil(5000 / spend) > 1 ? 's' : ''})
+                </p>
+
+                <table className="monthly-table">
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th style={{ color: theme.option1 }}>Opt 1</th>
+                      <th style={{ color: theme.option1 }}>Cumul.</th>
+                      <th style={{ color: theme.option2 }}>Opt 2 Base</th>
+                      <th style={{ color: theme.option2 }}>Accel. Bonus</th>
+                      <th style={{ color: theme.option2 }}>Accel. Left</th>
+                      <th style={{ color: theme.option2 }}>Opt 2 Total</th>
+                      <th style={{ color: theme.option2 }}>Cumul.</th>
+                      <th>Bilt Cash</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {monthlyBreakdown.months.map((row, i) => (
+                      <tr key={i} style={row.acceleratorActivated ? { background: '#f0f7f0' } : {}}>
+                        <td style={{ fontWeight: '500' }}>{row.monthName}</td>
+                        <td>{formatNumber(row.opt1Monthly)}</td>
+                        <td style={{ color: theme.option1, fontWeight: '500' }}>{formatNumber(row.opt1Cumulative)}</td>
+                        <td>{formatNumber(row.opt2BaseMonthly)}</td>
+                        <td>
+                          {row.acceleratorActivated ? (
+                            <span className="accelerator-badge">NEW +{formatNumber(row.acceleratorBonusPts)}</span>
+                          ) : row.acceleratorBonusPts > 0 ? (
+                            <span className="accelerator-active">+{formatNumber(row.acceleratorBonusPts)}</span>
+                          ) : '—'}
+                        </td>
+                        <td style={{ color: row.acceleratorSpendRemaining > 0 ? theme.option2 : theme.textMuted, fontSize: '10px' }}>
+                          {row.acceleratorSpendRemaining > 0 ? `$${formatNumber(row.acceleratorSpendRemaining)}` : '—'}
+                        </td>
+                        <td style={{ fontWeight: '500' }}>{formatNumber(row.opt2Monthly)}</td>
+                        <td style={{ color: theme.option2, fontWeight: '500' }}>{formatNumber(row.opt2Cumulative)}</td>
+                        <td style={{ color: theme.textSecondary }}>{formatCurrency(row.biltCashBalance)}</td>
+                      </tr>
+                    ))}
+                    {/* Summary Row */}
+                    <tr>
+                      <td style={{ fontWeight: '700' }}>TOTAL</td>
+                      <td></td>
+                      <td style={{ color: theme.option1, fontWeight: '700' }}>{formatNumber(monthlyBreakdown.option1Annual)}</td>
+                      <td></td>
+                      <td style={{ fontWeight: '600' }}>
+                        {monthlyBreakdown.acceleratorCount > 0 && (
+                          <span style={{ color: theme.option2 }}>
+                            {monthlyBreakdown.acceleratorCount}× = +{formatNumber(monthlyBreakdown.acceleratorBonus)}
+                          </span>
+                        )}
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td style={{ color: theme.option2, fontWeight: '700' }}>{formatNumber(monthlyBreakdown.option2Annual)}</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div style={{
+                  marginTop: '16px',
+                  padding: '12px',
+                  background: '#f9fafb',
+                  borderRadius: '8px',
+                  fontSize: '11px',
+                  color: theme.textSecondary,
+                }}>
+                  <strong>How Accelerator works:</strong> Each $200 activation gives +1x on your next $5,000 of spend.
+                  At {formatCurrency(spend)}/month, that's {Math.ceil(5000 / spend)} month{Math.ceil(5000 / spend) > 1 ? 's' : ''} of bonus earning per activation.
+                  You can only activate a new one after the previous $5K is used up (when "Accel. Left" shows —). Max 5 activations/year.
+                  {monthlyBreakdown.acceleratorCount < 5 && (
+                    <><br /><br />
+                    <strong style={{ color: theme.option1 }}>Why only {monthlyBreakdown.acceleratorCount} Accelerators?</strong> You generate {formatCurrency(Math.round(monthlyBreakdown.surplusBiltCash))}/mo surplus Bilt Cash after maxing housing unlock.
+                    To fund all 5 Accelerators ($1,000 total), you'd need more surplus. Try increasing spend or lowering housing.
+                    </>
+                  )}
+                  <br /><br />
+                  <em>Note: Real-life spending varies month to month. This table assumes stable monthly spend for illustration purposes.</em>
+                </div>
+              </div>
+            )}
+
+            {/* Footer / Key Insight */}
+            <div style={{
+              background: theme.cardBg,
+              borderRadius: '12px',
+              padding: '20px',
+              border: `1px solid ${theme.border}`,
+              marginTop: '24px',
+            }}>
+              <div style={{
+                fontSize: '12px',
+                fontWeight: '600',
+                color: theme.text,
+                marginBottom: '8px',
+              }}>
+                Quick Heuristic
+              </div>
+              <div style={{
+                fontSize: '12px',
+                color: theme.textSecondary,
+                lineHeight: '1.6',
+              }}>
+                <strong style={{ color: theme.option1 }}>Option 1</strong> wins at lower spend ratios or high housing ({">"}${formatNumber(8333)}/mo) because the 25% bonus scales with housing.
+                <br />
+                <strong style={{ color: theme.option2 }}>Option 2</strong> wins with moderate housing + high spend when you can fully utilize Accelerators.
+                <br />
+                <span style={{ color: theme.textMuted }}>Pro tip: You can switch options monthly!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<BiltCalculator />);
+  </script>
+</body>
+</html>
