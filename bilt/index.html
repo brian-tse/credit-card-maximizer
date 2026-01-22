@@ -730,8 +730,8 @@
                     <span style={{ fontWeight: '600' }}>{formatCurrency(Math.round(monthlyBreakdown.biltCashEarned))}/mo</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                    <span style={{ color: theme.textSecondary }}>→ Housing unlock (cap: {formatNumber(monthlyBreakdown.maxUnlockablePts)}/mo)</span>
-                    <span style={{ fontWeight: '600' }}>~{formatNumber(Math.round(monthlyBreakdown.avgMonthlyHousingUnlock))} pts/mo</span>
+                    <span style={{ color: theme.textSecondary }}>→ Housing unlock cap</span>
+                    <span style={{ fontWeight: '600' }}>{formatNumber(monthlyBreakdown.maxUnlockablePts)} pts/mo</span>
                   </div>
                   {monthlyBreakdown.strandedPoints > 0 && (
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
@@ -743,8 +743,8 @@
                     Uses ALL available Bilt Cash for housing first (33 pts/$1), then accelerators (25 pts/$1)
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: `1px solid ${theme.border}`, paddingTop: '4px', marginTop: '4px' }}>
-                    <span style={{ fontWeight: '600', color: theme.option2 }}>Avg Monthly Base</span>
-                    <span style={{ fontWeight: '700', color: theme.option2 }}>~{formatNumber(Math.round(monthlyBreakdown.option2BaseMonthlyPoints))} pts</span>
+                    <span style={{ fontWeight: '600', color: theme.option2 }}>Monthly Base (when maxed)</span>
+                    <span style={{ fontWeight: '700', color: theme.option2 }}>{formatNumber(monthlyBreakdown.baseSpendPoints + monthlyBreakdown.maxUnlockablePts)} pts</span>
                   </div>
                 </div>
               </div>
