@@ -161,6 +161,10 @@
         const option1TotalValue = option1Annual + option1BiltCashAsPoints;
         const option2TotalValue = option2Annual + option2BiltCashAsPoints;
 
+        const annualSpend = spend * 12;
+        const option1PointsPerDollar = annualSpend > 0 ? option1TotalValue / annualSpend : 0;
+        const option2PointsPerDollar = annualSpend > 0 ? option2TotalValue / annualSpend : 0;
+
         const winner = option2TotalValue > option1TotalValue ? 'option2' : 'option1';
         const difference = Math.abs(option2TotalValue - option1TotalValue);
 
@@ -197,6 +201,8 @@
           option2BiltCashAsPoints,
           option1TotalValue,
           option2TotalValue,
+          option1PointsPerDollar,
+          option2PointsPerDollar,
           winner,
           difference,
           config,
@@ -820,7 +826,8 @@
                   border: monthlyBreakdown.winner === 'option1' ? `2px solid ${theme.option1}` : '1px solid #e5e5e5',
                 }}>
                   <div style={{ fontSize: '10px', color: theme.textSecondary, textTransform: 'uppercase', marginBottom: '4px' }}>Option 1 Total Value</div>
-                  <div style={{ fontSize: '18px', fontWeight: '700', color: theme.option1, marginBottom: '8px' }}>{formatNumber(Math.round(monthlyBreakdown.option1TotalValue))} pts</div>
+                  <div style={{ fontSize: '18px', fontWeight: '700', color: theme.option1 }}>{formatNumber(Math.round(monthlyBreakdown.option1TotalValue))} pts</div>
+                  <div style={{ fontSize: '14px', fontWeight: '600', color: theme.option1, marginBottom: '8px' }}>{monthlyBreakdown.option1PointsPerDollar.toFixed(2)}x per $1 spent</div>
                   <div style={{ fontSize: '10px', color: theme.textSecondary }}>
                     <div>{formatNumber(monthlyBreakdown.option1Annual)} pts earned</div>
                     <div>+ {formatCurrency(Math.round(monthlyBreakdown.option1TotalBiltCash))} Bilt Cash × {monthlyBreakdown.biltCashPointValue} = {formatNumber(Math.round(monthlyBreakdown.option1BiltCashAsPoints))} pts</div>
@@ -835,7 +842,8 @@
                   border: monthlyBreakdown.winner === 'option2' ? `2px solid ${theme.option2}` : '1px solid #e5e5e5',
                 }}>
                   <div style={{ fontSize: '10px', color: theme.textSecondary, textTransform: 'uppercase', marginBottom: '4px' }}>Option 2 Total Value</div>
-                  <div style={{ fontSize: '18px', fontWeight: '700', color: theme.option2, marginBottom: '8px' }}>{formatNumber(Math.round(monthlyBreakdown.option2TotalValue))} pts</div>
+                  <div style={{ fontSize: '18px', fontWeight: '700', color: theme.option2 }}>{formatNumber(Math.round(monthlyBreakdown.option2TotalValue))} pts</div>
+                  <div style={{ fontSize: '14px', fontWeight: '600', color: theme.option2, marginBottom: '8px' }}>{monthlyBreakdown.option2PointsPerDollar.toFixed(2)}x per $1 spent</div>
                   <div style={{ fontSize: '10px', color: theme.textSecondary }}>
                     <div>{formatNumber(monthlyBreakdown.option2Annual)} pts earned</div>
                     <div>+ {formatCurrency(Math.round(monthlyBreakdown.option2TotalBiltCash))} Bilt Cash × {monthlyBreakdown.biltCashPointValue} = {formatNumber(Math.round(monthlyBreakdown.option2BiltCashAsPoints))} pts</div>
