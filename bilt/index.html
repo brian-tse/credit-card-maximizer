@@ -186,12 +186,9 @@
       const [showMonthly, setShowMonthly] = useState(false);
       const [biltCashPointValue, setBiltCashPointValue] = useState(10);
       const [trancheMode, setTrancheMode] = useState(true); // true = 1K tranches (v2), false = flexible (v1)
+      const [startingBiltCash, setStartingBiltCash] = useState(300);
 
       const effectiveMultiplier = 2;
-      const palladiumConfig = {
-        welcomeBiltCash: 300,
-        annualBiltCash: 200,
-      };
 
       const theme = {
         bg: '#f7f7f7',
@@ -209,8 +206,6 @@
       };
 
       const monthlyBreakdown = useMemo(() => {
-        const config = palladiumConfig;
-
         const spendRatio = housing > 0 ? (spend / housing) * 100 : 0;
         const housingMultiplier = (() => {
           if (spendRatio >= 100) return 1.25;
@@ -233,7 +228,7 @@
         const cashUsedForUnlock = transactionsUsed * 30;
         const surplusBiltCash = biltCashEarned - cashUsedForUnlock;
 
-        let biltCashBalance = config.welcomeBiltCash;
+        let biltCashBalance = startingBiltCash;
         let acceleratorsActivated = 0;
         let acceleratorSpendRemaining = 0;
         const maxAccelerators = 5;
@@ -247,10 +242,6 @@
           opt1Cumulative += option1MonthlyPoints;
 
           biltCashBalance += surplusBiltCash;
-
-          if (i === 1) {
-            biltCashBalance += config.annualBiltCash;
-          }
 
           const acceleratorSpendUsedPreCalc = Math.min(spend, acceleratorSpendRemaining);
           const acceleratorBonusPtsPreCalc = acceleratorSpendUsedPreCalc * 1;
@@ -307,13 +298,13 @@
         const option1MilestoneCash = option1Milestones * 50;
         const option2MilestoneCash = option2Milestones * 50;
 
-        const option1TotalBiltCash = config.welcomeBiltCash + option1MilestoneCash;
+        const option1TotalBiltCash = startingBiltCash + option1MilestoneCash;
 
         const annualBiltCashFrom4Percent = biltCashEarned * 12;
         const acceleratorCost = acceleratorsActivated * 200;
         const housingUnlockCost = cashUsedForUnlock * 12;
 
-        const option2BiltCashEarned = config.welcomeBiltCash + annualBiltCashFrom4Percent + option2MilestoneCash;
+        const option2BiltCashEarned = startingBiltCash + annualBiltCashFrom4Percent + option2MilestoneCash;
         const option2BiltCashBurned = acceleratorCost + housingUnlockCost;
         const finalMonthBalance = months.length > 0 ? months[months.length - 1].biltCashBalance : 0;
         const option2TotalBiltCash = finalMonthBalance;
@@ -368,9 +359,9 @@
           option2PointsPerDollar,
           winner,
           difference,
-          config,
+          startingBiltCash,
         };
-      }, [housing, spend, biltCashPointValue, trancheMode]);
+      }, [housing, spend, biltCashPointValue, trancheMode, startingBiltCash]);
 
       const formatNumber = (num) => num.toLocaleString();
       const formatCurrency = (num) => `$${num.toLocaleString()}`;
@@ -817,8 +808,8 @@
                   <div style={{ background: '#fef3c7', padding: '8px 10px', borderRadius: '6px', fontSize: '11px' }}>
                     <div style={{ fontWeight: '600', color: theme.option1, marginBottom: '6px' }}>Annual Bilt Cash Summary</div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px' }}>
-                      <span style={{ color: theme.textSecondary }}>Welcome bonus</span>
-                      <span style={{ fontWeight: '500' }}>{formatCurrency(monthlyBreakdown.config.welcomeBiltCash)}</span>
+                      <span style={{ color: theme.textSecondary }}>Starting Bilt Cash</span>
+                      <span style={{ fontWeight: '500' }}>{formatCurrency(monthlyBreakdown.startingBiltCash)}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px' }}>
                       <span style={{ color: theme.textSecondary }}>{monthlyBreakdown.option1Milestones} milestones × $50</span>
@@ -845,8 +836,8 @@
                     <div style={{ marginBottom: '6px' }}>
                       <div style={{ color: theme.textSecondary, fontSize: '10px', marginBottom: '2px' }}>EARNED</div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1px' }}>
-                        <span style={{ color: theme.textSecondary }}>Welcome bonus</span>
-                        <span style={{ fontWeight: '500' }}>{formatCurrency(monthlyBreakdown.config.welcomeBiltCash)}</span>
+                        <span style={{ color: theme.textSecondary }}>Starting Bilt Cash</span>
+                        <span style={{ fontWeight: '500' }}>{formatCurrency(monthlyBreakdown.startingBiltCash)}</span>
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1px' }}>
                         <span style={{ color: theme.textSecondary }}>4% on spend ({formatCurrency(spend)}/mo × 12)</span>
@@ -1007,6 +998,41 @@
                   </div>
                 </div>
               </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '12px' }}>
+                <div>
+                  <label style={{
+                    display: 'block',
+                    fontSize: '12px',
+                    fontWeight: '500',
+                    color: theme.text,
+                    marginBottom: '2px',
+                  }}>
+                    Starting Bilt Cash
+                  </label>
+                  <div style={{ fontSize: '10px', color: theme.textMuted }}>
+                    How much Bilt Cash do you have at the start of the year?
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1000"
+                    step="50"
+                    value={startingBiltCash}
+                    onChange={(e) => setStartingBiltCash(Number(e.target.value))}
+                    style={{ width: '120px' }}
+                  />
+                  <div style={{
+                    fontSize: '16px',
+                    fontWeight: '700',
+                    color: theme.accent,
+                    minWidth: '50px',
+                  }}>
+                    {formatCurrency(startingBiltCash)}
+                  </div>
+                </div>
+              </div>
               <div style={{ fontSize: '10px', color: theme.textMuted, marginBottom: '12px' }}>
                 Accelerators break even at 25 pts/$1. Above 25, holding Bilt Cash beats buying accelerators.
               </div>
@@ -1081,7 +1107,7 @@
                   color: theme.textSecondary,
                   margin: '0 0 16px 0',
                 }}>
-                  Starting Bilt Cash: ${monthlyBreakdown.config.welcomeBiltCash} welcome + ${monthlyBreakdown.config.annualBiltCash} annual = ${monthlyBreakdown.config.welcomeBiltCash + monthlyBreakdown.config.annualBiltCash} |
+                  Starting Bilt Cash: {formatCurrency(monthlyBreakdown.startingBiltCash)} |
                   Surplus: {formatCurrency(Math.round(monthlyBreakdown.surplusBiltCash))}/mo |
                   Each Accelerator covers ${formatNumber(5000)} spend ({Math.ceil(5000 / spend)} month{Math.ceil(5000 / spend) > 1 ? 's' : ''})
                 </p>
