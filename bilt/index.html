@@ -23,6 +23,7 @@
       const [spend, setSpend] = useState(4000);
       const [showMonthly, setShowMonthly] = useState(false);
       const [biltCashPointValue, setBiltCashPointValue] = useState(33);
+      const [trancheMode, setTrancheMode] = useState(true); // true = 1K tranches (v2), false = flexible (v1)
 
       const effectiveMultiplier = 2;
       const palladiumConfig = {
@@ -61,7 +62,8 @@
         const option1MonthlyPoints = housingPointsOpt1 + baseSpendPoints;
 
         const biltCashEarned = spend * 0.04;
-        const maxUnlockablePts = housing;
+        const maxUnlockablePts = trancheMode ? Math.floor(housing / 1000) * 1000 : housing;
+        const strandedPoints = trancheMode ? housing - maxUnlockablePts : 0;
         const unlockTransactions = Math.floor(biltCashEarned / 30);
         const ptsUnlockedWithCash = Math.min(unlockTransactions * 1000, maxUnlockablePts);
         const option2BaseMonthlyPoints = baseSpendPoints + ptsUnlockedWithCash;
@@ -194,6 +196,7 @@
           option2Milestones,
           option2MilestoneCash,
           maxUnlockablePts,
+          strandedPoints,
           biltCashPointValue,
           option1BiltCashAsPoints,
           option2BiltCashAsPoints,
@@ -205,7 +208,7 @@
           difference,
           config,
         };
-      }, [housing, spend, biltCashPointValue]);
+      }, [housing, spend, biltCashPointValue, trancheMode]);
 
       const formatNumber = (num) => num.toLocaleString();
       const formatCurrency = (num) => `$${num.toLocaleString()}`;
@@ -431,56 +434,6 @@
               </div>
             </div>
 
-            {/* Bilt Cash Valuation */}
-            <div style={{
-              background: theme.cardBg,
-              borderRadius: '12px',
-              padding: '16px 20px',
-              border: `1px solid ${theme.border}`,
-              marginBottom: '24px',
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
-                <div>
-                  <label style={{
-                    display: 'block',
-                    fontSize: '12px',
-                    fontWeight: '500',
-                    color: theme.textSecondary,
-                    marginBottom: '4px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.3px',
-                  }}>
-                    Bilt Cash Valuation
-                  </label>
-                  <div style={{ fontSize: '11px', color: theme.textMuted }}>
-                    How many points is $1 of Bilt Cash worth to you?
-                  </div>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <input
-                    type="range"
-                    min="10"
-                    max="50"
-                    step="1"
-                    value={biltCashPointValue}
-                    onChange={(e) => setBiltCashPointValue(Number(e.target.value))}
-                    style={{ width: '120px' }}
-                  />
-                  <div style={{
-                    fontSize: '18px',
-                    fontWeight: '700',
-                    color: theme.accent,
-                    minWidth: '80px',
-                  }}>
-                    {biltCashPointValue} pts/$1
-                  </div>
-                </div>
-              </div>
-              <div style={{ fontSize: '10px', color: theme.textMuted, marginTop: '8px' }}>
-                Note: Accelerators break even at 25 pts/$1. Above 25, holding Bilt Cash beats buying accelerators.
-              </div>
-            </div>
-
             {/* Results Comparison */}
             <div style={{
               display: 'grid',
@@ -679,6 +632,12 @@
                     <span style={{ color: theme.textSecondary }}>→ Housing unlock (cap: {formatNumber(monthlyBreakdown.maxUnlockablePts)})</span>
                     <span style={{ fontWeight: '600' }}>{formatNumber(monthlyBreakdown.ptsUnlockedWithCash)} pts</span>
                   </div>
+                  {monthlyBreakdown.strandedPoints > 0 && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                      <span style={{ color: '#dc2626', fontSize: '11px' }}>→ Stranded (not in 1K tranche)</span>
+                      <span style={{ fontWeight: '500', color: '#dc2626', fontSize: '11px' }}>{formatNumber(monthlyBreakdown.strandedPoints)} pts</span>
+                    </div>
+                  )}
                   {monthlyBreakdown.surplusBiltCash > 0 && (
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                       <span style={{ color: theme.option2 }}>→ Surplus Bilt Cash</span>
@@ -862,7 +821,7 @@
                 }}>
                   <div style={{ fontSize: '10px', color: theme.textSecondary, textTransform: 'uppercase', marginBottom: '4px' }}>Option 1 Total Value</div>
                   <div style={{ fontSize: '18px', fontWeight: '700', color: theme.option1 }}>{formatNumber(Math.round(monthlyBreakdown.option1TotalValue))} pts</div>
-                  <div style={{ fontSize: '14px', fontWeight: '600', color: theme.option1, marginBottom: '8px' }}>{monthlyBreakdown.option1PointsPerDollar.toFixed(2)}x per $1 spent</div>
+                  <div style={{ fontSize: '14px', fontWeight: '600', color: theme.option1, marginBottom: '8px' }}>{monthlyBreakdown.option1PointsPerDollar.toFixed(2)} points per $1 spent</div>
                   <div style={{ fontSize: '10px', color: theme.textSecondary }}>
                     <div>{formatNumber(monthlyBreakdown.option1Annual)} pts earned</div>
                     <div>+ {formatCurrency(Math.round(monthlyBreakdown.option1TotalBiltCash))} Bilt Cash × {monthlyBreakdown.biltCashPointValue} = {formatNumber(Math.round(monthlyBreakdown.option1BiltCashAsPoints))} pts</div>
@@ -878,7 +837,7 @@
                 }}>
                   <div style={{ fontSize: '10px', color: theme.textSecondary, textTransform: 'uppercase', marginBottom: '4px' }}>Option 2 Total Value</div>
                   <div style={{ fontSize: '18px', fontWeight: '700', color: theme.option2 }}>{formatNumber(Math.round(monthlyBreakdown.option2TotalValue))} pts</div>
-                  <div style={{ fontSize: '14px', fontWeight: '600', color: theme.option2, marginBottom: '8px' }}>{monthlyBreakdown.option2PointsPerDollar.toFixed(2)}x per $1 spent</div>
+                  <div style={{ fontSize: '14px', fontWeight: '600', color: theme.option2, marginBottom: '8px' }}>{monthlyBreakdown.option2PointsPerDollar.toFixed(2)} points per $1 spent</div>
                   <div style={{ fontSize: '10px', color: theme.textSecondary }}>
                     <div>{formatNumber(monthlyBreakdown.option2Annual)} pts earned</div>
                     <div>+ {formatCurrency(Math.round(monthlyBreakdown.option2TotalBiltCash))} Bilt Cash × {monthlyBreakdown.biltCashPointValue} = {formatNumber(Math.round(monthlyBreakdown.option2BiltCashAsPoints))} pts</div>
@@ -887,7 +846,92 @@
               </div>
 
               <div style={{ color: theme.textMuted, fontSize: '10px', textAlign: 'center' }}>
-                Bilt Cash valued at {monthlyBreakdown.biltCashPointValue} pts per $1 (adjust above)
+                Bilt Cash valued at {monthlyBreakdown.biltCashPointValue} pts per $1 (adjust below)
+              </div>
+            </div>
+
+            {/* Settings */}
+            <div style={{
+              background: theme.cardBg,
+              borderRadius: '12px',
+              padding: '16px 20px',
+              border: `1px solid ${theme.border}`,
+              marginBottom: '24px',
+            }}>
+              <div style={{
+                fontSize: '11px',
+                fontWeight: '600',
+                color: theme.textSecondary,
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                marginBottom: '12px',
+              }}>
+                Settings
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '12px' }}>
+                <div>
+                  <label style={{
+                    display: 'block',
+                    fontSize: '12px',
+                    fontWeight: '500',
+                    color: theme.text,
+                    marginBottom: '2px',
+                  }}>
+                    Bilt Cash Valuation
+                  </label>
+                  <div style={{ fontSize: '10px', color: theme.textMuted }}>
+                    How many points is $1 of Bilt Cash worth to you?
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <input
+                    type="range"
+                    min="10"
+                    max="50"
+                    step="1"
+                    value={biltCashPointValue}
+                    onChange={(e) => setBiltCashPointValue(Number(e.target.value))}
+                    style={{ width: '120px' }}
+                  />
+                  <div style={{
+                    fontSize: '16px',
+                    fontWeight: '700',
+                    color: theme.accent,
+                    minWidth: '70px',
+                  }}>
+                    {biltCashPointValue} pts/$1
+                  </div>
+                </div>
+              </div>
+              <div style={{ fontSize: '10px', color: theme.textMuted, marginBottom: '12px' }}>
+                Accelerators break even at 25 pts/$1. Above 25, holding Bilt Cash beats buying accelerators.
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                paddingTop: '12px',
+                borderTop: `1px solid ${theme.border}`,
+              }}>
+                <label style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  cursor: 'pointer',
+                  fontSize: '12px',
+                  color: theme.text,
+                }}>
+                  <input
+                    type="checkbox"
+                    checked={trancheMode}
+                    onChange={(e) => setTrancheMode(e.target.checked)}
+                    style={{ width: '16px', height: '16px', cursor: 'pointer' }}
+                  />
+                  <span style={{ fontWeight: '500' }}>1,000-point tranche rule</span>
+                </label>
+                <span style={{ fontSize: '10px', color: theme.textMuted }}>
+                  (housing unlock only in 1K increments, remaining points stranded)
+                </span>
               </div>
             </div>
 
