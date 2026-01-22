@@ -1076,18 +1076,53 @@
                 color: theme.text,
                 marginBottom: '8px',
               }}>
-                Quick Heuristic
+                Quick Heuristic by Spend Ratio
               </div>
               <div style={{
                 fontSize: '12px',
                 color: theme.textSecondary,
-                lineHeight: '1.6',
+                lineHeight: '1.7',
               }}>
-                <strong style={{ color: theme.option1 }}>Option 1</strong> wins at lower spend ratios or high housing ({">"}${formatNumber(8333)}/mo) because the 25% bonus scales with housing.
-                <br />
-                <strong style={{ color: theme.option2 }}>Option 2</strong> wins with moderate housing + high spend when you can fully utilize Accelerators.
-                <br />
-                <span style={{ color: theme.textMuted }}>Pro tip: You can switch options monthly!</span>
+                <div style={{ marginBottom: '8px' }}>
+                  Option 1's multiplier jumps at 25%, 50%, 75%, 100%. Just above each threshold, <strong style={{ color: theme.option1 }}>Option 1</strong> wins until Option 2 catches up:
+                </div>
+                <table style={{ width: '100%', fontSize: '11px', borderCollapse: 'collapse' }}>
+                  <tbody>
+                    <tr style={{ borderBottom: '1px solid #e5e5e5' }}>
+                      <td style={{ padding: '4px 0', color: theme.option1, fontWeight: '600' }}>25–37%</td>
+                      <td style={{ padding: '4px 8px' }}>→ Option 1</td>
+                      <td style={{ padding: '4px 0', color: theme.textMuted }}>0.5x housing beats limited unlock</td>
+                    </tr>
+                    <tr style={{ borderBottom: '1px solid #e5e5e5' }}>
+                      <td style={{ padding: '4px 0', color: theme.option2, fontWeight: '600' }}>38–49%</td>
+                      <td style={{ padding: '4px 8px' }}>→ Option 2</td>
+                      <td style={{ padding: '4px 0', color: theme.textMuted }}>Unlock exceeds 0.5x + Bilt Cash value</td>
+                    </tr>
+                    <tr style={{ borderBottom: '1px solid #e5e5e5' }}>
+                      <td style={{ padding: '4px 0', color: theme.option1, fontWeight: '600' }}>50–56%</td>
+                      <td style={{ padding: '4px 8px' }}>→ Option 1</td>
+                      <td style={{ padding: '4px 0', color: theme.textMuted }}>0.75x housing beats unlock</td>
+                    </tr>
+                    <tr style={{ borderBottom: '1px solid #e5e5e5' }}>
+                      <td style={{ padding: '4px 0', color: theme.option2, fontWeight: '600' }}>57–74%</td>
+                      <td style={{ padding: '4px 8px' }}>→ Option 2</td>
+                      <td style={{ padding: '4px 0', color: theme.textMuted }}>Unlock exceeds 0.75x + Bilt Cash value</td>
+                    </tr>
+                    <tr style={{ borderBottom: '1px solid #e5e5e5' }}>
+                      <td style={{ padding: '4px 0', color: theme.option2, fontWeight: '600' }}>75–99%</td>
+                      <td style={{ padding: '4px 8px' }}>→ Option 2</td>
+                      <td style={{ padding: '4px 0', color: theme.textMuted }}>Full unlock + surplus Bilt Cash</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '4px 0', fontWeight: '600' }}>100%+</td>
+                      <td style={{ padding: '4px 8px' }}>→ Depends</td>
+                      <td style={{ padding: '4px 0', color: theme.textMuted }}>1.25x bonus vs accelerators (see Bilt Cash value)</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div style={{ marginTop: '8px', color: theme.textMuted, fontSize: '10px' }}>
+                  Pro tip: You can switch options monthly! Your current ratio: <strong style={{ color: theme.text }}>{Math.round(monthlyBreakdown.spendRatio)}%</strong>
+                </div>
               </div>
             </div>
           </div>
