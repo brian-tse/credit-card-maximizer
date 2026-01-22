@@ -221,9 +221,10 @@
         // Monthly 4% Bilt Cash earned (fixed per month)
         const biltCashEarnedPerMonth = spend * 0.04;
         // Max housing points that can be unlocked per month
+        // Tranche mode: only 1K multiples allowed
+        // Non-tranche mode: can unlock any amount up to housing
         const maxUnlockablePts = trancheMode ? Math.floor(housing / 1000) * 1000 : housing;
         const strandedPoints = trancheMode ? housing - maxUnlockablePts : 0;
-        const maxTranchesPerMonth = trancheMode ? Math.floor(maxUnlockablePts / 1000) : Math.floor(housing / 1000);
 
         let biltCashBalance = startingBiltCash;
         let acceleratorsActivated = 0;
@@ -245,10 +246,22 @@
 
           // PRIORITY 1: Use ALL available Bilt Cash for housing unlock first (up to monthly cap)
           // Housing unlock: $30 per 1,000 points = 33.33 pts/$1 (better than accelerators at 25 pts/$1)
-          const affordableTranches = Math.floor(biltCashBalance / 30);
-          const unlockTranches = Math.min(affordableTranches, maxTranchesPerMonth);
-          const ptsUnlockedThisMonth = unlockTranches * 1000;
-          const cashUsedForUnlockThisMonth = unlockTranches * 30;
+          let ptsUnlockedThisMonth;
+          let cashUsedForUnlockThisMonth;
+
+          if (trancheMode) {
+            // Tranche mode: can only unlock in 1K multiples
+            const affordableTranches = Math.floor(biltCashBalance / 30);
+            const maxTranches = Math.floor(maxUnlockablePts / 1000);
+            const unlockTranches = Math.min(affordableTranches, maxTranches);
+            ptsUnlockedThisMonth = unlockTranches * 1000;
+            cashUsedForUnlockThisMonth = unlockTranches * 30;
+          } else {
+            // Non-tranche mode: can unlock any amount up to housing
+            const maxPtsAffordable = Math.floor(biltCashBalance / 30) * 1000;
+            ptsUnlockedThisMonth = Math.min(maxPtsAffordable, maxUnlockablePts);
+            cashUsedForUnlockThisMonth = (ptsUnlockedThisMonth / 1000) * 30;
+          }
           biltCashBalance -= cashUsedForUnlockThisMonth;
           totalHousingUnlockCost += cashUsedForUnlockThisMonth;
           totalHousingPtsUnlocked += ptsUnlockedThisMonth;
@@ -389,7 +402,6 @@
           difference,
           startingBiltCash,
           baseSpendPoints,
-          maxTranchesPerMonth,
         };
       }, [housing, spend, biltCashPointValue, trancheMode, startingBiltCash]);
 
