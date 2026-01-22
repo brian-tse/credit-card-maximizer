@@ -22,6 +22,7 @@
       const [housing, setHousing] = useState(4000);
       const [spend, setSpend] = useState(4000);
       const [showMonthly, setShowMonthly] = useState(false);
+      const [biltCashPointValue, setBiltCashPointValue] = useState(33);
 
       const effectiveMultiplier = 2;
       const palladiumConfig = {
@@ -154,7 +155,6 @@
         const finalMonthBalance = months.length > 0 ? months[months.length - 1].biltCashBalance : 0;
         const option2TotalBiltCash = finalMonthBalance;
 
-        const biltCashPointValue = 33;
         const option1BiltCashAsPoints = option1TotalBiltCash * biltCashPointValue;
         const option2BiltCashAsPoints = option2TotalBiltCash * biltCashPointValue;
 
@@ -207,7 +207,7 @@
           difference,
           config,
         };
-      }, [housing, spend]);
+      }, [housing, spend, biltCashPointValue]);
 
       const formatNumber = (num) => num.toLocaleString();
       const formatCurrency = (num) => `$${num.toLocaleString()}`;
@@ -437,6 +437,56 @@
                   <span>$1K</span>
                   <span>$20K</span>
                 </div>
+              </div>
+            </div>
+
+            {/* Bilt Cash Valuation */}
+            <div style={{
+              background: theme.cardBg,
+              borderRadius: '12px',
+              padding: '16px 20px',
+              border: `1px solid ${theme.border}`,
+              marginBottom: '24px',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+                <div>
+                  <label style={{
+                    display: 'block',
+                    fontSize: '12px',
+                    fontWeight: '500',
+                    color: theme.textSecondary,
+                    marginBottom: '4px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.3px',
+                  }}>
+                    Bilt Cash Valuation
+                  </label>
+                  <div style={{ fontSize: '11px', color: theme.textMuted }}>
+                    How many points is $1 of Bilt Cash worth to you?
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <input
+                    type="range"
+                    min="10"
+                    max="50"
+                    step="1"
+                    value={biltCashPointValue}
+                    onChange={(e) => setBiltCashPointValue(Number(e.target.value))}
+                    style={{ width: '120px' }}
+                  />
+                  <div style={{
+                    fontSize: '18px',
+                    fontWeight: '700',
+                    color: theme.accent,
+                    minWidth: '80px',
+                  }}>
+                    {biltCashPointValue} pts/$1
+                  </div>
+                </div>
+              </div>
+              <div style={{ fontSize: '10px', color: theme.textMuted, marginTop: '8px' }}>
+                Note: Accelerators break even at 25 pts/$1. Above 25, holding Bilt Cash beats buying accelerators.
               </div>
             </div>
 
@@ -852,7 +902,7 @@
               </div>
 
               <div style={{ color: theme.textMuted, fontSize: '10px', textAlign: 'center' }}>
-                Bilt Cash valued at {monthlyBreakdown.biltCashPointValue} pts per $1 (conservative estimate)
+                Bilt Cash valued at {monthlyBreakdown.biltCashPointValue} pts per $1 (adjust above)
               </div>
             </div>
 
@@ -997,7 +1047,7 @@
                 color: theme.text,
                 marginBottom: '8px',
               }}>
-                When to Choose Each Option (at 33 pts/$1 Bilt Cash value)
+                When to Choose Each Option (at {biltCashPointValue} pts/$1 Bilt Cash value)
               </div>
               <div style={{
                 fontSize: '12px',
@@ -1005,9 +1055,9 @@
                 lineHeight: '1.8',
               }}>
                 <div style={{ marginBottom: '12px', padding: '8px', background: '#fef3c7', borderRadius: '6px', fontSize: '11px' }}>
-                  <strong>Key insight:</strong> Option 2's 4% Bilt Cash earning = <strong>1.32 point-equivalents per $1 spent</strong>.
-                  Housing unlock is roughly break-even ($30 → 1,000 pts vs 990 pt-equiv cost).
-                  <span style={{ color: '#dc2626' }}> Accelerators are a trap: $200 → 5,000 pts, but costs 6,600 pt-equiv!</span>
+                  <strong>Key insight:</strong> Option 2's 4% Bilt Cash earning = <strong>{(0.04 * biltCashPointValue).toFixed(2)} point-equivalents per $1 spent</strong>.
+                  Housing unlock: $30 → 1,000 pts vs {30 * biltCashPointValue} pt-equiv cost ({30 * biltCashPointValue > 1000 ? 'net loss' : 30 * biltCashPointValue < 1000 ? 'net gain' : 'break-even'}).
+                  <span style={{ color: biltCashPointValue > 25 ? '#dc2626' : theme.option2 }}> Accelerators: $200 → 5,000 pts vs {200 * biltCashPointValue} pt-equiv cost ({biltCashPointValue > 25 ? 'not worth it!' : biltCashPointValue < 25 ? 'worth it!' : 'break-even'})</span>
                 </div>
                 <strong style={{ color: theme.option1 }}>Choose Option 1 when:</strong>
                 <ul style={{ margin: '4px 0 8px 16px', padding: 0 }}>
@@ -1022,7 +1072,7 @@
                   <li>High spend amounts — more Bilt Cash accumulation</li>
                 </ul>
                 <span style={{ color: theme.textMuted }}>
-                  <strong>Bottom line:</strong> At 33 pts/$1 valuation, Option 2 usually wins because the 4% Bilt Cash earning outweighs the 25% housing bonus — but only if you don't burn it on accelerators!
+                  <strong>Bottom line:</strong> At {biltCashPointValue} pts/$1, {biltCashPointValue >= 25 ? "Option 2 usually wins because the 4% Bilt Cash earning outweighs the 25% housing bonus — but only if you don't burn it on accelerators!" : "accelerators become worth buying, shifting the calculus toward Option 2 when you can fund them."}
                 </span>
               </div>
             </div>

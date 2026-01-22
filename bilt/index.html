@@ -22,6 +22,7 @@
       const [housing, setHousing] = useState(4000);
       const [spend, setSpend] = useState(4000);
       const [showMonthly, setShowMonthly] = useState(false);
+      const [biltCashPointValue, setBiltCashPointValue] = useState(33);
 
       const effectiveMultiplier = 2;
       const palladiumConfig = {
@@ -153,7 +154,6 @@
         const finalMonthBalance = months.length > 0 ? months[months.length - 1].biltCashBalance : 0;
         const option2TotalBiltCash = finalMonthBalance;
 
-        const biltCashPointValue = 33;
         const option1BiltCashAsPoints = option1TotalBiltCash * biltCashPointValue;
         const option2BiltCashAsPoints = option2TotalBiltCash * biltCashPointValue;
 
@@ -205,7 +205,7 @@
           difference,
           config,
         };
-      }, [housing, spend]);
+      }, [housing, spend, biltCashPointValue]);
 
       const formatNumber = (num) => num.toLocaleString();
       const formatCurrency = (num) => `$${num.toLocaleString()}`;
@@ -428,6 +428,56 @@
                   <span>$1K</span>
                   <span>$20K</span>
                 </div>
+              </div>
+            </div>
+
+            {/* Bilt Cash Valuation */}
+            <div style={{
+              background: theme.cardBg,
+              borderRadius: '12px',
+              padding: '16px 20px',
+              border: `1px solid ${theme.border}`,
+              marginBottom: '24px',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+                <div>
+                  <label style={{
+                    display: 'block',
+                    fontSize: '12px',
+                    fontWeight: '500',
+                    color: theme.textSecondary,
+                    marginBottom: '4px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.3px',
+                  }}>
+                    Bilt Cash Valuation
+                  </label>
+                  <div style={{ fontSize: '11px', color: theme.textMuted }}>
+                    How many points is $1 of Bilt Cash worth to you?
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <input
+                    type="range"
+                    min="10"
+                    max="50"
+                    step="1"
+                    value={biltCashPointValue}
+                    onChange={(e) => setBiltCashPointValue(Number(e.target.value))}
+                    style={{ width: '120px' }}
+                  />
+                  <div style={{
+                    fontSize: '18px',
+                    fontWeight: '700',
+                    color: theme.accent,
+                    minWidth: '80px',
+                  }}>
+                    {biltCashPointValue} pts/$1
+                  </div>
+                </div>
+              </div>
+              <div style={{ fontSize: '10px', color: theme.textMuted, marginTop: '8px' }}>
+                Note: Accelerators break even at 25 pts/$1. Above 25, holding Bilt Cash beats buying accelerators.
               </div>
             </div>
 
@@ -837,7 +887,7 @@
               </div>
 
               <div style={{ color: theme.textMuted, fontSize: '10px', textAlign: 'center' }}>
-                Bilt Cash valued at {monthlyBreakdown.biltCashPointValue} pts per $1 (conservative estimate)
+                Bilt Cash valued at {monthlyBreakdown.biltCashPointValue} pts per $1 (adjust above)
               </div>
             </div>
 
