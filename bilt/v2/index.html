@@ -989,18 +989,28 @@
                 color: theme.text,
                 marginBottom: '8px',
               }}>
-                Quick Heuristic
+                When to Choose Each Option
               </div>
               <div style={{
                 fontSize: '12px',
                 color: theme.textSecondary,
-                lineHeight: '1.6',
+                lineHeight: '1.8',
               }}>
-                <strong style={{ color: theme.option1 }}>Option 1</strong> wins at lower spend ratios or high housing ({">"}${formatNumber(8333)}/mo) because the 25% bonus scales with housing.
-                <br />
-                <strong style={{ color: theme.option2 }}>Option 2</strong> wins with moderate housing + high spend when you can fully utilize Accelerators.
-                <br />
-                <span style={{ color: theme.textMuted }}>Pro tip: You can switch options monthly!</span>
+                <strong style={{ color: theme.option1 }}>Choose Option 1 when:</strong>
+                <ul style={{ margin: '4px 0 8px 16px', padding: 0 }}>
+                  <li>Housing {">"} $8,333/mo — the 25% bonus exceeds max accelerator potential (5 × 5K pts)</li>
+                  <li>Spend ratio is 100%+ — you get the full 1.25x housing multiplier</li>
+                  <li>Housing has remainder when divided by 1,000 — Option 2 strands those points</li>
+                </ul>
+                <strong style={{ color: theme.option2 }}>Choose Option 2 when:</strong>
+                <ul style={{ margin: '4px 0 8px 16px', padding: 0 }}>
+                  <li>Spend ratio {"<"} 75% — Option 1's multiplier drops to ≤1x, same as unlocking</li>
+                  <li>Spend {">"} housing — more surplus Bilt Cash to fund accelerators</li>
+                  <li>Housing {"<"} $8,333/mo with high spend — accelerators can outpace the 25% bonus</li>
+                </ul>
+                <span style={{ color: theme.textMuted }}>
+                  <strong>Pro tip:</strong> You can switch options monthly! Use Option 1 in high-spend months, Option 2 when building up Bilt Cash reserves.
+                </span>
               </div>
             </div>
           </div>
