@@ -226,10 +226,23 @@
         const maxUnlockablePts = trancheMode ? Math.floor(housing / 1000) * 1000 : housing;
         const strandedPoints = trancheMode ? housing - maxUnlockablePts : 0;
 
+        // PRE-CALCULATE: How many accelerators can we afford while still maxing housing?
+        // Housing unlock (33 pts/$1) is always better than accelerators (25 pts/$1),
+        // so we should only buy accelerators with TRUE surplus after ensuring max housing.
+        const yearlyHousingCost = trancheMode
+          ? Math.floor(housing / 1000) * 30 * 12  // $30 per 1K tranche, 12 months
+          : Math.ceil(housing / 1000) * 30 * 12;  // Round up for non-tranche
+        const yearlyBiltCashIncome = startingBiltCash + (biltCashEarnedPerMonth * 12);
+        // Estimate milestone income (rough: assume ~60-80k points = 2-3 milestones = $100-150)
+        // Use conservative estimate of 2 milestones for planning
+        const estimatedMilestoneIncome = 100;
+        const totalAvailableBiltCash = yearlyBiltCashIncome + estimatedMilestoneIncome;
+        const surplusForAccelerators = Math.max(0, totalAvailableBiltCash - yearlyHousingCost);
+        const maxAffordableAccelerators = Math.min(5, Math.floor(surplusForAccelerators / 200));
+
         let biltCashBalance = startingBiltCash;
         let acceleratorsActivated = 0;
         let acceleratorSpendRemaining = 0;
-        const maxAccelerators = 5;
         let milestonesEarned = 0;
         let totalHousingUnlockCost = 0;
         let totalHousingPtsUnlocked = 0;
@@ -284,8 +297,14 @@
           }
 
           // PRIORITY 2: Only buy accelerators with Bilt Cash left AFTER maxing housing unlock
+          // Additional checks: housing must be maxed this month, and we need buffer for next month
+          const housingMaxedThisMonth = ptsUnlockedThisMonth >= maxUnlockablePts;
+          const monthlyHousingCost = (maxUnlockablePts / 1000) * 30;
+          const nextMonthProjectedBiltCash = (biltCashBalance - 200) + biltCashEarnedPerMonth;
+          const canAffordHousingNextMonth = nextMonthProjectedBiltCash >= monthlyHousingCost;
+
           let activatedThisMonth = false;
-          if (biltCashBalance >= 200 && acceleratorsActivated < maxAccelerators && acceleratorSpendRemaining <= 0) {
+          if (biltCashBalance >= 200 && acceleratorsActivated < 5 && acceleratorSpendRemaining <= 0 && housingMaxedThisMonth && canAffordHousingNextMonth) {
             activatedThisMonth = true;
             biltCashBalance -= 200;
             acceleratorsActivated++;
@@ -379,6 +398,7 @@
           acceleratorBonus,
           acceleratorCost,
           acceleratorCount: acceleratorsActivated,
+          maxAffordableAccelerators,
           option1TotalBiltCash,
           option1MilestoneCash,
           option2TotalBiltCash,
@@ -829,11 +849,11 @@
                       <div style={{ color: theme.textSecondary }}>{monthlyBreakdown.acceleratorCount} activated × +1x on ${formatNumber(5000)} spend each = +{formatNumber(monthlyBreakdown.acceleratorBonus)} pts</div>
                       <div style={{ color: theme.textMuted, fontSize: '10px', marginTop: '4px' }}>At {formatCurrency(spend)}/mo, each Accelerator takes {Math.ceil(5000 / spend)} month{Math.ceil(5000 / spend) > 1 ? 's' : ''} to deplete</div>
                       {monthlyBreakdown.acceleratorCount < 5 && (
-                        <div style={{ color: theme.option1, fontSize: '10px', marginTop: '4px' }}>💡 Only {monthlyBreakdown.acceleratorCount} funded — Bilt Cash prioritized for housing unlock first</div>
+                        <div style={{ color: theme.option1, fontSize: '10px', marginTop: '4px' }}>💡 Only {monthlyBreakdown.acceleratorCount} activated — Bilt Cash prioritized for housing unlock</div>
                       )}
                     </>
                   ) : (
-                    <div style={{ color: theme.textMuted }}>All Bilt Cash used for housing unlock (better value at 33 pts/$1 vs accelerator's 25 pts/$1).</div>
+                    <div style={{ color: theme.textMuted }}>No accelerators activated — all Bilt Cash reserved for housing unlock (33 pts/$1 vs 25 pts/$1).</div>
                   )}
                 </div>
               </div>
