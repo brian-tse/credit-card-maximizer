@@ -254,10 +254,8 @@
         for (let i = 1; i <= 12; i++) {
           opt1Cumulative += option1MonthlyPoints;
 
-          // Add monthly 4% Bilt Cash earnings
-          biltCashBalance += biltCashEarnedPerMonth;
-
-          // PRIORITY 1: Use ALL available Bilt Cash for housing unlock first (up to monthly cap)
+          // PRIORITY 1: Use available Bilt Cash for housing unlock first (up to monthly cap)
+          // Note: This month's 4% earnings are added at END of month (available next month)
           // Housing unlock: $30 per 1,000 points = 33.33 pts/$1 (better than accelerators at 25 pts/$1)
           let ptsUnlockedThisMonth;
           let cashUsedForUnlockThisMonth;
@@ -317,6 +315,9 @@
 
           const opt2MonthlyTotal = opt2BaseThisMonth + acceleratorBonusPts;
           opt2Cumulative += opt2MonthlyTotal;
+
+          // Add monthly 4% Bilt Cash earnings at END of month (available for next month)
+          biltCashBalance += biltCashEarnedPerMonth;
 
           months.push({
             month: i,
