@@ -2656,6 +2656,111 @@ const CARDS_DATABASE = [
     color: "#003DA5",
     lastUpdated: "2026-01-27",
     cardType: "balance-transfer"
+  },
+  {
+    id: "discover-it-cash-back",
+    name: "Discover It Cash Back",
+    issuer: "Discover",
+    network: "Discover",
+    annualFee: 0,
+    signUpBonus: {
+      amount: null,
+      currency: "Cashback Match",
+      description: "Discover matches all cash back earned in first year"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Rotating Categories", multiplier: 5, description: "Up to $1,500/quarter when activated. Q1 2026: Grocery, Wholesale Clubs, Streaming" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "Cashback Match", description: "All cash back earned in first year is matched", type: "bonus" },
+      { name: "No Annual Fee", description: "No annual fee ever", type: "fee" },
+      { name: "Free FICO Score", description: "Access your FICO score monthly", type: "feature" },
+      { name: "Freeze It", description: "Freeze your account instantly if card is lost", type: "security" }
+    ],
+    color: "#FF6600",
+    lastUpdated: "2026-01-27"
+  },
+  {
+    id: "us-bank-shield-visa",
+    name: "U.S. Bank Shield Visa",
+    issuer: "U.S. Bank",
+    network: "Visa",
+    annualFee: 0,
+    signUpBonus: null,
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Travel (U.S. Bank Portal)", multiplier: 4, description: "Booked through U.S. Bank travel portal" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Annual Statement Credit", amount: 20, frequency: "annual", type: "statement", description: "Earn $20 for 11 consecutive months of purchases" }
+    ],
+    perks: [
+      { name: "0% Intro APR", description: "0% for 24 billing cycles on purchases and balance transfers", type: "apr" },
+      { name: "Purchase Protection", description: "Covers eligible purchases against damage or theft", type: "protection" },
+      { name: "Extended Warranty", description: "Extends manufacturer warranty", type: "protection" },
+      { name: "Cell Phone Protection", description: "Up to $600 per claim when you pay your phone bill with this card", type: "protection" }
+    ],
+    color: "#002855",
+    lastUpdated: "2026-01-27",
+    cardType: "balance-transfer"
+  },
+  {
+    id: "wells-fargo-reflect",
+    name: "Wells Fargo Reflect",
+    issuer: "Wells Fargo",
+    network: "Visa",
+    annualFee: 0,
+    signUpBonus: null,
+    earning: {
+      base: 0,
+      categories: []
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "0% Intro APR on Purchases", description: "0% for 21 months, then 17.74%-29.74% variable", type: "apr" },
+      { name: "0% Intro APR on Balance Transfers", description: "0% for 21 months, then 17.74%-29.74% variable", type: "apr" },
+      { name: "Cell Phone Protection", description: "Up to $600 when you pay your phone bill with this card", type: "protection" },
+      { name: "Roadside Dispatch", description: "24/7 roadside assistance", type: "travel" }
+    ],
+    color: "#D71E28",
+    lastUpdated: "2026-01-27",
+    cardType: "balance-transfer"
+  },
+  {
+    id: "capital-one-savor-student",
+    name: "Capital One Savor Student Cash Rewards",
+    issuer: "Capital One",
+    network: "Mastercard",
+    annualFee: 0,
+    signUpBonus: null,
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Dining", multiplier: 3, description: "Restaurants and bars" },
+        { category: "Entertainment", multiplier: 3, description: "Movies, concerts, events" },
+        { category: "Streaming", multiplier: 3, description: "Popular streaming services" },
+        { category: "Grocery Stores", multiplier: 3, description: "Excludes superstores like Walmart" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "No Annual Fee", description: "No annual fee", type: "fee" },
+      { name: "No Foreign Transaction Fees", description: "Great for international purchases", type: "travel" },
+      { name: "Credit Building", description: "Designed for students to build credit", type: "feature" }
+    ],
+    color: "#D03027",
+    lastUpdated: "2026-01-27",
+    cardType: "student"
   }
 ];
 
