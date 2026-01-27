@@ -12,7 +12,7 @@ const CARDS_WITH_IMAGES = [
   // Capital One
   'capital-one-venture', 'capital-one-venture-x', 'capital-one-venture-x-business', 'capital-one-spark-miles', 'capital-one-spark-cash-plus',
   // Chase Personal
-  'chase-sapphire-reserve', 'chase-sapphire-preferred', 'chase-freedom-unlimited', 'chase-freedom-flex',
+  'chase-sapphire-reserve', 'chase-sapphire-preferred', 'chase-freedom-unlimited', 'chase-freedom-flex', 'amazon-prime-visa',
   // Chase Business
   'chase-ink-business-unlimited', 'chase-ink-business-preferred', 'chase-ink-business-cash',
   // Citi
@@ -30,7 +30,7 @@ const CARDS_WITH_IMAGES = [
   // United
   'united-explorer', 'united-quest', 'united-club-infinite', 'united-business-card',
   // Bank of America
-  'bofa-business-advantage-unlimited', 'boa-atmos-ascent', 'atmos-rewards-summit',
+  'bofa-business-advantage-unlimited', 'bank-of-america-customized-cash-rewards', 'boa-atmos-ascent', 'atmos-rewards-summit',
   // Other
   'discover-it-cash-back', 'us-bank-altitude-reserve',
   'wells-fargo-active-cash', 'wells-fargo-autograph-journey',

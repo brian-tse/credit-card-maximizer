@@ -431,6 +431,45 @@ const CARDS_DATABASE = [
     lastUpdated: "2026-01-15"
   },
   {
+    id: "amazon-prime-visa",
+    name: "Amazon Prime Visa",
+    issuer: "Chase",
+    network: "Visa",
+    cardType: "personal",
+    annualFee: 0,
+    signUpBonus: {
+      amount: 150,
+      currency: "Amazon Gift Card",
+      spendRequirement: 0,
+      timeframe: "Instant upon approval"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Amazon/Whole Foods/Amazon Fresh + Chase Travel", multiplier: 5, description: "Requires Prime membership" },
+        { category: "Gas Stations", multiplier: 2, description: "At the pump" },
+        { category: "Restaurants", multiplier: 2, description: "Dining and takeout" },
+        { category: "Transit & Commuting", multiplier: 2, description: "Local transit and rideshare" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "Daily Rewards Posting", description: "Rewards post as soon as next day", type: "rewards" },
+      { name: "Prime Bonus Offers", description: "10%+ back on rotating Amazon selections", type: "rewards" },
+      { name: "No Earning Caps", description: "Unlimited earning with no point expiration", type: "rewards" },
+      { name: "Extended Warranty Protection", description: "Extends warranties up to 1 additional year", type: "protection" },
+      { name: "Purchase Protection", description: "Covers new purchases for 120 days up to $500/item", type: "protection" },
+      { name: "Auto Rental Coverage", description: "Collision damage waiver", type: "insurance" },
+      { name: "Baggage Delay Insurance", description: "$100/day, max 3 days", type: "insurance" },
+      { name: "Travel Accident Insurance", description: "Up to $500,000", type: "insurance" },
+      { name: "Lost Luggage Reimbursement", description: "Up to $3,000", type: "insurance" },
+      { name: "No Foreign Transaction Fees", description: "Use abroad with no extra fees", type: "travel" }
+    ],
+    color: "#FF9900",
+    lastUpdated: "2026-01-26"
+  },
+  {
     id: "discover-it-cash-back",
     name: "Discover it Cash Back",
     issuer: "Discover",
@@ -1494,7 +1533,7 @@ const CARDS_DATABASE = [
       base: 2,
       categories: [
         { category: "Rent/Mortgage", multiplier: 1, description: "No fee with Bilt Cash, or 3% fee for max points" },
-        { category: "Dining", multiplier: 3, description: "Restaurants worldwide" },
+        { category: "Dining", multiplier: 2, description: "Restaurants worldwide" },
         { category: "Travel", multiplier: 2, description: "Airlines, hotels, car rentals" }
       ]
     },
@@ -2406,6 +2445,41 @@ const CARDS_DATABASE = [
     ],
     color: "#012169",
     lastUpdated: "2026-01-15"
+  },
+
+  // --- Bank of America Customized Cash Rewards ---
+  {
+    id: "bank-of-america-customized-cash-rewards",
+    name: "Bank of America Customized Cash Rewards",
+    issuer: "Bank of America",
+    network: "Visa",
+    cardType: "personal",
+    annualFee: 0,
+    signUpBonus: {
+      amount: 200,
+      currency: "Cash Back",
+      spendRequirement: 1000,
+      timeframe: "90 days"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Choice Category (Year 1)", multiplier: 6, description: "Gas/EV charging, online shopping, dining, travel, drugstores, or home improvement" },
+        { category: "Choice Category (After Year 1)", multiplier: 3, description: "Gas/EV charging, online shopping, dining, travel, drugstores, or home improvement" },
+        { category: "Grocery & Wholesale", multiplier: 2, description: "Grocery stores and wholesale clubs" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "0% Intro APR", description: "0% for 15 billing cycles on purchases and balance transfers (within first 60 days)", type: "apr" },
+      { name: "Quarterly Spending Cap", description: "$2,500 combined quarterly cap on 3%/2% categories, then 1%", type: "rewards" },
+      { name: "Monthly Category Changes", description: "Change choice category up to once per calendar month", type: "rewards" },
+      { name: "Preferred Rewards Boost", description: "Earn 25%-75% more with Preferred Rewards banking relationship", type: "rewards" },
+      { name: "No Foreign Transaction Fees", description: "Use abroad with no extra fees", type: "travel" }
+    ],
+    color: "#E31837",
+    lastUpdated: "2026-01-26"
   },
 
   // --- Bank of America Atmos Rewards Ascent ---
