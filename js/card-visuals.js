@@ -10,7 +10,7 @@ const CARDS_WITH_IMAGES = [
   // Bilt
   'bilt-blue', 'bilt-obsidian', 'bilt-palladium',
   // Capital One
-  'capital-one-venture', 'capital-one-venture-x', 'capital-one-venture-x-business', 'capital-one-spark-miles', 'capital-one-spark-cash-plus',
+  'capital-one-venture', 'capital-one-venture-x', 'capital-one-venture-x-business', 'capital-one-spark-miles', 'capital-one-spark-cash-plus', 'capital-one-savor',
   // Chase Personal
   'chase-sapphire-reserve', 'chase-sapphire-preferred', 'chase-freedom-unlimited', 'chase-freedom-flex', 'amazon-prime-visa',
   // Chase Business
