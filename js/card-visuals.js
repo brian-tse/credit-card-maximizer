@@ -1,7 +1,7 @@
 // CardMax - Card Visual Generator
 // Creates credit card visuals with actual images or CSS fallback
 
-// Cards with downloaded images (55 cards - all cards now have images)
+// Cards with downloaded images (69 cards - all cards now have images)
 const CARDS_WITH_IMAGES = [
   // Amex Personal
   'amex-platinum', 'amex-gold', 'amex-green', 'amex-blue-cash-preferred',
@@ -10,13 +10,16 @@ const CARDS_WITH_IMAGES = [
   // Bilt
   'bilt-blue', 'bilt-obsidian', 'bilt-palladium',
   // Capital One
-  'capital-one-venture', 'capital-one-venture-x', 'capital-one-venture-x-business', 'capital-one-spark-miles', 'capital-one-spark-cash-plus', 'capital-one-savor',
+  'capital-one-venture', 'capital-one-venture-x', 'capital-one-venture-x-business', 'capital-one-spark-miles', 'capital-one-spark-cash-plus', 'capital-one-savor', 'capital-one-savor-student',
   // Chase Personal
   'chase-sapphire-reserve', 'chase-sapphire-preferred', 'chase-freedom-unlimited', 'chase-freedom-flex', 'amazon-prime-visa',
   // Chase Business
   'chase-ink-business-unlimited', 'chase-ink-business-preferred', 'chase-ink-business-cash',
+  // Chase Co-brand
+  'chase-british-airways', 'chase-marriott-bold',
   // Citi
-  'citi-double-cash', 'citi-strata-premier', 'citi-strata-elite', 'citi-costco-anywhere',
+  'citi-double-cash', 'citi-strata-premier', 'citi-strata-elite', 'citi-costco-anywhere', 'citi-simplicity',
+  'citi-aadvantage-platinum-select', 'citi-aadvantage-executive', 'citi-aadvantage-globe',
   // Delta Personal
   'delta-skymiles-gold', 'delta-skymiles-platinum', 'delta-skymiles-reserve',
   // Delta Business
@@ -31,10 +34,11 @@ const CARDS_WITH_IMAGES = [
   'united-explorer', 'united-quest', 'united-club-infinite', 'united-business-card',
   // Bank of America
   'bofa-business-advantage-unlimited', 'bank-of-america-customized-cash-rewards', 'boa-atmos-ascent', 'atmos-rewards-summit',
+  'bofa-air-france-klm', 'bofa-premium-rewards', 'bofa-premium-rewards-elite',
   // Other
-  'discover-it-cash-back', 'us-bank-altitude-reserve',
-  'wells-fargo-active-cash', 'wells-fargo-autograph-journey',
-  'gemini-credit-card'
+  'discover-it-cash-back', 'us-bank-altitude-reserve', 'us-bank-shield-visa',
+  'wells-fargo-active-cash', 'wells-fargo-autograph-journey', 'wells-fargo-reflect',
+  'gemini-credit-card', 'cardless-qatar-infinite', 'synchrony-virgin-red'
 ];
 
 // Get issuer class name for styling
