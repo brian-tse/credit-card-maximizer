@@ -2633,6 +2633,29 @@ const CARDS_DATABASE = [
     ],
     color: "#D03027",
     lastUpdated: "2026-01-26"
+  },
+  {
+    id: "citi-simplicity",
+    name: "Citi Simplicity",
+    issuer: "Citi",
+    network: "Mastercard",
+    annualFee: 0,
+    signUpBonus: null,
+    earning: {
+      base: 0,
+      categories: []
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "0% Intro APR on Purchases", description: "0% for 12 months, then 17.49%-28.24% variable", type: "apr" },
+      { name: "0% Intro APR on Balance Transfers", description: "0% for 21 months, then 17.49%-28.24% variable", type: "apr" },
+      { name: "No Late Fees Ever", description: "You'll never pay a late fee", type: "feature" },
+      { name: "No Penalty APR", description: "Your rate won't increase even if you pay late", type: "feature" }
+    ],
+    color: "#003DA5",
+    lastUpdated: "2026-01-27",
+    cardType: "balance-transfer"
   }
 ];
 
