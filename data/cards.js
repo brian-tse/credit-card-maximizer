@@ -2761,6 +2761,401 @@ const CARDS_DATABASE = [
     color: "#D03027",
     lastUpdated: "2026-01-27",
     cardType: "student"
+  },
+
+  // ============ NEW CARDS JANUARY 2026 ============
+  
+  // --- Qatar Airways Cardless ---
+  {
+    id: "cardless-qatar-infinite",
+    name: "Qatar Airways Privilege Club Infinite",
+    issuer: "Cardless",
+    network: "Visa",
+    annualFee: 499,
+    signUpBonus: {
+      amount: 85000,
+      currency: "Avios",
+      spendRequirement: 6000,
+      timeframe: "90 days",
+      additionalInfo: "25,000 Avios after first transaction + 60,000 Avios after spend requirement"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Qatar Airways", multiplier: 5, description: "Flights and purchases" },
+        { category: "Restaurants", multiplier: 3, description: "Dining worldwide" }
+      ]
+    },
+    transferPartners: [
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" },
+      { name: "Aer Lingus", ratio: "1:1", type: "airline" },
+      { name: "Finnair", ratio: "1:1", type: "airline" }
+    ],
+    credits: [],
+    perks: [
+      { name: "Privilege Club Gold Status", description: "First year automatic Gold status with lounge access", type: "status" },
+      { name: "Oneworld Sapphire Status", description: "Business class lounges, priority boarding, extra bags", type: "status" },
+      { name: "Qpoints Earning", description: "2 Qpoints per 1,500 Avios earned", type: "status" },
+      { name: "Award Fee Waiver", description: "Waived award fees when meeting spend thresholds", type: "travel" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Points Never Expire", description: "Avios don't expire as long as you use your card", type: "rewards" },
+      { name: "Visa Infinite Benefits", description: "Premium Visa benefits package", type: "travel" }
+    ],
+    color: "#5C0632",
+    lastUpdated: "2026-01-27"
+  },
+  
+  // --- Bank of America Air France/KLM FlyingBlue ---
+  {
+    id: "bofa-air-france-klm",
+    name: "Air France KLM Visa Signature",
+    issuer: "Bank of America",
+    network: "Visa",
+    annualFee: 89,
+    signUpBonus: {
+      amount: 70000,
+      currency: "Flying Blue Miles",
+      spendRequirement: 3000,
+      timeframe: "90 days",
+      additionalInfo: "Plus 100 XP (Experience Points) for Silver status"
+    },
+    earning: {
+      base: 1.5,
+      categories: [
+        { category: "Air France/KLM/SkyTeam", multiplier: 3, description: "Bookings with Air France, KLM, and SkyTeam airlines" },
+        { category: "Dining", multiplier: 3, description: "Restaurants worldwide" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "Flying Blue Elite Status", description: "Earn up to 160 XP/year toward Silver, Gold, Platinum status", type: "status" },
+      { name: "Anniversary Bonus", description: "5,000 bonus miles + 20 XP after $50 annual spend", type: "rewards" },
+      { name: "Spend Bonuses", description: "80 XP at $15,000 spend + 60 XP at $25,000 spend annually", type: "status" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Visa Signature Benefits", description: "Premium Visa benefits package", type: "travel" }
+    ],
+    color: "#00205B",
+    lastUpdated: "2026-01-27"
+  },
+  
+  // --- Citi AAdvantage Platinum Select ---
+  {
+    id: "citi-aadvantage-platinum-select",
+    name: "Citi AAdvantage Platinum Select",
+    issuer: "Citi",
+    network: "Mastercard",
+    annualFee: 99,
+    signUpBonus: {
+      amount: 80000,
+      currency: "AAdvantage Miles",
+      spendRequirement: 3500,
+      timeframe: "4 months",
+      additionalInfo: "Annual fee waived first year"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "American Airlines", multiplier: 2, description: "Eligible AA purchases" },
+        { category: "Restaurants", multiplier: 2, description: "Dining worldwide" },
+        { category: "Gas Stations", multiplier: 2, description: "At the pump" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Flight Discount", amount: 125, frequency: "annual", type: "travel", description: "After $20,000 spend and card renewal" }
+    ],
+    perks: [
+      { name: "First Checked Bag Free", description: "For you + up to 4 companions on same reservation", type: "travel" },
+      { name: "Preferred Boarding", description: "Priority boarding on American Airlines flights", type: "travel" },
+      { name: "25% Savings Inflight", description: "Save 25% on inflight food and beverage purchases", type: "travel" },
+      { name: "Loyalty Points", description: "1 Loyalty Point per mile earned from purchases", type: "status" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Turo Credit", description: "Up to $180/year in Turo statement credits", type: "travel" }
+    ],
+    color: "#1B3668",
+    lastUpdated: "2026-01-27"
+  },
+  
+  // --- Citi AAdvantage Globe ---
+  {
+    id: "citi-aadvantage-globe",
+    name: "Citi AAdvantage Globe",
+    issuer: "Citi",
+    network: "Mastercard",
+    annualFee: 350,
+    signUpBonus: {
+      amount: 90000,
+      currency: "AAdvantage Miles",
+      spendRequirement: 5000,
+      timeframe: "4 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "American Airlines", multiplier: 2, description: "Eligible AA purchases" },
+        { category: "Restaurants", multiplier: 2, description: "Dining worldwide" },
+        { category: "Hotels", multiplier: 2, description: "Hotel stays" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Admirals Club Passes", amount: 4, frequency: "annual", type: "lounge", description: "4 Globe Passes per calendar year ($300+ value)" },
+      { name: "Annual Splurge Credit", amount: 100, frequency: "annual", type: "lifestyle", description: "Choose up to 2 brands: AAdvantage Hotels, 1stDibs, Live Nation, etc." },
+      { name: "Companion Certificate", amount: 1, frequency: "annual", type: "travel", description: "Starting year 2; $99 fee + taxes for domestic Main Cabin" },
+      { name: "Global Entry/TSA PreCheck", amount: 120, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
+    ],
+    perks: [
+      { name: "First Checked Bag Free", description: "For you + up to 8 companions on same reservation", type: "travel" },
+      { name: "Preferred Boarding", description: "Priority boarding on American Airlines flights", type: "travel" },
+      { name: "Flight Streak Bonus", description: "5,000 Loyalty Points per 4 AA flights (up to 15,000/year)", type: "status" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Travel Protection", description: "Trip cancellation, delay, and luggage protection", type: "insurance" }
+    ],
+    color: "#1B3668",
+    lastUpdated: "2026-01-27"
+  },
+  
+  // --- Citi AAdvantage Executive ---
+  {
+    id: "citi-aadvantage-executive",
+    name: "Citi AAdvantage Executive",
+    issuer: "Citi",
+    network: "Mastercard",
+    annualFee: 595,
+    signUpBonus: {
+      amount: 70000,
+      currency: "AAdvantage Miles",
+      spendRequirement: 10000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "American Airlines", multiplier: 2, description: "Eligible AA purchases" },
+        { category: "All Purchases", multiplier: 1, description: "Everything else" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Global Entry/TSA PreCheck", amount: 120, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
+    ],
+    perks: [
+      { name: "Admirals Club Membership", description: "Full membership ($700-850 value) at lounges worldwide", type: "lounge" },
+      { name: "First Checked Bag Free", description: "For you + up to 8 companions on same reservation", type: "travel" },
+      { name: "Enhanced Airport Experience", description: "Priority check-in, screening, and boarding", type: "travel" },
+      { name: "25% Savings Inflight", description: "Save 25% on inflight food and beverage purchases", type: "travel" },
+      { name: "Loyalty Points Bonuses", description: "10,000 bonus at 50,000 LP + 10,000 at 90,000 LP", type: "status" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Travel Protection", description: "Trip cancellation, delay, and luggage protection", type: "insurance" }
+    ],
+    color: "#1B3668",
+    lastUpdated: "2026-01-27"
+  },
+  
+  // --- Bank of America Premium Rewards ---
+  {
+    id: "bofa-premium-rewards",
+    name: "Bank of America Premium Rewards",
+    issuer: "Bank of America",
+    network: "Visa",
+    annualFee: 95,
+    signUpBonus: {
+      amount: 60000,
+      currency: "Points",
+      spendRequirement: 4000,
+      timeframe: "90 days"
+    },
+    earning: {
+      base: 1.5,
+      categories: [
+        { category: "Travel", multiplier: 2, description: "Airlines, hotels, car rentals" },
+        { category: "Dining", multiplier: 2, description: "Restaurants worldwide" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Airline Incidental Credit", amount: 100, frequency: "annual", type: "travel", description: "Seat upgrades, baggage fees, lounge access" },
+      { name: "Global Entry/TSA PreCheck", amount: 100, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
+    ],
+    perks: [
+      { name: "Preferred Rewards Bonus", description: "Earn 25-75% more points with Preferred Rewards status", type: "rewards" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Trip Delay Insurance", description: "Reimbursement for delays over 12 hours", type: "insurance" },
+      { name: "Trip Cancellation Insurance", description: "Coverage for non-refundable expenses", type: "insurance" },
+      { name: "Baggage Insurance", description: "Lost or delayed luggage coverage", type: "insurance" },
+      { name: "Purchase Protection", description: "Repair or replacement for 90 days, up to $10,000", type: "protection" },
+      { name: "Extended Warranty", description: "Extra year on manufacturer warranties", type: "protection" }
+    ],
+    color: "#E31837",
+    lastUpdated: "2026-01-27"
+  },
+  
+  // --- Bank of America Premium Rewards Elite ---
+  {
+    id: "bofa-premium-rewards-elite",
+    name: "Bank of America Premium Rewards Elite",
+    issuer: "Bank of America",
+    network: "Visa",
+    annualFee: 550,
+    signUpBonus: {
+      amount: 75000,
+      currency: "Points",
+      spendRequirement: 5000,
+      timeframe: "90 days"
+    },
+    earning: {
+      base: 1.5,
+      categories: [
+        { category: "Travel", multiplier: 2, description: "Airlines, hotels, car rentals" },
+        { category: "Dining", multiplier: 2, description: "Restaurants worldwide" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Airline Incidental Credit", amount: 300, frequency: "annual", type: "travel", description: "Seat upgrades, baggage fees, lounge fees" },
+      { name: "Lifestyle Credit", amount: 150, frequency: "annual", type: "lifestyle", description: "Streaming, food delivery, fitness, rideshare" },
+      { name: "Global Entry/TSA PreCheck", amount: 120, frequency: "every 4 years", type: "travel", description: "Statement credit for application fee" }
+    ],
+    perks: [
+      { name: "Priority Pass Select", description: "4 complimentary memberships with lounge access", type: "lounge" },
+      { name: "Preferred Rewards Bonus", description: "Earn 25-75% more points with Preferred Rewards status", type: "rewards" },
+      { name: "20% Airfare Savings", description: "20% off when paying with points through Travel Center", type: "travel" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Trip Delay Insurance", description: "Reimbursement for delays", type: "insurance" },
+      { name: "Trip Cancellation Insurance", description: "Coverage for non-refundable expenses", type: "insurance" },
+      { name: "Purchase Protection", description: "Repair or replacement for eligible items", type: "protection" }
+    ],
+    color: "#E31837",
+    lastUpdated: "2026-01-27"
+  },
+  
+  // --- Synchrony Virgin Red ---
+  {
+    id: "synchrony-virgin-red",
+    name: "Virgin Red Rewards Mastercard",
+    issuer: "Synchrony",
+    network: "Mastercard",
+    annualFee: 99,
+    signUpBonus: {
+      amount: 60000,
+      currency: "Virgin Points",
+      spendRequirement: 3000,
+      timeframe: "90 days"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Virgin Atlantic/Hotels/Voyages", multiplier: 3, description: "Virgin brand purchases" },
+        { category: "Dining", multiplier: 2, description: "Restaurants" },
+        { category: "Grocery Stores", multiplier: 2, description: "Supermarkets" },
+        { category: "Streaming Services", multiplier: 2, description: "Entertainment subscriptions" },
+        { category: "EV Charging", multiplier: 2, description: "Electric vehicle charging" }
+      ]
+    },
+    transferPartners: [
+      { name: "Virgin Atlantic", ratio: "1:1", type: "airline" }
+    ],
+    credits: [
+      { name: "Anniversary Points", amount: 5000, frequency: "annual", type: "points", description: "5,000 Virgin Points upon card renewal" },
+      { name: "Third Night Free", amount: 1, frequency: "annual", type: "hotel", description: "Book 2 nights, get 3rd free at Virgin Hotels" }
+    ],
+    perks: [
+      { name: "Personal Perks", description: "Spend $15K for 1 perk, $30K for 2: companion seat, hotel night, or bar credit", type: "rewards" },
+      { name: "Flying Club Tier Points", description: "25 Tier Points per $2,500 monthly spend (max 50/month)", type: "status" },
+      { name: "Authorized User Bonus", description: "2,500 points per added user (up to 10,000)", type: "rewards" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Points Never Expire", description: "Virgin Points don't expire while card is active", type: "rewards" },
+      { name: "Mastercard World Elite Benefits", description: "Premium Mastercard benefits", type: "travel" }
+    ],
+    color: "#E10A0A",
+    lastUpdated: "2026-01-27"
+  },
+  
+  // --- Chase British Airways ---
+  {
+    id: "chase-british-airways",
+    name: "British Airways Visa Signature",
+    issuer: "Chase",
+    network: "Visa",
+    annualFee: 95,
+    signUpBonus: {
+      amount: 75000,
+      currency: "Avios",
+      spendRequirement: 5000,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "British Airways/Aer Lingus/Iberia/LEVEL", multiplier: 3, description: "Flight purchases" },
+        { category: "Hotels (direct)", multiplier: 2, description: "Booked directly with hotels" }
+      ]
+    },
+    transferPartners: [
+      { name: "British Airways", ratio: "1:1", type: "airline" },
+      { name: "Aer Lingus", ratio: "1:1", type: "airline" },
+      { name: "Iberia", ratio: "1:1", type: "airline" }
+    ],
+    credits: [
+      { name: "Reward Flight Statement Credit", amount: 600, frequency: "annual", type: "travel", description: "$100-200 per booking (3x/year) toward taxes/fees on reward flights" }
+    ],
+    perks: [
+      { name: "Travel Together Ticket", description: "After $30,000 annual spend: companion flies free or 50% off Avios", type: "travel" },
+      { name: "10% Discount on BA Flights", description: "10% off when booking US-London flights at ba.com", type: "travel" },
+      { name: "Pay Taxes with Avios", description: "Use Avios to cover award ticket taxes and fees", type: "travel" },
+      { name: "DashPass", description: "12 months complimentary DoorDash DashPass", type: "subscription" },
+      { name: "DoorDash Credit", description: "$10 off quarterly non-restaurant orders", type: "dining" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Oneworld Redemptions", description: "Redeem Avios on AA, Alaska, Qantas, Qatar, and more", type: "travel" }
+    ],
+    color: "#075AAA",
+    lastUpdated: "2026-01-27"
+  },
+  
+  // --- Chase Marriott Bold ---
+  {
+    id: "chase-marriott-bold",
+    name: "Marriott Bonvoy Bold",
+    issuer: "Chase",
+    network: "Visa",
+    annualFee: 0,
+    signUpBonus: {
+      amount: 2,
+      currency: "Free Night Awards",
+      spendRequirement: 1000,
+      timeframe: "3 months",
+      additionalInfo: "Each Free Night valid at properties up to 50,000 points"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Marriott Hotels", multiplier: 14, description: "Up to 14x total: 3x card + base member earnings" },
+        { category: "Grocery Stores", multiplier: 2, description: "Supermarkets" },
+        { category: "Internet/Cable/Phone", multiplier: 2, description: "Monthly services" },
+        { category: "Streaming Services", multiplier: 2, description: "Entertainment subscriptions" },
+        { category: "Rideshare", multiplier: 2, description: "Uber, Lyft, taxis" },
+        { category: "Food Delivery", multiplier: 2, description: "DoorDash, Uber Eats, Grubhub, etc." }
+      ]
+    },
+    transferPartners: [
+      { name: "United Airlines", ratio: "3:1", type: "airline" },
+      { name: "Delta Airlines", ratio: "3:1", type: "airline" },
+      { name: "American Airlines", ratio: "3:1", type: "airline" }
+    ],
+    credits: [],
+    perks: [
+      { name: "No Annual Fee", description: "No annual fee ever", type: "fee" },
+      { name: "Silver Elite Status", description: "Automatic Marriott Bonvoy Silver Elite status", type: "status" },
+      { name: "5 Elite Night Credits", description: "Toward next status tier annually", type: "status" },
+      { name: "DashPass", description: "12 months complimentary DoorDash DashPass", type: "subscription" },
+      { name: "DoorDash Credit", description: "$10 off quarterly non-restaurant orders", type: "dining" },
+      { name: "Pay Yourself Back", description: "Redeem points for statement credits on airlines and Marriott", type: "redemption" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" }
+    ],
+    color: "#8B0029",
+    lastUpdated: "2026-01-27"
   }
 ];
 
