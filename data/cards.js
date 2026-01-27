@@ -2595,6 +2595,44 @@ const CARDS_DATABASE = [
     ],
     color: "#1B3668",
     lastUpdated: "2026-01-21"
+  },
+
+  // --- Capital One Savor ---
+  {
+    id: "capital-one-savor",
+    name: "Capital One Savor Cash Rewards",
+    issuer: "Capital One",
+    network: "Mastercard",
+    cardType: "personal",
+    annualFee: 0,
+    signUpBonus: {
+      amount: 200,
+      currency: "Cash Bonus",
+      spendRequirement: 500,
+      timeframe: "3 months"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "Capital One Entertainment", multiplier: 8, description: "Purchases through Capital One Entertainment" },
+        { category: "Hotels & Rental Cars", multiplier: 5, description: "Booked through Capital One Travel" },
+        { category: "Dining", multiplier: 3, description: "Restaurants, bars, cafes, fast food" },
+        { category: "Entertainment", multiplier: 3, description: "Movies, concerts, sporting events, amusement parks" },
+        { category: "Grocery Stores", multiplier: 3, description: "Excludes superstores like Walmart and Target" },
+        { category: "Streaming", multiplier: 3, description: "Popular streaming services" }
+      ]
+    },
+    transferPartners: [],
+    credits: [],
+    perks: [
+      { name: "0% Intro APR", description: "0% for 12 months on purchases and balance transfers", type: "apr" },
+      { name: "No Foreign Transaction Fees", description: "No fees on international purchases", type: "travel" },
+      { name: "Hertz Five Star Status", description: "Complimentary Hertz Five Star rental status", type: "status" },
+      { name: "Extended Warranty", description: "Extends manufacturer warranty", type: "protection" },
+      { name: "Travel Accident Insurance", description: "Coverage for travel accidents", type: "insurance" }
+    ],
+    color: "#D03027",
+    lastUpdated: "2026-01-26"
   }
 ];
 
