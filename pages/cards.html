@@ -235,6 +235,8 @@
 
     // Cloudflare Worker endpoint for card suggestions
     const SUGGESTION_API = 'https://cardmax-suggestions.briantse.workers.dev';
+    // Web3Forms for email notification to Brian
+    const WEB3FORMS_KEY = '9295b1da-e117-4432-bc64-658ab416d2aa';
 
     async function submitCardSuggestion(event) {
       event.preventDefault();
@@ -253,13 +255,31 @@
       };
 
       try {
-        const response = await fetch(SUGGESTION_API, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
+        // Submit to both endpoints in parallel
+        const [workerResponse, web3Response] = await Promise.all([
+          // 1. Cloudflare Worker → GitHub Issue
+          fetch(SUGGESTION_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+          }),
+          // 2. Web3Forms → Email notification to Brian
+          fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              access_key: WEB3FORMS_KEY,
+              subject: `CardMax Card Suggestion: ${formData.issuer} ${formData.cardName}`,
+              from_name: 'CardMax Suggestions',
+              issuer: formData.issuer,
+              card_name: formData.cardName,
+              notes: formData.notes || 'None',
+              user_email: formData.email || 'Not provided'
+            })
+          })
+        ]);
 
-        const result = await response.json();
+        const result = await workerResponse.json();
         console.log('Suggestion API response:', result);
 
         if (result.success) {
