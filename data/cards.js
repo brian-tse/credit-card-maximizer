@@ -3156,6 +3156,44 @@ const CARDS_DATABASE = [
     ],
     color: "#8B0029",
     lastUpdated: "2026-01-27"
+  },
+
+  // --- Barclays JetBlue Plus ---
+  {
+    id: "barclays-jetblue-plus",
+    name: "JetBlue Plus Card",
+    issuer: "Barclays",
+    network: "Mastercard",
+    annualFee: 99,
+    signUpBonus: {
+      amount: 70000,
+      currency: "TrueBlue Points",
+      spendRequirement: 1000,
+      timeframe: "90 days"
+    },
+    earning: {
+      base: 1,
+      categories: [
+        { category: "JetBlue and Paisly", multiplier: 6, description: "Eligible JetBlue, JetBlue Vacations, and Paisly purchases" },
+        { category: "Restaurants", multiplier: 2, description: "Dining purchases" },
+        { category: "Grocery Stores", multiplier: 2, description: "Eligible grocery purchases" }
+      ]
+    },
+    transferPartners: [],
+    credits: [
+      { name: "Anniversary Points", amount: 5000, frequency: "annual", type: "points", description: "5,000 TrueBlue points after account anniversary" },
+      { name: "JetBlue Vacations Credit", amount: 100, frequency: "annual", type: "travel", description: "Statement credit after a qualifying JetBlue Vacations package purchase" }
+    ],
+    perks: [
+      { name: "First Checked Bag Free", description: "First checked bag for cardmember and up to 3 companions on JetBlue-operated flights", type: "travel" },
+      { name: "10% Points Back", description: "10% of points back after redeeming for JetBlue-operated award flights", type: "redemption" },
+      { name: "50% In-Flight Savings", description: "Savings on eligible food and drink purchases aboard JetBlue-operated flights", type: "travel" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Points Payback", description: "Redeem points for statement credits on eligible purchases", type: "redemption" },
+      { name: "Mosaic Status Path", description: "Earn tiles through eligible card spend toward TrueBlue perks and Mosaic status", type: "status" }
+    ],
+    color: "#003876",
+    lastUpdated: "2026-06-05"
   }
 ];
 
