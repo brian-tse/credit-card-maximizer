@@ -762,6 +762,51 @@ const CARDS_DATABASE = [
     lastUpdated: "2026-01-15"
   },
   {
+    id: "marriott-bonvoy-brilliant",
+    name: "Marriott Bonvoy Brilliant",
+    issuer: "American Express",
+    network: "American Express",
+    annualFee: 650,
+    signUpBonus: {
+      amount: 150000,
+      currency: "Marriott Bonvoy Points",
+      spendRequirement: 8000,
+      timeframe: "6 months",
+      additionalInfo: "Earn 100,000 points after $6,000 in purchases, plus 50,000 more after an additional $2,000"
+    },
+    earning: {
+      base: 2,
+      categories: [
+        { category: "Marriott Hotels", multiplier: 6, description: "Eligible purchases at participating Marriott Bonvoy hotels" },
+        { category: "Restaurants", multiplier: 3, description: "Restaurants worldwide" },
+        { category: "Flights", multiplier: 3, description: "Booked directly with airlines" }
+      ]
+    },
+    transferPartners: [
+      { name: "United Airlines", ratio: "3:1", type: "airline" },
+      { name: "Delta Airlines", ratio: "3:1", type: "airline" },
+      { name: "American Airlines", ratio: "3:1", type: "airline" }
+    ],
+    credits: [
+      { name: "Brilliant Dining Credit", amount: 300, frequency: "annual", type: "dining", description: "Up to $25 per month at restaurants worldwide", monthlyAmount: 25 },
+      { name: "Free Night Award", amount: 1, frequency: "annual", type: "hotel", description: "One award after renewal, redeemable for a night up to 85,000 points" },
+      { name: "Marriott Property Credit", amount: 100, frequency: "per stay", type: "hotel", description: "Qualifying charges on eligible 2+ night Ritz-Carlton or St. Regis stays booked at the special rate" },
+      { name: "Global Entry/TSA PreCheck", amount: 120, frequency: "every 4 years", type: "travel", description: "Up to $120 for Global Entry or $85 for TSA PreCheck" }
+    ],
+    perks: [
+      { name: "Marriott Platinum Elite Status", description: "Complimentary Marriott Bonvoy Platinum Elite status", type: "status" },
+      { name: "25 Elite Night Credits", description: "Toward the next Marriott Bonvoy status tier each calendar year", type: "status" },
+      { name: "Priority Pass Select", description: "Enrollment provides unlimited visits to participating airport lounges", type: "lounge" },
+      { name: "Brilliant Earned Choice Award", description: "Choose an award after $60,000 in eligible calendar-year purchases", type: "hotel" },
+      { name: "No Foreign Transaction Fee", description: "Use abroad with no extra fees", type: "travel" },
+      { name: "Cell Phone Protection", description: "Up to $800 per claim, 2 claims per 12 months, with a $50 deductible", type: "insurance" },
+      { name: "Trip Cancellation Insurance", description: "Up to $10,000 per trip and $20,000 per eligible card per 12 months", type: "insurance" },
+      { name: "Trip Delay Insurance", description: "Up to $500 per trip after a covered delay of more than 6 hours", type: "insurance" }
+    ],
+    color: "#252525",
+    lastUpdated: "2026-07-19"
+  },
+  {
     id: "hilton-honors-surpass",
     name: "Hilton Honors Surpass",
     issuer: "American Express",
