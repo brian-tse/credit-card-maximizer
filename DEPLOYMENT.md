@@ -9,6 +9,8 @@ Production is **https://cardmax.cc**, Cloudflare Pages project **cardmax**. The 
 3. Merge a checked pull request into `main`. GitHub Actions deploys the suggestion Worker before the Pages assets, then verifies `/version.json` against the commit and checks `/health` on the Worker.
 4. Keep the previous deployment available for rollback. Do not purge stored user history when changing the catalog.
 
+The release workflow disables duplicate automatic production builds in the existing Cloudflare Pages Git integration. Preview integration settings remain unchanged. An existing Netlify preview integration may still post checks; it does not host cardmax.cc.
+
 GitHub Actions uses the existing `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` secrets. The token needs access to Pages and the suggestion Worker; never print or export it. The Worker retains its existing server-side `GITHUB_TOKEN` secret. For manual maintenance use `npx wrangler login` and local authentication; never write credentials into project files.
 
 A manual workflow dispatch on a feature branch deploys a Pages preview only. The Worker must be separately dry-run tested before its production deployment. Running `node scripts/verify-production.mjs` checks HTTPS, the deployed commit when `GITHUB_SHA` is supplied, required scripts, non-email suggestion UI, and Worker health without submitting a real issue.
