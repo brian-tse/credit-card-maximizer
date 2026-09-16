@@ -9,9 +9,11 @@
   <link rel="canonical" href="https://cardmax.cc/bilt/">
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="calculator.css">
+  <link rel="stylesheet" href="../css/tools.css">
   <script src="../data/cards.js" defer></script>
   <script src="calculator-model.js" defer></script>
   <script src="calculator.js" defer></script>
+  <script src="../js/interface.js" defer></script>
 </head>
 <body>
   <nav class="navbar" aria-label="Main navigation"><div class="navbar-content">
@@ -20,14 +22,20 @@
   </div></nav>
   <main class="container bilt-page">
     <header class="hero"><p class="eyebrow">Bilt · One billing cycle</p><h1>Compare housing rewards</h1><p>Enter eligible housing and everyday spending to compare the two rewards options.</p></header>
-    <form id="calculator-form" class="input-panel" aria-label="Rewards calculator" novalidate>
+    <aside id="mobile-results-summary" class="mobile-results-summary" aria-label="Current estimated rewards" hidden>
+      <div class="mobile-result-points"><div><span>Housing-only</span><strong id="mobile-housing-total">0 points</strong></div><div><span>Flexible</span><strong id="mobile-flexible-total">0 points</strong></div></div>
+      <p id="mobile-cash-remaining"></p>
+      <a href="#results">View full breakdown <span aria-hidden="true">↓</span></a>
+    </aside>
+    <form id="calculator-form" tabindex="-1" class="input-panel" aria-label="Rewards calculator" novalidate>
       <div><label for="card">Your Bilt card</label><select id="card" disabled><option>Loading current catalog…</option></select><p id="card-details" class="help"></p></div>
       <div><label for="housing">Monthly housing payment ($)</label><input id="housing" type="number" min="0" max="1000000" step="0.01" value="4000" inputmode="decimal" required><p class="help">Eligible rent or mortgage paid through Bilt in this billing cycle.</p></div>
       <div><label for="spend">Everyday spending ($)</label><input id="spend" type="number" min="0" max="1000000" step="0.01" value="4000" inputmode="decimal" required><p class="help">Eligible purchases that post in the same billing cycle, excluding housing.</p></div>
       <div><label for="available-cash">Other Bilt Cash to use ($)</label><input id="available-cash" type="number" min="0" max="1000000" step="0.01" value="0" inputmode="decimal" required><p class="help">Optional existing balance for Flexible housing redemptions. No welcome bonus is assumed.</p></div>
     </form>
     <p id="input-error" role="alert" hidden></p>
-    <section id="results" aria-label="Rewards comparison" hidden>
+    <section id="results" tabindex="-1" aria-label="Rewards comparison" hidden>
+      <a class="edit-calculator-inputs" href="#calculator-form">↑ Edit amounts</a>
       <p id="comparison-summary" class="comparison-summary" aria-live="polite"></p>
       <div class="option-grid">
         <article class="option-panel"><p class="eyebrow">Option 1</p><h2>Housing-only</h2><p class="points"><span id="housing-total">0</span> <span>points</span></p><p class="help">Estimated total for this billing cycle</p>

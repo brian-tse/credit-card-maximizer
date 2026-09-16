@@ -394,8 +394,10 @@
       margin-bottom: 1.5rem;
     }
   </style>
+  <link rel="stylesheet" href="../css/tools.css">
+  <script src="../js/interface.js" defer></script>
 </head>
-<body>
+<body class="categories-page">
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
@@ -465,6 +467,17 @@
     // Get user's cards
     let userCardIds = CardMaxModel.loadCardIds();
     let userCards = userCardIds.map(id => CARDS_DATABASE.find(c => c.id === id)).filter(Boolean);
+    let rankingView = 'value';
+
+    function setRankingView(view) {
+      rankingView = view === 'rate' ? 'rate' : 'value';
+      render();
+      document.getElementById(`ranking-${rankingView}`).focus();
+    }
+
+    function isPortalCategory(name) {
+      return /(?:Chase|Amex|Capital One(?: Business)?|Citi|Bilt) Travel|Travel Center|portal/i.test(name) && !/direct|Amazon/i.test(name);
+    }
 
     // Category icons
     const categoryIcons = {
@@ -574,7 +587,7 @@
 
       // Sort each category by EFFECTIVE RETURN (highest first)
       Object.keys(categories).forEach(cat => {
-        categories[cat].sort((a, b) => b.effectiveReturn - a.effectiveReturn);
+        categories[cat].sort((a, b) => rankingView === 'rate' ? b.multiplier - a.multiplier : b.effectiveReturn - a.effectiveReturn);
       });
 
       return categories;
@@ -609,18 +622,29 @@
         <div class="page-intro">
           <div class="page-header">
             <div>
-              <h2>Your Card Rankings by Category</h2>
-              <p>Based on the ${userCards.length} card${userCards.length > 1 ? 's' : ''} in your collection. Cards are ranked by <strong>effective return rate</strong> (multiplier × editable point value). These estimates assume eligibility and available category caps; spending limits, category choices and introductory periods still apply. Unverified rates are excluded. Crypto percentages reflect reward value at purchase, not future asset value.</p>
+              <h2>${userCards.length} card${userCards.length > 1 ? 's' : ''} in your wallet</h2>
             </div>
-            <button class="settings-btn" onclick="openValuationsModal()">
+            <button id="point-values-button" class="settings-btn" onclick="openValuationsModal()">
               <span>⚙️</span> Point Values
             </button>
           </div>
         </div>
-        <div class="category-grid">
+        <div class="ranking-controls" role="group" aria-label="Rank cards by">
+          <button id="ranking-value" class="filter-btn ${rankingView === 'value' ? 'active' : ''}" aria-pressed="${rankingView === 'value'}" onclick="setRankingView('value')">Estimated value</button>
+          <button id="ranking-rate" class="filter-btn ${rankingView === 'rate' ? 'active' : ''}" aria-pressed="${rankingView === 'rate'}" onclick="setRankingView('rate')">Points / earning rate</button>
+        </div>
+        <p class="ranking-explainer" role="status">${rankingView === 'value' ? 'Ranked by multiplier × your editable point value. Estimated percentages are not guaranteed cash back.' : 'Ranked by the listed multiplier or percentage. Points, miles and cash rewards have different values.'}</p>
+        <details class="ranking-assumptions"><summary>Eligibility and estimate assumptions</summary><p>Spending limits, category choices, enrollment and introductory periods still apply. Estimates assume eligibility and available caps. Unverified rates are excluded. Crypto percentages reflect reward value at purchase, not future asset value. Mixed direct / portal categories appear under everyday and direct purchases; check each earning condition.</p></details>
       `;
 
-      sortedCategoryNames.forEach(categoryName => {
+      const groups = [
+        { title: 'Everyday & direct purchases', description: 'Find the card to use for regular spending and direct bookings.', names: sortedCategoryNames.filter(name => !isPortalCategory(name)) },
+        { title: 'Travel portals & booking channels', description: 'These rates require the specified booking channel. Check the conditions before booking.', names: sortedCategoryNames.filter(isPortalCategory) }
+      ];
+      groups.forEach(group => {
+        if (!group.names.length) return;
+        html += `<section class="category-group"><h2>${group.title}</h2><p class="tool-help">${group.description}</p><div class="category-grid">`;
+        group.names.forEach(categoryName => {
         const cards = categories[categoryName];
         const icon = getCategoryIcon(categoryName);
 
@@ -645,13 +669,14 @@
               ${cardVisual}
               <div class="card-ranking-info">
                 <div class="card-ranking-name">
-                  ${getShortName(item.card)}
+                  ${CardMaxModel.escapeHtml(item.card.name)}
                 </div>
                 <div class="card-ranking-description">${item.description}${item.terms || ''}</div>
               </div>
               <div class="multiplier-badge">
-                <div class="effective-return">${item.effectiveReturn.toFixed(1)}%</div>
-                <div class="multiplier-raw">${CardMaxModel.earningLabel(item.card, {multiplier:item.multiplier})} @ ${item.pointValue.toFixed(2)}¢</div>
+                ${rankingView === 'value'
+                  ? `<div class="effective-return">${item.effectiveReturn.toFixed(1)}% <span>est. value</span></div><div class="multiplier-raw">${CardMaxModel.earningLabel(item.card, {multiplier:item.multiplier})} · ${['cashback', 'crypto'].includes(item.card.rewardCurrency) ? 'listed reward rate' : `${item.pointValue.toFixed(2)}¢ / point`}</div>`
+                  : `<div class="earning-rate">${CardMaxModel.earningLabel(item.card, {multiplier:item.multiplier})}</div><div class="multiplier-raw">${item.effectiveReturn.toFixed(1)}% est. value</div>`}
               </div>
             </li>
           `;
@@ -661,9 +686,9 @@
             </ul>
           </div>
         `;
+        });
+        html += '</div></section>';
       });
-
-      html += '</div>';
       container.innerHTML = html;
     }
 
@@ -725,6 +750,7 @@
       if (event && event.target !== event.currentTarget) return;
       CardMaxDialogs.close('valuations-modal');
       render(); // Re-render with updated valuations
+      document.getElementById('point-values-button')?.focus();
     }
 
     // Update a single valuation

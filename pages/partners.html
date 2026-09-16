@@ -192,8 +192,10 @@
       margin-bottom: 0;
     }
   </style>
+  <link rel="stylesheet" href="../css/tools.css">
+  <script src="../js/interface.js" defer></script>
 </head>
-<body>
+<body class="partners-page">
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
@@ -228,27 +230,34 @@
     </section>
 
     <!-- Filter Section -->
-    <div class="filter-section">
-      <button class="filter-btn active" data-filter="all" onclick="filterPartners('all')">All Partners</button>
-      <button class="filter-btn" data-filter="airline" onclick="filterPartners('airline')">✈️ Airlines</button>
-      <button class="filter-btn" data-filter="hotel" onclick="filterPartners('hotel')">🏨 Hotels</button>
+    <div class="partner-search">
+      <label for="partner-search">Find a transfer program</label>
+      <input type="search" id="partner-search" placeholder="Search programs, e.g. Aeroplan" autocomplete="off" oninput="searchPartners(this.value)" aria-controls="partner-grid">
+    </div>
+    <div class="filter-section" role="group" aria-label="Partner type">
+      <button class="filter-btn active" data-filter="all" aria-pressed="true" onclick="filterPartners('all')">All Partners</button>
+      <button class="filter-btn" data-filter="airline" aria-pressed="false" onclick="filterPartners('airline')">✈️ Airlines</button>
+      <button class="filter-btn" data-filter="hotel" aria-pressed="false" onclick="filterPartners('hotel')">🏨 Hotels</button>
     </div>
 
     <!-- Page Intro -->
     <div class="page-intro" id="page-intro">
-      <p>Click on a transfer partner below to see which of your cards transfer to that program.</p>
+      <p>Choose a program to compare your cards, transfer ratios and conditions.</p>
     </div>
 
+    <p id="partner-status" class="tool-help" role="status" aria-live="polite" aria-atomic="true"></p>
+
     <!-- Partner Detail (shown when a partner is selected) -->
-    <div class="partner-detail" id="partner-detail" style="display: none;">
+    <section class="partner-detail" id="partner-detail" aria-labelledby="partner-detail-title" style="display: none;">
       <div class="partner-detail-header">
-        <div class="partner-detail-title" id="partner-detail-title">Partner Name</div>
+        <h2 class="partner-detail-title" id="partner-detail-title" tabindex="-1">Partner Name</h2>
         <button class="close-detail-btn" aria-label="Close transfer partner details" onclick="closePartnerDetail()">×</button>
       </div>
+      <div class="transfer-columns" aria-hidden="true"><span>Card</span><span>Transfer ratio</span><span>Conditions</span></div>
       <ul class="cards-that-transfer" id="cards-that-transfer">
         <!-- Cards will be inserted here -->
       </ul>
-    </div>
+    </section>
 
     <!-- Partner Grid -->
     <div class="partner-grid" id="partner-grid">
@@ -340,6 +349,8 @@
 
     let selectedPartner = null;
     let currentFilter = 'all';
+    let partnerQuery = '';
+    let lastPartnerTrigger = null;
 
     // Render partner grid
     function renderPartners() {
@@ -351,6 +362,7 @@
         container.style.display = 'none';
         pageIntro.style.display = 'none';
         noCardsMsg.style.display = 'block';
+        document.getElementById('partner-status').textContent = '';
         return;
       }
 
@@ -368,15 +380,17 @@
         return a.name.localeCompare(b.name);
       });
 
-      // Filter by type
-      const filteredPartners = currentFilter === 'all'
-        ? partnerList
-        : partnerList.filter(p => p.type === currentFilter);
+      // Program search and type filters work together without replacing their controls.
+      const filteredPartners = partnerList.filter(partner =>
+        (currentFilter === 'all' || partner.type === currentFilter) &&
+        partner.name.toLocaleLowerCase().includes(partnerQuery.toLocaleLowerCase())
+      );
+      document.getElementById('partner-status').textContent = `${filteredPartners.length} program${filteredPartners.length === 1 ? '' : 's'} found${partnerQuery ? ` for “${partnerQuery}”` : ''}.`;
 
       if (filteredPartners.length === 0) {
         container.innerHTML = `
           <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-secondary);">
-            No ${currentFilter === 'airline' ? 'airline' : 'hotel'} partners found in your cards.
+            ${partnerQuery ? `No matching programs for “${CardMaxModel.escapeHtml(partnerQuery)}”. Try another name or choose All Partners.` : `No ${currentFilter === 'all' ? 'transfer' : currentFilter} partners found in your cards.`}
           </div>
         `;
         return;
@@ -384,8 +398,9 @@
 
       container.innerHTML = filteredPartners.map(partner => `
         <button type="button" class="partner-card ${selectedPartner === partner.name ? 'selected' : ''}"
-             data-type="${partner.type}"
-             onclick="selectPartner('${partner.name.replace(/'/g, "\\'")}')">
+             data-type="${partner.type}" data-partner="${CardMaxModel.escapeHtml(partner.name)}"
+             aria-expanded="${selectedPartner === partner.name}" aria-controls="partner-detail"
+             onclick="selectPartner(this.dataset.partner)">
           <div class="partner-header">
             <span class="partner-icon">${getPartnerIcon(partner.type)}</span>
             <div>
@@ -406,13 +421,18 @@
       if (!partner) return;
 
       selectedPartner = partnerName;
-      renderPartners();
+      lastPartnerTrigger = [...document.querySelectorAll('.partner-card')].find(button => button.dataset.partner === partnerName) || null;
+      document.querySelectorAll('.partner-card').forEach(button => {
+        const selected = button.dataset.partner === partnerName;
+        button.classList.toggle('selected', selected);
+        button.setAttribute('aria-expanded', String(selected));
+      });
 
       const detailSection = document.getElementById('partner-detail');
       const titleEl = document.getElementById('partner-detail-title');
       const cardsEl = document.getElementById('cards-that-transfer');
 
-      titleEl.innerHTML = `${getPartnerIcon(partner.type)} ${partner.name}`;
+      titleEl.textContent = `${getPartnerIcon(partner.type)} ${partner.name}`;
 
       cardsEl.innerHTML = partner.cards.map(item => {
         const cardVisual = typeof CardVisuals !== 'undefined' && CardVisuals.hasImage(item.card.id)
@@ -420,23 +440,36 @@
           : `<div class="card-dot" style="background: ${item.card.color}"></div>`;
         return `
         <li class="transfer-card-item">
-          ${cardVisual}
-          <div class="card-info">
-            <div class="card-name">${getShortIssuer(item.card.issuer)} ${getShortCardName(item.card.name)}</div>
-            <div class="card-issuer">${item.card.issuer}</div>
-          </div>
-          <div class="transfer-ratio">${CardMaxModel.escapeHtml(CardMaxModel.transferLabel(item.partner))}${item.partner.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(item.partner.description)}</span>` : ''}${CardMaxModel.termsHtml(item.partner)}${CardMaxModel.termsHtml({transferAccess:item.card.transferAccess,transferProgramNote:item.card.transferProgramNote})}</div>
+          <div class="transfer-card-identity">${cardVisual}<div class="card-info">
+            <div class="card-name">${CardMaxModel.escapeHtml(item.card.name)}</div>
+            <div class="card-issuer">${CardMaxModel.escapeHtml(item.card.issuer)}</div>
+          </div></div>
+          <div class="transfer-rate-cell"><span class="transfer-cell-label">Transfer ratio</span><span class="transfer-ratio">${CardMaxModel.escapeHtml(CardMaxModel.transferLabel(item.partner))}</span></div>
+          <div class="transfer-conditions"><span class="transfer-cell-label">Conditions</span>${item.partner.description ? `<p>${CardMaxModel.escapeHtml(item.partner.description)}</p>` : ''}${CardMaxModel.termsHtml(item.partner)}${CardMaxModel.termsHtml({transferAccess:item.card.transferAccess,transferProgramNote:item.card.transferProgramNote}) || (!item.partner.description ? '<p>Review current program terms before transferring.</p>' : '')}</div>
         </li>
       `}).join('');
 
       detailSection.style.display = 'block';
-      detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('partner-status').textContent = `${partner.name} details opened. ${partner.cards.length} card${partner.cards.length === 1 ? '' : 's'} available.`;
+      // Focus the revealed heading deliberately; closing returns to the original program.
+      titleEl.focus({ preventScroll: true });
+      detailSection.scrollIntoView({ behavior: 'auto', block: 'start' });
     }
 
     // Close partner detail
-    function closePartnerDetail() {
+    function closePartnerDetail(restoreFocus = true) {
       selectedPartner = null;
       document.getElementById('partner-detail').style.display = 'none';
+      document.querySelectorAll('.partner-card').forEach(button => {
+        button.classList.remove('selected');
+        button.setAttribute('aria-expanded', 'false');
+      });
+      if (restoreFocus && lastPartnerTrigger?.isConnected) lastPartnerTrigger.focus();
+    }
+
+    function searchPartners(query) {
+      partnerQuery = query.trim();
+      closePartnerDetail(false);
       renderPartners();
     }
 
@@ -447,8 +480,10 @@
       // Update button states
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.filter === type);
+        btn.setAttribute('aria-pressed', String(btn.dataset.filter === type));
       });
 
+      closePartnerDetail(false);
       renderPartners();
     }
 
@@ -457,7 +492,8 @@
     window.addEventListener('cardmax-data-changed', () => {
       userCardIds = CardMaxModel.loadCardIds();
       userCards = userCardIds.map(id => CARDS_DATABASE.find(card => card.id === id)).filter(Boolean);
-      closePartnerDetail();
+      closePartnerDetail(false);
+      renderPartners();
     });
   </script>
   <script src="../js/feedback.js"></script>

@@ -37,6 +37,36 @@ function trackerDateRange(period) {
   return `${format(start)}–${format(end)}${start.getFullYear() === end.getFullYear() ? `, ${end.getFullYear()}` : ''}`;
 }
 
+function benefitEssentialTerms(credit) {
+  const notes = [];
+  if (credit.requiresEnrollment || credit.enrollmentRequired) notes.push('Enrollment required.');
+  if (credit.requiresActivation) notes.push('Activation required.');
+  if (credit.eligibility) notes.push(typeof credit.eligibility === 'string' ? credit.eligibility : JSON.stringify(credit.eligibility));
+  if (credit.cohort) notes.push(typeof credit.cohort === 'string' ? credit.cohort : JSON.stringify(credit.cohort));
+  if (credit.conditional || credit.annualValueExcluded) notes.push('Conditional benefit; excluded from default cash totals.');
+  if (credit.effectiveUntil) notes.push(`Benefit ends ${credit.effectiveUntil}.`);
+  return notes.map(trackerEscape).join('<br>');
+}
+
+function renderDueBenefits() {
+  const container = document.getElementById('due-benefits');
+  if (!container || typeof CardMaxWallet === 'undefined') return;
+  if (!userCards.length) { container.innerHTML = '<h2 id="due-benefits-title">Start with your cards</h2><p>Add the cards you hold to see the benefits you can track.</p><a class="btn btn-primary" href="../index.html#add-cards">Find your cards →</a>'; return; }
+  const summary = CardMaxWallet.summarize(CardMaxWallet.currentEntries(CARDS_DATABASE, trackerSnapshot));
+  const entries = summary.dueThisMonth.length ? summary.dueThisMonth : summary.outstanding;
+  const row = entry => `<li><div><strong>${trackerEscape(entry.credit.name)}</strong><span class="action-meta">${trackerEscape(entry.card.name)} · ${trackerEscape(CardMaxWallet.expiryLabel(entry))}</span><span class="action-meta">${benefitEssentialTerms(entry.credit)}</span></div><div class="wallet-action-amount"><strong>${trackerEscape(CardMaxModel.formatCredit({ ...entry.credit, amount: typeof entry.credit.amount === 'number' ? entry.remaining : entry.credit.amount }))}</strong><span class="action-meta">${entry.cash ? 'remaining' : 'available'}</span><button type="button" data-review-benefit="${trackerEscape(entry.period.key)}">${entry.record?.completed ? 'Update use' : 'Record use'} →</button></div></li>`;
+  container.innerHTML = `<div class="wallet-actions-header"><div><h2 id="due-benefits-title">${summary.dueThisMonth.length ? 'Due this month' : 'Current benefits to review'}</h2><p>${summary.dueThisMonth.length ? `${trackerMoney(summary.dueCash)} in tracked cash allowances remaining` : `${summary.outstanding.length} benefits still available`}</p></div><a href="#by-card-view" onclick="switchView('card')">View full checklist ↓</a></div>
+    ${entries.length ? `<ul class="wallet-action-list">${entries.slice(0, 5).map(row).join('')}</ul>${entries.length > 5 ? `<details class="wallet-action-note"><summary>Show ${entries.length - 5} more</summary><ul class="wallet-action-list">${entries.slice(5).map(row).join('')}</ul></details>` : '<p class="wallet-action-note">Use the full checklist below for other periods, completed benefits and saved history.</p>'}` : '<p>You have completed all current benefits, or your cards have no trackable credits.</p>'}
+    <p class="wallet-action-note">Cash totals exclude conditional benefits and uncertain reset dates. Availability depends on issuer eligibility and your recorded use.</p>`;
+}
+
+function reviewBenefit(key) {
+  switchView('card');
+  const target = [...document.querySelectorAll('#by-card-container [data-benefit]')].find(input => input.dataset.benefit === key);
+  target?.closest('.benefit-item')?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  target?.focus({ preventScroll: true });
+}
+
 function benefitRow(entry) {
   const { card, credit, period, record } = entry;
   const checked = record?.completed === true;
@@ -47,12 +77,13 @@ function benefitRow(entry) {
     <label style="display:flex;align-items:flex-start;gap:0.75rem;flex:1;min-width:220px;cursor:pointer">
       <input type="checkbox" ${checked ? 'checked' : ''} aria-label="${trackerEscape(label)}" data-benefit="${key}" style="width:20px;height:20px;margin-top:3px;flex-shrink:0">
       <span class="benefit-content"><span class="benefit-text" style="display:block">${trackerEscape(credit.name)}</span>
-        <span class="benefit-description" style="display:block">${trackerEscape(credit.description)}${CardMaxModel.termsHtml(credit)}</span>
+        <span class="benefit-description" style="display:block">${trackerEscape(credit.description)}${benefitEssentialTerms(credit) ? `<span class="terms-note">${benefitEssentialTerms(credit)}</span>` : ''}</span>
         <span class="text-muted" style="display:block;font-size:0.75rem;margin-top:0.25rem">${trackerEscape(period.label)}${trackerDateRange(period) ? ` · ${trackerEscape(trackerDateRange(period))}` : ''}</span>
         ${period.warning ? `<span style="display:block;color:var(--text-secondary);font-size:0.8rem;margin-top:0.25rem">${trackerEscape(period.warning)}</span>` : ''}
       </span>
     </label>
     <span class="benefit-value">${trackerEscape(amount)}</span>
+    ${CardMaxModel.termsHtml(credit) ? `<details class="benefit-details" style="flex-basis:100%;margin-left:2rem"><summary>Additional terms</summary>${CardMaxModel.termsHtml(credit)}</details>` : ''}
     ${checked ? `<div style="width:100%;display:flex;flex-wrap:wrap;gap:1rem;margin-left:2rem;font-size:0.8rem">
       <label>Used on <input type="date" data-used-date="${key}" value="${trackerEscape(record.usedAt || '')}" ${['monthly', 'quarterly', 'semiannual', 'annual'].includes(period.frequency) ? `min="${period.start}"` : ''} max="${CardMaxPeriods.dateKey(new Date())}" aria-label="Date used for ${trackerEscape(credit.name)}"></label>
       <span data-date-error role="alert" style="color:var(--text-secondary)"></span>
@@ -149,19 +180,27 @@ function switchView(view, redraw = true) {
 }
 
 function refreshTracker() {
+  const focus = typeof CardMaxWallet !== 'undefined' ? CardMaxWallet.captureFocus(document) : null;
+  const openDetails = [...document.querySelectorAll('.benefit-details[open]')].map(details => details.closest('.benefit-item')?.querySelector('[data-benefit]')?.dataset.benefit);
   loadUserData();
   trackerEntries.clear();
   renderBenefitTrackers();
   renderByCardView();
   updateStats();
+  renderDueBenefits();
   switchView(currentView, false);
+  document.querySelectorAll('.benefit-details').forEach(details => { details.open = openDetails.includes(details.closest('.benefit-item')?.querySelector('[data-benefit]')?.dataset.benefit); });
+  if (typeof CardMaxWallet !== 'undefined') CardMaxWallet.restoreFocus(document, focus);
   const month = document.getElementById('current-month');
   if (month) month.textContent = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   refreshTracker();
-  CardMaxSave.renderSaveRestoreUI('save-restore-ui');
+  document.addEventListener('click', event => {
+    const button = event.target.closest('[data-review-benefit]');
+    if (button) reviewBenefit(button.dataset.reviewBenefit);
+  });
   const handleEdit = event => {
     const target = event.target;
     if (target.dataset.benefit) {
@@ -199,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Persist each valid edit immediately without replacing the focused input.
     // The change event redraws both views once editing is complete.
     if (event.type === 'change') refreshTracker();
-    else updateStats();
+    else { updateStats(); renderDueBenefits(); }
   };
   document.addEventListener('input', handleEdit);
   document.addEventListener('change', handleEdit);

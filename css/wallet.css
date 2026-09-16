@@ -1,0 +1,65 @@
+/* Wallet and tracker prioritize actions; estimates and account tools stay secondary. */
+.wallet-hero { margin-bottom: 1.5rem; }
+.wallet-hero p { max-width: 44rem; }
+.wallet-actions, .due-benefits { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; }
+.wallet-actions-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.wallet-actions-header h2 { font-size: 1.25rem; margin: 0 0 .4rem; }
+.wallet-actions-header p, .wallet-action-note { color: var(--text-secondary); font-size: .875rem; margin: 0; }
+.wallet-action-list { list-style: none; padding: 0; margin: 0; }
+.wallet-action-list > li { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .85rem 0; border-top: 1px solid var(--border); }
+.wallet-action-list strong, .wallet-action-list span { display: block; }
+.wallet-action-list .action-meta { color: var(--text-secondary); font-size: .8125rem; margin-top: .25rem; }
+.wallet-action-amount { text-align: right; flex-shrink: 0; }
+.wallet-action-amount a, .wallet-action-amount button { display: inline-flex; min-height: 40px; align-items: center; color: var(--text); background: transparent; border: 0; font: inherit; font-size: .8125rem; text-decoration: underline; cursor: pointer; }
+.wallet-action-note { margin-top: 1rem; }
+.wallet-annual, .tracker-summary { border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.5rem; background: var(--surface); }
+.wallet-annual > summary, .tracker-summary > summary, .wallet-backup > summary { font-weight: 500; cursor: pointer; min-height: 24px; }
+.wallet-annual .quick-stats, .tracker-summary .stats-bar { margin: 1rem 0 0; }
+.wallet-annual .quick-stat-card, .tracker-summary .stat-card { padding: .75rem; }
+.wallet-annual .quick-stat-value, .tracker-summary .stat-value { font-size: 1.5rem; }
+.wallet-annual .terms-note { margin: 1rem 0 0; }
+.wallet-data-tools { margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: .75rem; font-size: .8125rem; }
+.wallet-backup { flex-basis: 100%; }
+.wallet-backup > summary { color: var(--text-secondary); }
+.wallet-backup-content { margin-top: 1rem; padding: 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.wallet-backup-actions, .wallet-restore { display: flex; gap: .75rem; flex-wrap: wrap; margin: .75rem 0 1.25rem; }
+.wallet-restore input { flex: 1; min-width: 150px; padding: .75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); }
+.wallet-undo { position: fixed; z-index: 1200; bottom: 1.5rem; left: 50%; transform: translateX(-50%); width: min(38rem, calc(100% - 2rem)); padding: 1rem 1.25rem; background: var(--text); color: var(--surface); border-radius: 12px; box-shadow: 0 4px 24px #0003; display: flex; align-items: center; gap: 1rem; }
+.wallet-undo span { flex: 1; }
+.wallet-undo button { color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 6px; min-height: 44px; padding: .5rem .8rem; cursor: pointer; font: inherit; }
+.wallet-page #card-search { padding-left: 2.75rem; }
+.wallet-page .my-cards-section { padding: 1.25rem; }
+.wallet-page .my-card-item .action-btn { width: 44px; height: 44px; }
+.wallet-page .card-selector-item { text-align: left; font: inherit; color: inherit; }
+.wallet-page #add-cards { scroll-margin-top: 9rem; }
+.wallet-page #quick-save-fab { display: none !important; }
+.wallet-page .auth-container { margin: 0; }
+.wallet-page.empty-wallet .wallet-data-tools { order: 4; }
+.wallet-page.empty-wallet .wallet-content { display: flex; flex-direction: column; }
+.wallet-page.empty-wallet #add-cards { order: 2; }
+.wallet-page.empty-wallet .wallet-hero { order: 1; }
+.wallet-page.empty-wallet .wallet-data-tools { margin-top: 1.5rem; }
+.wallet-page [hidden], .tracker-page [hidden] { display: none !important; }
+.tracker-page .hero { margin-bottom: 1.5rem; }
+.tracker-page .benefit-description > details { margin-top: .5rem; }
+.tracker-page .benefit-description summary { cursor: pointer; min-height: 24px; }
+.tracker-page .benefit-item > label { min-width: 0 !important; }
+.tracker-page .benefit-checklist .terms-note { font-size: .8125rem; }
+.tracker-page .benefit-item:focus-within { outline: 2px solid var(--accent); outline-offset: 4px; }
+.tracker-page .filter-bar { margin: 1.5rem 0 1rem; }
+.tracker-page #by-card-view { scroll-margin-top: 9rem; }
+@media (max-width: 600px) {
+  .wallet-actions, .due-benefits { padding: 1rem; }
+  .wallet-actions-header { flex-direction: column; }
+  .wallet-action-list > li { align-items: flex-start; gap: .65rem; }
+  .wallet-action-list strong { font-size: .875rem; }
+  .wallet-action-amount { max-width: 42%; }
+  .wallet-page .my-cards-header { gap: .75rem; }
+  .wallet-page .search-container { max-width: none; }
+  .wallet-annual .quick-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wallet-page #my-cards-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wallet-page .my-card-item .card-visual { margin-top: 1.75rem; }
+  .wallet-page .my-card-item .card-name { overflow-wrap: anywhere; }
+  .wallet-page .date-row { flex-wrap: wrap; }
+  .tracker-page .tracker-progress { font-size: 1rem; }
+}

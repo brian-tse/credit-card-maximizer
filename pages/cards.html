@@ -13,9 +13,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/catalog.css">
   <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
+  <script src="../js/interface.js" defer></script>
 </head>
 <body>
   <!-- Navigation -->
@@ -35,28 +37,8 @@
   <div class="container">
     <!-- Hero Section -->
     <section class="hero">
-      <h1>Credit Card Database</h1>
-      <p>Browse all cards in our database. Click on any card to view details or add it to your collection.</p>
-    </section>
-
-    <!-- Stats Bar -->
-    <section class="stats-bar">
-      <div class="stat-card">
-        <div class="stat-value" id="total-cards">0</div>
-        <div class="stat-label">Cards in Database</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="total-partners">20+</div>
-        <div class="stat-label">Transfer Partners</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="total-credits">$0</div>
-        <div class="stat-label">Max annualized cash caps</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="last-updated">0</div>
-        <div class="stat-label">Source review within 90 days</div>
-      </div>
+      <h1>Find your next card</h1>
+      <p>Search <span id="total-cards">93</span> cards, check the terms, and add the ones you own to My Cards.</p>
     </section>
 
     <!-- Search Bar -->
@@ -77,6 +59,8 @@
       <button class="filter-btn" data-filter="midtier">Mid-Tier ($100-$399)</button>
       <button class="filter-btn" data-filter="nofee">No Fee</button>
     </div>
+
+    <p id="catalog-result-count" class="catalog-result-count" role="status"></p>
 
     <!-- Card Grid -->
     <section class="card-grid" id="cards-container">
@@ -128,22 +112,22 @@
 
   <!-- Card Detail Modal -->
   <div class="modal-overlay" id="card-modal">
-    <div class="modal" role="dialog" aria-labelledby="modal-card-name">
+    <div class="modal card-detail-dialog" role="dialog" aria-labelledby="modal-card-name">
       <div class="modal-header">
         <h2 id="modal-card-name">Card Name</h2>
         <button class="modal-close" aria-label="Close card details" onclick="closeModal()">&times;</button>
       </div>
-      <div class="tabs">
-        <button class="tab active" data-tab="overview">Overview</button>
-        <button class="tab" data-tab="earning">Earning</button>
-        <button class="tab" data-tab="partners">Partners</button>
-        <button class="tab" data-tab="credits">Credits</button>
-        <button class="tab" data-tab="perks">Perks</button>
+      <div class="tabs" role="tablist" aria-label="Card details">
+        <button class="tab active" data-tab="overview" id="tab-overview" role="tab" aria-controls="modal-content" aria-selected="true" tabindex="0">Overview</button>
+        <button class="tab" data-tab="earning" id="tab-earning" role="tab" aria-controls="modal-content" aria-selected="false" tabindex="-1">Earning</button>
+        <button class="tab" data-tab="partners" id="tab-partners" role="tab" aria-controls="modal-content" aria-selected="false" tabindex="-1">Partners</button>
+        <button class="tab" data-tab="credits" id="tab-credits" role="tab" aria-controls="modal-content" aria-selected="false" tabindex="-1">Credits</button>
+        <button class="tab" data-tab="perks" id="tab-perks" role="tab" aria-controls="modal-content" aria-selected="false" tabindex="-1">Perks</button>
       </div>
-      <div id="modal-content">
+      <div id="modal-content" role="tabpanel" aria-labelledby="tab-overview" tabindex="0">
         <!-- Modal content will be dynamically inserted -->
       </div>
-      <div class="modal-footer" style="padding: 1rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 1rem;">
+      <div class="modal-footer">
         <button class="btn btn-secondary" onclick="closeModal()">Close</button>
         <button class="btn btn-primary" id="add-to-collection-btn" onclick="addToCollection()">Add to My Cards</button>
       </div>
