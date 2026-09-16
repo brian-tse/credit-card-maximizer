@@ -1,0 +1,1159 @@
+{
+  "reviewedAt": "2026-09-16",
+  "scope": "21 existing Chase records, all 94 audit findings, and four researched additions",
+  "auditSource": "research-2026-09-16/chase-audit.json",
+  "findingCount": 94,
+  "findings": [
+    {
+      "findingId": "chase-sapphire-reserve:1",
+      "cardId": "chase-sapphire-reserve",
+      "field": "earning.Peloton",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "10x on eligible equipment/accessory purchases over $150; up to $5,000 of purchases across the offer through December 31, 2027.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/offerdetails/chasesapphire",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-sapphire-reserve:2",
+      "cardId": "chase-sapphire-reserve",
+      "field": "credits.enrollment; expiration",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Show required StubHub and DoorDash activation; DoorDash promotions end December 31, 2027. Include NEXUS in the $120 credit available every four years.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/offerdetails/chasesapphire",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-sapphire-reserve:3",
+      "cardId": "chase-sapphire-reserve",
+      "field": "perks.Air Canada Lounge Access",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Participating Maple Leaf/Cafés; member +1 guest; departing Star Alliance flight required. Signature Suites and all Montréal YUL lounges excluded.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/offerdetails/chasesapphire",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-sapphire-reserve:4",
+      "cardId": "chase-sapphire-reserve",
+      "field": "perks.IHG Platinum Elite Status",
+      "auditClassification": "unsupported",
+      "disposition": "qualified-and-unsupported-claim-removed",
+      "implemented": "IHG account linking and 2027 expiration published; unsupported Hertz Five Star claim removed. No claim about separate legacy offers.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/offerdetails/chasesapphire",
+      "confidence": "medium",
+      "remainingQualification": "Absence in these sources does not prove that a separate network/legacy offer cannot exist."
+    },
+    {
+      "findingId": "chase-sapphire-reserve:5",
+      "cardId": "chase-sapphire-reserve",
+      "field": "perks.Apple TV+ & Apple Music",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "Current detailed terms promise at least 12 months from activation; Apple TV activation deadline 6/22/2027 is not a universal benefit end date.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/offerdetails/chasesapphire",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-sapphire-reserve:6",
+      "cardId": "chase-sapphire-reserve",
+      "field": "perks.status and spend thresholds",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Register for Marriott Gold July 1–September 30, 2026; three paid nights in that window extend status through February 2028. Spending $75,000 in a calendar year unlocks conditional Hyatt Explorist, IHG Diamond, Southwest A-List, $500 Southwest Chase Travel credits and $250 Shops benefits.",
+      "sourceUrl": "https://www.chase.com/sapphire-cards/personal/reserve",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-sapphire-reserve:7",
+      "cardId": "chase-sapphire-reserve",
+      "field": "perks.insurance",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Use covered traveler; delay is more than 6 h or overnight. Evacuation has distance/medical conditions; warranty applies to eligible US warranties. Link the current applicable guide.",
+      "sourceUrl": "https://www.chase.com/sapphire-cards/personal/reserve",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-sapphire-reserve:8",
+      "cardId": "chase-sapphire-reserve",
+      "field": "transferPartners.Emirates",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "Remove from current direct Chase transfer list; neither the current Chase partner list nor current Sapphire Preferred product includes Emirates.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+      "confidence": "high",
+      "remainingQualification": "Do not infer an exact historical termination date from the current list."
+    },
+    {
+      "findingId": "chase-sapphire-reserve:9",
+      "cardId": "chase-sapphire-reserve",
+      "field": "transferPartners.Wyndham",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Add Wyndham Rewards as an available direct partner.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-sapphire-preferred:1",
+      "cardId": "chase-sapphire-preferred",
+      "field": "perks.Trip Cancellation Insurance",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "Up to $10,000 per covered traveler and $20,000 per trip for covered prepaid, nonrefundable expenses.",
+      "sourceUrl": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-sapphire-preferred:2",
+      "cardId": "chase-sapphire-preferred",
+      "field": "perks.Primary Car Rental Insurance",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Advertised primary coverage up to $60,000 for qualifying vehicles with MSRP of $125,000 or less. The public page says US coverage is secondary for New York residents.",
+      "sourceUrl": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-sapphire-preferred:3",
+      "cardId": "chase-sapphire-preferred",
+      "field": "perks.Trip Delay; evacuation",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Trip delay: more than 12 hours or an overnight stay, up to $500 per covered traveler. Emergency evacuation: up to $100,000 under covered conditions, on an eligible trip at least 100 miles from home.",
+      "sourceUrl": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+      "confidence": "high",
+      "remainingQualification": "The stated delay benefit is per covered traveler, not per ticket."
+    },
+    {
+      "findingId": "chase-sapphire-preferred:4",
+      "cardId": "chase-sapphire-preferred",
+      "field": "credits.DoorDash.expiration",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Monthly nonrestaurant promo ends 12/31/2027; membership activation required by that date.",
+      "sourceUrl": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-sapphire-preferred:5",
+      "cardId": "chase-sapphire-preferred",
+      "field": "transferPartners.Emirates",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "Remove from current direct Chase transfer list; neither the current Chase partner list nor current Sapphire Preferred product includes Emirates.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+      "confidence": "high",
+      "remainingQualification": "Do not infer an exact historical termination date from the current list."
+    },
+    {
+      "findingId": "chase-sapphire-preferred:6",
+      "cardId": "chase-sapphire-preferred",
+      "field": "transferPartners.Wyndham",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Add Wyndham Rewards as an available direct partner.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-freedom-unlimited:1",
+      "cardId": "chase-freedom-unlimited",
+      "field": "transferPartners.access",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "No standalone direct airline/hotel transfers. Eligible points must first be combined into an eligible transfer-enabled Chase account; display that prerequisite.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+      "confidence": "high",
+      "remainingQualification": "The pooled route is conditional; it is not an intrinsic benefit of this no-fee card. A conditional list also needs the current partner list, without Emirates and with Wyndham."
+    },
+    {
+      "findingId": "chase-freedom-unlimited:2",
+      "cardId": "chase-freedom-unlimited",
+      "field": "earning.Lyft; credits.DoorDash",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "2% total on eligible Lyft purchases through September 30, 2027. Six months of DashPass with activation by December 31, 2027; activated members receive a $10 quarterly nonrestaurant promotion through that date.",
+      "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-freedom-unlimited:3",
+      "cardId": "chase-freedom-unlimited",
+      "field": "perks.0% Intro APR",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Current 15-month introductory period also covers balance transfers; fees and post-intro APR apply.",
+      "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-freedom-unlimited:4",
+      "cardId": "chase-freedom-unlimited",
+      "field": "perks.Purchase Protection",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Generally 120 days, but 90 days for New York residents; public advertised limit of $500 per item. Link the applicable guide.",
+      "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-freedom-flex:1",
+      "cardId": "chase-freedom-flex",
+      "field": "transferPartners.access",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "No standalone direct airline/hotel transfers. Eligible points must first be combined into an eligible transfer-enabled Chase account; display that prerequisite.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+      "confidence": "high",
+      "remainingQualification": "The pooled route is conditional; it is not an intrinsic benefit of this no-fee card. A conditional list also needs the current partner list, without Emirates and with Wyndham."
+    },
+    {
+      "findingId": "chase-freedom-flex:2",
+      "cardId": "chase-freedom-flex",
+      "field": "earning.Lyft; credits.DoorDash",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "2% total on eligible Lyft purchases through September 30, 2027. Six months of DashPass with activation by December 31, 2027; activated members receive a $10 quarterly nonrestaurant promotion through that date.",
+      "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-freedom-flex:3",
+      "cardId": "chase-freedom-flex",
+      "field": "perks.0% Intro APR",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Current 15-month introductory period also covers balance transfers; fees and post-intro APR apply.",
+      "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-freedom-flex:4",
+      "cardId": "chase-freedom-flex",
+      "field": "perks.Purchase Protection",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Generally 120 days, but 90 days for New York residents; public advertised limit of $500 per item. Link the applicable guide.",
+      "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-freedom-flex:5",
+      "cardId": "chase-freedom-flex",
+      "field": "perks.Cell Phone Protection",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "$50 deductible; at most two paid claims and $1,000 total per 12 months. Charge the monthly cellular bill to the card; coverage supplements other insurance.",
+      "sourceUrl": "https://static.chasecdn.com/content/services/structured-document/document.en.pdf/card/benefits-center/product-benefits-guide-pdf/BGC11363_v2.pdf",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "amazon-prime-visa:1",
+      "cardId": "amazon-prime-visa",
+      "field": "earning.Audible",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "The current public product includes Audible.com among eligible merchants earning 5% with Prime.",
+      "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/amazon-prime-rewards",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "amazon-prime-visa:2",
+      "cardId": "amazon-prime-visa",
+      "field": "perks.insurance; rewards expiry",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "US rental coverage is secondary. Baggage delay requires more than six hours; New York purchase coverage lasts 90 days. Nonexpiry depends on account conditions; warranty extension applies to eligible US warranties of three years or less.",
+      "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/amazon-prime-rewards",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "world-of-hyatt:1",
+      "cardId": "world-of-hyatt",
+      "field": "perks.Primary Car Rental Insurance",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "Public product explicitly says US rental coverage is secondary to personal insurance.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "world-of-hyatt:2",
+      "cardId": "world-of-hyatt",
+      "field": "credits.Free Night Award; Bonus Free Night",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "The regular certificate is awarded at account anniversary; the extra category 1–4 certificate requires $15,000 of calendar-year purchases. Track certificate expiry separately.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "world-of-hyatt:3",
+      "cardId": "world-of-hyatt",
+      "field": "perks.elite nights; DoorDash credit",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Two additional qualifying nights per $5,000 spent. DashPass activation by December 31, 2027 also enables $10 quarterly nonrestaurant promotions through 2027.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "world-of-hyatt:4",
+      "cardId": "world-of-hyatt",
+      "field": "earning.Hyatt Hotels",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Keep the card-only 4x rate separate from up-to-9x combined loyalty earnings, so the card’s incremental return is not overstated.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "marriott-bonvoy-boundless:1",
+      "cardId": "marriott-bonvoy-boundless",
+      "field": "transferPartners.list and United bonus",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Marriott has more than 35 airline partners. Label these as onward Bonvoy conversions. United adds 10,000 miles per 60,000 points transferred; the usual 5,000-mile bonus per 60,000 excludes American, Delta and Avianca.",
+      "sourceUrl": "https://www.marriott.com/loyalty/redeem/travel/points-to-miles.mi",
+      "confidence": "high",
+      "remainingQualification": "Current ratios shown are not themselves false; partner coverage and bonus qualifications are incomplete."
+    },
+    {
+      "findingId": "marriott-bonvoy-boundless:2",
+      "cardId": "marriott-bonvoy-boundless",
+      "field": "earning.Marriott Hotels",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Separate card rate from loyalty base/status points; public combined total is up to 17x",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "marriott-bonvoy-boundless:3",
+      "cardId": "marriott-bonvoy-boundless",
+      "field": "earning.Grocery/Gas/Dining cap",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "One shared $6,000 calendar-year cap across grocery, gas and dining, then 2x.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "marriott-bonvoy-boundless:4",
+      "cardId": "marriott-bonvoy-boundless",
+      "field": "credits.Free Night Award",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "One certificate worth up to 35,000 points each account anniversary; expiry, top-up and eligible-property restrictions apply.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "marriott-bonvoy-boundless:5",
+      "cardId": "marriott-bonvoy-boundless",
+      "field": "perks.elite nights; DoorDash",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "One additional elite night per $5,000 spent; 12 months of DashPass and $10 quarterly nonrestaurant promotions after activation by December 31, 2027.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "marriott-bonvoy-boundless:6",
+      "cardId": "marriott-bonvoy-boundless",
+      "field": "credits.limited airline offer",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Cohort promotion: $50 after $250 of direct airline spending in each eligible period. Existing eligible members by January 7, 2026 must activate; their periods are January–June and July–December 2026. Applicants June 4–December 31, 2026 enroll automatically; their periods are June 4–December 31, 2026 and January–June 2027.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
+      "confidence": "high",
+      "remainingQualification": "Do not turn this into an evergreen 100/year credit or assume Jan 8–Jun 3 applicants qualify; source does not resolve that cohort."
+    },
+    {
+      "findingId": "ihg-one-rewards-premier:1",
+      "cardId": "ihg-one-rewards-premier",
+      "field": "credits.Instacart; DoorDash",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Instacart: $10 monthly with active Instacart+ after activation; three free months, then paid auto-renewal. DashPass: 12 months plus a $10 quarterly nonrestaurant promotion. Promotions end December 31, 2027.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "ihg-one-rewards-premier:2",
+      "cardId": "ihg-one-rewards-premier",
+      "field": "credits.Global Entry/TSA PreCheck",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "Up to $120 every four years; NEXUS also qualifies.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "ihg-one-rewards-premier:3",
+      "cardId": "ihg-one-rewards-premier",
+      "field": "earning.IHG Hotels",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "The card earns 10x. Up to 26x total includes up to 10x IHG base points and 6x Platinum points on eligible stays.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "ihg-one-rewards-premier:4",
+      "cardId": "ihg-one-rewards-premier",
+      "field": "credits.Free Night Award",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Account-anniversary certificate worth up to 40,000 points, with additional points permitted. Redeem and complete the stay within 12 months of issue.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "ihg-one-rewards-premier:5",
+      "cardId": "ihg-one-rewards-premier",
+      "field": "credits.United TravelBank; spending rewards",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "$50 TravelBank per year in $25 January/July deposits after one-time registration; $100 statement credit plus 10,000 points after $20,000 calendar-yearspend; Diamond after $40,000 calendar-yearspend through the following December 31.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "ihg-one-rewards-traveler:1",
+      "cardId": "ihg-one-rewards-traveler",
+      "field": "credits.Instacart; DoorDash",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Instacart: $10 monthly with active Instacart+ after activation; three free months, then paid auto-renewal. DashPass: 12 months plus a $10 quarterly nonrestaurant promotion. Promotions end December 31, 2027.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/traveler",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "ihg-one-rewards-traveler:2",
+      "cardId": "ihg-one-rewards-traveler",
+      "field": "perks.spend rewards",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "10,000 bonus points after $10,000 of calendar-year purchases; Gold after $20,000 of calendar-year purchases, through the following December 31.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/traveler",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-explorer:1",
+      "cardId": "united-explorer",
+      "field": "perks.baggage; boarding",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Show same-reservation, ticket-payment and MileagePlus requirements on eligible United/United Express flights. Any included Club passes reset by anniversary and may be restricted by lounge capacity; Quest does not include such passes.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-explorer:2",
+      "cardId": "united-explorer",
+      "field": "earning.United Purchases",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "3x card earnings on United. Eligible flights earn up to 9x combined: 6x from United membership plus 3x from the card. Member earnings exclude some fare components; Basic Economy/base options differ.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-explorer:3",
+      "cardId": "united-explorer",
+      "field": "earning.Hotels",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "2x on hotel accommodations booked directly; intermediaries do not generally qualify.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-explorer:4",
+      "cardId": "united-explorer",
+      "field": "credits.United Travel Credit; Avis",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "$100 TravelBank after $10,000 calendar-yearspend. Avis/Budget: $25 TravelBank for each of the first two rentals through cars.united.com each anniversary year. These are not unrestricted statement credits.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-explorer:5",
+      "cardId": "united-explorer",
+      "field": "credits; perks.spend benefits",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "United Hotels: $50 on each of the first two prepaid stays per anniversary year. Rideshare: $5 monthly, annual opt-in. JSX: $100 per anniversary year. Trusted traveler: $120 every four years. Also 10,000-mile award discount after $20,000 calendar-yearspend, and 1 PQP per $20 spent, up to 1,000 PQP per calendar year.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-explorer:6",
+      "cardId": "united-explorer",
+      "field": "annualFee.firstYear; perks.award savings",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "The public offer waives the first-year fee. Current cardholder award discounts start at 10%, with higher discounts for Premier members. The 25% rebate covers eligible inflight and Club premium-drink purchases.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+      "confidence": "high",
+      "remainingQualification": "Fee waiver is offer/cohort-specific; do not overwrite the ongoing 150 fee."
+    },
+    {
+      "findingId": "united-club-infinite:1",
+      "cardId": "united-club-infinite",
+      "field": "perks.baggage; boarding",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Show same-reservation, ticket-payment and MileagePlus requirements on eligible United/United Express flights. Any included Club passes reset by anniversary and may be restricted by lounge capacity; Quest does not include such passes.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-club-infinite:2",
+      "cardId": "united-club-infinite",
+      "field": "earning.United Purchases",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "5x card earnings on United; eligible flights earn up to 11x combined (6x membership plus 5x card). Add 5x prepaid Renowned Hotels. Other travel/dining remain 2x; other purchases 1x.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-club-infinite:3",
+      "cardId": "united-club-infinite",
+      "field": "perks.United Club Membership",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "Standard membership permits one adult guest plus dependent children under 18, and excludes Star Alliance lounges. All Access requires Premier Gold or higher, or $50,000 calendar-yearspend; it permits two adult guests or eligible family and adds Star Alliance access.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+      "confidence": "high",
+      "remainingQualification": "A major access restriction, not a cosmetic description change."
+    },
+    {
+      "findingId": "united-club-infinite:4",
+      "cardId": "united-club-infinite",
+      "field": "credits.Instacart",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "Two separate $10 credits per month, with only one credit per order. Activation and active Instacart+ membership are required. Complimentary membership is time-limited, then renews for a fee unless cancelled.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-club-infinite:5",
+      "cardId": "united-club-infinite",
+      "field": "credits.Rideshare; Renowned",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Rideshare: $12 each month January–November and $18 total in December, with annual opt-in. Renowned Hotels: $200 on qualifying prepaid stays per account anniversary year.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-club-infinite:6",
+      "cardId": "united-club-infinite",
+      "field": "credits; status; award benefits",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Avis/Budget: $50 TravelBank for each of the first two qualifying rentals per anniversary year. JSX: $200 per anniversary year. Trusted traveler: $120 every four years. Annual 1,500 bonus PQP plus 1 PQP per $15 spent, up to 28,000 spending PQP per calendar year. A 10,000-mile award discount after each $20,000 spend, at most twice per calendar year.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-club-infinite:7",
+      "cardId": "united-club-infinite",
+      "field": "name",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Current marketing name is United Club Card; retain stable legacy ID and aliases.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-quest:1",
+      "cardId": "united-quest",
+      "field": "perks.baggage; boarding",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Show same-reservation, ticket-payment and MileagePlus requirements on eligible United/United Express flights. Any included Club passes reset by anniversary and may be restricted by lounge capacity; Quest does not include such passes.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-quest:2",
+      "cardId": "united-quest",
+      "field": "earning.United Flights; United Purchases",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "4x card earnings on United; eligible flights earn up to 10x combined (6x membership plus 4x card). The 5x prepaid Renowned Hotels, 2x dining/select streaming/travel, and 1x base rates match.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-quest:3",
+      "cardId": "united-quest",
+      "field": "credits.United TravelBank Credit",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "$200 TravelBank at opening and each anniversary, usable for eligible United/United Express flight purchases, not any United charge. The deposit expires after 12 months.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-quest:4",
+      "cardId": "united-quest",
+      "field": "credits.Rideshare Credit",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "$8 monthly January–November and $12 in December, with annual opt-in. Track monthly periods and a December override.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-quest:5",
+      "cardId": "united-quest",
+      "field": "credits.Instacart; CarRental; JSX; Renowned",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Instacart: separate $10 and $5 monthly credits, one credit per order. Rentals: $40 TravelBank for each of the first two Avis/Budget rentals through cars.united.com per anniversary year. JSX $150 and qualifying prepaid Renowned Hotels $150 also reset by anniversary.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-quest:6",
+      "cardId": "united-quest",
+      "field": "perks.awards; status; bagcompanion",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Two free checked bags also apply to one companion. A 10,000-mile anniversary award discount plus another after $20,000 calendar-yearspend. Annual 1,000 bonus PQP plus 1 PQP per $20, up to 18,000 spending PQP per calendar year. Two global Economy Plus upgrades after $40,000 calendar-yearspend.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "southwest-priority:1",
+      "cardId": "southwest-priority",
+      "field": "perks.Tier Qualifying Points; Companion Pass boost",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "2,500 TQP per $5,000 spent annually; 10,000 Companion Pass qualifying points per year, with one boost per member. The TQP spending year ends at the December statement, rather than exactly December 31.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/southwest/priority",
+      "confidence": "high",
+      "remainingQualification": "Companion Pass qualifying points are neither cash nor redeemable bonus points; exclude the boost from annual cash value."
+    },
+    {
+      "findingId": "southwest-priority:2",
+      "cardId": "southwest-priority",
+      "field": "earning.Rapid Rewards Hotels/Rentals",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "The current program lists 4x Southwest, 2x gas/restaurants, and 1x other purchases; no 3x hotel/rental category. Do not mix Rapid Rewards booking bonuses with card earnings.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/southwest/priority",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "southwest-priority:3",
+      "cardId": "southwest-priority",
+      "field": "credits.Southwest Travel Credit; Upgraded Boardings",
+      "auditClassification": "unsupported",
+      "disposition": "retired-preserving-history",
+      "implemented": "Both original credit IDs retained under retiredBenefits, with tracking disabled and annual value excluded. Historical retirement date remains unresolved.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/southwest/priority",
+      "confidence": "high",
+      "remainingQualification": "Current benefit claim is unsupported. The exact historical retirement date was not established from a surviving official transition notice; preserve historical usage."
+    },
+    {
+      "findingId": "southwest-priority:4",
+      "cardId": "southwest-priority",
+      "field": "credits.Anniversary Points; perks.seats/bags/partners",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "7,500 points at account anniversary. Preferred seats at booking and Extra Legroom upgrades within 48 hours, when available. Bag and Group 5 benefits extend to eight companions. DashPass/Instacart require activation; Instacart becomes paid after three months, and promotions end in 2027.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/southwest/priority",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-ink-business-unlimited:1",
+      "cardId": "chase-ink-business-unlimited",
+      "field": "transferPartners.access",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "No standalone direct airline/hotel transfers. Eligible points must first be combined into an eligible transfer-enabled Chase account; display that prerequisite.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+      "confidence": "high",
+      "remainingQualification": "The pooled route is conditional; it is not an intrinsic benefit of this no-fee card. A conditional list also needs the current partner list, without Emirates and with Wyndham."
+    },
+    {
+      "findingId": "chase-ink-business-unlimited:2",
+      "cardId": "chase-ink-business-unlimited",
+      "field": "earning.Lyft; credits.Instacart",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "5% total on Lyft through September 30, 2027. Three free months of Instacart+, then paid auto-renewal; $20 monthly Instacart Business credit with activation and active membership through December 31, 2027.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/unlimited",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-ink-business-unlimited:3",
+      "cardId": "chase-ink-business-unlimited",
+      "field": "perks.Auto Rental Coverage",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Primary when renting for business; up to $60,000 for qualifying vehicles with MSRP of $125,000 or less, subject to the applicable guide.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/unlimited",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-ink-business-preferred:1",
+      "cardId": "chase-ink-business-preferred",
+      "field": "earning.3x cap",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "One combined $150,000 account-anniversary-year cap across 3x categories, then 1x.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/business-preferred",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-ink-business-preferred:2",
+      "cardId": "chase-ink-business-preferred",
+      "field": "perks.1.25x Point Value",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "The current standard redemption is 1¢ per point; selected Points Boost offers reach 1.5¢. Historical 1.25¢ eligibility must be qualified by account cohort and point age.",
+      "sourceUrl": "https://creditcards.chase.com/a1/Business/ReserveBusiness0626",
+      "confidence": "high",
+      "remainingQualification": "The public rewards agreement ends universal 1.25¢ redemptions after October 25, 2025. Exact grandfathered account terms remain unresolved; preserve eligible legacy rates."
+    },
+    {
+      "findingId": "chase-ink-business-preferred:3",
+      "cardId": "chase-ink-business-preferred",
+      "field": "earning.Lyft; credits.DoorDash",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "5x Lyft through September 30, 2027. Activate DashPass by December 31, 2027 for at least one year and a $10 monthly nonrestaurant promotion.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/business-preferred",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-ink-business-preferred:4",
+      "cardId": "chase-ink-business-preferred",
+      "field": "perks.phone; cancellation; purchase",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Phone: $100 deductible, at most three claims per 12 months, and eligible bill paid with card. Cancellation: $5,000 per covered traveler/$10,000 per trip. Purchase protection: $10,000 per item, 90 days for New York residents. Primary business-rental coverage up to $60,000 is also omitted.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/business-preferred",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-ink-business-preferred:5",
+      "cardId": "chase-ink-business-preferred",
+      "field": "transferPartners.Emirates",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "Remove from current direct Chase transfer list; neither the current Chase partner list nor current Sapphire Preferred product includes Emirates.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+      "confidence": "high",
+      "remainingQualification": "Do not infer an exact historical termination date from the current list."
+    },
+    {
+      "findingId": "chase-ink-business-preferred:6",
+      "cardId": "chase-ink-business-preferred",
+      "field": "transferPartners.Wyndham",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Add Wyndham Rewards as an available direct partner.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-ink-business-cash:1",
+      "cardId": "chase-ink-business-cash",
+      "field": "transferPartners.access",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "No standalone direct airline/hotel transfers. Eligible points must first be combined into an eligible transfer-enabled Chase account; display that prerequisite.",
+      "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+      "confidence": "high",
+      "remainingQualification": "The pooled route is conditional; it is not an intrinsic benefit of this no-fee card. A conditional list also needs the current partner list, without Emirates and with Wyndham."
+    },
+    {
+      "findingId": "chase-ink-business-cash:2",
+      "cardId": "chase-ink-business-cash",
+      "field": "earning.Lyft; credits.Instacart",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "5% total on Lyft through September 30, 2027. Three free months of Instacart+, then paid auto-renewal; $20 monthly Instacart Business credit with activation and active membership through December 31, 2027.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/cash",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-ink-business-cash:3",
+      "cardId": "chase-ink-business-cash",
+      "field": "perks.Auto Rental Coverage",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Primary when renting for business; up to $60,000 for qualifying vehicles with MSRP of $125,000 or less, subject to the applicable guide.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/cash",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-ink-business-cash:4",
+      "cardId": "chase-ink-business-cash",
+      "field": "earning.caps",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Two separate $25,000 spending pools, both resetting by account anniversary. Clearly identify the categories sharing each pool.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/cash",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-business-card:1",
+      "cardId": "united-business-card",
+      "field": "perks.baggage; boarding",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Show same-reservation, ticket-payment and MileagePlus requirements on eligible United/United Express flights. Any included Club passes reset by anniversary and may be restricted by lounge capacity; Quest does not include such passes.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/united/united-business-card",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-business-card:2",
+      "cardId": "united-business-card",
+      "field": "credits",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "$125 TravelBank after five qualifying United transactions of at least $100 each per calendar year; United Hotels $50 on each of two prepaid stays per anniversary year; rideshare $8 monthly January–November/$12 December; Avis/Budget $25 TravelBank on each of two qualifying rentals per anniversary; Instacart $10 monthly; JSX $100 and FareLock $25 per anniversary year.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/united/united-business-card",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "united-business-card:3",
+      "cardId": "united-business-card",
+      "field": "perks.anniversary; upgrades; award pricing",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "5,000 anniversary miles when also holding an eligible personal United card. Two continental-US Economy Plus upgrades after $25,000 calendar-yearspend. Award discounts start at 10%. The 25% rebate also includes Club premium drinks.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/united/united-business-card",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "southwest-performance-business:1",
+      "cardId": "southwest-performance-business",
+      "field": "perks.Tier Qualifying Points; Companion Pass boost",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "2,500 TQP per $5,000 spent annually; 10,000 Companion Pass qualifying points per year, with one boost per member. The TQP spending year ends at the December statement, rather than exactly December 31.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/southwest/performance-business",
+      "confidence": "high",
+      "remainingQualification": "Companion Pass qualifying points are neither cash nor redeemable bonus points; exclude the boost from annual cash value."
+    },
+    {
+      "findingId": "southwest-premier-business:1",
+      "cardId": "southwest-premier-business",
+      "field": "perks.Tier Qualifying Points; Companion Pass boost",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "2,000 TQP per $5,000 spent annually; 10,000 Companion Pass qualifying points per year, with one boost per member. The TQP spending year ends at the December statement, rather than exactly December 31.",
+      "sourceUrl": "https://creditcards.chase.com/business-credit-cards/southwest/premier-business",
+      "confidence": "high",
+      "remainingQualification": "Companion Pass qualifying points are neither cash nor redeemable bonus points; exclude the boost from annual cash value."
+    },
+    {
+      "findingId": "chase-british-airways:1",
+      "cardId": "chase-british-airways",
+      "field": "credits.Reward Flight Statement Credit",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "At most three bookings per calendar year: $100 economy/premium economy or $200 business/first. The eligible BA-operated transatlantic reward itinerary must originate in the US, with taxes and charges paid using the card.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/avios/british-airways",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-british-airways:2",
+      "cardId": "chase-british-airways",
+      "field": "perks.Travel Together Ticket",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "After $30,000 calendar-yearspend, companion Avios are waived, or a solo traveler receives a 50% Avios discount. Taxes, fees and carrier charges remain payable; the voucher lasts two years.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/avios/british-airways",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-british-airways:3",
+      "cardId": "chase-british-airways",
+      "field": "perks.10% Discount",
+      "auditClassification": "confirmed-wrong",
+      "disposition": "applied",
+      "implemented": "Eligible BA flights originating in the US booked through the designated cardholder website; not every ba.com purchase, and not limited to London.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/avios/british-airways",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-british-airways:4",
+      "cardId": "chase-british-airways",
+      "field": "perks.Pay Taxes with Avios",
+      "auditClassification": "unsupported",
+      "disposition": "retired-preserving-history",
+      "implemented": "Original pay-taxes-with-avios ID preserved in retiredPerks; active benefit removed. Taxes and carrier charges remain explicitly payable.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/avios/british-airways",
+      "confidence": "medium",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-british-airways:5",
+      "cardId": "chase-british-airways",
+      "field": "credits.Anniversary Avios",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Current full product terms include 2,500 Avios each account anniversary. Record these as points, not dollars.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/avios/british-airways",
+      "confidence": "high",
+      "remainingQualification": "Included in the full offer terms despite absence from the product headline; verify legacy cohorts before backfilling historical awards."
+    },
+    {
+      "findingId": "chase-british-airways:6",
+      "cardId": "chase-british-airways",
+      "field": "transferPartners",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "The card earns BA Avios directly. Combining Avios between the member’s own loyalty accounts is distinct from UR transfers. BA’s current list also includes Qatar, Finnair, Vueling and Loganair.",
+      "sourceUrl": "https://www.britishairways.com/content/en/us/the-british-airways-club/avios/combine-avios",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-marriott-bold:1",
+      "cardId": "chase-marriott-bold",
+      "field": "transferPartners.list and United bonus",
+      "auditClassification": "omission",
+      "disposition": "applied",
+      "implemented": "Marriott has more than 35 airline partners. Label these as onward Bonvoy conversions. United adds 10,000 miles per 60,000 points transferred; the usual 5,000-mile bonus per 60,000 excludes American, Delta and Avianca.",
+      "sourceUrl": "https://www.marriott.com/loyalty/redeem/travel/points-to-miles.mi",
+      "confidence": "high",
+      "remainingQualification": "Current ratios shown are not themselves false; partner coverage and bonus qualifications are incomplete."
+    },
+    {
+      "findingId": "chase-marriott-bold:2",
+      "cardId": "chase-marriott-bold",
+      "field": "earning.Marriott Hotels",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Separate card rate 3x from loyalty earnings; public combined total is up to 14x.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/bold",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-marriott-bold:3",
+      "cardId": "chase-marriott-bold",
+      "field": "perks.Pay Yourself Back",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Currently 0.8¢ per point ($100 per 12,500 points), capped at $750 of redemptions per year; eligibility and redemption values can change.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/bold",
+      "confidence": "high",
+      "remainingQualification": null
+    },
+    {
+      "findingId": "chase-marriott-bold:4",
+      "cardId": "chase-marriott-bold",
+      "field": "perks.DoorDash",
+      "auditClassification": "qualification",
+      "disposition": "applied",
+      "implemented": "Activate complimentary DashPass by December 31, 2027; quarterly nonrestaurant promotions run through that date.",
+      "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/bold",
+      "confidence": "high",
+      "remainingQualification": null
+    }
+  ],
+  "supplementalChanges": [
+    {
+      "cardIds": [
+        "chase-sapphire-preferred",
+        "chase-ink-business-preferred"
+      ],
+      "change": "Structured World of Hyatt 4:3 transfer transitions, retaining applicable 1:1 legacy cohort through September 30, 2026.",
+      "sourceUrl": "https://media.chase.com/news/Meet-the-New-Chase-Sapphire-Preferred"
+    },
+    {
+      "cardIds": [
+        "world-of-hyatt",
+        "ihg-one-rewards-premier",
+        "ihg-one-rewards-traveler",
+        "world-of-hyatt-business",
+        "ihg-one-rewards-premier-business"
+      ],
+      "change": "Loyalty-program conversions separated from Chase transfers; unverified conversion ratios omitted.",
+      "sourceUrls": [
+        "https://world.hyatt.com/content/gp/en/rewards/air-auto.html",
+        "https://www.ihg.com/content/ihg/hotels/en_US/rewardsclub/earn-rewards/miles.html"
+      ]
+    },
+    {
+      "cardIds": [
+        "chase-sapphire-reserve",
+        "chase-sapphire-preferred",
+        "chase-freedom-unlimited",
+        "chase-freedom-flex",
+        "amazon-prime-visa",
+        "world-of-hyatt",
+        "marriott-bonvoy-boundless",
+        "ihg-one-rewards-premier",
+        "ihg-one-rewards-traveler",
+        "united-explorer",
+        "united-club-infinite",
+        "united-quest",
+        "southwest-priority",
+        "chase-ink-business-unlimited",
+        "chase-ink-business-preferred",
+        "chase-ink-business-cash",
+        "united-business-card",
+        "southwest-performance-business",
+        "southwest-premier-business",
+        "chase-british-airways",
+        "chase-marriott-bold",
+        "chase-sapphire-reserve-business",
+        "world-of-hyatt-business",
+        "ihg-one-rewards-premier-business",
+        "chase-aeroplan"
+      ],
+      "change": "Sources, field-level review states, unresolved insurance/legacy qualifications and hidden unverified welcome offers. No card marked fully verified."
+    }
+  ],
+  "additions": [
+    {
+      "cardId": "chase-sapphire-reserve-business",
+      "name": "Chase Sapphire Reserve for Business",
+      "disposition": "added-with-sourced-public-terms",
+      "sources": [
+        "https://creditcards.chase.com/business-credit-cards/sapphire/reserve",
+        "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+        "https://media.chase.com/news/Meet-the-New-Chase-Sapphire-Preferred"
+      ],
+      "uncertainties": [
+        "Detailed insurance guide, current per-partner transfer ratios, individual offer eligibility and every high-spend perk condition need separate implementation review.",
+        "Use 2026 product terms for The Edit; older launch descriptions used half-year limits.",
+        "Business card is pay-in-full with a possible Flex for Business feature; do not depict it as identical to a consumer revolving card."
+      ]
+    },
+    {
+      "cardId": "world-of-hyatt-business",
+      "name": "World of Hyatt Business Credit Card",
+      "disposition": "added-with-sourced-public-terms",
+      "sources": [
+        "https://creditcards.chase.com/business-credit-cards/world-of-hyatt/hyatt-business-card",
+        "https://world.hyatt.com/content/gp/en/rewards/air-auto.html"
+      ],
+      "uncertainties": [
+        "Full insurance exclusions and detailed rebate timing require the applicable guide and account terms.",
+        "Do not import the personal card’s $95 fee, annual certificate, or five automatic annual elite nights."
+      ]
+    },
+    {
+      "cardId": "ihg-one-rewards-premier-business",
+      "name": "IHG One Rewards Premier Business Credit Card",
+      "disposition": "added-with-sourced-public-terms",
+      "sources": [
+        "https://creditcards.chase.com/business-credit-cards/IHG/business-premier",
+        "https://www.ihg.com/content/ihg/hotels/en_US/rewardsclub/earn-rewards/miles.html"
+      ],
+      "uncertainties": [
+        "The separate personal Premier page mentions business eligibility for United TravelBank, but the fetched business page did not expose the benefit; verify the current dedicated registration terms before adding it.",
+        "Full insurance guide and individual welcome/renewal cohort terms remain unreviewed."
+      ]
+    },
+    {
+      "cardId": "chase-aeroplan",
+      "name": "Air Canada Aeroplan Card",
+      "disposition": "added-with-sourced-public-terms",
+      "sources": [
+        "https://creditcards.chase.com/travel-credit-cards/aircanada/aeroplan"
+      ],
+      "uncertainties": [
+        "Read exact status duration, qualifying award-discount rules, legacy $95 card conversion/renewal timing and insurance guide before implementation.",
+        "Pay Yourself Back rates are transaction/offer-specific; current terms reserve the right to change values.",
+        "Do not treat partner-flight redemptions as transferable currencies."
+      ]
+    }
+  ],
+  "unresolved": [
+    "Full insurance guides and state/legacy policy editions are not certified. Public summaries carry explicit qualifications.",
+    "Welcome offers remain hidden and unverified.",
+    "Wyndham numeric UR transfer ratio not independently verified; live rate must be checked.",
+    "Boundless January 8–June 3, 2026 airline-credit cohort remains unresolved and excluded from default value/tracking.",
+    "Aeroplan legacy $95 renewal dates and IHG Business dedicated TravelBank registration/cohort remain unverified."
+  ]
+}

@@ -1,0 +1,1017 @@
+[
+  {
+    "id": "chase-sapphire-reserve",
+    "credits": [
+      "annual-travel-credit",
+      "dining-credit-exclusive-tables",
+      "the-edit-hotel-credit",
+      "select-hotels-credit-2026",
+      "stubhub-viagogo-credit",
+      "lyft-credit",
+      "doordash-credits",
+      "global-entry-tsa-precheck",
+      "peloton-membership-credit"
+    ],
+    "perks": [
+      "chase-sapphire-lounges",
+      "priority-pass-select",
+      "air-canada-lounge-access",
+      "ihg-platinum-elite-status",
+      "reserve-travel-designer",
+      "apple-tv-apple-music",
+      "trip-delay-insurance",
+      "trip-cancellation-insurance",
+      "primary-car-rental-insurance",
+      "baggage-delay-insurance",
+      "lost-luggage-reimbursement",
+      "emergency-evacuation",
+      "extended-warranty",
+      "purchase-protection",
+      "points-boost",
+      "visa-infinite-concierge"
+    ]
+  },
+  {
+    "id": "amex-platinum",
+    "credits": [
+      "airline-incidental-credit",
+      "uber-credit",
+      "hotel-credit",
+      "digital-entertainment",
+      "resy-credit",
+      "walmart-membership",
+      "equinox-credit",
+      "clear-plus-credit",
+      "global-entry-tsa-precheck",
+      "uber-one-credit",
+      "lululemon-credit",
+      "oura-ring-credit"
+    ],
+    "perks": [
+      "centurion-lounges",
+      "priority-pass-select",
+      "delta-sky-club",
+      "hilton-gold-status",
+      "marriott-gold-status",
+      "hertz-president-s-circle",
+      "fine-hotels-resorts"
+    ]
+  },
+  {
+    "id": "capital-one-venture-x",
+    "credits": [
+      "annual-travel-credit",
+      "anniversary-bonus",
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "capital-one-lounges",
+      "priority-pass",
+      "hertz-president-s-circle",
+      "primary-car-rental-insurance",
+      "trip-cancellation-insurance",
+      "cell-phone-protection"
+    ]
+  },
+  {
+    "id": "chase-sapphire-preferred",
+    "credits": [
+      "annual-hotel-credit",
+      "global-entry-tsa-precheck",
+      "doordash-non-restaurant-credit"
+    ],
+    "perks": [
+      "points-boost",
+      "trip-delay-insurance",
+      "trip-cancellation-insurance",
+      "primary-car-rental-insurance",
+      "anniversary-bonus",
+      "apple-tv",
+      "emergency-evacuation-and-transportation"
+    ]
+  },
+  {
+    "id": "amex-gold",
+    "credits": [
+      "uber-credit",
+      "dining-credit",
+      "dunkin-credit"
+    ],
+    "perks": [
+      "no-foreign-transaction-fees",
+      "purchase-protection",
+      "return-protection"
+    ]
+  },
+  {
+    "id": "citi-double-cash",
+    "credits": [],
+    "perks": [
+      "no-annual-fee",
+      "0-intro-apr",
+      "citi-entertainment"
+    ]
+  },
+  {
+    "id": "chase-freedom-unlimited",
+    "credits": [],
+    "perks": [
+      "no-annual-fee",
+      "0-intro-apr",
+      "purchase-protection"
+    ]
+  },
+  {
+    "id": "chase-freedom-flex",
+    "credits": [],
+    "perks": [
+      "no-annual-fee",
+      "0-intro-apr",
+      "cell-phone-protection",
+      "purchase-protection"
+    ]
+  },
+  {
+    "id": "amazon-prime-visa",
+    "credits": [],
+    "perks": [
+      "daily-rewards-posting",
+      "prime-bonus-offers",
+      "no-earning-caps",
+      "extended-warranty-protection",
+      "purchase-protection",
+      "auto-rental-coverage",
+      "baggage-delay-insurance",
+      "travel-accident-insurance",
+      "lost-luggage-reimbursement",
+      "no-foreign-transaction-fees"
+    ]
+  },
+  {
+    "id": "discover-it-cash-back",
+    "credits": [],
+    "perks": [
+      "cashback-match",
+      "no-annual-fee",
+      "no-foreign-transaction-fee",
+      "free-fico-score"
+    ]
+  },
+  {
+    "id": "wells-fargo-active-cash",
+    "credits": [],
+    "perks": [
+      "no-annual-fee",
+      "0-intro-apr",
+      "cell-phone-protection",
+      "roadside-dispatch"
+    ]
+  },
+  {
+    "id": "gemini-credit-card",
+    "credits": [],
+    "perks": [
+      "real-time-crypto-rewards",
+      "no-foreign-transaction-fees",
+      "no-exchange-fees",
+      "metal-card-design",
+      "mastercard-world-benefits",
+      "security-design"
+    ]
+  },
+  {
+    "id": "capital-one-venture",
+    "credits": [
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "no-foreign-transaction-fee",
+      "travel-accident-insurance",
+      "24-hour-travel-assistance"
+    ]
+  },
+  {
+    "id": "wells-fargo-autograph-journey",
+    "credits": [
+      "annual-airline-credit"
+    ],
+    "perks": [
+      "no-foreign-transaction-fee",
+      "cell-phone-protection",
+      "trip-cancellation-insurance"
+    ]
+  },
+  {
+    "id": "world-of-hyatt",
+    "credits": [
+      "free-night-award",
+      "bonus-free-night"
+    ],
+    "perks": [
+      "discoverist-status",
+      "5-elite-night-credits",
+      "doordash-dashpass",
+      "primary-car-rental-insurance"
+    ]
+  },
+  {
+    "id": "marriott-bonvoy-boundless",
+    "credits": [
+      "free-night-award"
+    ],
+    "perks": [
+      "silver-elite-status",
+      "15-elite-night-credits",
+      "gold-status-path"
+    ]
+  },
+  {
+    "id": "marriott-bonvoy-brilliant",
+    "credits": [
+      "brilliant-dining-credit",
+      "free-night-award",
+      "marriott-property-credit",
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "marriott-platinum-elite-status",
+      "25-elite-night-credits",
+      "priority-pass-select",
+      "brilliant-earned-choice-award",
+      "no-foreign-transaction-fee",
+      "cell-phone-protection",
+      "trip-cancellation-insurance",
+      "trip-delay-insurance"
+    ]
+  },
+  {
+    "id": "hilton-honors-surpass",
+    "credits": [
+      "free-night-reward"
+    ],
+    "perks": [
+      "gold-status",
+      "priority-pass-select",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "hilton-honors-aspire",
+    "credits": [
+      "hilton-resort-credit",
+      "airline-fee-credit",
+      "free-night-reward"
+    ],
+    "perks": [
+      "diamond-status",
+      "priority-pass-select",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "ihg-one-rewards-premier",
+    "credits": [
+      "free-night-award",
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "platinum-elite-status",
+      "4th-night-free",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "ihg-one-rewards-traveler",
+    "credits": [],
+    "perks": [
+      "silver-elite-status",
+      "4th-night-free",
+      "20-point-discount",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "delta-skymiles-gold",
+    "credits": [
+      "delta-stays-credit",
+      "flight-credit"
+    ],
+    "perks": [
+      "first-checked-bag-free",
+      "priority-boarding",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "delta-skymiles-platinum",
+    "credits": [
+      "resy-credit",
+      "rideshare-credit",
+      "companion-certificate"
+    ],
+    "perks": [
+      "first-checked-bag-free",
+      "priority-boarding",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "delta-skymiles-reserve",
+    "credits": [
+      "resy-credit",
+      "rideshare-credit",
+      "delta-stays-credit",
+      "companion-certificate"
+    ],
+    "perks": [
+      "delta-sky-club",
+      "centurion-lounge-access",
+      "first-checked-bag-free",
+      "priority-boarding"
+    ]
+  },
+  {
+    "id": "united-explorer",
+    "credits": [
+      "united-travel-credit",
+      "instacart-credit",
+      "avis-budget-credit"
+    ],
+    "perks": [
+      "first-checked-bag-free",
+      "priority-boarding",
+      "2-united-club-passes",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "united-club-infinite",
+    "credits": [
+      "rideshare-credit",
+      "instacart-credit",
+      "renowned-hotels-credit"
+    ],
+    "perks": [
+      "united-club-membership",
+      "two-free-checked-bags",
+      "premier-access",
+      "25-back-on-united"
+    ]
+  },
+  {
+    "id": "united-quest",
+    "credits": [
+      "united-travelbank-credit",
+      "instacart-credit",
+      "jsx-credit",
+      "renowned-hotels-credit",
+      "rideshare-credit",
+      "car-rental-credit",
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "first-checked-bag-free",
+      "second-checked-bag-free",
+      "priority-boarding",
+      "primary-rental-car-insurance",
+      "trip-delay-insurance",
+      "no-foreign-transaction-fee",
+      "25-back-on-united"
+    ]
+  },
+  {
+    "id": "southwest-priority",
+    "credits": [
+      "southwest-travel-credit",
+      "anniversary-points",
+      "upgraded-boardings"
+    ],
+    "perks": [
+      "first-checked-bag-free",
+      "seat-selection",
+      "in-flight-perks",
+      "doordash-dashpass",
+      "instacart"
+    ]
+  },
+  {
+    "id": "citi-strata-premier",
+    "credits": [
+      "annual-hotel-credit"
+    ],
+    "perks": [
+      "no-foreign-transaction-fee",
+      "trip-cancellation-insurance",
+      "trip-delay-insurance",
+      "baggage-insurance",
+      "citi-entertainment"
+    ]
+  },
+  {
+    "id": "citi-strata-elite",
+    "credits": [
+      "annual-hotel-credit",
+      "splurge-credit",
+      "blacklane-credit",
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "priority-pass-select",
+      "aa-admirals-club-passes",
+      "no-foreign-transaction-fee",
+      "trip-cancellation-insurance",
+      "trip-delay-insurance"
+    ]
+  },
+  {
+    "id": "us-bank-altitude-reserve",
+    "credits": [
+      "annual-travel-credit",
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "priority-pass-select",
+      "no-foreign-transaction-fee",
+      "primary-car-rental-insurance",
+      "trip-cancellation-insurance",
+      "visa-infinite-benefits"
+    ]
+  },
+  {
+    "id": "amex-green",
+    "credits": [
+      "clear-plus-credit"
+    ],
+    "perks": [
+      "no-foreign-transaction-fee",
+      "trip-delay-insurance",
+      "car-rental-insurance",
+      "purchase-protection",
+      "extended-warranty"
+    ]
+  },
+  {
+    "id": "atmos-rewards-summit",
+    "credits": [
+      "global-companion-award-25k",
+      "delay-voucher"
+    ],
+    "perks": [
+      "alaska-lounge-passes",
+      "free-checked-bags",
+      "priority-boarding",
+      "no-same-day-change-fees",
+      "status-points-earning"
+    ]
+  },
+  {
+    "id": "bilt-blue",
+    "credits": [],
+    "perks": [
+      "10-intro-apr",
+      "bilt-cash-earning",
+      "no-foreign-transaction-fee",
+      "rent-rewards"
+    ]
+  },
+  {
+    "id": "bilt-obsidian",
+    "credits": [
+      "bilt-travel-hotel-credit"
+    ],
+    "perks": [
+      "10-intro-apr",
+      "bilt-cash-earning",
+      "no-foreign-transaction-fee",
+      "rent-rewards",
+      "lyft-credits"
+    ]
+  },
+  {
+    "id": "bilt-palladium",
+    "credits": [
+      "bilt-travel-hotel-credit"
+    ],
+    "perks": [
+      "10-intro-apr",
+      "bilt-gold-status",
+      "2x-everyday-points",
+      "no-foreign-transaction-fee",
+      "rent-rewards",
+      "premium-lyft-credits",
+      "dining-credits"
+    ]
+  },
+  {
+    "id": "chase-ink-business-unlimited",
+    "credits": [],
+    "perks": [
+      "no-annual-fee",
+      "0-intro-apr",
+      "employee-cards",
+      "purchase-protection",
+      "extended-warranty"
+    ]
+  },
+  {
+    "id": "chase-ink-business-preferred",
+    "credits": [],
+    "perks": [
+      "cell-phone-protection",
+      "trip-cancellation-insurance",
+      "purchase-protection",
+      "1-25x-point-value",
+      "employee-cards"
+    ]
+  },
+  {
+    "id": "chase-ink-business-cash",
+    "credits": [],
+    "perks": [
+      "no-annual-fee",
+      "0-intro-apr",
+      "employee-cards",
+      "purchase-protection"
+    ]
+  },
+  {
+    "id": "amex-business-platinum",
+    "credits": [
+      "airline-incidental-credit",
+      "dell-credit",
+      "indeed-credit",
+      "adobe-creative-cloud-credit",
+      "global-entry-tsa-precheck",
+      "dell-spend-bonus",
+      "hotel-credit",
+      "hilton-credit",
+      "wireless-credit",
+      "clear-plus-credit"
+    ],
+    "perks": [
+      "centurion-lounges",
+      "priority-pass-select",
+      "delta-sky-club",
+      "hilton-gold-status",
+      "marriott-gold-status",
+      "35-points-rebate"
+    ]
+  },
+  {
+    "id": "amex-business-gold",
+    "credits": [
+      "flexible-credit"
+    ],
+    "perks": [
+      "no-foreign-transaction-fee",
+      "purchase-protection",
+      "extended-warranty",
+      "25-points-rebate"
+    ]
+  },
+  {
+    "id": "amex-blue-business-plus",
+    "credits": [],
+    "perks": [
+      "no-annual-fee",
+      "0-intro-apr",
+      "expanded-buying-power",
+      "employee-cards"
+    ]
+  },
+  {
+    "id": "amex-blue-business-cash",
+    "credits": [],
+    "perks": [
+      "no-annual-fee",
+      "0-intro-apr",
+      "expanded-buying-power",
+      "employee-cards",
+      "purchase-protection"
+    ]
+  },
+  {
+    "id": "amex-business-green",
+    "credits": [],
+    "perks": [
+      "annual-fee-waived-first-year",
+      "no-foreign-transaction-fee",
+      "purchase-protection",
+      "extended-warranty"
+    ]
+  },
+  {
+    "id": "capital-one-venture-x-business",
+    "credits": [
+      "annual-travel-credit",
+      "anniversary-bonus",
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "capital-one-lounges",
+      "priority-pass",
+      "plaza-premium-lounges",
+      "hertz-president-s-circle",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "capital-one-spark-miles",
+    "credits": [],
+    "perks": [
+      "annual-fee-waived-first-year",
+      "no-foreign-transaction-fee",
+      "free-employee-cards",
+      "travel-accident-insurance"
+    ]
+  },
+  {
+    "id": "capital-one-spark-cash-plus",
+    "credits": [],
+    "perks": [
+      "no-preset-spending-limit",
+      "no-foreign-transaction-fee",
+      "free-employee-cards",
+      "purchase-records-download"
+    ]
+  },
+  {
+    "id": "delta-skymiles-gold-business",
+    "credits": [],
+    "perks": [
+      "first-checked-bag-free",
+      "priority-boarding",
+      "20-back-on-inflight",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "delta-skymiles-platinum-business",
+    "credits": [
+      "companion-certificate"
+    ],
+    "perks": [
+      "first-checked-bag-free",
+      "priority-boarding",
+      "20-back-on-inflight",
+      "no-foreign-transaction-fee",
+      "status-boost"
+    ]
+  },
+  {
+    "id": "delta-skymiles-reserve-business",
+    "credits": [
+      "companion-certificate",
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "delta-sky-club",
+      "centurion-lounge-access",
+      "first-checked-bag-free",
+      "priority-boarding",
+      "status-boost"
+    ]
+  },
+  {
+    "id": "united-business-card",
+    "credits": [],
+    "perks": [
+      "first-checked-bag-free",
+      "priority-boarding",
+      "2-united-club-passes",
+      "25-back-on-united",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "southwest-performance-business",
+    "credits": [
+      "anniversary-points",
+      "global-entry-tsa-precheck-nexus"
+    ],
+    "perks": [
+      "no-foreign-transaction-fee",
+      "companion-pass-progress",
+      "employee-cards",
+      "first-checked-bag",
+      "group-5-boarding",
+      "inflight-savings",
+      "preferred-seats-and-extra-legroom"
+    ]
+  },
+  {
+    "id": "southwest-premier-business",
+    "credits": [
+      "anniversary-points",
+      "anniversary-flight-discount"
+    ],
+    "perks": [
+      "no-foreign-transaction-fee",
+      "companion-pass-progress",
+      "employee-cards",
+      "first-checked-bag",
+      "group-5-boarding",
+      "inflight-savings",
+      "preferred-seat-selection"
+    ]
+  },
+  {
+    "id": "marriott-bonvoy-business",
+    "credits": [
+      "free-night-award"
+    ],
+    "perks": [
+      "silver-elite-status",
+      "15-elite-night-credits",
+      "gold-status-path",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "hilton-honors-business",
+    "credits": [
+      "free-weekend-night"
+    ],
+    "perks": [
+      "gold-status",
+      "diamond-status-path",
+      "priority-pass-select",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "bofa-business-advantage-unlimited",
+    "credits": [],
+    "perks": [
+      "no-annual-fee",
+      "0-intro-apr",
+      "preferred-rewards-bonus",
+      "employee-cards",
+      "cash-flow-management"
+    ]
+  },
+  {
+    "id": "bank-of-america-customized-cash-rewards",
+    "credits": [],
+    "perks": [
+      "0-intro-apr",
+      "quarterly-spending-cap",
+      "monthly-category-changes",
+      "preferred-rewards-boost",
+      "no-foreign-transaction-fees"
+    ]
+  },
+  {
+    "id": "boa-atmos-ascent",
+    "credits": [
+      "alaska-lounge-discount",
+      "inflight-purchase-credit"
+    ],
+    "perks": [
+      "free-checked-bag",
+      "preferred-boarding",
+      "99-companion-fare",
+      "no-foreign-transaction-fee",
+      "status-points"
+    ]
+  },
+  {
+    "id": "amex-blue-cash-preferred",
+    "credits": [
+      "disney-bundle-credit"
+    ],
+    "perks": [
+      "0-intro-apr",
+      "purchase-protection",
+      "extended-warranty",
+      "return-protection",
+      "car-rental-loss-damage"
+    ]
+  },
+  {
+    "id": "citi-costco-anywhere",
+    "credits": [],
+    "perks": [
+      "no-foreign-transaction-fees",
+      "worldwide-car-rental-insurance",
+      "travel-emergency-assistance",
+      "roadside-assistance",
+      "purchase-protection",
+      "0-fraud-liability",
+      "citi-quick-lock",
+      "citi-entertainment"
+    ]
+  },
+  {
+    "id": "capital-one-savor",
+    "credits": [],
+    "perks": [
+      "0-intro-apr",
+      "no-foreign-transaction-fees",
+      "hertz-five-star-status",
+      "extended-warranty",
+      "travel-accident-insurance"
+    ]
+  },
+  {
+    "id": "citi-simplicity",
+    "credits": [],
+    "perks": [
+      "0-intro-apr-on-purchases",
+      "0-intro-apr-on-balance-transfers",
+      "no-late-fees-ever",
+      "no-penalty-apr"
+    ]
+  },
+  {
+    "id": "us-bank-shield-visa",
+    "credits": [
+      "annual-statement-credit"
+    ],
+    "perks": [
+      "0-intro-apr",
+      "purchase-protection",
+      "extended-warranty",
+      "cell-phone-protection"
+    ]
+  },
+  {
+    "id": "wells-fargo-reflect",
+    "credits": [],
+    "perks": [
+      "0-intro-apr-on-purchases",
+      "0-intro-apr-on-balance-transfers",
+      "cell-phone-protection",
+      "roadside-dispatch"
+    ]
+  },
+  {
+    "id": "capital-one-savor-student",
+    "credits": [],
+    "perks": [
+      "no-annual-fee",
+      "no-foreign-transaction-fees",
+      "credit-building"
+    ]
+  },
+  {
+    "id": "cardless-qatar-infinite",
+    "credits": [],
+    "perks": [
+      "privilege-club-gold-status",
+      "oneworld-sapphire-status",
+      "qpoints-earning",
+      "award-fee-waiver",
+      "no-foreign-transaction-fee",
+      "points-never-expire",
+      "visa-infinite-benefits"
+    ]
+  },
+  {
+    "id": "bofa-air-france-klm",
+    "credits": [],
+    "perks": [
+      "flying-blue-elite-status",
+      "anniversary-bonus",
+      "spend-bonuses",
+      "no-foreign-transaction-fee",
+      "visa-signature-benefits"
+    ]
+  },
+  {
+    "id": "citi-aadvantage-platinum-select",
+    "credits": [
+      "flight-discount"
+    ],
+    "perks": [
+      "first-checked-bag-free",
+      "preferred-boarding",
+      "25-savings-inflight",
+      "loyalty-points",
+      "no-foreign-transaction-fee",
+      "turo-credit"
+    ]
+  },
+  {
+    "id": "citi-aadvantage-globe",
+    "credits": [
+      "admirals-club-passes",
+      "annual-splurge-credit",
+      "companion-certificate",
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "first-checked-bag-free",
+      "preferred-boarding",
+      "flight-streak-bonus",
+      "no-foreign-transaction-fee",
+      "travel-protection"
+    ]
+  },
+  {
+    "id": "citi-aadvantage-executive",
+    "credits": [
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "admirals-club-membership",
+      "first-checked-bag-free",
+      "enhanced-airport-experience",
+      "25-savings-inflight",
+      "loyalty-points-bonuses",
+      "no-foreign-transaction-fee",
+      "travel-protection"
+    ]
+  },
+  {
+    "id": "bofa-premium-rewards",
+    "credits": [
+      "airline-incidental-credit",
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "preferred-rewards-bonus",
+      "no-foreign-transaction-fee",
+      "trip-delay-insurance",
+      "trip-cancellation-insurance",
+      "baggage-insurance",
+      "purchase-protection",
+      "extended-warranty"
+    ]
+  },
+  {
+    "id": "bofa-premium-rewards-elite",
+    "credits": [
+      "airline-incidental-credit",
+      "lifestyle-credit",
+      "global-entry-tsa-precheck"
+    ],
+    "perks": [
+      "priority-pass-select",
+      "preferred-rewards-bonus",
+      "20-airfare-savings",
+      "no-foreign-transaction-fee",
+      "trip-delay-insurance",
+      "trip-cancellation-insurance",
+      "purchase-protection"
+    ]
+  },
+  {
+    "id": "synchrony-virgin-red",
+    "credits": [
+      "anniversary-points",
+      "third-night-free"
+    ],
+    "perks": [
+      "personal-perks",
+      "flying-club-tier-points",
+      "authorized-user-bonus",
+      "no-foreign-transaction-fee",
+      "points-never-expire",
+      "mastercard-world-elite-benefits"
+    ]
+  },
+  {
+    "id": "chase-british-airways",
+    "credits": [
+      "reward-flight-statement-credit"
+    ],
+    "perks": [
+      "travel-together-ticket",
+      "10-discount-on-ba-flights",
+      "pay-taxes-with-avios",
+      "dashpass",
+      "doordash-credit",
+      "no-foreign-transaction-fee",
+      "oneworld-redemptions"
+    ]
+  },
+  {
+    "id": "chase-marriott-bold",
+    "credits": [],
+    "perks": [
+      "no-annual-fee",
+      "silver-elite-status",
+      "5-elite-night-credits",
+      "dashpass",
+      "doordash-credit",
+      "pay-yourself-back",
+      "no-foreign-transaction-fee"
+    ]
+  },
+  {
+    "id": "barclays-jetblue-plus",
+    "credits": [
+      "anniversary-points",
+      "jetblue-vacations-credit"
+    ],
+    "perks": [
+      "first-checked-bag-free",
+      "10-points-back",
+      "50-in-flight-savings",
+      "no-foreign-transaction-fee",
+      "points-payback",
+      "mosaic-status-path"
+    ]
+  }
+]

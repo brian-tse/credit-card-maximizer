@@ -1,0 +1,389 @@
+{
+  "reviewedAt": "2026-09-16",
+  "originalFindingCount": 47,
+  "resolutions": [
+    {
+      "cardId": "atmos-rewards-summit",
+      "findingIndex": 0,
+      "field": "perks.free-checked-bag",
+      "sourceUrl": "https://news.alaskaair.com/loyalty/alaska-airlines-and-bank-of-america-present-a-new-premium-credit-card/",
+      "disposition": "corrected",
+      "resolution": "Cardholder plus 6 companions; eligible paid-with-card itinerary."
+    },
+    {
+      "cardId": "atmos-rewards-summit",
+      "findingIndex": 1,
+      "field": "transferPartners",
+      "sourceUrl": "https://news.alaskaair.com/loyalty/alaska-airlines-and-bank-of-america-present-a-new-premium-credit-card/",
+      "disposition": "corrected",
+      "resolution": "Separate award redemption from outbound transfers; replace placeholders with exact eligible hotel programs/ratios."
+    },
+    {
+      "cardId": "atmos-rewards-summit",
+      "findingIndex": 2,
+      "field": "credits/perks",
+      "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+      "disposition": "corrected",
+      "resolution": "Add $120 airport-security credit/four years; 100k companion award after $60k anniversary-year spend; eligible-bank 10% bonus."
+    },
+    {
+      "cardId": "atmos-rewards-summit",
+      "findingIndex": 3,
+      "field": "credits.delay-voucher",
+      "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+      "disposition": "corrected",
+      "resolution": "Qualifying Alaska delay/cancellation voucher with a short redemption window; current bank page says departure delay of 2 hours or more. Exact eligibility/48-hour expiry requires reconciliation with current terms."
+    },
+    {
+      "cardId": "bofa-business-advantage-unlimited",
+      "findingIndex": 0,
+      "field": "signUpBonus (hidden)",
+      "sourceUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards",
+      "disposition": "corrected",
+      "resolution": "Current public page advertises500 after5000/90days; retain per-offer eligibility."
+    },
+    {
+      "cardId": "bank-of-america-customized-cash-rewards",
+      "findingIndex": 0,
+      "field": "perks.no-foreign-transaction-fees",
+      "sourceUrl": "https://secure.bankofamerica.com/apply-now-services/credit-cards/rest/get-disclosures/v1/usa/show-in-browser?cId=4079158&isMobile=true&locale=en_US&poCd=4V",
+      "disposition": "corrected",
+      "resolution": "3% of USD amount of foreign-currency transactions."
+    },
+    {
+      "cardId": "bank-of-america-customized-cash-rewards",
+      "findingIndex": 1,
+      "field": "perks.preferred-rewards",
+      "sourceUrl": "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+      "disposition": "corrected",
+      "resolution": "BofA Rewards:10/25/50/75%; preserve applicable grandfathered benefits."
+    },
+    {
+      "cardId": "bank-of-america-customized-cash-rewards",
+      "findingIndex": 2,
+      "field": "earning.cap/intro",
+      "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+      "disposition": "corrected",
+      "resolution": "Combined cap includes first-year6%; relationship bonus excludes extra3% introductory portion."
+    },
+    {
+      "cardId": "boa-atmos-ascent",
+      "findingIndex": 0,
+      "field": "perks.bank-relationship-bonus",
+      "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+      "disposition": "corrected",
+      "resolution": "10% bonus on purchase points with eligible Bank of America account."
+    },
+    {
+      "cardId": "boa-atmos-ascent",
+      "findingIndex": 1,
+      "field": "credits.lounge-discount",
+      "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+      "disposition": "corrected",
+      "resolution": "Describe100 off qualifying annual membership without hardcoding undiscounted price; companion spend uses anniversary year."
+    },
+    {
+      "cardId": "bofa-air-france-klm",
+      "findingIndex": 0,
+      "field": "perks.anniversary",
+      "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/",
+      "disposition": "corrected",
+      "resolution": "50spend requirement attaches to5000miles;20XP awarded each anniversary independently. Additional80XP at15k and60XP at25k anniversary-year spend."
+    },
+    {
+      "cardId": "bofa-premium-rewards",
+      "findingIndex": 0,
+      "field": "perks.preferred-rewards",
+      "sourceUrl": "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+      "disposition": "corrected",
+      "resolution": "BofA Rewards10/25/50/75%; verify extended legacy bonus per account."
+    },
+    {
+      "cardId": "bofa-premium-rewards",
+      "findingIndex": 1,
+      "field": "credits.resetPeriod",
+      "sourceUrl": "https://www.privatebank.bankofamerica.com/solutions/credit-cards.html",
+      "disposition": "corrected",
+      "resolution": "The airline incidental credit resets by calendar year."
+    },
+    {
+      "cardId": "bofa-premium-rewards-elite",
+      "findingIndex": 0,
+      "field": "perks.preferred-rewards",
+      "sourceUrl": "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+      "disposition": "corrected",
+      "resolution": "BofA Rewards10/25/50/75%; verify extended legacy bonus per account."
+    },
+    {
+      "cardId": "bofa-premium-rewards-elite",
+      "findingIndex": 1,
+      "field": "credits.resetPeriod",
+      "sourceUrl": "https://www.privatebank.bankofamerica.com/solutions/credit-cards.html",
+      "disposition": "corrected",
+      "resolution": "Airline and applicable lifestyle credits reset by calendar year."
+    },
+    {
+      "cardId": "bilt-blue",
+      "findingIndex": 0,
+      "field": "issuer",
+      "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+      "disposition": "corrected",
+      "resolution": "Column N.A. issues Bilt cards; Cardless services them."
+    },
+    {
+      "cardId": "bilt-blue",
+      "findingIndex": 1,
+      "field": "earning.housing",
+      "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+      "disposition": "corrected",
+      "resolution": "Replace with Housing-only tiers up to1.25x or Flexible Bilt Cash redemption up to1x; neither has a Bilt housing transaction fee."
+    },
+    {
+      "cardId": "bilt-blue",
+      "findingIndex": 2,
+      "field": "transferPartners.Hilton",
+      "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+      "disposition": "corrected",
+      "resolution": "1:1"
+    },
+    {
+      "cardId": "bilt-blue",
+      "findingIndex": 3,
+      "field": "transferPartners",
+      "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+      "disposition": "corrected",
+      "resolution": "Add Wyndham1:1,VirginRed1:1,IPrefer1:2; rename Alaska toAtmos."
+    },
+    {
+      "cardId": "bilt-blue",
+      "findingIndex": 4,
+      "field": "earning.dining/travel",
+      "sourceUrl": "https://www.bilt.com/card",
+      "disposition": "corrected",
+      "resolution": "1x ordinary purchases. Portal hotels3x,flights2x; linked Lyft3x."
+    },
+    {
+      "cardId": "bilt-blue",
+      "findingIndex": 5,
+      "field": "perks.bilt-cash",
+      "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+      "disposition": "corrected",
+      "resolution": "4% Bilt Cash only with Flexible option."
+    },
+    {
+      "cardId": "bilt-obsidian",
+      "findingIndex": 0,
+      "field": "issuer",
+      "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+      "disposition": "corrected",
+      "resolution": "Column N.A. issues Bilt cards; Cardless services them."
+    },
+    {
+      "cardId": "bilt-obsidian",
+      "findingIndex": 1,
+      "field": "earning.housing",
+      "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+      "disposition": "corrected",
+      "resolution": "Replace with Housing-only tiers up to1.25x or Flexible Bilt Cash redemption up to1x; neither has a Bilt housing transaction fee."
+    },
+    {
+      "cardId": "bilt-obsidian",
+      "findingIndex": 2,
+      "field": "transferPartners.Hilton",
+      "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+      "disposition": "corrected",
+      "resolution": "1:1"
+    },
+    {
+      "cardId": "bilt-obsidian",
+      "findingIndex": 3,
+      "field": "transferPartners",
+      "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+      "disposition": "corrected",
+      "resolution": "Add Wyndham1:1,VirginRed1:1,IPrefer1:2; rename Alaska toAtmos."
+    },
+    {
+      "cardId": "bilt-obsidian",
+      "findingIndex": 4,
+      "field": "earning.categories",
+      "sourceUrl": "https://www.bilt.com/card",
+      "disposition": "corrected",
+      "resolution": "Choose dining OR grocery3x; grocery capped25k/year. Portal hotels4x,flights3x."
+    },
+    {
+      "cardId": "bilt-obsidian",
+      "findingIndex": 5,
+      "field": "perks.lyft-credits",
+      "sourceUrl": "https://www.bilt.com/card",
+      "disposition": "removed-or-qualified",
+      "resolution": "Linked Lyft earns3x; any Bilt Cash redemption is conditional, not a guaranteed separate card credit."
+    },
+    {
+      "cardId": "bilt-obsidian",
+      "findingIndex": 6,
+      "field": "perks.bilt-cash",
+      "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+      "disposition": "corrected",
+      "resolution": "Requires Flexible option."
+    },
+    {
+      "cardId": "bilt-palladium",
+      "findingIndex": 0,
+      "field": "issuer",
+      "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+      "disposition": "corrected",
+      "resolution": "Column N.A. issues Bilt cards; Cardless services them."
+    },
+    {
+      "cardId": "bilt-palladium",
+      "findingIndex": 1,
+      "field": "earning.housing",
+      "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+      "disposition": "corrected",
+      "resolution": "Replace with Housing-only tiers up to1.25x or Flexible Bilt Cash redemption up to1x; neither has a Bilt housing transaction fee."
+    },
+    {
+      "cardId": "bilt-palladium",
+      "findingIndex": 2,
+      "field": "transferPartners.Hilton",
+      "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+      "disposition": "corrected",
+      "resolution": "1:1"
+    },
+    {
+      "cardId": "bilt-palladium",
+      "findingIndex": 3,
+      "field": "transferPartners",
+      "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+      "disposition": "corrected",
+      "resolution": "Add Wyndham1:1,VirginRed1:1,IPrefer1:2; rename Alaska toAtmos."
+    },
+    {
+      "cardId": "bilt-palladium",
+      "findingIndex": 4,
+      "field": "perks.gold-status",
+      "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+      "disposition": "corrected",
+      "resolution": "Welcome status requires4k eligible spend/90days; finite status duration."
+    },
+    {
+      "cardId": "bilt-palladium",
+      "findingIndex": 5,
+      "field": "credits/perks",
+      "sourceUrl": "https://www.bilt.com/card",
+      "disposition": "corrected",
+      "resolution": "Add200 annual Bilt Cash and PriorityPass; portal hotels4x,flights3x,linked Lyft4x."
+    },
+    {
+      "cardId": "bilt-palladium",
+      "findingIndex": 6,
+      "field": "perks.dining/lyft-credits",
+      "sourceUrl": "https://www.bilt.com/card",
+      "disposition": "removed-or-qualified",
+      "resolution": "Do not imply separate unconditional card credits; specify conditional Bilt Cash options."
+    },
+    {
+      "cardId": "cardless-qatar-infinite",
+      "findingIndex": 0,
+      "field": "issuer",
+      "sourceUrl": "https://www.cardless.com/qatar-cardholder-agreement",
+      "disposition": "corrected",
+      "resolution": "First Electronic Bank; Cardless is servicer."
+    },
+    {
+      "cardId": "cardless-qatar-infinite",
+      "findingIndex": 1,
+      "field": "perks.award-fee-waiver",
+      "sourceUrl": "https://www.cardless.com/cards/qatar/premium",
+      "disposition": "removed-or-qualified",
+      "resolution": "No supporting current benefit found; do not publish as confirmed without exact terms."
+    },
+    {
+      "cardId": "discover-it-cash-back",
+      "findingIndex": 0,
+      "field": "perks.fico",
+      "sourceUrl": "https://www.discover.com/credit-cards/cash-back/it-card/",
+      "disposition": "removed-or-qualified",
+      "resolution": "Current page promotes CreditWise FICO8; statement delivery may depend on migration cohort."
+    },
+    {
+      "cardId": "discover-it-cash-back",
+      "findingIndex": 1,
+      "field": "issuer/application metadata",
+      "sourceUrl": "https://www.capitalone.com/updates/discover/card-faqs/",
+      "disposition": "corrected",
+      "resolution": "Preserve Discover branding but record Capital One migration and working current product/application URL."
+    },
+    {
+      "cardId": "gemini-credit-card",
+      "findingIndex": 0,
+      "field": "perks.mastercard-world",
+      "sourceUrl": "https://www.gemini.com/credit-card",
+      "disposition": "corrected",
+      "resolution": "Current product lists World Elite."
+    },
+    {
+      "cardId": "gemini-credit-card",
+      "findingIndex": 1,
+      "field": "rewardCurrency",
+      "sourceUrl": "https://www.gemini.com/credit-card",
+      "disposition": "corrected",
+      "resolution": "Represent crypto rewards distinctly; return at purchase differs from subsequent asset value."
+    },
+    {
+      "cardId": "gemini-credit-card",
+      "findingIndex": 2,
+      "field": "perks.instant-rewards",
+      "sourceUrl": "https://www.gemini.com/credit-card",
+      "disposition": "corrected",
+      "resolution": "Some excluded transactions pay when posted."
+    },
+    {
+      "cardId": "synchrony-virgin-red",
+      "findingIndex": 0,
+      "field": "credits.resetPeriod",
+      "sourceUrl": "https://virginredrewardscard.syf.com/essimages/cs/groups/ess_webasset/dualcard/@virgin/en/html/ess075414.html",
+      "disposition": "corrected",
+      "resolution": "Renewalpoints and spend thresholds use cardholder anniversary year."
+    },
+    {
+      "cardId": "synchrony-virgin-red",
+      "findingIndex": 1,
+      "field": "perks.personal-perks",
+      "sourceUrl": "https://virginredrewardscard.syf.com/essimages/cs/groups/ess_webasset/dualcard/@virgin/en/html/ess075414.html",
+      "disposition": "corrected",
+      "resolution": "Voucher value75kRed/150kSilverGold; taxes/surcharges extra; selection/expiry deadlines."
+    },
+    {
+      "cardId": "synchrony-virgin-red",
+      "findingIndex": 2,
+      "field": "transferPartners.VirginAtlantic",
+      "sourceUrl": "https://membersupport.red.virgin.com/hc/en-gb/articles/360013786277-What-is-the-difference-between-Flying-Club-Virgin-Red",
+      "disposition": "corrected",
+      "resolution": "Linked Virgin Red/Flying Club share balance; describe linkage instead of ordinarytransfer."
+    },
+    {
+      "cardId": "barclays-jetblue-plus",
+      "findingIndex": 0,
+      "field": "earning.category-name",
+      "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+      "disposition": "corrected",
+      "resolution": "TrueBlue Travel (renamed Paisly)."
+    },
+    {
+      "cardId": "barclays-jetblue-plus",
+      "findingIndex": 1,
+      "field": "credits.conditions",
+      "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+      "disposition": "removed-or-qualified",
+      "resolution": "Anniversarypoints are anniversary-linked; source exact vacation purchase minimum/reset before marking credit verified."
+    }
+  ],
+  "additionalCorrections": [
+    "Removed unresolved Business Advantage introductory APR.",
+    "Bilt introductory APR uses billing cycles.",
+    "Qatar contradictory earning rate excluded from rankings.",
+    "Restricted Bilt Cash and travel vouchers excluded from cash totals.",
+    "Four researched cards added; unresolved credits excluded from valuation and tracking."
+  ]
+}

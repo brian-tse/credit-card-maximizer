@@ -43,7 +43,7 @@ function renderCardPicker(filter = '') {
       ${cardVisual}
       <div class="card-info">
         <div class="card-name">${card.name}</div>
-        <div class="card-fee">$${card.annualFee}/year</div>
+        <div class="card-fee">${CardMaxModel.feeLabel(card)}/year</div>
       </div>
       <span class="check-icon" aria-hidden="true">${selectedCards.has(card.id) ? '✓' : ''}</span>
     </button>
@@ -91,7 +91,7 @@ function quickSelect(preset) {
 
   switch (preset) {
     case 'premium':
-      CARDS_DATABASE.filter(c => c.annualFee >= 300).forEach(c => selectedCards.add(c.id));
+      CARDS_DATABASE.filter(c => CardMaxModel.annualFeeForCard(c) !== null && CardMaxModel.annualFeeForCard(c) >= 300).forEach(c => selectedCards.add(c.id));
       break;
     case 'chase':
       CARDS_DATABASE.filter(c => c.issuer === 'Chase').forEach(c => selectedCards.add(c.id));
@@ -153,14 +153,14 @@ function renderComparison() {
   const cards = Array.from(selectedCards).map(id => CARDS_DATABASE.find(c => c.id === id)).filter(Boolean);
 
   // Calculate comparison metrics
-  const fees = cards.map(c => c.annualFee);
-  const minFee = Math.min(...fees);
+  const fees = cards.map(c => CardMaxModel.annualCostForCard(c));
+  const minFee = Math.min(...fees.filter(Number.isFinite));
 
   const totalCredits = cards.map(card => CardMaxModel.annualCashValue(card));
   const maxCredits = Math.max(...totalCredits);
 
-  const netValues = cards.map((c, i) => totalCredits[i] - c.annualFee);
-  const maxNet = Math.max(...netValues);
+  const netValues = cards.map((c, i) => fees[i] === null ? null : totalCredits[i] - fees[i]);
+  const maxNet = Math.max(...netValues.filter(Number.isFinite));
 
   const baseEarns = cards.map(c => c.earning.base);
   const maxBase = Math.max(...baseEarns);
@@ -172,7 +172,7 @@ function renderComparison() {
     : [];
 
   container.innerHTML = `
-    <p class="terms-note">Cash totals are annualized credit caps, assuming full eligible use. Multi-year reimbursements are spread over their full period. Points, nights, certificates and per-use benefits are shown separately and excluded from cash totals. Terms and eligibility may differ for existing cardholders.</p>
+    <p class="terms-note">Cash totals are annualized credit caps, assuming full eligible use. Multi-year reimbursements are spread over their full period. Points, restricted rewards, nights, certificates, unverified terms and conditional or per-use benefits are excluded from cash totals. Required membership costs are included in net totals. Terms and eligibility may differ for existing cardholders.</p>
     <div class="comparison-table-wrapper">
       <table class="comparison-table">
         <caption class="sr-only">Selected credit cards, fees, benefits, and earning rates</caption>
@@ -195,7 +195,7 @@ function renderComparison() {
             <td class="row-label">Annual Fee</td>
             ${cards.map((card, i) => `
               <td class="value-cell">
-                <div class="value-big ${fees[i] === minFee ? 'value-best' : ''}">\$${card.annualFee}</div>
+                <div class="value-big ${fees[i] === minFee ? 'value-best' : ''}">${CardMaxModel.feeLabel(card)}</div>
               </td>
             `).join('')}
           </tr>
@@ -212,7 +212,7 @@ function renderComparison() {
 
           <!-- Net Value -->
           <tr>
-            <td class="row-label">Cash caps minus fee<br><span style="font-size: 0.7rem; font-weight: 400;">(Assumes full use)</span></td>
+            <td class="row-label">Cash caps minus annual cost<br><span style="font-size: 0.7rem; font-weight: 400;">(Assumes full use)</span></td>
             ${cards.map((card, i) => `
               <td class="value-cell">
                 <div class="value-big ${netValues[i] === maxNet ? 'value-best' : ''}" style="${netValues[i] < 0 ? 'color: var(--accent-orange)' : ''}">
@@ -237,7 +237,7 @@ function renderComparison() {
             <td class="row-label">Base Earning</td>
             ${cards.map((card, i) => `
               <td class="value-cell">
-                <div class="value-big ${baseEarns[i] === maxBase ? 'value-best' : ''}">${card.earning.base}x</div>
+                <div class="value-big ">${CardMaxModel.earningLabel(card)}</div>
                 <div class="value-note">on all purchases</div>
               </td>
             `).join('')}
@@ -249,10 +249,10 @@ function renderComparison() {
             ${cards.map(card => `
               <td>
                 <ul class="category-list">
-                  ${card.earning.categories.map(cat => `
+                  ${CardMaxModel.earningCategories(card).map(cat => `
                     <li>
-                      <span>${cat.category}</span>
-                      <span class="multiplier">${cat.multiplier}x</span>
+                      <span>${cat.category}<small class="terms-note">${cat.description}</small>${CardMaxModel.termsHtml(cat)}</span>
+                      <span class="multiplier">${CardMaxModel.earningLabel(card, cat)}</span>
                     </li>
                   `).join('')}
                 </ul>
@@ -268,7 +268,7 @@ function renderComparison() {
                 <ul class="credit-list">
                   ${card.credits.map(credit => `
                     <li>
-                      <span>${credit.name}<small class="terms-note">${CardMaxModel.periodLabel(credit)}</small>${CardMaxModel.termsHtml(credit)}</span>
+                      <span>${credit.name}<small class="terms-note">${credit.description}</small><small class="terms-note">${CardMaxModel.periodLabel(credit)}</small>${CardMaxModel.termsHtml(credit)}</span>
                       <span class="amount">${CardMaxModel.formatCredit(credit)}</span>
                     </li>
                   `).join('')}
@@ -284,7 +284,7 @@ function renderComparison() {
               <td>
                 <div class="partner-tags">
                   ${card.transferPartners.map(p => `
-                    <span class="partner-tag ${sharedPartners.includes(p.name) ? 'shared' : ''}">${p.name} ${p.ratio}${p.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(p.description)}</span>` : ''}${CardMaxModel.termsHtml(p)}</span>
+                    <span class="partner-tag ${sharedPartners.includes(p.name) ? 'shared' : ''}">${p.name} ${CardMaxModel.escapeHtml(CardMaxModel.transferLabel(p))}${p.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(p.description)}</span>` : ''}${CardMaxModel.termsHtml(p)}</span>
                   `).join('')}
                 </div>
               </td>
@@ -299,7 +299,7 @@ function renderComparison() {
               return `
                 <td>
                   ${lounges.length > 0 ? lounges.map(l => `
-                    <div class="perk-item has">✓ ${l.name}<span class="terms-note">${l.description}</span></div>
+                    <div class="perk-item has">✓ ${l.name}<span class="terms-note">${l.description}${CardMaxModel.termsHtml(l)}</span></div>
                   `).join('') : '<div class="perk-item no">✗ None</div>'}
                 </td>
               `;
@@ -314,7 +314,7 @@ function renderComparison() {
               return `
                 <td>
                   ${status.length > 0 ? status.map(s => `
-                    <div class="perk-item has">✓ ${s.name}<span class="terms-note">${s.description}</span></div>
+                    <div class="perk-item has">✓ ${s.name}<span class="terms-note">${s.description}${CardMaxModel.termsHtml(s)}</span></div>
                   `).join('') : '<div class="perk-item no">✗ None</div>'}
                 </td>
               `;
@@ -364,12 +364,12 @@ function getBestFor(card) {
 
   if (card.earning.base >= 2) recommendations.push('everyday spending');
 
-  const hasDining = card.earning.categories.some(c =>
+  const hasDining = CardMaxModel.earningCategories(card).some(c =>
     c.category.toLowerCase().includes('dining') || c.category.toLowerCase().includes('restaurant')
   );
   if (hasDining) recommendations.push('dining');
 
-  const hasTravel = card.earning.categories.some(c =>
+  const hasTravel = CardMaxModel.earningCategories(card).some(c =>
     c.category.toLowerCase().includes('travel') || c.category.toLowerCase().includes('flight')
   );
   if (hasTravel) recommendations.push('travel');
@@ -377,7 +377,7 @@ function getBestFor(card) {
   const hasLounge = card.perks.some(p => p.type === 'lounge');
   if (hasLounge) recommendations.push('lounge access');
 
-  if (card.annualFee < 200) recommendations.push('low fee');
+  if (CardMaxModel.annualCostForCard(card) !== null && CardMaxModel.annualCostForCard(card) < 200) recommendations.push('low fee');
 
   return recommendations.slice(0, 2).join(', ') || 'general rewards';
 }

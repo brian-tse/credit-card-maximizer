@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node --test tests/*.test.js",
     "download-images": "node scripts/download-card-images.js",
-    "check": "node scripts/validate-catalog.js",
+    "check": "node scripts/validate-catalog.js && node scripts/compile-catalog.js --check",
+    "catalog": "node scripts/compile-catalog.js",
     "build": "node scripts/build.js",
     "review-data": "node scripts/review-data.mjs"
   },

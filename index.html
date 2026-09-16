@@ -484,7 +484,7 @@
       </div>
     </div>
 
-    <p class="terms-note" id="cash-caps-note">Fees use your entered amount when set, otherwise the listed fee. Cash caps assume full eligible use. Multi-year credits are annualized; points, certificates, nights and per-use benefits are excluded.</p>
+    <p class="terms-note" id="cash-caps-note">Fees use your entered amount when set, otherwise the listed fee. Required membership costs are included. Cash caps assume full eligible use. Multi-year credits are annualized; points, restricted rewards, unverified terms and conditional or per-use benefits are excluded.</p>
 
     <!-- My Cards Section -->
     <section class="my-cards-section" id="my-cards-section">
@@ -686,7 +686,7 @@
 
         case 'fee':
           // Sort by annual fee (highest first)
-          cardsWithData.sort((a, b) => b.card.annualFee - a.card.annualFee);
+          cardsWithData.sort((a, b) => (CardMaxModel.annualFeeForCard(b.card) ?? -1) - (CardMaxModel.annualFeeForCard(a.card) ?? -1));
           break;
 
         case 'date':
@@ -762,7 +762,7 @@
             <div class="card-details">
               <div class="card-name">${shortIssuer} ${getShortCardName(card.name)}</div>
               <div class="card-issuer">${card.issuer}</div>
-              <div class="card-fee">$${card.annualFee}/year</div>
+              <div class="card-fee">${CardMaxModel.feeLabel(card)}/year</div>
             </div>
             <span class="card-checkbox" aria-hidden="true">+</span>
           </button>
@@ -917,7 +917,7 @@
             <div class="card-details">
               <div class="card-name">${shortIssuer} ${getShortCardName(card.name)}</div>
               <div class="card-meta">
-                <span>${CardMaxModel.money(annualFee)}/yr${Object.hasOwn(actualAnnualFees, cardId) ? ' · your fee' : ' · listed fee'}</span>
+                <span>${CardMaxModel.money(annualFee)}/yr${Object.hasOwn(actualAnnualFees, cardId) ? ' · your fee' : ' · listed fee'}${card.requiredAnnualMembershipFee ? ` + ${CardMaxModel.money(card.requiredAnnualMembershipFee)} membership` : ''}</span>
                 ${dateDisplay ? `<span>${dateDisplay}</span>` : '<span class="add-date-hint">+ Add date</span>'}
               </div>
             </div>
@@ -934,7 +934,7 @@
                 ${years.map(y => `<option value="${y}" ${signupDate.year == y ? 'selected' : ''}>${y || 'Yr'}</option>`).join('')}
               </select>
               <label class="fee-override-label" for="fee-${cardId}">Your annual fee ($)
-                <input type="number" id="fee-${cardId}" min="0" max="10000" step="0.01" value="${actualAnnualFees[cardId] ?? ''}" placeholder="${card.annualFee}" onchange="updateAnnualFee('${cardId}', this.value)">
+                <input type="number" id="fee-${cardId}" min="0" max="10000" step="0.01" value="${actualAnnualFees[cardId] ?? ''}" placeholder="${CardMaxModel.annualFeeForCard(card) ?? 'Enter your fee'}" onchange="updateAnnualFee('${cardId}', this.value)">
               </label>
               <span class="terms-note">Optional: enter your billed fee. Leave blank to use the listed fee.</span>
             </div>
@@ -982,12 +982,14 @@
     function updateQuickStats() {
       let totalFees = 0;
       let totalCredits = 0;
+      let unknownFees = false;
 
       selectedCards.forEach(cardId => {
         const card = CARDS_DATABASE.find(c => c.id === cardId);
         if (!card) return;
 
-        totalFees += CardMaxModel.annualFeeForCard(card, actualAnnualFees);
+        const cost = CardMaxModel.annualCostForCard(card, actualAnnualFees);
+        if (cost === null) unknownFees = true; else totalFees += cost;
 
         totalCredits += CardMaxModel.annualCashValue(card);
       });
@@ -998,9 +1000,9 @@
       document.getElementById('first-card-cta').style.display = selectedCards.length ? 'none' : 'inline-flex';
       document.getElementById('quick-stats').hidden = !selectedCards.length;
       document.getElementById('cash-caps-note').hidden = !selectedCards.length;
-      document.getElementById('stat-annual-fees').textContent = '$' + totalFees.toLocaleString();
+      document.getElementById('stat-annual-fees').textContent = unknownFees ? 'Enter missing fee' : CardMaxModel.money(totalFees);
       document.getElementById('stat-total-credits').textContent = CardMaxModel.money(totalCredits);
-      document.getElementById('stat-net-value').textContent = CardMaxModel.money(netValue);
+      document.getElementById('stat-net-value').textContent = CardMaxModel.money(unknownFees ? null : netValue);
       document.getElementById('stat-net-value').style.color = netValue >= 0 ? 'var(--accent)' : 'var(--warning)';
     }
     window.addEventListener('cardmax-data-changed', () => {

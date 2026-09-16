@@ -319,7 +319,7 @@
         'Wells Fargo': 'WF',
         'US Bank': 'USB',
         'Discover': 'Disc',
-        'Cardless': 'Bilt'
+        'Column N.A.': 'Bilt'
       };
       return shortNames[issuer] || issuer;
     }
@@ -425,7 +425,7 @@
             <div class="card-name">${getShortIssuer(item.card.issuer)} ${getShortCardName(item.card.name)}</div>
             <div class="card-issuer">${item.card.issuer}</div>
           </div>
-          <div class="transfer-ratio">${item.ratio}${item.partner.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(item.partner.description)}</span>` : ''}${CardMaxModel.termsHtml(item.partner)}</div>
+          <div class="transfer-ratio">${CardMaxModel.escapeHtml(CardMaxModel.transferLabel(item.partner))}${item.partner.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(item.partner.description)}</span>` : ''}${CardMaxModel.termsHtml(item.partner)}${CardMaxModel.termsHtml({transferAccess:item.card.transferAccess,transferProgramNote:item.card.transferProgramNote})}</div>
         </li>
       `}).join('');
 

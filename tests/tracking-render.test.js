@@ -5,6 +5,23 @@ const fs = require('node:fs');
 const path = require('node:path');
 const read = name => fs.readFileSync(path.join(__dirname, '..', name), 'utf8');
 
+test('conditional use increases actual cash history without consuming unrelated monthly allowances', async t => {
+  const dom = new JSDOM(read('pages/tracker.html'), { url: 'https://cardmax.test/pages/tracker.html', runScripts: 'outside-only' });
+  t.after(() => dom.window.close());
+  const w = dom.window;
+  w.localStorage.setItem('cardmax_user_cards', '["amex-platinum"]');
+  w.CardMaxAuth = { autoSync() { w.CardMaxStorage.captureChanges(); } };
+  w.CardMaxSave = { renderSaveRestoreUI() {} };
+  w.eval(['data/cards.js', 'js/card-model.js', 'js/storage.js', 'js/benefit-periods.js', 'js/tracker.js'].map(read).join('\n') + '\nCARDS_DATABASE.find(c => c.id === "amex-platinum").credits.find(c => c.id === "uber-credit").conditional = true;');
+  await new Promise(resolve => w.document.addEventListener('DOMContentLoaded', resolve));
+  const remaining = w.document.getElementById('credits-remaining').textContent;
+  const checkbox = w.document.querySelector('#by-card-container [data-benefit*="|uber-credit|"]');
+  checkbox.dispatchEvent(new w.Event('change', { bubbles: true }));
+  assert.equal(w.document.getElementById('credits-remaining').textContent, remaining);
+  assert.equal(w.document.getElementById('credits-used').textContent, '$0.00');
+  assert.notEqual(w.document.getElementById('annual-value').textContent, '$0.00');
+});
+
 test('tracker renders quarterly and multi-year benefits consistently, records edits, refreshes after sync', async () => {
   const dom = new JSDOM(read('pages/tracker.html'), { url: 'https://cardmax.test/pages/tracker.html', runScripts: 'outside-only' });
   const w = dom.window;
@@ -15,7 +32,7 @@ test('tracker renders quarterly and multi-year benefits consistently, records ed
   await new Promise(resolve => w.document.addEventListener('DOMContentLoaded', resolve));
   const quarterly = w.document.querySelector('#quarterly-benefits-container');
   assert.match(quarterly.textContent, /Resy/);
-  const pointRow = [...w.document.querySelectorAll('#by-card-container .benefit-item')].find(node => /Anniversary Bonus/.test(node.textContent));
+  const pointRow = w.document.querySelector('#by-card-container [data-benefit*="capital-one-venture-x|anniversary-bonus|"]').closest('.benefit-item');
   assert.match(pointRow.textContent, /10,000 pts/);
   assert.doesNotMatch(pointRow.textContent, /\$10,000/);
   const globalEntries = [...w.document.querySelectorAll('[data-benefit]')].filter(input => input.dataset.benefit.includes('capital-one-venture-x|global-entry'));

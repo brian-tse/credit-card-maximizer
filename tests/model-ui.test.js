@@ -92,3 +92,41 @@ test('dashboard fee overrides persist zero and clear back to the listed fee', t 
   assert.equal(window.document.getElementById('stat-annual-fees').textContent, '$395');
   assert.equal(window.document.getElementById('stat-net-value').textContent, '-$65');
 });
+
+test('new membership card shows its required cost in dashboard and comparison', t => {
+  const dom = page('index.html', ['data/cards.js', 'js/card-model.js'], ['robinhood-gold-card']);
+  t.after(() => dom.window.close());
+  assert.equal(dom.window.document.getElementById('stat-annual-fees').textContent, '$50');
+  assert.equal(dom.window.document.getElementById('stat-net-value').textContent, '-$50');
+  const comparison = page('pages/compare.html', ['data/cards.js', 'js/card-model.js', 'js/compare.js']);
+  t.after(() => comparison.window.close());
+  comparison.window.toggleCardSelection('robinhood-gold-card');
+  assert.match(comparison.window.document.getElementById('comparison-container').textContent, /\$50 required membership/);
+});
+
+test('unresolved earning rates and category conditions are readable in the catalog', t => {
+  const dom = page('pages/cards.html', ['data/cards.js', 'js/card-model.js', 'js/dialogs.js', 'js/app.js']);
+  t.after(() => dom.window.close());
+  const w = dom.window;
+  w.openCardModal('cardless-qatar-infinite'); w.renderModalContent('earning');
+  assert.match(w.document.getElementById('modal-content').textContent, /headline shows 5x/);
+  assert.doesNotMatch(w.document.getElementById('modal-content').textContent, /nullx|undefinedx/);
+  w.openCardModal('bilt-obsidian'); w.renderModalContent('earning');
+  assert.match(w.document.getElementById('modal-content').textContent, /Dining OR Grocery/);
+  assert.match(w.document.getElementById('modal-content').textContent, /25,000/);
+  w.openCardModal('bilt-palladium'); w.renderModalContent('credits');
+  assert.match(w.document.getElementById('modal-content').textContent, /\$200 Bilt Cash/);
+});
+
+test('unverified fees never enter advertised fee tiers', t => {
+  const dom = page('pages/cards.html', ['data/cards.js', 'js/card-model.js', 'js/dialogs.js', 'js/app.js']);
+  t.after(() => dom.window.close());
+  dom.window.renderCards('premium');
+  assert.doesNotMatch(dom.window.document.getElementById('cards-container').textContent, /Altitude Reserve/);
+  dom.window.renderCards('midtier');
+  assert.doesNotMatch(dom.window.document.getElementById('cards-container').textContent, /Amex Green|American Express Green/);
+  const comparison = page('pages/compare.html', ['data/cards.js', 'js/card-model.js', 'js/compare.js']);
+  t.after(() => comparison.window.close());
+  comparison.window.quickSelect('premium');
+  assert.doesNotMatch(comparison.window.document.getElementById('comparison-container').textContent, /Altitude Reserve/);
+});

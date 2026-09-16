@@ -110,3 +110,44 @@ test('PDF and non-text issuer sources require manual review without decoding the
     if (contentType === 'application/pdf') assert.match(buildReport([], { 'https://www.americanexpress.com/terms': result }).markdown, /PDF source requires a document read/);
   }
 });
+
+test('reviewed issuer and partner hosts are allowed without accepting lookalikes or credentials', async () => {
+  const { allowedSource, collectSourceUrls } = await sourceReview;
+  const directory = path.join(__dirname, '../data/reviewed');
+  for (const filename of fs.readdirSync(directory).filter(name => name.endsWith('.json'))) {
+    const reviewed = JSON.parse(fs.readFileSync(path.join(directory, filename), 'utf8'));
+    for (const url of collectSourceUrls(reviewed)) assert(allowedSource(url), `Unreviewed source host: ${url}`);
+  }
+  for (const url of ['https://chase.com.evil.example/', 'https://fakechase.com/', 'http://www.chase.com/', 'https://user:secret@www.chase.com/', 'https://127.0.0.1/', 'https://githubusercontent.com/terms']) {
+    assert.equal(allowedSource(url), false, url);
+  }
+});
+
+test('weekly report retains unresolved field questions even when source pages are unchanged', async () => {
+  const { buildReport } = await sourceReview;
+  const data = [{ id: 'example', name: 'Example Card', verificationStatus: 'partially-verified', verifiedAt: null, reviewedAt: '2026-09-16', sourceUrl: 'https://www.chase.com/card',
+    fieldSources: {
+      annualFee: { verificationStatus: 'verified', sourceUrl: 'https://www.chase.com/card' },
+      insurance: { verificationStatus: 'needs-review', note: 'Legacy Guide to Benefits remains unresolved.', sourceUrl: 'https://static.chasecdn.com/guide.pdf' },
+      transferRatio: { status: 'unverified', note: 'Check the live account rate.' }
+    }
+  }];
+  const before = JSON.stringify(data);
+  const { markdown, report } = buildReport(data, { 'https://www.chase.com/card': { status: 'unchanged-page' } }, '2026-09-16');
+  assert.equal(report.cards[0].fieldReviews.length, 3);
+  assert.deepEqual(report.cards[0].unresolvedFields.map(field => field.field), ['insurance', 'transferRatio']);
+  assert.match(markdown, /Legacy Guide to Benefits remains unresolved/);
+  assert.match(markdown, /Check the live account rate/);
+  assert.match(markdown, /unchanged source page does not resolve/);
+  assert.equal(JSON.stringify(data), before);
+});
+
+test('upcoming report names nested program ratios, earning changes, and the eligible cohort', async () => {
+  const { buildReport, upcomingTerms } = await sourceReview;
+  const card = { id: 'example', name: 'Example Card', transferPartners: [{ name: 'Hyatt', terms: [{ ratio: '4:3', effectiveFrom: '2026-10-01', cohort: 'Applied before June 15, 2026', description: 'New conversion rate.' }] }], earning: { categories: [{ category: 'Dining', multiplier: 3, terms: [{ multiplier: 3, effectiveUntil: '2026-12-31' }, { multiplier: 2, effectiveFrom: '2027-01-01' }] }] } };
+  const october = buildReport([card], {}, '2026-09-16');
+  assert.match(october.markdown, /Hyatt starts 2026-10-01 — ratio 4:3/);
+  assert.match(october.markdown, /Applied before June 15, 2026/);
+  assert.deepEqual(upcomingTerms(card, '2026-12-01').map(term => [term.name, term.change, term.term]), [['Dining', 'expires', '3x earning'], ['Dining', 'starts', '2x earning']]);
+  assert.equal(upcomingTerms(card, '2027-01-02').length, 0);
+});

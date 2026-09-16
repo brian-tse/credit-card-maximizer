@@ -244,6 +244,15 @@
     const benefits = { ...snapshot.benefits };
     const canonical = id => aliases[id] || id;
     for (const card of cards) for (const credit of [...(card.credits || []), ...(card.retiredBenefits || [])]) {
+      // Correct a previously misclassified non-cash award without deleting its
+      // usage date or original amount. Saved voucher history must not count as USD.
+      if (['points', 'nights', 'certificates', 'visits', 'percent', 'Bilt Cash', 'voucher', 'crypto'].includes(unit(credit))) {
+        for (const [key, record] of Object.entries(benefits)) {
+          if (key.startsWith('benefit|') && record?.cardId === card.id && record.creditId === creditId(credit) && record.unit === 'USD') {
+            benefits[key] = { ...record, originalUnit: record.unit, originalCashValue: record.cashValue, unit: unit(credit), cashValue: 0 };
+          }
+        }
+      }
       const names = [credit.name, ...(credit.legacyNames || [])].map(sanitize);
       const ids = [card.id, ...Object.keys(aliases).filter(id => canonical(id) === card.id)];
       for (const [oldKey, value] of Object.entries(snapshot.benefits || {})) {
