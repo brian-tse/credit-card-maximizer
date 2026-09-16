@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 export function verifyCatalogPrivacy(catalog) {
   assert(catalog.includes('card-model.js'), 'Shared calculation module missing');
@@ -32,9 +34,18 @@ export async function verifyProduction({ base = process.env.SITE_URL || 'https:/
     assert.equal(response.status, 200, `${path} must return 200`);
     return response;
   }
-  verifyCatalogPrivacy(await (await get('/pages/cards')).text());
+  const catalog = await (await get('/pages/cards')).text();
+  verifyCatalogPrivacy(catalog);
   const home = await (await get('/')).text();
   assert(home.includes('storage.js'), 'Storage module missing');
+  for (const html of [home, catalog]) {
+    const assets = [...html.matchAll(/\b(?:src|href)=["']([^"']+)["']/gi)].map(match => new URL(match[1].replace(/&amp;/g, '&'), base)).filter(url => url.origin === new URL(base).origin && /\.(?:js|css)$/.test(url.pathname));
+    assert(assets.length > 0, 'Local release assets missing');
+    for (const url of assets) assert.equal(url.searchParams.get('v'), version.commit, `Unversioned release asset: ${url.pathname}`);
+  }
+  const data = await (await get(`/data/cards.js?v=${version.commit}`)).text();
+  const digest = value => createHash('sha256').update(value).digest('hex');
+  assert.equal(digest(data), digest(readFileSync(new URL('../data/cards.js', import.meta.url))), 'Production catalog bytes differ from this release');
   const health = await fetchImpl('https://cardmax-suggestions.briantse.workers.dev/health', { signal: AbortSignal.timeout(15000) });
   assert.equal(health.status, 200, 'Suggestion Worker health');
   assert.equal((await health.json()).collectsEmail, false, 'Suggestion privacy release missing');
