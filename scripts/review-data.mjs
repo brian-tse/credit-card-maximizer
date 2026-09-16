@@ -5,7 +5,20 @@ import { createRequire } from 'node:module';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url);
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const issuerHosts = ['chase.com', 'americanexpress.com', 'thecenturionlounge.com', 'capitalone.com', 'capitalonetravel.com', 'wellsfargo.com', 'citi.com', 'citicards.com', 'bankofamerica.com', 'barclaycardus.com', 'barclaysus.com', 'discover.com', 'usbank.com', 'biltrewards.com', 'bilt.com', 'cardless.com', 'gemini.com', 'synchrony.com', 'virgin.com', 'virginred.com', 'qatarairways.com', 'emirates.com', 'southwest.com', 'united.com', 'hilton.com', 'marriott.com'];
+// Official issuers, loyalty programs and benefit providers cited by reviewed records.
+// Do not add general hosting/CDN domains to make a failed source check pass.
+const issuerHosts = [
+  'chase.com', 'chasecdn.com', 'americanexpress.com', 'thecenturionlounge.com',
+  'capitalone.com', 'capitalonetravel.com', 'wellsfargo.com', 'wf.com',
+  'citi.com', 'citicards.com', 'citigroup.com', 'thankyou.com', 'bankofamerica.com',
+  'barclaycardus.com', 'barclaysus.com', 'discover.com', 'usbank.com',
+  'biltrewards.com', 'bilt.com', 'cardless.com', 'gemini.com', 'synchrony.com', 'syf.com',
+  'fidelity.com', 'robinhood.com', 'virgin.com', 'virginred.com', 'qatarairways.com',
+  'emirates.com', 'southwest.com', 'united.com', 'delta.com', 'aa.com', 'alaskaair.com',
+  'jetblue.com', 'britishairways.com', 'hilton.com', 'marriott.com', 'hyatt.com',
+  'ihg.com', 'wyndhamhotels.com', 'choicehotels.com', 'accor.com', 'iprefer.com',
+  'turo.com', 'mycardgtb.com'
+];
 export function allowedSource(source) {
   try {
     const url = new URL(source);
@@ -16,6 +29,16 @@ function visit(record, callback, scope = '') {
   if (!record || typeof record !== 'object') return;
   callback(record, scope);
   for (const [key, value] of Object.entries(record)) if (value && typeof value === 'object') visit(value, callback, scope ? `${scope}.${key}` : key);
+}
+export function fieldReviews(card) {
+  const unresolved = new Set(['needs-review', 'unverified', 'unresolved', 'unsupported', 'ambiguous', 'pending', 'manual-review']);
+  return Object.entries(card.fieldSources || {}).map(([field, item]) => {
+    const source = item && typeof item === 'object' ? item : {};
+    const status = source.verificationStatus || source.status || 'needs-review';
+    return { field, status, unresolved: unresolved.has(status) || unresolved.has(source.status),
+      reviewedAt: source.reviewedAt || null, sourceUrl: source.sourceUrl || null,
+      note: source.note || source.description || null };
+  });
 }
 export function collectSourceUrls(record) {
   const urls = new Set();
@@ -93,7 +116,20 @@ export function upcomingTerms(card, today, days = 45) {
   const upcoming = [];
   visit(card, (item, scope) => {
     for (const [field, change] of [['effectiveFrom', 'starts'], ['effectiveUntil', 'expires']]) {
-      if (item[field] >= today && item[field] <= deadline) upcoming.push({ id: item.id || scope || card.id, name: item.name || scope || card.name, change, date: item[field], eligibility: item.eligibility || null });
+      if (item[field] >= today && item[field] <= deadline) {
+        // Nested term variants may put their program name on the enclosing record.
+        const parts = scope.split('.');
+        const ownName = item.name || item.category;
+        let parent = card, name = ownName;
+        for (const part of parts) {
+          if (!parent || typeof parent !== 'object') break;
+          if (!ownName && (parent.name || parent.category)) name = parent.name || parent.category;
+          parent = parent[part];
+        }
+        const term = item.ratio ? `ratio ${item.ratio}` : item.multiplier != null ? `${item.multiplier}x earning` : null;
+        upcoming.push({ id: item.id || scope || card.id, name: name || scope || card.name, change, date: item[field],
+          eligibility: item.eligibility || item.cohort || null, term, description: item.description || item.termsNote || null });
+      }
     }
   });
   return upcoming;
@@ -104,10 +140,19 @@ export function buildReport(cards, results = {}, today = new Date().toISOString(
     const age = card.verifiedAt ? Math.floor((Date.parse(today) - Date.parse(card.verifiedAt)) / 86400000) : null;
     const sourceChecks = collectSourceUrls(card).map(url => ({ url, status: results[url]?.status || 'not-fetched' }));
     return { id: card.id, name: card.name, status: card.verificationStatus, verifiedAt: card.verifiedAt, reviewedAt: card.reviewedAt, overdue: age === null || age > 90, sourceUrl: card.sourceUrl,
-      sourceCheck: priority.find(status => sourceChecks.some(check => check.status === status)) || 'not-fetched', sourceChecks, upcoming: upcomingTerms(card, today) };
+      sourceCheck: priority.find(status => sourceChecks.some(check => check.status === status)) || 'not-fetched', sourceChecks,
+      fieldReviews: fieldReviews(card), unresolvedFields: fieldReviews(card).filter(field => field.unresolved), upcoming: upcomingTerms(card, today) };
   });
   let markdown = `# CardMax data review — ${today}\n\n${cards.length} cards. ${rows.filter(row => row.overdue).length} need a complete or overdue source review.\n\nPage changes are review signals, not verified fact changes. Before/after excerpts compare issuer pages; proposed catalog edits still require a human source review. No card values or verification dates were changed.\n\n| Card | Review status | Source check (all cited pages) | Issuer |\n|---|---|---|---|\n`;
   for (const row of rows) markdown += `| ${esc(row.name)} | ${esc(row.status)}${row.reviewedAt ? `; partial ${row.reviewedAt}` : ''} | ${row.sourceCheck} (${row.sourceChecks.length} pages) | [Source](${row.sourceUrl}) |\n`;
+  const unresolvedRows = rows.filter(row => row.unresolvedFields.length);
+  if (unresolvedRows.length) {
+    markdown += '\n## Fields still needing source review\n\nAn unchanged source page does not resolve these open questions or certify an account’s legacy terms.\n';
+    for (const row of unresolvedRows) {
+      markdown += `\n### ${esc(row.name)}\n`;
+      for (const field of row.unresolvedFields) markdown += `\n- ${esc(field.field)} — ${esc(field.status)}${field.note ? `: ${esc(field.note)}` : ''}${field.sourceUrl ? ` ([source](${field.sourceUrl}))` : ''}\n`;
+    }
+  }
   for (const [url, result] of Object.entries(results)) {
     if (!['changed-review-needed', 'unavailable', 'manual-review'].includes(result.status)) continue;
     markdown += `\n## ${esc(url)}\n\nStatus: ${result.status}${result.httpStatus ? ` (${result.httpStatus})` : ''}.${result.detail ? ` ${esc(result.detail)}.` : ''}\n`;
@@ -118,7 +163,7 @@ export function buildReport(cards, results = {}, today = new Date().toISOString(
       for (const snippet of result.afterEvidence || []) markdown += `\n> ${esc(snippet)}\n`;
     }
   }
-  const upcoming = rows.flatMap(row => row.upcoming.map(term => `${row.name}: ${term.name} ${term.change} ${term.date}${term.eligibility ? ` (${term.eligibility})` : ''}`));
+  const upcoming = rows.flatMap(row => row.upcoming.map(term => `${row.name}: ${term.name} ${term.change} ${term.date}${term.term ? ` — ${term.term}` : ''}${term.eligibility ? ` (${term.eligibility})` : ''}${term.description ? `. ${term.description}` : ''}`));
   if (upcoming.length) markdown += '\n## Terms starting or expiring within 45 days\n\n' + upcoming.map(item => `- ${esc(item)}`).join('\n') + '\n';
   // Full page text is kept only in the local cache; reports contain bounded excerpts.
   const sources = Object.fromEntries(Object.entries(results).map(([url, { text, ...result }]) => [url, result]));

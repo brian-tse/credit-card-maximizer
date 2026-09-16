@@ -49,6 +49,7 @@ const DEFAULT_VALUATIONS = {
   'best-western': { name: 'Best Western Rewards', category: 'Hotel Points', value: 0.55 },
 
   // Cash Back (always 1 cent per point)
+  'crypto': { name: 'Crypto reward value at purchase', category: 'Crypto rewards', value: 1.00 },
   'cashback': { name: 'Cash Back', category: 'Cash Back', value: 1.00 }
 };
 

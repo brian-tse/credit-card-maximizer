@@ -1,0 +1,3855 @@
+{
+  "asOf": "2026-09-16 UTC",
+  "findingCount": 416,
+  "cards": [
+    {
+      "id": "chase-sapphire-reserve",
+      "findings": [
+        {
+          "kind": "omission",
+          "field": "earning.Peloton",
+          "current": "Absent",
+          "corrected": "10x on eligible equipment/accessory purchases over $150; up to $5,000 of purchases across the offer through December 31, 2027.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/offerdetails/chasesapphire",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "credits.enrollment; expiration",
+          "current": "StubHub activation absent; DoorDash expiry absent; trusted-traveler omits NEXUS",
+          "corrected": "Show required StubHub and DoorDash activation; DoorDash promotions end December 31, 2027. Include NEXUS in the $120 credit available every four years.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/offerdetails/chasesapphire",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "perks.Air Canada Lounge Access",
+          "current": "Maple Leaf lounges in US, Canada, Europe",
+          "corrected": "Participating Maple Leaf/Cafés; member +1 guest; departing Star Alliance flight required. Signature Suites and all Montréal YUL lounges excluded.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/offerdetails/chasesapphire",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "unsupported",
+          "field": "perks.IHG Platinum Elite Status",
+          "current": "IHG Platinum plus Hertz Five Star",
+          "corrected": "IHG Platinum requires account linking and ends 12/31/2027. Hertz Five Star is not established by reviewed current Chase terms; separate and verify before advertising.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/offerdetails/chasesapphire",
+          "confidence": "medium",
+          "note": "Absence in these sources does not prove that a separate network/legacy offer cannot exist."
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "perks.Apple TV+ & Apple Music",
+          "current": "Complimentary through June 2027",
+          "corrected": "Current detailed terms promise at least 12 months from activation; Apple TV activation deadline 6/22/2027 is not a universal benefit end date.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/offerdetails/chasesapphire",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "perks.status and spend thresholds",
+          "current": "No Marriott trial or $75k spend benefits",
+          "corrected": "Register for Marriott Gold July 1–September 30, 2026; three paid nights in that window extend status through February 2028. Spending $75,000 in a calendar year unlocks conditional Hyatt Explorist, IHG Diamond, Southwest A-List, $500 Southwest Chase Travel credits and $250 Shops benefits.",
+          "sourceUrl": "https://www.chase.com/sapphire-cards/personal/reserve",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "perks.insurance",
+          "current": "Delay measured per ticket; evacuation/warranty conditions absent",
+          "corrected": "Use covered traveler; delay is more than 6 h or overnight. Evacuation has distance/medical conditions; warranty applies to eligible US warranties. Link the current applicable guide.",
+          "sourceUrl": "https://www.chase.com/sapphire-cards/personal/reserve",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "transferPartners.Emirates",
+          "current": "Emirates Skywards listed as available",
+          "corrected": "Remove from current direct Chase transfer list; neither the current Chase partner list nor current Sapphire Preferred product includes Emirates.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+          "confidence": "high",
+          "note": "Do not infer an exact historical termination date from the current list."
+        },
+        {
+          "kind": "omission",
+          "field": "transferPartners.Wyndham",
+          "current": "Not listed",
+          "corrected": "Add Wyndham Rewards as an available direct partner.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "amex-platinum",
+      "findings": [
+        {
+          "field": "earning.categories[Flights (direct)].description",
+          "current": "5X without a cap",
+          "corrected": "$500,000 of eligible airfare purchases per calendar year; then 1X",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "perks[Hilton Gold Status / Marriott Gold Status].description",
+          "current": "Automatic Gold status",
+          "corrected": "Complimentary status requires enrollment",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "perks[Hertz President's Circle].description",
+          "current": "Top-tier rental car status",
+          "corrected": "Name Hertz President’s Circle and state enrollment required; avoid an unqualified ranking of all Hertz tiers.",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+          "confidence": "medium",
+          "note": "missing-condition"
+        },
+        {
+          "field": "perks[Delta Sky Club].description",
+          "current": "10 visits; year/reset and fare rule unspecified",
+          "corrected": "10 visits per Medallion Year (Feb 1–Jan 31); eligible same-day flight; excludes Delta Main Basic; unlimited after $75,000 eligible calendar-year spend.",
+          "sourceUrl": "https://www.delta.com/us/en/delta-sky-club/access",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "perks[Centurion Lounges].description",
+          "current": "Guest charges/$75,000 threshold only",
+          "corrected": "Add same-flight guest rule and departure-window restrictions; link current lounge policy.",
+          "sourceUrl": "https://www.thecenturionlounge.com/info/access/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[CLEAR Plus Credit].description",
+          "current": "$219 calendar-year reimbursement",
+          "corrected": "Auto-renewing CLEAR+ membership; taxes and fees excluded",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[lululemon Credit].description",
+          "current": "Eligible U.S. stores",
+          "corrected": "U.S. retail stores excluding outlets; lululemon.com; enrollment required",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "perks[Leaders Club Sterling]",
+          "current": "Absent",
+          "corrected": "Complimentary Leaders Club Sterling status, enrollment required",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[insurance/protection suite]",
+          "current": "Absent",
+          "corrected": "Add source-linked trip delay/cancellation, cell phone, purchase/return protection and extended warranty summaries after policy review.",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+          "confidence": "high",
+          "note": "omitted-current-benefit: Existence confirmed; detailed coverage not certified."
+        },
+        {
+          "field": "transferPartners[Aeromexico].ratio",
+          "current": "1:1",
+          "corrected": "1:1.6 (1,000 MR → 1,600 Aeromexico Rewards)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Cathay Pacific].ratio",
+          "current": "1:1",
+          "corrected": "5:4 (1,000 MR → 800 Asia Miles)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[El Al]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[TAP Portugal]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Aer Lingus]",
+          "current": "Absent",
+          "corrected": "Aer Lingus AerClub 1:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "transferPartners[The Leading Hotels of the World]",
+          "current": "Absent",
+          "corrected": "Leaders Club 4:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        }
+      ]
+    },
+    {
+      "id": "capital-one-venture-x",
+      "findings": [
+        {
+          "field": "transferPartners",
+          "current": "Emirates/Japan Airlines/Accor 1:1; Qatar/JetBlue/I Prefer absent",
+          "corrected": "Emirates and JAL 2:1.5; Accor 2:1; add Qatar 1:1, JetBlue 5:3 and I Prefer 1:2. Other 16 listed ratios match the issuer table.",
+          "sourceUrl": "https://www.capitalone.com/learn-grow/money-management/venture-miles-transfer-partnerships/",
+          "confidence": "high",
+          "note": "ERROR + OMISSION. Minimum transfer 1,000 miles; matching names; Choice transfers require a US Choice account."
+        },
+        {
+          "field": "earning.categories",
+          "current": "No Capital One Entertainment entry",
+          "corrected": "5 X eligible Capital One Entertainment purchases",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/benefits/entertainment/",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.hertz",
+          "current": "President's Circle status without enrollment instructions",
+          "corrected": "Enrollment through Capital One benefits link required",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/dining-and-entertainment",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.insurance",
+          "current": "Primary CDW; trip cancellation 2,000/person; cell 800/claim",
+          "corrected": "CDW requires full payment/declining rental waiver; cancellation covers eligible common-carrier tickets and named reasons; cell 50 deductible,2 claims/12 months,1,600 aggregate and prior monthly bill payment",
+          "sourceUrl": "https://ecm.capitalone.com/WCM/card/benefits-guide/visa-benefits-guides/visa-infinite-english.pdf",
+          "confidence": "high",
+          "note": "OMISSION. Existing headline amounts are supported; restrictions materially limit coverage."
+        },
+        {
+          "field": "perks.hotel-collections",
+          "current": "Absent",
+          "corrected": "Eligible Premier Collection bookings include 100 experience credit; Lifestyle 50 per stay, subject to property terms",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/venture-x/",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.lounge-access",
+          "current": "75,000 annual spend; guests 45 adult/25 child; AU 125",
+          "corrected": "Specify calendar-year spend; under 2 free; PP 35/guest remains payable even after 75 K. Authorized-user lounge access is opt-in 125/year.",
+          "sourceUrl": "https://capitalonetravel.com/airport-lounges/lounge-access-guide",
+          "confidence": "high",
+          "note": "CLARIFICATION. Core personal-card lounge corrections already in data are supported."
+        }
+      ]
+    },
+    {
+      "id": "chase-sapphire-preferred",
+      "findings": [
+        {
+          "kind": "confirmed-wrong",
+          "field": "perks.Trip Cancellation Insurance",
+          "current": "Up to $5,000/person",
+          "corrected": "Up to $10,000 per covered traveler and $20,000 per trip for covered prepaid, nonrefundable expenses.",
+          "sourceUrl": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "perks.Primary Car Rental Insurance",
+          "current": "Primary worldwide without limit",
+          "corrected": "Advertised primary coverage up to $60,000 for qualifying vehicles with MSRP of $125,000 or less. The public page says US coverage is secondary for New York residents.",
+          "sourceUrl": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "perks.Trip Delay; evacuation",
+          "current": "After 12h r per ticket; evacuation 100k generic",
+          "corrected": "Trip delay: more than 12 hours or an overnight stay, up to $500 per covered traveler. Emergency evacuation: up to $100,000 under covered conditions, on an eligible trip at least 100 miles from home.",
+          "sourceUrl": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+          "confidence": "high",
+          "note": "The stated delay benefit is per covered traveler, not per ticket."
+        },
+        {
+          "kind": "omission",
+          "field": "credits.DoorDash.expiration",
+          "current": "No end date",
+          "corrected": "Monthly nonrestaurant promo ends 12/31/2027; membership activation required by that date.",
+          "sourceUrl": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "transferPartners.Emirates",
+          "current": "Emirates Skywards listed as available",
+          "corrected": "Remove from current direct Chase transfer list; neither the current Chase partner list nor current Sapphire Preferred product includes Emirates.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+          "confidence": "high",
+          "note": "Do not infer an exact historical termination date from the current list."
+        },
+        {
+          "kind": "omission",
+          "field": "transferPartners.Wyndham",
+          "current": "Not listed",
+          "corrected": "Add Wyndham Rewards as an available direct partner.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "amex-gold",
+      "findings": [
+        {
+          "field": "earning.categories[Restaurants].description",
+          "current": "Worldwide including takeout; uncapped",
+          "corrected": "4X up to $50,000/calendar year, then 1X",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "earning.categories[AmexTravel prepaid hotels]",
+          "current": "Absent",
+          "corrected": "5X prepaid hotels through AmexTravel.com or Amex Travel App",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "earning.categories[AmexTravel cars/cruises]",
+          "current": "Absent",
+          "corrected": "2X prepaid car rentals via AmexTravel/App and cruises booked and paid via AmexTravel.com",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[Resy]",
+          "current": "Absent",
+          "corrected": "$100/calendar year: $50 Jan–Jun and $50 Jul–Dec; qualifying U.S. Resy restaurants; enrollment",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[Dining Credit].description",
+          "current": "Select restaurants",
+          "corrected": "Enrollment; current partners include Grubhub/Seamless, Buffalo Wild Wings, Five Guys, Cheesecake Factory and Wonder.",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Dunkin' Credit].description",
+          "current": "$7/month at Dunkin'",
+          "corrected": "Enrollment and U.S. locations required",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Uber Credit].description",
+          "current": "$10/month Uber Eats/rides",
+          "corrected": "Add Gold to Uber; U.S. use; select an Amex card for payment",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "perks[Return Protection]",
+          "current": "90 days, $300/item",
+          "corrected": "Do not publish as confirmed: standard Gold absent from current return-protection eligible-card list.",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/features-benefits/policies/return-protection-terms.html",
+          "confidence": "medium",
+          "note": "unsupported: Directory tells unlisted cardholders to call to verify; absence alone is not proof that every legacy account lacks coverage."
+        },
+        {
+          "field": "perks[Purchase Protection].description",
+          "current": "$10,000 per occurrence",
+          "corrected": "$10,000 per covered purchase; $50,000/calendar year; 90 days; exclusions apply",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "perks[Hertz/The Hotel Collection]",
+          "current": "Absent",
+          "corrected": "Hertz Five Star (enroll); THC $100 eligible property credit on 2+ night AmexTravel stays",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "transferPartners[Aeromexico].ratio",
+          "current": "1:1",
+          "corrected": "1:1.6 (1,000 MR → 1,600 Aeromexico Rewards)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Cathay Pacific].ratio",
+          "current": "1:1",
+          "corrected": "5:4 (1,000 MR → 800 Asia Miles)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[El Al]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[TAP Portugal]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Aer Lingus]",
+          "current": "Absent",
+          "corrected": "Aer Lingus AerClub 1:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "transferPartners[The Leading Hotels of the World]",
+          "current": "Absent",
+          "corrected": "Leaders Club 4:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        }
+      ]
+    },
+    {
+      "id": "citi-double-cash",
+      "findings": [
+        {
+          "field": "perks.0-intro-apr",
+          "current": "18 months BT without eligibility window/fee",
+          "corrected": "BT must complete within 4 months; current intro fee 3% minimum 5, then 5% minimum 5",
+          "sourceUrl": "https://www.citi.com/credit-cards/balance-transfer/citi-double-cash-card-balance-transfer",
+          "confidence": "high",
+          "note": "OMISSION. Intro applies to BT; purchases can accrue interest when carrying transfer balances."
+        },
+        {
+          "field": "transferPartners",
+          "current": "Empty",
+          "corrected": "Direct transfer capability exists: Accor 1000:350 and I Prefer 1000:1400 for Double Cash are explicitly confirmed; additional partners/ratios require current account table",
+          "sourceUrl": "https://iprefer.com/partners/transfer-points",
+          "confidence": "high",
+          "note": "OMISSION. Accor partner source confirms 1000:350. Do not equate all ThankYou tiers."
+        },
+        {
+          "field": "perks.extended-warranty",
+          "current": "Absent",
+          "corrected": "Extended warranty advertised; detailed limits require guide",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-double-cash-credit-card",
+          "confidence": "high",
+          "note": "OMISSION."
+        }
+      ]
+    },
+    {
+      "id": "chase-freedom-unlimited",
+      "findings": [
+        {
+          "kind": "confirmed-wrong",
+          "field": "transferPartners.access",
+          "current": "Full Ultimate Rewards partner list attached with no prerequisite",
+          "corrected": "No standalone direct airline/hotel transfers. Eligible points must first be combined into an eligible transfer-enabled Chase account; display that prerequisite.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+          "confidence": "high",
+          "note": "The pooled route is conditional; it is not an intrinsic benefit of this no-fee card. A conditional list also needs the current partner list, without Emirates and with Wyndham."
+        },
+        {
+          "kind": "omission",
+          "field": "earning.Lyft; credits.DoorDash",
+          "current": "Absent",
+          "corrected": "2% total on eligible Lyft purchases through September 30, 2027. Six months of DashPass with activation by December 31, 2027; activated members receive a $10 quarterly nonrestaurant promotion through that date.",
+          "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "perks.0% Intro APR",
+          "current": "Purchases only",
+          "corrected": "Current 15-month introductory period also covers balance transfers; fees and post-intro APR apply.",
+          "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "perks.Purchase Protection",
+          "current": "120 days universally",
+          "corrected": "Generally 120 days, but 90 days for New York residents; public advertised limit of $500 per item. Link the applicable guide.",
+          "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "chase-freedom-flex",
+      "findings": [
+        {
+          "kind": "confirmed-wrong",
+          "field": "transferPartners.access",
+          "current": "Full Ultimate Rewards partner list attached with no prerequisite",
+          "corrected": "No standalone direct airline/hotel transfers. Eligible points must first be combined into an eligible transfer-enabled Chase account; display that prerequisite.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+          "confidence": "high",
+          "note": "The pooled route is conditional; it is not an intrinsic benefit of this no-fee card. A conditional list also needs the current partner list, without Emirates and with Wyndham."
+        },
+        {
+          "kind": "omission",
+          "field": "earning.Lyft; credits.DoorDash",
+          "current": "Absent",
+          "corrected": "2% total on eligible Lyft purchases through September 30, 2027. Six months of DashPass with activation by December 31, 2027; activated members receive a $10 quarterly nonrestaurant promotion through that date.",
+          "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "perks.0% Intro APR",
+          "current": "Purchases only",
+          "corrected": "Current 15-month introductory period also covers balance transfers; fees and post-intro APR apply.",
+          "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "perks.Purchase Protection",
+          "current": "120 days universally",
+          "corrected": "Generally 120 days, but 90 days for New York residents; public advertised limit of $500 per item. Link the applicable guide.",
+          "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "perks.Cell Phone Protection",
+          "current": "Up to $800/claim without conditions",
+          "corrected": "$50 deductible; at most two paid claims and $1,000 total per 12 months. Charge the monthly cellular bill to the card; coverage supplements other insurance.",
+          "sourceUrl": "https://static.chasecdn.com/content/services/structured-document/document.en.pdf/card/benefits-center/product-benefits-guide-pdf/BGC11363_v2.pdf",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "amazon-prime-visa",
+      "findings": [
+        {
+          "kind": "omission",
+          "field": "earning.Audible",
+          "current": "5%category omits Audible.com",
+          "corrected": "The current public product includes Audible.com among eligible merchants earning 5% with Prime.",
+          "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/amazon-prime-rewards",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "perks.insurance; rewards expiry",
+          "current": "Rental is generic; baggage threshold omitted; 120 days unconditional; noexpiration unconditional",
+          "corrected": "US rental coverage is secondary. Baggage delay requires more than six hours; New York purchase coverage lasts 90 days. Nonexpiry depends on account conditions; warranty extension applies to eligible US warranties of three years or less.",
+          "sourceUrl": "https://creditcards.chase.com/cash-back-credit-cards/amazon-prime-rewards",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "discover-it-cash-back",
+      "findings": [
+        {
+          "field": "perks.fico",
+          "current": "Score on statements",
+          "corrected": "Current page promotes CreditWise FICO8; statement delivery may depend on migration cohort.",
+          "sourceUrl": "https://www.discover.com/credit-cards/cash-back/it-card/",
+          "confidence": "medium",
+          "kind": "needs-verification",
+          "note": ""
+        },
+        {
+          "field": "issuer/application metadata",
+          "current": "Discover;applicationunknown",
+          "corrected": "Preserve Discover branding but record Capital One migration and working current product/application URL.",
+          "sourceUrl": "https://www.capitalone.com/updates/discover/card-faqs/",
+          "confidence": "high",
+          "kind": "metadata",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "wells-fargo-active-cash",
+      "findings": [
+        {
+          "field": "perks.cell-phone-protection",
+          "current": "Up to 600/claim",
+          "corrected": "600/claim,25 deductible, max 2 claims and 1,200 per 12 months; pay prior calendar month's wireless bill",
+          "sourceUrl": "https://www.wellsfargo.com/credit-cards/documents/active-cash-benefits/",
+          "confidence": "high",
+          "note": "OMISSION. Guide effectiveSep 15,2025."
+        },
+        {
+          "field": "perks.roadside-dispatch",
+          "current": "24/7 assistance",
+          "corrected": "Pay-per-use dispatch; service costs are cardholder responsibility",
+          "sourceUrl": "https://www.wellsfargo.com/credit-cards/documents/active-cash-benefits/",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.0-intro-apr",
+          "current": "12 months purchases/BT",
+          "corrected": "Balance transfers within 120 days qualify; transfer fee applies",
+          "sourceUrl": "https://creditcards.wellsfargo.com/active-cash-credit-card/",
+          "confidence": "high",
+          "note": "OMISSION of eligibility window."
+        },
+        {
+          "field": "perks.rental",
+          "current": "Absent",
+          "corrected": "Auto rental collision coverage in guide, generally secondary; payment and rental-waiver conditions apply",
+          "sourceUrl": "https://www.wellsfargo.com/credit-cards/documents/active-cash-benefits/",
+          "confidence": "high",
+          "note": "OMISSION."
+        }
+      ]
+    },
+    {
+      "id": "gemini-credit-card",
+      "findings": [
+        {
+          "field": "perks.mastercard-world",
+          "current": "World",
+          "corrected": "Current product lists World Elite.",
+          "sourceUrl": "https://www.gemini.com/credit-card",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "rewardCurrency",
+          "current": "cashback",
+          "corrected": "Represent crypto rewards distinctly; return at purchase differs from subsequent asset value.",
+          "sourceUrl": "https://www.gemini.com/credit-card",
+          "confidence": "high",
+          "kind": "data-model",
+          "note": ""
+        },
+        {
+          "field": "perks.instant-rewards",
+          "current": "All instantaneous",
+          "corrected": "Some excluded transactions pay when posted.",
+          "sourceUrl": "https://www.gemini.com/credit-card",
+          "confidence": "high",
+          "kind": "missing-condition",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "capital-one-venture",
+      "findings": [
+        {
+          "field": "transferPartners",
+          "current": "Emirates/Japan Airlines/Accor 1:1; Qatar/JetBlue/I Prefer absent",
+          "corrected": "Emirates and JAL 2:1.5; Accor 2:1; add Qatar 1:1, JetBlue 5:3 and I Prefer 1:2. Other 16 listed ratios match the issuer table.",
+          "sourceUrl": "https://www.capitalone.com/learn-grow/money-management/venture-miles-transfer-partnerships/",
+          "confidence": "high",
+          "note": "ERROR + OMISSION. Minimum transfer 1,000 miles; matching names; Choice transfers require a US Choice account."
+        },
+        {
+          "field": "credits.global-entry-tsa-precheck.amount",
+          "current": 100,
+          "corrected": 120,
+          "sourceUrl": "https://www.capitalone.com/help-center/credit-cards/tsa-precheck-global-entry-benefits/",
+          "confidence": "high",
+          "note": "ERROR. Once every four years."
+        },
+        {
+          "field": "earning.categories",
+          "current": "5 X Hotels/Rentals",
+          "corrected": "Include vacation rentals and rental cars explicitly; add 5 X Capital One Entertainment",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/benefits/entertainment/",
+          "confidence": "high",
+          "note": "OMISSION. Travel categories supported separately by product page."
+        },
+        {
+          "field": "perks.hertz-and-hotels",
+          "current": "Absent",
+          "corrected": "Hertz Five Star via enrollment and Lifestyle Collection 50 experience credit per eligible stay",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/venture/",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.travel-accident-insurance",
+          "current": "Up to 250,000",
+          "corrected": "Retain as unverified until the applicable account/network guide is matched",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/benefits-guide/",
+          "confidence": "medium",
+          "note": "UNSUPPORTED amount for all Venture accounts. Benefits depend on account network/tier; directory alone does not verify 250,000."
+        }
+      ]
+    },
+    {
+      "id": "wells-fargo-autograph-journey",
+      "findings": [
+        {
+          "field": "transferPartners.Choice",
+          "current": "1:1",
+          "corrected": "1:2",
+          "sourceUrl": "https://www.choicehotels.com/choice-privileges/redeem-points",
+          "confidence": "high",
+          "note": "ERROR."
+        },
+        {
+          "field": "transferPartners.missing-airlines",
+          "current": "OnlyAFKL, BA, AerLingus, Choice",
+          "corrected": "Add Avianca LifeMiles andIberia; issuer launch confirms partnership",
+          "sourceUrl": "https://newsroom.wf.com/news-releases/news-details/2024/Wells-Fargo-to-Launch-Autograph-Journey-Card-Designed-for-Frequent-Travelers/default.aspx",
+          "confidence": "high",
+          "note": "OMISSION. Generic Wells rules say 1:1 unless otherwise stated; verify current account table for full roster."
+        },
+        {
+          "field": "transferPartners.JetBlue",
+          "current": "Absent",
+          "corrected": "JetBlue 1:1",
+          "sourceUrl": "https://newsroom.wf.com/news-releases/news-details/2025/Wells-Fargo-Welcomes-JetBlue-as-Newest-Rewards-Points-Transfer-Partner/default.aspx",
+          "confidence": "high",
+          "note": "OMISSION. Points-based eligible Wells cards."
+        },
+        {
+          "field": "transferPartners.Virgin",
+          "current": "Absent",
+          "corrected": "Virgin Points 1:1",
+          "sourceUrl": "https://membersupport.red.virgin.com/hc/en-gb/articles/28636399421073-What-is-the-transfer-ratio-of-Wells-Fargo-Rewards-points-to-Virgin-Points",
+          "confidence": "high",
+          "note": "OMISSION. Virgin Red/Flying Club linkage governs use."
+        },
+        {
+          "field": "transferPartners.Wyndham",
+          "current": "Absent",
+          "corrected": "Wyndham 1:2, launchedApril 15,2026",
+          "sourceUrl": "https://newsroom.wf.com/news-releases/news-details/2026/Wells-Fargo-Welcomes-Wyndham-to-Rewards-Points-Transfer-Program/default.aspx",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.trip-cancellation",
+          "current": "15,000 eligibleprepaidtravel",
+          "corrected": "Up to 15,000 covered traveler/trip and 20,000/account per 12 months, limited to eligible charged expense",
+          "sourceUrl": "https://www.wellsfargo.com/credit-cards/documents/autograph-journey-visa-benefits/",
+          "confidence": "high",
+          "note": "OMISSION of aggregate cap."
+        },
+        {
+          "field": "perks.missing",
+          "current": "Onlycell/cancellation/noFX",
+          "corrected": "Guide also includestravelaccident 1 million, baggage 3,000/trip, rentalcollisioncoverage, roadside/assistance",
+          "sourceUrl": "https://www.wellsfargo.com/credit-cards/documents/autograph-journey-visa-benefits/",
+          "confidence": "high",
+          "note": "OMISSION. Rental generally secondary; roadside/assistance does not make third-party services free."
+        }
+      ]
+    },
+    {
+      "id": "world-of-hyatt",
+      "findings": [
+        {
+          "kind": "confirmed-wrong",
+          "field": "perks.Primary Car Rental Insurance",
+          "current": "Primary CDW",
+          "corrected": "Public product explicitly says US rental coverage is secondary to personal insurance.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "credits.Free Night Award; Bonus Free Night",
+          "current": "Both reset unknown",
+          "corrected": "The regular certificate is awarded at account anniversary; the extra category 1–4 certificate requires $15,000 of calendar-year purchases. Track certificate expiry separately.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "perks.elite nights; DoorDash credit",
+          "current": "Only 5 annual nights; DashPass 12 months",
+          "corrected": "Two additional qualifying nights per $5,000 spent. DashPass activation by December 31, 2027 also enables $10 quarterly nonrestaurant promotions through 2027.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "earning.Hyatt Hotels",
+          "current": "Multiplier 9 includes member 5",
+          "corrected": "Keep the card-only 4x rate separate from up-to-9x combined loyalty earnings, so the card’s incremental return is not overstated.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "marriott-bonvoy-boundless",
+      "findings": [
+        {
+          "kind": "omission",
+          "field": "transferPartners.list and United bonus",
+          "current": "Only United/Delta/AA 3:1",
+          "corrected": "Marriott has more than 35 airline partners. Label these as onward Bonvoy conversions. United adds 10,000 miles per 60,000 points transferred; the usual 5,000-mile bonus per 60,000 excludes American, Delta and Avianca.",
+          "sourceUrl": "https://www.marriott.com/loyalty/redeem/travel/points-to-miles.mi",
+          "confidence": "high",
+          "note": "Current ratios shown are not themselves false; partner coverage and bonus qualifications are incomplete."
+        },
+        {
+          "kind": "qualification",
+          "field": "earning.Marriott Hotels",
+          "current": "17x",
+          "corrected": "Separate card rate from loyalty base/status points; public combined total is up to 17x",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "earning.Grocery/Gas/Dining cap",
+          "current": "Each description says up to $6,000/year",
+          "corrected": "One shared $6,000 calendar-year cap across grocery, gas and dining, then 2x.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "credits.Free Night Award",
+          "current": "35k certificate reset unknown",
+          "corrected": "One certificate worth up to 35,000 points each account anniversary; expiry, top-up and eligible-property restrictions apply.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "perks.elite nights; DoorDash",
+          "current": "Only 15 annual elite nights",
+          "corrected": "One additional elite night per $5,000 spent; 12 months of DashPass and $10 quarterly nonrestaurant promotions after activation by December 31, 2027.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "credits.limited airline offer",
+          "current": "Absent",
+          "corrected": "Cohort promotion: $50 after $250 of direct airline spending in each eligible period. Existing eligible members by January 7, 2026 must activate; their periods are January–June and July–December 2026. Applicants June 4–December 31, 2026 enroll automatically; their periods are June 4–December 31, 2026 and January–June 2027.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
+          "confidence": "high",
+          "note": "Do not turn this into an evergreen 100/year credit or assume Jan 8–Jun 3 applicants qualify; source does not resolve that cohort."
+        }
+      ]
+    },
+    {
+      "id": "marriott-bonvoy-brilliant",
+      "findings": [
+        {
+          "field": "credits[Free Night Award].resetPeriod",
+          "current": "unknown",
+          "corrected": "anniversary; issued after renewal month",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-brilliant/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "perks[Cell Phone Protection].description",
+          "current": "$800/claim, 2 claims/12 months, $50 deductible",
+          "corrected": "Also requires previous month wireless bill on eligible card and covered line listed",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-brilliant/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "perks[Trip Delay Insurance].description",
+          "current": "$500/trip after >6 hours",
+          "corrected": "Covered reason and eligible fully paid roundtrip; maximum 2 claims/12 months",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-brilliant/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "transferPartners",
+          "current": "Only United, Delta and American, each 3:1",
+          "corrected": "The three ratios are correct, but label this as a selection or expand from Marriott’s full airline-transfer directory.",
+          "sourceUrl": "https://www.marriott.com/loyalty/redeem/travel/points-to-miles.mi",
+          "confidence": "high",
+          "note": "incomplete-list: This is transfer of earned Marriott points, not Membership Rewards. Program transfer bonuses and minimums need separate modeling."
+        }
+      ]
+    },
+    {
+      "id": "hilton-honors-surpass",
+      "findings": [
+        {
+          "field": "earning.categories[Restaurants].description",
+          "current": "Worldwide",
+          "corrected": "U.S. restaurants",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "earning.categories[U.S. online retail]",
+          "current": "Absent",
+          "corrected": "4X eligible U.S. online retail",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[Hilton credit]",
+          "current": "Absent",
+          "corrected": "$200/year, up to $50/calendar quarter on eligible direct Hilton-property purchases",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[Free Night Reward].resetPeriod",
+          "current": "unknown",
+          "corrected": "calendar ($15,000 eligible spend)",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "perks[Priority Pass Select]",
+          "current": "10 lounge visits/year",
+          "corrected": "Not supported as a current entitlement; remove pending account-specific evidence",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
+          "confidence": "high",
+          "note": "unsupported"
+        },
+        {
+          "field": "perks[National Executive / Diamond path]",
+          "current": "Absent",
+          "corrected": "National Emerald Club Executive (enroll); Diamond after $40,000/calendar year, through following year",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        }
+      ]
+    },
+    {
+      "id": "hilton-honors-aspire",
+      "findings": [
+        {
+          "field": "credits[Hilton Resort Credit].frequency",
+          "current": "$400 annual",
+          "corrected": "$200 semiannual, calendar halves; participating Hilton Resorts/direct eligible purchases",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "credits[Airline Fee Credit]",
+          "current": "$200 annual; selected airline incidentals",
+          "corrected": "Flight credit: $50/calendar quarter; airfare direct airline or AmexTravel, not selected-airline incidental allowance",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "credits[Free Night Reward].description",
+          "current": "On anniversary only",
+          "corrected": "First year and each renewal; anniversary reset",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[spend free nights]",
+          "current": "Absent",
+          "corrected": "Additional night at$30,000/calendar year and another at $60,000",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[CLEAR+]",
+          "current": "Absent",
+          "corrected": "Up to $219/calendar year; auto-renewing membership; no taxes/fees",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[property credit]",
+          "current": "Absent",
+          "corrected": "Up to $100 per qualifying 2+ night Waldorf Astoria/Conrad stay at required Aspire benefit rate",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Priority Pass Select]",
+          "current": "Unlimited visits plus 2 guests",
+          "corrected": "Not in current entitlement; remove pending account-specific evidence",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/",
+          "confidence": "high",
+          "note": "unsupported"
+        },
+        {
+          "field": "perks[National Executive]",
+          "current": "Absent",
+          "corrected": "Complimentary National Emerald Club Executive; enroll",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        }
+      ]
+    },
+    {
+      "id": "ihg-one-rewards-premier",
+      "findings": [
+        {
+          "kind": "omission",
+          "field": "credits.Instacart; DoorDash",
+          "current": "Absent",
+          "corrected": "Instacart: $10 monthly with active Instacart+ after activation; three free months, then paid auto-renewal. DashPass: 12 months plus a $10 quarterly nonrestaurant promotion. Promotions end December 31, 2027.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "credits.Global Entry/TSA PreCheck",
+          "current": "100 every 4 years",
+          "corrected": "Up to $120 every four years; NEXUS also qualifies.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "earning.IHG Hotels",
+          "current": "26x without breakdown",
+          "corrected": "The card earns 10x. Up to 26x total includes up to 10x IHG base points and 6x Platinum points on eligible stays.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "credits.Free Night Award",
+          "current": "40k topoff, reset unknown",
+          "corrected": "Account-anniversary certificate worth up to 40,000 points, with additional points permitted. Redeem and complete the stay within 12 months of issue.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "credits.United TravelBank; spending rewards",
+          "current": "Absent",
+          "corrected": "$50 TravelBank per year in $25 January/July deposits after one-time registration; $100 statement credit plus 10,000 points after $20,000 calendar-yearspend; Diamond after $40,000 calendar-yearspend through the following December 31.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "ihg-one-rewards-traveler",
+      "findings": [
+        {
+          "kind": "omission",
+          "field": "credits.Instacart; DoorDash",
+          "current": "Absent",
+          "corrected": "Instacart: $10 monthly with active Instacart+ after activation; three free months, then paid auto-renewal. DashPass: 12 months plus a $10 quarterly nonrestaurant promotion. Promotions end December 31, 2027.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/traveler",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "perks.spend rewards",
+          "current": "Absent",
+          "corrected": "10,000 bonus points after $10,000 of calendar-year purchases; Gold after $20,000 of calendar-year purchases, through the following December 31.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/traveler",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "delta-skymiles-gold",
+      "findings": [
+        {
+          "field": "perks[First Checked Bag Free]",
+          "current": "First bag only; companions not numerically limited",
+          "corrected": "First bag on eligible Delta flights; also second bag on domestic Delta flights. Detail reservation/passenger and baggage restrictions in linked terms.",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[TakeOff 15]",
+          "current": "Absent",
+          "corrected": "15% reduction in miles for eligible Delta award flights booked on delta.com/Fly Delta; excludes partner-operated flights and taxes/fees.",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[Rideshare]",
+          "current": "Absent",
+          "corrected": "After first card renewal: $10/month, $120/year; select U.S. providers; enroll",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[Delta Stays Credit].description",
+          "current": "Hotels/rentals via Delta.com",
+          "corrected": "Prepaid hotels/vacation rentals through Delta Stays; $100/calendar year",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Flight Credit].resetPeriod",
+          "current": "unknown",
+          "corrected": "calendar; $200 credit after $10,000 eligible yearly spend",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        }
+      ]
+    },
+    {
+      "id": "delta-skymiles-platinum",
+      "findings": [
+        {
+          "field": "perks[First Checked Bag Free]",
+          "current": "First bag only; companions not numerically limited",
+          "corrected": "First bag on eligible Delta flights; also second bag on domestic Delta flights. Detail reservation/passenger and baggage restrictions in linked terms.",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[TakeOff 15]",
+          "current": "Absent",
+          "corrected": "15% reduction in miles for eligible Delta award flights booked on delta.com/Fly Delta; excludes partner-operated flights and taxes/fees.",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Priority Boarding].description",
+          "current": "Main Cabin 1",
+          "corrected": "Zone 5",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "credits[Resy / Rideshare].description",
+          "current": "Monthly amounts without enrollment/location qualifications",
+          "corrected": "Enrollment required; eligible U.S. Resy/select U.S. rideshare providers",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Companion Certificate].description",
+          "current": "Main Cabin domestic/Caribbean",
+          "corrected": "After renewal; Delta Main on eligible domestic, Caribbean/Central American itineraries; taxes/fees $22–$250; excludes Delta Basic",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Companion Certificate].resetPeriod",
+          "current": "unknown",
+          "corrected": "anniversary/renewal",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Global Entry / TSA]",
+          "current": "Absent",
+          "corrected": "Global Entry $120 or TSA PreCheck up to $85; one credit per 4 years",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[MQD Headstart / Boost]",
+          "current": "Absent",
+          "corrected": "2,500 MQDs each qualification year; 1 MQD/$20 eligible card spend",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Hertz status]",
+          "current": "Absent",
+          "corrected": "Five Star; enrollment/linking required",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[Delta Stays]",
+          "current": "Absent",
+          "corrected": "$150/calendar year eligible prepaid Delta Stays",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        }
+      ]
+    },
+    {
+      "id": "delta-skymiles-reserve",
+      "findings": [
+        {
+          "field": "perks[First Checked Bag Free]",
+          "current": "First bag only; companions not numerically limited",
+          "corrected": "First bag on eligible Delta flights; also second bag on domestic Delta flights. Detail reservation/passenger and baggage restrictions in linked terms.",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[TakeOff 15]",
+          "current": "Absent",
+          "corrected": "15% reduction in miles for eligible Delta award flights booked on delta.com/Fly Delta; excludes partner-operated flights and taxes/fees.",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Priority Boarding].description",
+          "current": "Zone 1",
+          "corrected": "Zone 5",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "credits[Resy / Rideshare].description",
+          "current": "Monthly amounts without enrollment/location qualifications",
+          "corrected": "Enrollment required; eligible U.S. Resy/select U.S. rideshare providers",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Companion Certificate].description",
+          "current": "First Class domestic",
+          "corrected": "After renewal; Delta First, Comfort or Main on eligible domestic, Caribbean/Central American itineraries; taxes/fees $22–$250; excludes Delta Basic",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Companion Certificate].resetPeriod",
+          "current": "unknown",
+          "corrected": "anniversary/renewal",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Global Entry / TSA]",
+          "current": "Absent",
+          "corrected": "Global Entry $120 or TSA PreCheck up to $85; one credit per 4 years",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[MQD Headstart / Boost]",
+          "current": "Absent",
+          "corrected": "2,500 MQDs each qualification year; 1 MQD/$10 eligible card spend",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Hertz status]",
+          "current": "Absent",
+          "corrected": "President’s Circle; enrollment/linking required",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[Delta Stays Credit].amount",
+          "current": 150,
+          "corrected": 200,
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "perks[Delta Sky Club].description",
+          "current": "15/year; unlimited after $75,000 spend",
+          "corrected": "15 per Medallion Year (Feb 1–Jan 31); eligible fare/flight; 4 one-time guest passes; guest fees beyond passes",
+          "sourceUrl": "https://www.delta.com/us/en/delta-sky-club/access",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "perks[Centurion Lounge Access].description",
+          "current": "When flying Delta",
+          "corrected": "Eligible Delta flight booked with Reserve; departure window/guest fees apply",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        }
+      ]
+    },
+    {
+      "id": "united-explorer",
+      "findings": [
+        {
+          "kind": "qualification",
+          "field": "perks.baggage; boarding",
+          "current": "Brief unconditional descriptions",
+          "corrected": "Show same-reservation, ticket-payment and MileagePlus requirements on eligible United/United Express flights. Any included Club passes reset by anniversary and may be restricted by lounge capacity; Quest does not include such passes.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "earning.United Purchases",
+          "current": "7x total=5 member+2 card",
+          "corrected": "3x card earnings on United. Eligible flights earn up to 9x combined: 6x from United membership plus 3x from the card. Member earnings exclude some fare components; Basic Economy/base options differ.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "earning.Hotels",
+          "current": "2x hotel stays",
+          "corrected": "2x on hotel accommodations booked directly; intermediaries do not generally qualify.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "credits.United Travel Credit; Avis",
+          "current": "100 after 10k unknown period; 50 generic rental credit",
+          "corrected": "$100 TravelBank after $10,000 calendar-yearspend. Avis/Budget: $25 TravelBank for each of the first two rentals through cars.united.com each anniversary year. These are not unrestricted statement credits.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "credits; perks.spend benefits",
+          "current": "Missing hotel/rideshare/JSX/trusted-traveler/award/PQP",
+          "corrected": "United Hotels: $50 on each of the first two prepaid stays per anniversary year. Rideshare: $5 monthly, annual opt-in. JSX: $100 per anniversary year. Trusted traveler: $120 every four years. Also 10,000-mile award discount after $20,000 calendar-yearspend, and 1 PQP per $20 spent, up to 1,000 PQP per calendar year.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "annualFee.firstYear; perks.award savings",
+          "current": "150 ongoing only",
+          "corrected": "The public offer waives the first-year fee. Current cardholder award discounts start at 10%, with higher discounts for Premier members. The 25% rebate covers eligible inflight and Club premium-drink purchases.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+          "confidence": "high",
+          "note": "Fee waiver is offer/cohort-specific; do not overwrite the ongoing 150 fee."
+        }
+      ]
+    },
+    {
+      "id": "united-club-infinite",
+      "findings": [
+        {
+          "kind": "qualification",
+          "field": "perks.baggage; boarding",
+          "current": "Brief unconditional descriptions",
+          "corrected": "Show same-reservation, ticket-payment and MileagePlus requirements on eligible United/United Express flights. Any included Club passes reset by anniversary and may be restricted by lounge capacity; Quest does not include such passes.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "earning.United Purchases",
+          "current": "4x",
+          "corrected": "5x card earnings on United; eligible flights earn up to 11x combined (6x membership plus 5x card). Add 5x prepaid Renowned Hotels. Other travel/dining remain 2x; other purchases 1x.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "perks.United Club Membership",
+          "current": "Fullmembership+2 guests",
+          "corrected": "Standard membership permits one adult guest plus dependent children under 18, and excludes Star Alliance lounges. All Access requires Premier Gold or higher, or $50,000 calendar-yearspend; it permits two adult guests or eligible family and adds Star Alliance access.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+          "confidence": "high",
+          "note": "A major access restriction, not a cosmetic description change."
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "credits.Instacart",
+          "current": "20monthlysinglecredit+free membership",
+          "corrected": "Two separate $10 credits per month, with only one credit per order. Activation and active Instacart+ membership are required. Complimentary membership is time-limited, then renews for a fee unless cancelled.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "credits.Rideshare; Renowned",
+          "current": "12/month+$18 December; unknown Renowned period",
+          "corrected": "Rideshare: $12 each month January–November and $18 total in December, with annual opt-in. Renowned Hotels: $200 on qualifying prepaid stays per account anniversary year.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "credits; status; award benefits",
+          "current": "No Avis/JSX/trusted-traveler/PQP",
+          "corrected": "Avis/Budget: $50 TravelBank for each of the first two qualifying rentals per anniversary year. JSX: $200 per anniversary year. Trusted traveler: $120 every four years. Annual 1,500 bonus PQP plus 1 PQP per $15 spent, up to 28,000 spending PQP per calendar year. A 10,000-mile award discount after each $20,000 spend, at most twice per calendar year.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "name",
+          "current": "United Club Infinite Card",
+          "corrected": "Current marketing name is United Club Card; retain stable legacy ID and aliases.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "united-quest",
+      "findings": [
+        {
+          "kind": "qualification",
+          "field": "perks.baggage; boarding",
+          "current": "Brief unconditional descriptions",
+          "corrected": "Show same-reservation, ticket-payment and MileagePlus requirements on eligible United/United Express flights. Any included Club passes reset by anniversary and may be restricted by lounge capacity; Quest does not include such passes.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "earning.United Flights; United Purchases",
+          "current": "8x flights/3x other United",
+          "corrected": "4x card earnings on United; eligible flights earn up to 10x combined (6x membership plus 4x card). The 5x prepaid Renowned Hotels, 2x dining/select streaming/travel, and 1x base rates match.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "credits.United TravelBank Credit",
+          "current": "Use on any Unitedpurchase; reset unknown",
+          "corrected": "$200 TravelBank at opening and each anniversary, usable for eligible United/United Express flight purchases, not any United charge. The deposit expires after 12 months.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "credits.Rideshare Credit",
+          "current": "100 annualpool",
+          "corrected": "$8 monthly January–November and $12 in December, with annual opt-in. Track monthly periods and a December override.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "credits.Instacart; CarRental; JSX; Renowned",
+          "current": "15 single monthly pool; 80 generic rental; unknown annual dates",
+          "corrected": "Instacart: separate $10 and $5 monthly credits, one credit per order. Rentals: $40 TravelBank for each of the first two Avis/Budget rentals through cars.united.com per anniversary year. JSX $150 and qualifying prepaid Renowned Hotels $150 also reset by anniversary.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "perks.awards; status; bagcompanion",
+          "current": "Only self bags; no award/PQP benefits",
+          "corrected": "Two free checked bags also apply to one companion. A 10,000-mile anniversary award discount plus another after $20,000 calendar-yearspend. Annual 1,000 bonus PQP plus 1 PQP per $20, up to 18,000 spending PQP per calendar year. Two global Economy Plus upgrades after $40,000 calendar-yearspend.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "southwest-priority",
+      "findings": [
+        {
+          "kind": "omission",
+          "field": "perks.Tier Qualifying Points; Companion Pass boost",
+          "current": "Absent",
+          "corrected": "2,500 TQP per $5,000 spent annually; 10,000 Companion Pass qualifying points per year, with one boost per member. The TQP spending year ends at the December statement, rather than exactly December 31.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/southwest/priority",
+          "confidence": "high",
+          "note": "Companion Pass qualifying points are neither cash nor redeemable bonus points; exclude the boost from annual cash value."
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "earning.Rapid Rewards Hotels/Rentals",
+          "current": "3x",
+          "corrected": "The current program lists 4x Southwest, 2x gas/restaurants, and 1x other purchases; no 3x hotel/rental category. Do not mix Rapid Rewards booking bonuses with card earnings.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/southwest/priority",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "unsupported",
+          "field": "credits.Southwest Travel Credit; Upgraded Boardings",
+          "current": "75 annual credit+4 A 1–A 15 upgrades",
+          "corrected": "Retire these from the current offer: neither appears in current 2026 terms, and A1–A15 open-seating upgrades do not match the assigned-seat service. Preserve historical benefit usage.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/southwest/priority",
+          "confidence": "high",
+          "note": "Current benefit claim is unsupported. The exact historical retirement date was not established from a surviving official transition notice; preserve historical usage."
+        },
+        {
+          "kind": "qualification",
+          "field": "credits.Anniversary Points; perks.seats/bags/partners",
+          "current": "7500 reset unknown; seatsvague",
+          "corrected": "7,500 points at account anniversary. Preferred seats at booking and Extra Legroom upgrades within 48 hours, when available. Bag and Group 5 benefits extend to eight companions. DashPass/Instacart require activation; Instacart becomes paid after three months, and promotions end in 2027.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/southwest/priority",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "citi-strata-premier",
+      "findings": [
+        {
+          "field": "credits.annual-hotel-benefit",
+          "current": "100 annual on 500+ stay",
+          "corrected": "Once each calendar year, single hotel stay 500 excludingtaxes/fees booked via Citi Travel or designated phone; applied at booking",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-strata-premier-credit-card",
+          "confidence": "high",
+          "note": "OMISSION of reset/qualification."
+        },
+        {
+          "field": "transferPartners.Choice",
+          "current": "1:1",
+          "corrected": "Current US Choice headline: up to 1,500 Choice points per 1,000 Citi points; exact tier ratio needs confirmation",
+          "sourceUrl": "https://www.choicehotels.com/choice-privileges/redeem-points",
+          "confidence": "medium",
+          "note": "UNSUPPORTED current 1:1. Choice page contradicts itself: current headline up to 1:1.5, old footnote still Premier/Prestige 1:2. Do not replace with stale 1:2."
+        },
+        {
+          "field": "transferPartners.Emirates",
+          "current": "1:1",
+          "corrected": "Do not mark 1:1 verified; partner page publishes starting 1 point=0.56 Skywards but does not expose Premier/Elite tier",
+          "sourceUrl": "https://www.emirates.com/us/english/skywards/partners/citi-thankyou-rewards/",
+          "confidence": "medium",
+          "note": "UNSUPPORTED card-tier rate. Full card-specific ThankYou table was inaccessible."
+        },
+        {
+          "field": "transferPartners.hotel-omissions",
+          "current": "No Accor, I Prefer, or Leading Hotels of the World",
+          "corrected": "Add Accor 2:1; I Prefer 1:2 for Premier/Elite; LHW partnership confirmed but card-tier ratio not certified",
+          "sourceUrl": "https://iprefer.com/partners/transfer-points",
+          "confidence": "high",
+          "note": "OMISSION. Accor official table and Citi product pages separately support Accor rate/LHW presence; minimum 1000 advertised by Citi."
+        },
+        {
+          "field": "perks.insurance",
+          "current": "Trip cancellation, trip delay 500, baggage",
+          "corrected": "Current comparison confirms enhanced cancellation/interruption, delay, luggage, MasterRental, warranty, purchase assurance; add missing categories but do not certify 500 delay cap without current guide",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-strata-all-cards",
+          "confidence": "medium",
+          "note": "OMISSION + UNSUPPORTED numeric delay limit. Older Premier guide link redirected to error; updated wording suggests current guide is required."
+        },
+        {
+          "field": "perks.hotel-collection",
+          "current": "Absent",
+          "corrected": "The Reserve eligible bookings advertise breakfast 2 and 100 experience credit; property terms apply",
+          "sourceUrl": "https://www.citi.com/credit-cards/credit-card-rewards/citi-strata-premier-travel-benefits",
+          "confidence": "high",
+          "note": "OMISSION."
+        }
+      ]
+    },
+    {
+      "id": "citi-strata-elite",
+      "findings": [
+        {
+          "field": "transferPartners.Choice",
+          "current": "1:1",
+          "corrected": "Current US Choice headline: up to 1,500 Choice points per 1,000 Citi points; exact tier ratio needs confirmation",
+          "sourceUrl": "https://www.choicehotels.com/choice-privileges/redeem-points",
+          "confidence": "medium",
+          "note": "UNSUPPORTED current 1:1. Choice page contradicts itself: current headline up to 1:1.5, old footnote still Premier/Prestige 1:2. Do not replace with stale 1:2."
+        },
+        {
+          "field": "transferPartners.Emirates",
+          "current": "1:1",
+          "corrected": "Do not mark 1:1 verified; partner page publishes starting 1 point=0.56 Skywards but does not expose Premier/Elite tier",
+          "sourceUrl": "https://www.emirates.com/us/english/skywards/partners/citi-thankyou-rewards/",
+          "confidence": "medium",
+          "note": "UNSUPPORTED card-tier rate. Full card-specific ThankYou table was inaccessible."
+        },
+        {
+          "field": "transferPartners.hotel-omissions",
+          "current": "No Accor, I Prefer, or Leading Hotels of the World",
+          "corrected": "Add Accor 2:1; I Prefer 1:2 for Premier/Elite; LHW partnership confirmed but card-tier ratio not certified",
+          "sourceUrl": "https://iprefer.com/partners/transfer-points",
+          "confidence": "high",
+          "note": "OMISSION. Accor official table and Citi product pages separately support Accor rate/LHW presence; minimum 1000 advertised by Citi."
+        },
+        {
+          "field": "credits.reset-and-enrollment",
+          "current": "Annual labels",
+          "corrected": "Hotel 300 calendar,2+nights; Splurge 200 calendar, select 2 eligible brands before purchase; Blacklane 100 Jan–Jun+100 Jul–Dec",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-strata-elite-credit-card",
+          "confidence": "high",
+          "note": "CLARIFICATION. Existing amounts match."
+        },
+        {
+          "field": "perks.travel-protection",
+          "current": "Cancellation vague;delay 500 vague",
+          "corrected": "Cancellation 5,000/trip and 10,000/account 12 mo; delayover 6 h 500/trip, max 2 claims/12 mo; MasterRental secondary in residence country",
+          "sourceUrl": "https://www.cardbenefits.citi.com/-/media/CPP/Files/LegalDocs/SOAPI/PID920_CITI_STRATA_ELITE_CRE388_GTPB_0625_TAGGED.ashx",
+          "confidence": "high",
+          "note": "OMISSION. Covered reasons and paid-trip conditions still apply."
+        },
+        {
+          "field": "perks.additional-protections",
+          "current": "Missing rental, luggage, purchase, warranty",
+          "corrected": "Current guide includes MasterRental, luggage, purchase assurance and extended warranty",
+          "sourceUrl": "https://www.cardbenefits.citi.com/-/media/CPP/Files/LegalDocs/SOAPI/PID920_CITI_STRATA_ELITE_CRE388_GTPB_0625_TAGGED.ashx",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "credits.banking-relationship",
+          "current": "Absent",
+          "corrected": "Qualifying Citigold 145 annual relationship credit; Private Client 595 first year then 145, subject to relationship/account criteria",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-strata-elite-credit-card",
+          "confidence": "high",
+          "note": "OMISSION. Conditional credit must not lower fee universally."
+        }
+      ]
+    },
+    {
+      "id": "us-bank-altitude-reserve",
+      "findings": [
+        {
+          "field": "earning.mobile-wallet-cap",
+          "current": "5,000/month",
+          "corrected": "5,000 perbillingcycle, then 1 X",
+          "sourceUrl": "https://rewards.usbank.com/benefits/card/AltitudeReserveBenefits/program-rules",
+          "confidence": "high",
+          "note": "ERROR in reset basis."
+        },
+        {
+          "field": "earning.portal-categories",
+          "current": "Hotels/cars 10;flights 5",
+          "corrected": "Must be prepaid Travel Center bookings",
+          "sourceUrl": "https://rewards.usbank.com/benefits/card/AltitudeReserveBenefits/program-rules",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "credits.global-entry-tsa-precheck.amount",
+          "current": 100,
+          "corrected": 120,
+          "sourceUrl": "https://rewards.usbank.com/benefits/card/AltitudeReserveBenefits",
+          "confidence": "medium",
+          "note": "ERROR. Official indexed benefit listing confirms 120; detailed cadence/current cohort still requires guide."
+        },
+        {
+          "field": "applicationStatus",
+          "current": "unknown",
+          "corrected": "No current new-application path found; product page redirects to issuer card directory",
+          "sourceUrl": "https://www.usbank.com/credit-cards/altitude-reserve-visa-infinite-credit-card.html",
+          "confidence": "medium",
+          "note": "INFERENCE: treat as unavailable for new online applications, retain existing-holder card; do not call all accounts discontinued."
+        },
+        {
+          "field": "transferPartners",
+          "current": "AFKL, BA, Emirates, Hyatt all 1:1",
+          "corrected": "Mark all four names/ratios unsupported pending current bank table",
+          "sourceUrl": "https://rewards.usbank.com/benefits/card/AltitudeReserveBenefits/program-rules",
+          "confidence": "medium",
+          "note": "UNSUPPORTED. Program rules mention external transfers, so do not claim the program has no partners solely from historical knowledge."
+        },
+        {
+          "field": "perks.priority-pass",
+          "current": "8 visits+guests",
+          "corrected": "Eight complimentary visits total are advertised; guest counting and membership-year terms require guide",
+          "sourceUrl": "https://rewards.usbank.com/benefits/card/AltitudeReserveBenefits",
+          "confidence": "medium",
+          "note": "UNSUPPORTED implication of eight entries plus unlimited/free extra guests."
+        }
+      ]
+    },
+    {
+      "id": "amex-green",
+      "findings": [
+        {
+          "field": "name",
+          "current": "American Express Green",
+          "corrected": "American Express Classic Green",
+          "sourceUrl": "https://www.americanexpress.com/en-us/account/get-started/green/set-up-and-payments",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "credits[CLEAR Plus Credit].amount",
+          "current": 209,
+          "corrected": 219,
+          "sourceUrl": "https://global.americanexpress.com/card-benefits/detail/hundred-clear-credit/amex-green",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "credits[CLEAR Plus Credit].resetPeriod",
+          "current": "unknown",
+          "corrected": "calendar; auto-renewing annual CLEAR+ membership; taxes/fees excluded",
+          "sourceUrl": "https://global.americanexpress.com/card-benefits/detail/hundred-clear-credit/amex-green",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "applicationStatus",
+          "current": "unknown",
+          "corrected": "Public new applications currently unavailable; preserve existing-card support",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/green/",
+          "confidence": "medium",
+          "note": "availability-change: Observed redirect plus existing-card Classic Green onboarding; not proof of permanent discontinuation."
+        },
+        {
+          "field": "transferPartners[Aeromexico].ratio",
+          "current": "1:1",
+          "corrected": "1:1.6 (1,000 MR → 1,600 Aeromexico Rewards)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Cathay Pacific].ratio",
+          "current": "1:1",
+          "corrected": "5:4 (1,000 MR → 800 Asia Miles)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[El Al]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[TAP Portugal]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Aer Lingus]",
+          "current": "Absent",
+          "corrected": "Aer Lingus AerClub 1:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "transferPartners[The Leading Hotels of the World]",
+          "current": "Absent",
+          "corrected": "Leaders Club 4:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        }
+      ]
+    },
+    {
+      "id": "atmos-rewards-summit",
+      "findings": [
+        {
+          "field": "perks.free-checked-bag",
+          "current": "7 guests",
+          "corrected": "Cardholder plus 6 companions; eligible paid-with-card itinerary.",
+          "sourceUrl": "https://news.alaskaair.com/loyalty/alaska-airlines-and-bank-of-america-present-a-new-premium-credit-card/",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "transferPartners",
+          "current": "Alaska/Hawaiian/oneworld and generic Multiple Hotels",
+          "corrected": "Separate award redemption from outbound transfers; replace placeholders with exact eligible hotel programs/ratios.",
+          "sourceUrl": "https://news.alaskaair.com/loyalty/alaska-airlines-and-bank-of-america-present-a-new-premium-credit-card/",
+          "confidence": "high",
+          "kind": "data-model",
+          "note": ""
+        },
+        {
+          "field": "credits/perks",
+          "current": "Missing",
+          "corrected": "Add $120 airport-security credit/four years; 100k companion award after $60k anniversary-year spend; eligible-bank 10% bonus.",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+          "confidence": "high",
+          "kind": "omission",
+          "note": ""
+        },
+        {
+          "field": "credits.delay-voucher",
+          "current": "Generic $50 per delay",
+          "corrected": "Qualifying Alaska delay/cancellation voucher with a short redemption window; current bank page says departure delay of 2 hours or more. Exact eligibility/48-hour expiry requires reconciliation with current terms.",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+          "confidence": "medium",
+          "kind": "missing-condition",
+          "note": "2025 launch text said more than2hours; do not certify edge case from older release."
+        }
+      ]
+    },
+    {
+      "id": "bilt-blue",
+      "findings": [
+        {
+          "field": "issuer",
+          "current": "Cardless",
+          "corrected": "Column N.A. issues Bilt cards; Cardless services them.",
+          "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "earning.housing",
+          "current": "1x;3%fee option",
+          "corrected": "Replace with Housing-only tiers up to1.25x or Flexible Bilt Cash redemption up to1x; neither has a Bilt housing transaction fee.",
+          "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "transferPartners.Hilton",
+          "current": "1:2",
+          "corrected": "1:1",
+          "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "transferPartners",
+          "current": "Missing Wyndham/VirginRed/IPrefer",
+          "corrected": "Add Wyndham1:1,VirginRed1:1,IPrefer1:2; rename Alaska toAtmos.",
+          "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+          "confidence": "high",
+          "kind": "omission",
+          "note": "I Prefer June2026 launch separately sourced. Sources list both."
+        },
+        {
+          "field": "earning.dining/travel",
+          "current": "3x general dining;2x general travel",
+          "corrected": "1x ordinary purchases. Portal hotels3x,flights2x; linked Lyft3x.",
+          "sourceUrl": "https://www.bilt.com/card",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "perks.bilt-cash",
+          "current": "Unconditional4%",
+          "corrected": "4% Bilt Cash only with Flexible option.",
+          "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+          "confidence": "high",
+          "kind": "missing-condition",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "bilt-obsidian",
+      "findings": [
+        {
+          "field": "issuer",
+          "current": "Cardless",
+          "corrected": "Column N.A. issues Bilt cards; Cardless services them.",
+          "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "earning.housing",
+          "current": "1x;3%fee option",
+          "corrected": "Replace with Housing-only tiers up to1.25x or Flexible Bilt Cash redemption up to1x; neither has a Bilt housing transaction fee.",
+          "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "transferPartners.Hilton",
+          "current": "1:2",
+          "corrected": "1:1",
+          "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "transferPartners",
+          "current": "Missing Wyndham/VirginRed/IPrefer",
+          "corrected": "Add Wyndham1:1,VirginRed1:1,IPrefer1:2; rename Alaska toAtmos.",
+          "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+          "confidence": "high",
+          "kind": "omission",
+          "note": "I Prefer June2026 launch separately sourced. Sources list both."
+        },
+        {
+          "field": "earning.categories",
+          "current": "3xdining only",
+          "corrected": "Choose dining OR grocery3x; grocery capped25k/year. Portal hotels4x,flights3x.",
+          "sourceUrl": "https://www.bilt.com/card",
+          "confidence": "high",
+          "kind": "omission",
+          "note": ""
+        },
+        {
+          "field": "perks.lyft-credits",
+          "current": "Unspecified ride credits",
+          "corrected": "Linked Lyft earns3x; any Bilt Cash redemption is conditional, not a guaranteed separate card credit.",
+          "sourceUrl": "https://www.bilt.com/card",
+          "confidence": "high",
+          "kind": "unsupported-claim",
+          "note": ""
+        },
+        {
+          "field": "perks.bilt-cash",
+          "current": "Unconditional4%",
+          "corrected": "Requires Flexible option.",
+          "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+          "confidence": "high",
+          "kind": "missing-condition",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "bilt-palladium",
+      "findings": [
+        {
+          "field": "issuer",
+          "current": "Cardless",
+          "corrected": "Column N.A. issues Bilt cards; Cardless services them.",
+          "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "earning.housing",
+          "current": "1x;3%fee option",
+          "corrected": "Replace with Housing-only tiers up to1.25x or Flexible Bilt Cash redemption up to1x; neither has a Bilt housing transaction fee.",
+          "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "transferPartners.Hilton",
+          "current": "1:2",
+          "corrected": "1:1",
+          "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "transferPartners",
+          "current": "Missing Wyndham/VirginRed/IPrefer",
+          "corrected": "Add Wyndham1:1,VirginRed1:1,IPrefer1:2; rename Alaska toAtmos.",
+          "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+          "confidence": "high",
+          "kind": "omission",
+          "note": "I Prefer June2026 launch separately sourced. Sources list both."
+        },
+        {
+          "field": "perks.gold-status",
+          "current": "Automatic Gold",
+          "corrected": "Welcome status requires4k eligible spend/90days; finite status duration.",
+          "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "credits/perks",
+          "current": "Missing annual Bilt Cash/PriorityPass",
+          "corrected": "Add200 annual Bilt Cash and PriorityPass; portal hotels4x,flights3x,linked Lyft4x.",
+          "sourceUrl": "https://www.bilt.com/card",
+          "confidence": "high",
+          "kind": "omission",
+          "note": ""
+        },
+        {
+          "field": "perks.dining/lyft-credits",
+          "current": "Guaranteed-sounding unnamed credits",
+          "corrected": "Do not imply separate unconditional card credits; specify conditional Bilt Cash options.",
+          "sourceUrl": "https://www.bilt.com/card",
+          "confidence": "high",
+          "kind": "unsupported-claim",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "chase-ink-business-unlimited",
+      "findings": [
+        {
+          "kind": "confirmed-wrong",
+          "field": "transferPartners.access",
+          "current": "Full Ultimate Rewards partner list attached with no prerequisite",
+          "corrected": "No standalone direct airline/hotel transfers. Eligible points must first be combined into an eligible transfer-enabled Chase account; display that prerequisite.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+          "confidence": "high",
+          "note": "The pooled route is conditional; it is not an intrinsic benefit of this no-fee card. A conditional list also needs the current partner list, without Emirates and with Wyndham."
+        },
+        {
+          "kind": "omission",
+          "field": "earning.Lyft; credits.Instacart",
+          "current": "Absent",
+          "corrected": "5% total on Lyft through September 30, 2027. Three free months of Instacart+, then paid auto-renewal; $20 monthly Instacart Business credit with activation and active membership through December 31, 2027.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/unlimited",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "perks.Auto Rental Coverage",
+          "current": "Absent",
+          "corrected": "Primary when renting for business; up to $60,000 for qualifying vehicles with MSRP of $125,000 or less, subject to the applicable guide.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/unlimited",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "chase-ink-business-preferred",
+      "findings": [
+        {
+          "kind": "confirmed-wrong",
+          "field": "earning.3x cap",
+          "current": "No cap shown",
+          "corrected": "One combined $150,000 account-anniversary-year cap across 3x categories, then 1x.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/business-preferred",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "perks.1.25x Point Value",
+          "current": "Unconditional 1.25¢Chase Travel",
+          "corrected": "The current standard redemption is 1¢ per point; selected Points Boost offers reach 1.5¢. Historical 1.25¢ eligibility must be qualified by account cohort and point age.",
+          "sourceUrl": "https://creditcards.chase.com/a1/Business/ReserveBusiness0626",
+          "confidence": "high",
+          "note": "The public rewards agreement ends universal 1.25¢ redemptions after October 25, 2025. Exact grandfathered account terms remain unresolved; preserve eligible legacy rates."
+        },
+        {
+          "kind": "omission",
+          "field": "earning.Lyft; credits.DoorDash",
+          "current": "Absent",
+          "corrected": "5x Lyft through September 30, 2027. Activate DashPass by December 31, 2027 for at least one year and a $10 monthly nonrestaurant promotion.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/business-preferred",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "perks.phone; cancellation; purchase",
+          "current": "1000 claim/3 claims-year; 5000 person; 120 days",
+          "corrected": "Phone: $100 deductible, at most three claims per 12 months, and eligible bill paid with card. Cancellation: $5,000 per covered traveler/$10,000 per trip. Purchase protection: $10,000 per item, 90 days for New York residents. Primary business-rental coverage up to $60,000 is also omitted.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/business-preferred",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "transferPartners.Emirates",
+          "current": "Emirates Skywards listed as available",
+          "corrected": "Remove from current direct Chase transfer list; neither the current Chase partner list nor current Sapphire Preferred product includes Emirates.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+          "confidence": "high",
+          "note": "Do not infer an exact historical termination date from the current list."
+        },
+        {
+          "kind": "omission",
+          "field": "transferPartners.Wyndham",
+          "current": "Not listed",
+          "corrected": "Add Wyndham Rewards as an available direct partner.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "chase-ink-business-cash",
+      "findings": [
+        {
+          "kind": "confirmed-wrong",
+          "field": "transferPartners.access",
+          "current": "Full Ultimate Rewards partner list attached with no prerequisite",
+          "corrected": "No standalone direct airline/hotel transfers. Eligible points must first be combined into an eligible transfer-enabled Chase account; display that prerequisite.",
+          "sourceUrl": "https://www.chase.com/personal/credit-cards/education/basics/how-to-transfer-chase-ultimate-rewards-points",
+          "confidence": "high",
+          "note": "The pooled route is conditional; it is not an intrinsic benefit of this no-fee card. A conditional list also needs the current partner list, without Emirates and with Wyndham."
+        },
+        {
+          "kind": "omission",
+          "field": "earning.Lyft; credits.Instacart",
+          "current": "Absent",
+          "corrected": "5% total on Lyft through September 30, 2027. Three free months of Instacart+, then paid auto-renewal; $20 monthly Instacart Business credit with activation and active membership through December 31, 2027.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/cash",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "perks.Auto Rental Coverage",
+          "current": "Absent",
+          "corrected": "Primary when renting for business; up to $60,000 for qualifying vehicles with MSRP of $125,000 or less, subject to the applicable guide.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/cash",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "earning.caps",
+          "current": "25k/yearcombined repeated",
+          "corrected": "Two separate $25,000 spending pools, both resetting by account anniversary. Clearly identify the categories sharing each pool.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/ink/cash",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "amex-business-platinum",
+      "findings": [
+        {
+          "field": "perks[Delta Sky Club].description",
+          "current": "Access when flying Delta",
+          "corrected": "10 visits per Medallion Year, eligible flight/fare; $75,000 calendar spend unlocks unlimited; guest charges apply",
+          "sourceUrl": "https://www.delta.com/us/en/delta-sky-club/access",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "perks[Hilton Gold / Marriott Gold].description",
+          "current": "Automatic Gold status",
+          "corrected": "Enrollment required",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-platinum-credit-card-amex/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Hilton Credit].description",
+          "current": "Eligible Hilton properties; enrollment",
+          "corrected": "Hilton for Business membership required; registration accompanies enrollment if needed; direct eligible Hilton purchases",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-platinum-credit-card-amex/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[ChatGPT Business]",
+          "current": "Absent",
+          "corrected": "$300/calendar year for eligible U.S. ChatGPT Business subscriptions; enrollment; auto-renewal",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-platinum-credit-card-amex/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Leaders Club Sterling]",
+          "current": "Absent",
+          "corrected": "Complimentary status; enrollment",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-platinum-credit-card-amex/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[One AP high-spend credit]",
+          "current": "Absent",
+          "corrected": "After $250,000 eligible calendar-year spend, up to $2,400 One AP fee credits next calendar year; qualifying usage and payment conditions",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-platinum-credit-card-amex/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "transferPartners[Aeromexico].ratio",
+          "current": "1:1",
+          "corrected": "1:1.6 (1,000 MR → 1,600 Aeromexico Rewards)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Cathay Pacific].ratio",
+          "current": "1:1",
+          "corrected": "5:4 (1,000 MR → 800 Asia Miles)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[El Al]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[TAP Portugal]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Aer Lingus]",
+          "current": "Absent",
+          "corrected": "Aer Lingus AerClub 1:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "transferPartners[The Leading Hotels of the World]",
+          "current": "Absent",
+          "corrected": "Leaders Club 4:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        }
+      ]
+    },
+    {
+      "id": "amex-business-gold",
+      "findings": [
+        {
+          "field": "earning.categories[Top 2 Categories].description",
+          "current": "Airfare, advertising, gas, shipping, computer hardware/software/cloud, restaurants",
+          "corrected": "Top 2 each billing cycle: U.S. advertising; U.S. electronics/software/cloud; U.S. restaurants; U.S. gas; transit; U.S. monthly wireless. Combined $150,000/calendar year then 1X.",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "earning.categories[AmexTravel]",
+          "current": "Absent",
+          "corrected": "3X flights/prepaid hotels through AmexTravel.com",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[Flexible Credit]",
+          "current": "$155 annual; Grubhub, Boxed, Office Depot",
+          "corrected": "$240 maximum, $20/month; enroll; eligible U.S. Grubhub/office-supply-store purchases and FedEx through October 1, 2026",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "credits[Walmart+]",
+          "current": "Absent",
+          "corrected": "Monthly membership up to $12.95 plus tax; excludes Plus Ups; auto-renews",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[ChatGPT Business]",
+          "current": "Absent",
+          "corrected": "$300/calendar year, eligible U.S. subscriptions; enroll; auto-renewal",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[Squarespace]",
+          "current": "Absent",
+          "corrected": "$150/calendar year, eligible U.S. Squarespace; enroll; subscriptions auto-renew",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Purchase Protection].description",
+          "current": "$10,000 per occurrence",
+          "corrected": "$1,000 per covered purchase; $50,000/calendar year; 90 days",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "perks[25% Points Rebate]",
+          "current": "25% back on Pay with Points flights",
+          "corrected": "Remove from current benefits unless supported by account-specific terms",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
+          "confidence": "medium",
+          "note": "unsupported: Not in current benefit/reward description; precise discontinuation date not established here."
+        },
+        {
+          "field": "transferPartners[Aeromexico].ratio",
+          "current": "1:1",
+          "corrected": "1:1.6 (1,000 MR → 1,600 Aeromexico Rewards)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Cathay Pacific].ratio",
+          "current": "1:1",
+          "corrected": "5:4 (1,000 MR → 800 Asia Miles)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[El Al]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[TAP Portugal]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Aer Lingus]",
+          "current": "Absent",
+          "corrected": "Aer Lingus AerClub 1:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "transferPartners[The Leading Hotels of the World]",
+          "current": "Absent",
+          "corrected": "Leaders Club 4:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        }
+      ]
+    },
+    {
+      "id": "amex-blue-business-plus",
+      "findings": [
+        {
+          "field": "earning.categories[All Purchases].description",
+          "current": "2X first $50,000/year then 1X",
+          "corrected": "Eligible AmexTravel purchases also earn 2X and do not count toward the $50,000 bucket",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-blue-business-plus-credit-card-amex/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "perks[No Annual Fee].description",
+          "current": "No annual fee ever",
+          "corrected": "No annual fee under current terms",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-blue-business-plus-credit-card-amex/",
+          "confidence": "high",
+          "note": "unsupported: Current fee schedule cannot guarantee future terms."
+        },
+        {
+          "field": "transferPartners[Aeromexico].ratio",
+          "current": "1:1",
+          "corrected": "1:1.6 (1,000 MR → 1,600 Aeromexico Rewards)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Cathay Pacific].ratio",
+          "current": "1:1",
+          "corrected": "5:4 (1,000 MR → 800 Asia Miles)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[El Al]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[TAP Portugal]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Aer Lingus]",
+          "current": "Absent",
+          "corrected": "Aer Lingus AerClub 1:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "transferPartners[The Leading Hotels of the World]",
+          "current": "Absent",
+          "corrected": "Leaders Club 4:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        }
+      ]
+    },
+    {
+      "id": "amex-blue-business-cash",
+      "findings": [
+        {
+          "field": "perks[No Annual Fee].description",
+          "current": "No annual fee ever",
+          "corrected": "No annual fee under current terms",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/blue-business-cash/",
+          "confidence": "high",
+          "note": "unsupported"
+        },
+        {
+          "field": "perks[Purchase Protection].description",
+          "current": "$1,000 per occurrence",
+          "corrected": "$1,000 per covered purchase, $50,000/calendar year, 90 days; theft/accidental damage",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/blue-business-cash/",
+          "confidence": "high",
+          "note": "missing-condition"
+        }
+      ]
+    },
+    {
+      "id": "amex-business-green",
+      "findings": [
+        {
+          "field": "earning.categories",
+          "current": "2X broad travel, U.S. restaurants, transit and shipping",
+          "corrected": "2X eligible AmexTravel flights/prepaid hotels; 1X other eligible purchases",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-green-card-amex/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "perks[No Foreign Transaction Fee]",
+          "current": "No foreign transaction fee",
+          "corrected": "2.7% foreign transaction fee",
+          "sourceUrl": "https://www.americanexpress.com/content/dam/amex/en-us/company/legal/cardmember-agreements/public-site-2024-q1-pdf-cmas/gcs-small-business/business-green-rewards-04-03-2024.pdf",
+          "confidence": "medium",
+          "note": "confirmed-wrong: Official agreement is from 2024; refresh from current application disclosure before publishing."
+        },
+        {
+          "field": "perks[Annual Fee Waived First Year]",
+          "current": "$95 waived first year",
+          "corrected": "Current issuer listing states $95; no universal introductory waiver supported",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/?intlink=us-acq-gcp-corporate-mm-see-business-card-options-learn-more",
+          "confidence": "medium",
+          "note": "unsupported"
+        },
+        {
+          "field": "perks[Purchase Protection].description",
+          "current": "$1,000 per occurrence",
+          "corrected": "$1,000 per covered purchase; $50,000/calendar year;90 days",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-green-card-amex/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "transferPartners[Aeromexico].ratio",
+          "current": "1:1",
+          "corrected": "1:1.6 (1,000 MR → 1,600 Aeromexico Rewards)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Cathay Pacific].ratio",
+          "current": "1:1",
+          "corrected": "5:4 (1,000 MR → 800 Asia Miles)",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[El Al]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[TAP Portugal]",
+          "current": "1:1 direct partner",
+          "corrected": "Remove from current U.S. MR direct-transfer list",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "transferPartners[Aer Lingus]",
+          "current": "Absent",
+          "corrected": "Aer Lingus AerClub 1:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "transferPartners[The Leading Hotels of the World]",
+          "current": "Absent",
+          "corrected": "Leaders Club 4:1",
+          "sourceUrl": "https://global.americanexpress.com/rewards/transfer/?intlink=us-GABM-memberweek-cm-travel-Marriott",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        }
+      ]
+    },
+    {
+      "id": "capital-one-venture-x-business",
+      "findings": [
+        {
+          "field": "transferPartners",
+          "current": "Emirates/Japan Airlines/Accor 1:1; Qatar/JetBlue/I Prefer absent",
+          "corrected": "Emirates and JAL 2:1.5; Accor 2:1; add Qatar 1:1, JetBlue 5:3 and I Prefer 1:2. Other 16 listed ratios match the issuer table.",
+          "sourceUrl": "https://www.capitalone.com/learn-grow/money-management/venture-miles-transfer-partnerships/",
+          "confidence": "high",
+          "note": "ERROR + OMISSION. Minimum transfer 1,000 miles; matching names; Choice transfers require a US Choice account."
+        },
+        {
+          "field": "credits.global-entry-tsa-precheck.amount",
+          "current": 100,
+          "corrected": 120,
+          "sourceUrl": "https://www.capitalone.com/help-center/credit-cards/tsa-precheck-global-entry-benefits/",
+          "confidence": "high",
+          "note": "ERROR. Once every four years."
+        },
+        {
+          "field": "earning.categories",
+          "current": "Vacation rentals and Entertainment absent",
+          "corrected": "5 X vacation rentals through Business Travel;5 X eligible Capital One Entertainment",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/benefits/entertainment/",
+          "confidence": "high",
+          "note": "OMISSION. Business Travel product page confirms vacation rentals."
+        },
+        {
+          "field": "perks.capital-one-lounges",
+          "current": "Complimentary access plus 2 guests",
+          "corrected": "Primary access; guests 45 adult/25 ages 2–17;75 K calendar spend unlocks 2 Lounge/1 Landing guests; under 2 free; AU lounge access 125/year",
+          "sourceUrl": "https://capitalonetravel.com/airport-lounges/lounge-access-guide",
+          "confidence": "high",
+          "note": "ERROR. Current Business PP still includes two guests: do not apply personal PP guest restriction to Business."
+        },
+        {
+          "field": "perks.plaza-premium",
+          "current": "Standalone Plaza Premium access plus 2 guests",
+          "corrected": "Do not assert standalone entitlement without current terms; check participating lounges through eligible memberships",
+          "sourceUrl": "https://capitalonetravel.com/airport-lounges/lounge-access-guide",
+          "confidence": "medium",
+          "note": "UNSUPPORTED; not a confirmed cancellation of all access to Plaza Premium locations."
+        },
+        {
+          "field": "perks.hertz-and-hotels",
+          "current": "Hertz President's Circle without enrollment; no hotel collection",
+          "corrected": "Hertz enrollment required; Premier Collection 100 experience credit per qualifying stay",
+          "sourceUrl": "https://www.capitalone.com/small-business/credit-cards/venture-x-business/",
+          "confidence": "high",
+          "note": "OMISSION."
+        }
+      ]
+    },
+    {
+      "id": "capital-one-spark-miles",
+      "findings": [
+        {
+          "field": "transferPartners",
+          "current": "Emirates/Japan Airlines/Accor 1:1; Qatar/JetBlue/I Prefer absent",
+          "corrected": "Emirates and JAL 2:1.5; Accor 2:1; add Qatar 1:1, JetBlue 5:3 and I Prefer 1:2. Other 16 listed ratios match the issuer table.",
+          "sourceUrl": "https://www.capitalone.com/learn-grow/money-management/venture-miles-transfer-partnerships/",
+          "confidence": "high",
+          "note": "ERROR + OMISSION. Minimum transfer 1,000 miles; matching names; Choice transfers require a US Choice account."
+        },
+        {
+          "field": "name/applicationStatus",
+          "current": "Spark Miles for Business;unknown",
+          "corrected": "Renamed Venture Business in April 2026; old product URL redirects; new applications use Venture Business",
+          "sourceUrl": "https://www.capitalone.com/about/newsroom/venture-business-rebrand/",
+          "confidence": "high",
+          "note": "ERROR. Preserve legacy identity/account cohort rather than silently overwriting all existing-holder terms."
+        },
+        {
+          "field": "perks.annual-fee-waived-first-year",
+          "current": "95 fee waived first year",
+          "corrected": "Current new Venture Business application shows 95 annual fee, no first-year waiver",
+          "sourceUrl": "https://www.capitalone.com/small-business/credit-cards/venture-business/",
+          "confidence": "high",
+          "note": "ERROR for current application; historical Spark offer may differ."
+        },
+        {
+          "field": "credits",
+          "current": "Empty",
+          "corrected": "Legacy Spark Miles is eligible forGE/TSA 120/4 years. Current Venture Business also has 50 annual Business Travel and 50 annual qualifying advertising/software credit.",
+          "sourceUrl": "https://www.capitalone.com/small-business/credit-cards/venture-business/",
+          "confidence": "high",
+          "note": "OMISSION. Do not automatically give new 50 credits to every legacy account. Travel credit expires next opening anniversary; advertising/software annual reset anchor needs confirmation."
+        },
+        {
+          "field": "earning.categories",
+          "current": "Only hotels 5 X",
+          "corrected": "Current successor includes 5 X portal hotels/vacation rentals/cars and 5 X eligible Entertainment",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/benefits/entertainment/",
+          "confidence": "high",
+          "note": "OMISSION. Product page confirms travel categories."
+        },
+        {
+          "field": "perks.travel-accident-insurance",
+          "current": "250,000 coverage",
+          "corrected": "Requires legacy account's applicable network guide",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/benefits-guide/",
+          "confidence": "medium",
+          "note": "UNSUPPORTED universal limit; not proven false."
+        }
+      ]
+    },
+    {
+      "id": "capital-one-spark-cash-plus",
+      "findings": [
+        {
+          "field": "credits",
+          "current": "Empty",
+          "corrected": "150 annual-fee refund after 150,000 net purchases in membership year; credit within 2 billing cycles after anniversary",
+          "sourceUrl": "https://www.capitalone.com/small-business/credit-cards/spark-cash-plus/",
+          "confidence": "high",
+          "note": "OMISSION. Spend gate and anniversary period matter."
+        },
+        {
+          "field": "earning.categories",
+          "current": "Hotels/rentals 5%; no Entertainment",
+          "corrected": "Include vacation rentals 5%; eligible Capital One Entertainment 5%",
+          "sourceUrl": "https://www.capitalone.com/learn-grow/more-than-money/all-about-capital-one-entertainment/",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.extended-warranty",
+          "current": "Absent",
+          "corrected": "Extended warranty is advertised; use account-specific network guide for terms",
+          "sourceUrl": "https://www.capitalone.com/small-business/credit-cards/spark-cash-plus/",
+          "confidence": "high",
+          "note": "OMISSION. Coverage limits not certified."
+        }
+      ]
+    },
+    {
+      "id": "delta-skymiles-gold-business",
+      "findings": [
+        {
+          "field": "perks[First Checked Bag Free]",
+          "current": "First bag only; companions not numerically limited",
+          "corrected": "First bag on eligible Delta flights; also second bag on domestic Delta flights. Detail reservation/passenger and baggage restrictions in linked terms.",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-gold/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[TakeOff 15]",
+          "current": "Absent",
+          "corrected": "15% reduction in miles for eligible Delta award flights booked on delta.com/Fly Delta; excludes partner-operated flights and taxes/fees.",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-gold/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "earning.categories[U.S. Shipping].description",
+          "current": "2X without cap",
+          "corrected": "2X on first $50,000/calendar year; then 1X",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-gold/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "earning.categories[U.S. advertising]",
+          "current": "Absent",
+          "corrected": "2X eligible U.S. media advertising: first $50,000/calendar year, separate cap",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-gold/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[Delta Stays / Flight Credit / Rideshare]",
+          "current": "None",
+          "corrected": "$150/calendar-year Delta Stays; $200 flight credit after $10,000/calendar-year spend; after first renewal $10/month U.S. rideshare, enrollment required",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-gold/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[20% Back on Inflight].description",
+          "current": "Food, drinks, and Wi-Fi",
+          "corrected": "Eligible food/beverages; Wi-Fi not supported",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
+          "confidence": "medium",
+          "note": "unsupported: Current issuer summary names food/beverage; capture complete business terms before asserting exact Wi-Fi exclusion."
+        }
+      ]
+    },
+    {
+      "id": "delta-skymiles-platinum-business",
+      "findings": [
+        {
+          "field": "perks[First Checked Bag Free]",
+          "current": "First bag only; companions not numerically limited",
+          "corrected": "First bag on eligible Delta flights; also second bag on domestic Delta flights. Detail reservation/passenger and baggage restrictions in linked terms.",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[TakeOff 15]",
+          "current": "Absent",
+          "corrected": "15% reduction in miles for eligible Delta award flights booked on delta.com/Fly Delta; excludes partner-operated flights and taxes/fees.",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Priority Boarding].description",
+          "current": "Main Cabin 1",
+          "corrected": "Zone 5",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "perks[Status Boost].description",
+          "current": "Earn MQMs with spending",
+          "corrected": "MQD Boost: 1 MQD/$20; also 2,500 MQD Headstart per qualification year",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "credits[Companion Certificate].description",
+          "current": "Main Cabin domestic",
+          "corrected": "After renewal; Delta Main; eligible domestic, Caribbean/Central America; taxes/fees $22–$250; excludes Basic",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Companion Certificate].resetPeriod",
+          "current": "unknown",
+          "corrected": "anniversary/renewal",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Resy / Rideshare / Delta Stays]",
+          "current": "Absent",
+          "corrected": "Resy $10/month; rideshare $10/month; both require enrollment/U.S.; Delta Stays $200/calendar year eligible prepaid bookings",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Hertz status]",
+          "current": "Absent",
+          "corrected": "Five Star; enroll/link",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "earning.base",
+          "current": 1.5,
+          "corrected": 1,
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "earning.categories[Hotels].multiplier",
+          "current": 2,
+          "corrected": "3X purchases direct with hotels",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "earning.categories[1.5X conditional]",
+          "current": "1.5X treated as base",
+          "corrected": "1.5X eligible transit, U.S. shipping, or individual $5,000+ purchases; $100,000 combined/year cap",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "credits[Global Entry / TSA]",
+          "current": "Absent",
+          "corrected": "Global Entry $120/TSA PreCheck up to $85 once per 4 years",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[20% Back on Inflight].description",
+          "current": "Food, drinks, and Wi-Fi",
+          "corrected": "Eligible food/beverages; Wi-Fi not supported",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
+          "confidence": "medium",
+          "note": "unsupported: Current issuer summary names food/beverage; capture complete business terms before asserting exact Wi-Fi exclusion."
+        }
+      ]
+    },
+    {
+      "id": "delta-skymiles-reserve-business",
+      "findings": [
+        {
+          "field": "perks[First Checked Bag Free]",
+          "current": "First bag only; companions not numerically limited",
+          "corrected": "First bag on eligible Delta flights; also second bag on domestic Delta flights. Detail reservation/passenger and baggage restrictions in linked terms.",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-reserve/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[TakeOff 15]",
+          "current": "Absent",
+          "corrected": "15% reduction in miles for eligible Delta award flights booked on delta.com/Fly Delta; excludes partner-operated flights and taxes/fees.",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-reserve/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Priority Boarding].description",
+          "current": "Zone 1",
+          "corrected": "Zone 5",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-reserve/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "perks[Status Boost].description",
+          "current": "Earn MQMs with spending",
+          "corrected": "MQD Boost: 1 MQD/$10; also 2,500 MQD Headstart per qualification year",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-reserve/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "credits[Companion Certificate].description",
+          "current": "First Class domestic",
+          "corrected": "After renewal; Delta First/Comfort/Main; eligible domestic, Caribbean/Central America; taxes/fees $22–$250; excludes Basic",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-reserve/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Companion Certificate].resetPeriod",
+          "current": "unknown",
+          "corrected": "anniversary/renewal",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-reserve/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Resy / Rideshare / Delta Stays]",
+          "current": "Absent",
+          "corrected": "Resy $20/month; rideshare $10/month; both require enrollment/U.S.; Delta Stays $250/calendar year eligible prepaid bookings",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-reserve/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Hertz status]",
+          "current": "Absent",
+          "corrected": "President’s Circle; enroll/link",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-reserve/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "earning.categories[1.5X]",
+          "current": "Absent",
+          "corrected": "1.5X transit/U.S. shipping/U.S. office supply; after $150,000/year spend, 1.5X other eligible purchases for remainder of year",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-reserve/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "credits[Global Entry/TSA PreCheck].amount",
+          "current": 100,
+          "corrected": "Global Entry $120 or TSA PreCheck up to $85 once per 4 years",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-reserve/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "perks[Delta Sky Club].description",
+          "current": "Unlimited visits plus 2 guests",
+          "corrected": "15 visits/Medallion Year; $75,000 calendar spend unlocks unlimited; 4 guest passes/year, otherwise guest fee",
+          "sourceUrl": "https://www.delta.com/us/en/delta-sky-club/access",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "perks[Centurion Lounge Access].description",
+          "current": "Delta same-day",
+          "corrected": "Eligible Delta flight booked with Reserve; 3-hour departure window, Sidecar 90 minutes; guest fees",
+          "sourceUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-reserve/",
+          "confidence": "high",
+          "note": "missing-condition"
+        }
+      ]
+    },
+    {
+      "id": "united-business-card",
+      "findings": [
+        {
+          "kind": "qualification",
+          "field": "perks.baggage; boarding",
+          "current": "Brief unconditional descriptions",
+          "corrected": "Show same-reservation, ticket-payment and MileagePlus requirements on eligible United/United Express flights. Any included Club passes reset by anniversary and may be restricted by lounge capacity; Quest does not include such passes.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/united/united-business-card",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "credits",
+          "current": "Empty",
+          "corrected": "$125 TravelBank after five qualifying United transactions of at least $100 each per calendar year; United Hotels $50 on each of two prepaid stays per anniversary year; rideshare $8 monthly January–November/$12 December; Avis/Budget $25 TravelBank on each of two qualifying rentals per anniversary; Instacart $10 monthly; JSX $100 and FareLock $25 per anniversary year.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/united/united-business-card",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "perks.anniversary; upgrades; award pricing",
+          "current": "Absent",
+          "corrected": "5,000 anniversary miles when also holding an eligible personal United card. Two continental-US Economy Plus upgrades after $25,000 calendar-yearspend. Award discounts start at 10%. The 25% rebate also includes Club premium drinks.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/united/united-business-card",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "southwest-performance-business",
+      "findings": [
+        {
+          "kind": "omission",
+          "field": "perks.Tier Qualifying Points; Companion Pass boost",
+          "current": "Absent",
+          "corrected": "2,500 TQP per $5,000 spent annually; 10,000 Companion Pass qualifying points per year, with one boost per member. The TQP spending year ends at the December statement, rather than exactly December 31.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/southwest/performance-business",
+          "confidence": "high",
+          "note": "Companion Pass qualifying points are neither cash nor redeemable bonus points; exclude the boost from annual cash value."
+        }
+      ]
+    },
+    {
+      "id": "southwest-premier-business",
+      "findings": [
+        {
+          "kind": "omission",
+          "field": "perks.Tier Qualifying Points; Companion Pass boost",
+          "current": "Absent",
+          "corrected": "2,000 TQP per $5,000 spent annually; 10,000 Companion Pass qualifying points per year, with one boost per member. The TQP spending year ends at the December statement, rather than exactly December 31.",
+          "sourceUrl": "https://creditcards.chase.com/business-credit-cards/southwest/premier-business",
+          "confidence": "high",
+          "note": "Companion Pass qualifying points are neither cash nor redeemable bonus points; exclude the boost from annual cash value."
+        }
+      ]
+    },
+    {
+      "id": "marriott-bonvoy-business",
+      "findings": [
+        {
+          "field": "earning.categories[U.S. Restaurants]",
+          "current": "4X U.S. only",
+          "corrected": "4X restaurants worldwide",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/amex-marriott-bonvoy-business-credit-card/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "perks[Silver Elite Status / Gold Status Path]",
+          "current": "Silver automatic; Gold after $35,000 spend",
+          "corrected": "Complimentary Gold Elite; remove $35,000 spend condition",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/amex-marriott-bonvoy-business-credit-card/",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "credits[Free Night Award].resetPeriod",
+          "current": "unknown",
+          "corrected": "anniversary; after renewal month",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/amex-marriott-bonvoy-business-credit-card/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[additional free night]",
+          "current": "Absent",
+          "corrected": "One additional 35,000-point-cap award after $60,000/calendar-year spend",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/amex-marriott-bonvoy-business-credit-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Room Rate Discount]",
+          "current": "Absent",
+          "corrected": "7% off qualifying direct Marriott bookings under Amex Business Card Rate",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/amex-marriott-bonvoy-business-credit-card/",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "transferPartners",
+          "current": "Only United, Delta and American, each 3:1",
+          "corrected": "The three ratios are correct, but label this as a selection or expand from Marriott’s full airline-transfer directory.",
+          "sourceUrl": "https://www.marriott.com/loyalty/redeem/travel/points-to-miles.mi",
+          "confidence": "high",
+          "note": "incomplete-list: This is transfer of earned Marriott points, not Membership Rewards. Program transfer bonuses and minimums need separate modeling."
+        }
+      ]
+    },
+    {
+      "id": "hilton-honors-business",
+      "findings": [
+        {
+          "field": "earning.categories",
+          "current": "6X U.S. gas/restaurants/shipping; otherwise 3X",
+          "corrected": "12X Hilton; 5X other eligible purchases on first $100,000/calendar year; then 3X",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/hilton-honors/?searchresult=apr+",
+          "confidence": "high",
+          "note": "confirmed-wrong"
+        },
+        {
+          "field": "credits[Free Weekend Night]",
+          "current": "1 night after $15,000/year",
+          "corrected": "Not supported as a current benefit; remove current accrual pending account-specific evidence",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/hilton-honors/?searchresult=apr+",
+          "confidence": "high",
+          "note": "unsupported"
+        },
+        {
+          "field": "credits[Hilton credit]",
+          "current": "Absent",
+          "corrected": "$240/year, $60/calendar quarter; eligible direct Hilton-property purchases",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/hilton-honors/?searchresult=apr+",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        },
+        {
+          "field": "perks[Priority Pass Select]",
+          "current": "10 visits/year",
+          "corrected": "Not supported as current benefit; remove pending account-specific evidence",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/hilton-honors/?searchresult=apr+",
+          "confidence": "high",
+          "note": "unsupported"
+        },
+        {
+          "field": "perks[National Executive]",
+          "current": "Absent",
+          "corrected": "National Emerald Club Executive; enroll",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/hilton-honors/?searchresult=apr+",
+          "confidence": "high",
+          "note": "omitted-current-benefit"
+        }
+      ]
+    },
+    {
+      "id": "bofa-business-advantage-unlimited",
+      "findings": [
+        {
+          "field": "signUpBonus (hidden)",
+          "current": "300 after3000/60days",
+          "corrected": "Current public page advertises500 after5000/90days; retain per-offer eligibility.",
+          "sourceUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards",
+          "confidence": "high",
+          "kind": "hidden-offer",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "bank-of-america-customized-cash-rewards",
+      "findings": [
+        {
+          "field": "perks.no-foreign-transaction-fees",
+          "current": "No foreign transaction fee",
+          "corrected": "3% of USD amount of foreign-currency transactions.",
+          "sourceUrl": "https://secure.bankofamerica.com/apply-now-services/credit-cards/rest/get-disclosures/v1/usa/show-in-browser?cId=4079158&isMobile=true&locale=en_US&poCd=4V",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "perks.preferred-rewards",
+          "current": "25–75% Preferred Rewards",
+          "corrected": "BofA Rewards:10/25/50/75%; preserve applicable grandfathered benefits.",
+          "sourceUrl": "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "earning.cap/intro",
+          "current": "3%/2% cap;intro stacking ambiguous",
+          "corrected": "Combined cap includes first-year6%; relationship bonus excludes extra3% introductory portion.",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+          "confidence": "high",
+          "kind": "missing-condition",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "boa-atmos-ascent",
+      "findings": [
+        {
+          "field": "perks.bank-relationship-bonus",
+          "current": "Missing",
+          "corrected": "10% bonus on purchase points with eligible Bank of America account.",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+          "confidence": "high",
+          "kind": "omission",
+          "note": ""
+        },
+        {
+          "field": "credits.lounge-discount",
+          "current": "Fixed membership-price reference;reset unknown",
+          "corrected": "Describe100 off qualifying annual membership without hardcoding undiscounted price; companion spend uses anniversary year.",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+          "confidence": "high",
+          "kind": "missing-condition",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "amex-blue-cash-preferred",
+      "findings": [
+        {
+          "field": "earning.categories[Streaming Services].description",
+          "current": "Netflix, Hulu, Spotify, Disney+, etc.",
+          "corrected": "Select U.S. streaming subscriptions, not all streaming charges",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "credits[Disney Bundle Credit].description",
+          "current": "$10/month Disney+, Hulu, ESPN+",
+          "corrected": "Enroll; direct subscription/bundle purchases at DisneyPlus.com, Hulu.com or Stream.ESPN.com U.S. websites; no minimum; auto-renewal",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/",
+          "confidence": "high",
+          "note": "missing-condition"
+        },
+        {
+          "field": "annualFee introductory qualifier",
+          "current": "95, no introductory qualifier",
+          "corrected": "Current public offer: $0 first year then $95; keep ongoing fee $95",
+          "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/",
+          "confidence": "medium",
+          "note": "omitted-offer-condition"
+        }
+      ]
+    },
+    {
+      "id": "citi-costco-anywhere",
+      "findings": [
+        {
+          "field": "annualFee/eligibility",
+          "current": "0 without membership qualification",
+          "corrected": "No card annual fee with paid Costco membership",
+          "sourceUrl": "https://www.citi.com/credit-cards/costco-anywhere-visa-card",
+          "confidence": "high",
+          "note": "OMISSION; membership cost is separate."
+        },
+        {
+          "field": "earning.redemption",
+          "current": "No redemption restrictions",
+          "corrected": "Annual certificate after February statement; redeem at US Costco warehouses byDecember 31",
+          "sourceUrl": "https://www.citi.com/credit-cards/costco-anywhere-visa-card",
+          "confidence": "high",
+          "note": "OMISSION; rewards are not ordinary anytime statement cash."
+        },
+        {
+          "field": "perks.damage-theft-protection",
+          "current": "120 days",
+          "corrected": "120 days except 90 days for New York residents",
+          "sourceUrl": "https://www.citi.com/credit-cards/costco-anywhere-visa-card",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.roadside-and-emergency",
+          "current": "Assistance without cost terms",
+          "corrected": "Referral/dispatch service; cardholder pays service costs",
+          "sourceUrl": "https://www.citi.com/credit-cards/costco-anywhere-visa-card",
+          "confidence": "high",
+          "note": "CLARIFICATION; do not imply free repairs or emergency medical insurance."
+        }
+      ]
+    },
+    {
+      "id": "capital-one-savor",
+      "findings": [
+        {
+          "field": "earning.categories",
+          "current": "Portal hotels and rental cars 5%",
+          "corrected": "Add vacation rentals 5%",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/savor/",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.hertz",
+          "current": "Five Star complimentary",
+          "corrected": "Enrollment through Capital One benefits link required",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/dining-and-entertainment",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.extended-warranty-and-travel-accident",
+          "current": "Both shown as unconditional product benefits",
+          "corrected": "Mark account/network-specific until corresponding guide is matched",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/benefits-guide/",
+          "confidence": "medium",
+          "note": "UNSUPPORTED as a universal promise; not a finding that these benefits never apply."
+        }
+      ]
+    },
+    {
+      "id": "citi-simplicity",
+      "findings": [
+        {
+          "field": "perks.intro-apr",
+          "current": "12 months purchase/21 BT then 17.49–28.24",
+          "corrected": "Mark offer-specific and link current application disclosure; public Citi pages show both 12/21 and 18/18",
+          "sourceUrl": "https://www.citi.com/usc/Multi/Featured/default.htm",
+          "confidence": "medium",
+          "note": "UNSUPPORTED universal current durations/range; cannot choose one conflicting public offer."
+        },
+        {
+          "field": "perks.no-penalty-apr",
+          "current": "Your rate won't increase even if you pay late",
+          "corrected": "No penaltyAPR; ordinary variable APR may still change with prime rate",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-simplicity-credit-card",
+          "confidence": "high",
+          "note": "CLARIFICATION. The current wording overstates an immutable rate."
+        }
+      ]
+    },
+    {
+      "id": "us-bank-shield-visa",
+      "findings": [
+        {
+          "field": "earning.base",
+          "current": 1,
+          "corrected": 0,
+          "sourceUrl": "https://rewards.usbank.com/benefits/card/ShieldBenefits/program-rules",
+          "confidence": "high",
+          "note": "ERROR. Explicit program rule: cash rewards not earned on other purchases."
+        },
+        {
+          "field": "earning.categories",
+          "current": "4%TravelPortal",
+          "corrected": "4% prepaidair/hotel/car booked inTravelCenter",
+          "sourceUrl": "https://rewards.usbank.com/benefits/card/ShieldBenefits/program-rules",
+          "confidence": "high",
+          "note": "OMISSION of prepaid/booking-category restrictions."
+        },
+        {
+          "field": "perks.0-intro-apr",
+          "current": "24 billingcycles",
+          "corrected": "21 billingcycles purchases/BT;BTwithin 60 days;fee 5%minimum 5",
+          "sourceUrl": "https://www.usbank.com/credit-cards/shield-visa-credit-card.html",
+          "confidence": "high",
+          "note": "ERROR for current application offer."
+        },
+        {
+          "field": "credits.annual-statement-credit",
+          "current": "20 after 11 consecutivemonths;resetunknown",
+          "corrected": "20 afterpurchases in 11 consecutivecalendar months, at mostonecredit per 12 months, accountgoodstanding",
+          "sourceUrl": "https://www.usbank.com/credit-cards/shield-visa-credit-card.html",
+          "confidence": "high",
+          "note": "OMISSION of period/eligibility."
+        },
+        {
+          "field": "perks.cell-phone-protection",
+          "current": "600 claim withmonthlybill",
+          "corrected": "600 claim,100 deductible, maximum 1 claim/12 months;pay priorbillingcycle wirelessbill",
+          "sourceUrl": "https://mycardgtb.com/shield/download",
+          "confidence": "high",
+          "note": "OMISSION. Guide effectiveMarch 1,2026; purchase security andextendedwarranty also present, so do not remove them as unsupported."
+        },
+        {
+          "field": "perks.extendpay",
+          "current": "Absent",
+          "corrected": "Annual 3 month 0-feeExtendPayplan offer afterintro period, subjecteligibility",
+          "sourceUrl": "https://www.usbank.com/credit-cards/shield-visa-credit-card.html",
+          "confidence": "high",
+          "note": "OMISSION."
+        }
+      ]
+    },
+    {
+      "id": "wells-fargo-reflect",
+      "findings": [
+        {
+          "field": "perks.variable-apr",
+          "current": "17.74–29.74%",
+          "corrected": "Current published rates 17.49%,23.99%, or 28.24%based oncreditworthiness; prefer live disclosure link",
+          "sourceUrl": "https://creditcards.wellsfargo.com/reflect-visa-credit-card/",
+          "confidence": "high",
+          "note": "ERROR. APR is variable and offer-specific."
+        },
+        {
+          "field": "perks.balance-transfer",
+          "current": "21 months without transfer deadline",
+          "corrected": "Qualifying transfers within 120 days; transfer fee applies",
+          "sourceUrl": "https://creditcards.wellsfargo.com/reflect-visa-credit-card/",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.cell-phone-protection",
+          "current": "Up to 600",
+          "corrected": "25 deductible;max 2 claims/12 months;pay eligible monthly bill",
+          "sourceUrl": "https://www.wellsfargo.com/credit-cards/documents/reflect-visa-benefits/",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.roadside-dispatch",
+          "current": "24/7 assistance",
+          "corrected": "Pay-per-use dispatch, not free repairs/towing",
+          "sourceUrl": "https://www.wellsfargo.com/credit-cards/documents/reflect-visa-benefits/",
+          "confidence": "high",
+          "note": "CLARIFICATION."
+        }
+      ]
+    },
+    {
+      "id": "capital-one-savor-student",
+      "findings": [
+        {
+          "field": "earning.categories",
+          "current": "Only 3% categories",
+          "corrected": "Add 5% Capital One Travel hotels/vacation rentals/rental cars and 8% Capital One Entertainment",
+          "sourceUrl": "https://www.capitalone.com/learn-grow/money-management/capital-one-student-credit-card/",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.hertz",
+          "current": "Absent",
+          "corrected": "Hertz Five Star through Capital One enrollment",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/dining-and-entertainment",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "applicationStatus/eligibility",
+          "current": "Unknown;designed for students",
+          "corrected": "Open;18+ and admitted/enrolled at qualifying institution, subject to credit approval",
+          "sourceUrl": "https://www.capitalone.com/credit-cards/savor-student/",
+          "confidence": "high",
+          "note": "OMISSION."
+        }
+      ]
+    },
+    {
+      "id": "cardless-qatar-infinite",
+      "findings": [
+        {
+          "field": "issuer",
+          "current": "Cardless",
+          "corrected": "First Electronic Bank; Cardless is servicer.",
+          "sourceUrl": "https://www.cardless.com/qatar-cardholder-agreement",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "perks.award-fee-waiver",
+          "current": "Waived award fees at spend thresholds",
+          "corrected": "No supporting current benefit found; do not publish as confirmed without exact terms.",
+          "sourceUrl": "https://www.cardless.com/cards/qatar/premium",
+          "confidence": "high",
+          "kind": "unsupported-claim",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "bofa-air-france-klm",
+      "findings": [
+        {
+          "field": "perks.anniversary",
+          "current": "5000 miles and20XP after50spend",
+          "corrected": "50spend requirement attaches to5000miles;20XP awarded each anniversary independently. Additional80XP at15k and60XP at25k anniversary-year spend.",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/",
+          "confidence": "high",
+          "kind": "missing-condition",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "citi-aadvantage-platinum-select",
+      "findings": [
+        {
+          "field": "perks.loyalty-points",
+          "current": "1 Loyalty Point per mile earned from purchases",
+          "corrected": "Eligible base miles count; bonus category accelerators do not",
+          "sourceUrl": "https://www.aa.com/pubcontent/en_US/aadvantage-program/loyalty-points/index.html",
+          "confidence": "high",
+          "note": "ERROR. Two redeemable miles on a category does not mean two Loyalty Points."
+        },
+        {
+          "field": "perks.turo-credit",
+          "current": "Up to 180/year",
+          "corrected": "Finite offer:up to 30 per completed trip,180 total Oct 19,2025–Oct 18,2026; link card at Turo benefit page and pay directly",
+          "sourceUrl": "https://turo.com/us/en/aadvantageplatinum",
+          "confidence": "high",
+          "note": "ERROR. Not a recurring annual credit. Converted-account eligibility can begin later."
+        },
+        {
+          "field": "perks.first-checked-bag",
+          "current": "You+4 same reservation",
+          "corrected": "Eligible domestic AA itineraries, cardholder+4 companions; booking/account conditions apply",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-aadvantage-platinum-select-world-elite-mastercard",
+          "confidence": "high",
+          "note": "OMISSION of domestic restriction."
+        },
+        {
+          "field": "perks.preferred-boarding.description",
+          "current": "Priority boarding",
+          "corrected": "Preferred boarding; use issuer's named boarding benefit",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-aadvantage-platinum-select-world-elite-mastercard",
+          "confidence": "high",
+          "note": "ERROR in description."
+        },
+        {
+          "field": "credits.flight-discount.resetPeriod",
+          "current": "unknown",
+          "corrected": "Cardmembership year spend 20,000 andrenewal",
+          "sourceUrl": "https://creditcards.aa.com/",
+          "confidence": "high",
+          "note": "OMISSION; not calendar-year automatic credit."
+        }
+      ]
+    },
+    {
+      "id": "citi-aadvantage-globe",
+      "findings": [
+        {
+          "field": "earning",
+          "current": "AA 2;generalhotels 2;dining 2;base 1",
+          "corrected": "AA 3;eligible AAdvantage Hotels 6;dining andeligible Rides/Rails 2;other 1",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-aadvantage-globe-mastercard",
+          "confidence": "high",
+          "note": "ERROR + OMISSION. Generic hotels are not a 2 X category."
+        },
+        {
+          "field": "credits.missing",
+          "current": "No Turo or inflight credit",
+          "corrected": "Turo up to 240/calendar year at 30/completed qualifying trip after linking;100 inflight statement credit/calendar year",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-aadvantage-globe-mastercard",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "credits.resetPeriods",
+          "current": "unknown",
+          "corrected": "4 Globe passes and 100 Splurge calendar year; GE 4 years; companion certificate afterrenewal fromyear 2",
+          "sourceUrl": "https://creditcards.aa.com/credit-cards/globeprescreen/",
+          "confidence": "high",
+          "note": "OMISSION. Splurge eligible brand selection required; companion 99+taxes and route/fare terms."
+        },
+        {
+          "field": "perks.flight-streak-bonus",
+          "current": "5,000 every 4 AAflights, max 15,000/year",
+          "corrected": "Use status year March 1–lastdayFebruary; qualifying flights and cardpayment required",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-aadvantage-globe-mastercard",
+          "confidence": "high",
+          "note": "OMISSION; not calendar year."
+        },
+        {
+          "field": "perks.bag-and-boarding",
+          "current": "No domestic qualifier;descriptionPriority",
+          "corrected": "Domestic firstbag+8 eligible companions; Preferred boarding",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-aadvantage-globe-mastercard",
+          "confidence": "high",
+          "note": "ERROR/OMISSION."
+        }
+      ]
+    },
+    {
+      "id": "citi-aadvantage-executive",
+      "findings": [
+        {
+          "field": "annualFee",
+          "current": 595,
+          "corrected": "695 for new applications fromAug 23,2026",
+          "sourceUrl": "https://www.citigroup.com/global/news/press-release/2026/american-airlines-citi-elevate-premium-travel-enhanced-citi-aadvantage-executive-world-legend-mastercard",
+          "confidence": "high",
+          "note": "ERROR for current applications. Existing-account renewal effective date not established; do not change every holder's fee to 695 without cohort terms."
+        },
+        {
+          "field": "earning",
+          "current": "AA 2;other 1",
+          "corrected": "AA 4, then 5 after 150,000 calendar spend for rest ofyear;eligible AAHotels/car 12;other 1",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-aadvantage-executive-world-legend-mastercard",
+          "confidence": "high",
+          "note": "ERROR + OMISSION."
+        },
+        {
+          "field": "credits",
+          "current": "OnlyGE 120",
+          "corrected": "Add AA Vacations 500=250 Jan–Jun+250 Jul–Dec;Lyft 15 after 3 rides/month up to 180;eligibleprepaidAvis/Budget 120/year;eligibleinflight/Admirals 100/calendar year",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-aadvantage-executive-world-legend-mastercard",
+          "confidence": "high",
+          "note": "OMISSION. Use current 2026 program/cohort eligibility."
+        },
+        {
+          "field": "perks.inflight",
+          "current": "25%savings",
+          "corrected": "Current enhanced card advertises 100 annual eligible inflight/Admirals statement credit",
+          "sourceUrl": "https://www.citigroup.com/global/news/press-release/2026/american-airlines-citi-elevate-premium-travel-enhanced-citi-aadvantage-executive-world-legend-mastercard",
+          "confidence": "high",
+          "note": "ERROR/outdated benefit framing. Do not assume both credits stack."
+        },
+        {
+          "field": "perks.loyalty-points",
+          "current": "10 K at 50 K+90 KLP",
+          "corrected": "10 K at each 50 K,90 K,165 K,240 KLP threshold within qualifying status year",
+          "sourceUrl": "https://www.citigroup.com/global/news/press-release/2026/american-airlines-citi-elevate-premium-travel-enhanced-citi-aadvantage-executive-world-legend-mastercard",
+          "confidence": "high",
+          "note": "OMISSION of two thresholds."
+        },
+        {
+          "field": "perks.omni",
+          "current": "Absent",
+          "corrected": "Omni Select Guest Champion status after enrollment",
+          "sourceUrl": "https://www.citigroup.com/global/news/press-release/2026/american-airlines-citi-elevate-premium-travel-enhanced-citi-aadvantage-executive-world-legend-mastercard",
+          "confidence": "high",
+          "note": "OMISSION."
+        },
+        {
+          "field": "perks.bag-and-lounge",
+          "current": "Bag+8 anyflight;Admirals 700–850 value",
+          "corrected": "Domestic bag restrictions; Admirals membership access requires eligible itinerary; remove stale fixed retail-value range",
+          "sourceUrl": "https://www.citi.com/credit-cards/citi-aadvantage-executive-world-legend-mastercard",
+          "confidence": "high",
+          "note": "OMISSION + UNSUPPORTED retail valuation."
+        }
+      ]
+    },
+    {
+      "id": "bofa-premium-rewards",
+      "findings": [
+        {
+          "field": "perks.preferred-rewards",
+          "current": "25–75% Preferred Rewards",
+          "corrected": "BofA Rewards10/25/50/75%; verify extended legacy bonus per account.",
+          "sourceUrl": "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "credits.resetPeriod",
+          "current": "unknown",
+          "corrected": "The airline incidental credit resets by calendar year.",
+          "sourceUrl": "https://www.privatebank.bankofamerica.com/solutions/credit-cards.html",
+          "confidence": "high",
+          "kind": "missing-condition",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "bofa-premium-rewards-elite",
+      "findings": [
+        {
+          "field": "perks.preferred-rewards",
+          "current": "25–75% Preferred Rewards",
+          "corrected": "BofA Rewards10/25/50/75%; verify extended legacy bonus per account.",
+          "sourceUrl": "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+          "confidence": "high",
+          "kind": "confirmed-error",
+          "note": ""
+        },
+        {
+          "field": "credits.resetPeriod",
+          "current": "unknown",
+          "corrected": "Airline and applicable lifestyle credits reset by calendar year.",
+          "sourceUrl": "https://www.privatebank.bankofamerica.com/solutions/credit-cards.html",
+          "confidence": "high",
+          "kind": "missing-condition",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "synchrony-virgin-red",
+      "findings": [
+        {
+          "field": "credits.resetPeriod",
+          "current": "unknown",
+          "corrected": "Renewalpoints and spend thresholds use cardholder anniversary year.",
+          "sourceUrl": "https://virginredrewardscard.syf.com/essimages/cs/groups/ess_webasset/dualcard/@virgin/en/html/ess075414.html",
+          "confidence": "high",
+          "kind": "missing-condition",
+          "note": ""
+        },
+        {
+          "field": "perks.personal-perks",
+          "current": "Companionseat without limits",
+          "corrected": "Voucher value75kRed/150kSilverGold; taxes/surcharges extra; selection/expiry deadlines.",
+          "sourceUrl": "https://virginredrewardscard.syf.com/essimages/cs/groups/ess_webasset/dualcard/@virgin/en/html/ess075414.html",
+          "confidence": "high",
+          "kind": "missing-condition",
+          "note": ""
+        },
+        {
+          "field": "transferPartners.VirginAtlantic",
+          "current": "1:1transfer",
+          "corrected": "Linked Virgin Red/Flying Club share balance; describe linkage instead of ordinarytransfer.",
+          "sourceUrl": "https://membersupport.red.virgin.com/hc/en-gb/articles/360013786277-What-is-the-difference-between-Flying-Club-Virgin-Red",
+          "confidence": "high",
+          "kind": "data-model",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "chase-british-airways",
+      "findings": [
+        {
+          "kind": "qualification",
+          "field": "credits.Reward Flight Statement Credit",
+          "current": "100–200/booking 3 times/year, reset unknown",
+          "corrected": "At most three bookings per calendar year: $100 economy/premium economy or $200 business/first. The eligible BA-operated transatlantic reward itinerary must originate in the US, with taxes and charges paid using the card.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/avios/british-airways",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "perks.Travel Together Ticket",
+          "current": "Companion flies free",
+          "corrected": "After $30,000 calendar-yearspend, companion Avios are waived, or a solo traveler receives a 50% Avios discount. Taxes, fees and carrier charges remain payable; the voucher lasts two years.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/avios/british-airways",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "confirmed-wrong",
+          "field": "perks.10% Discount",
+          "current": "US–London atba.com",
+          "corrected": "Eligible BA flights originating in the US booked through the designated cardholder website; not every ba.com purchase, and not limited to London.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/avios/british-airways",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "unsupported",
+          "field": "perks.Pay Taxes with Avios",
+          "current": "Use Avios tocoverawardtaxesandfees",
+          "corrected": "Not established as a card-specific benefit. Remove the claim or verify separate BA redemption terms; do not imply that Travel Together waives cash charges.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/avios/british-airways",
+          "confidence": "medium",
+          "note": ""
+        },
+        {
+          "kind": "omission",
+          "field": "credits.Anniversary Avios",
+          "current": "Absent",
+          "corrected": "Current full product terms include 2,500 Avios each account anniversary. Record these as points, not dollars.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/avios/british-airways",
+          "confidence": "high",
+          "note": "Included in the full offer terms despite absence from the product headline; verify legacy cohorts before backfilling historical awards."
+        },
+        {
+          "kind": "qualification",
+          "field": "transferPartners",
+          "current": "BA/Aer Lingus/Iberia 1:1",
+          "corrected": "The card earns BA Avios directly. Combining Avios between the member’s own loyalty accounts is distinct from UR transfers. BA’s current list also includes Qatar, Finnair, Vueling and Loganair.",
+          "sourceUrl": "https://www.britishairways.com/content/en/us/the-british-airways-club/avios/combine-avios",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "chase-marriott-bold",
+      "findings": [
+        {
+          "kind": "omission",
+          "field": "transferPartners.list and United bonus",
+          "current": "Only United/Delta/AA 3:1",
+          "corrected": "Marriott has more than 35 airline partners. Label these as onward Bonvoy conversions. United adds 10,000 miles per 60,000 points transferred; the usual 5,000-mile bonus per 60,000 excludes American, Delta and Avianca.",
+          "sourceUrl": "https://www.marriott.com/loyalty/redeem/travel/points-to-miles.mi",
+          "confidence": "high",
+          "note": "Current ratios shown are not themselves false; partner coverage and bonus qualifications are incomplete."
+        },
+        {
+          "kind": "qualification",
+          "field": "earning.Marriott Hotels",
+          "current": "14x",
+          "corrected": "Separate card rate 3x from loyalty earnings; public combined total is up to 14x.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/bold",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "perks.Pay Yourself Back",
+          "current": "No value orcap shown",
+          "corrected": "Currently 0.8¢ per point ($100 per 12,500 points), capped at $750 of redemptions per year; eligibility and redemption values can change.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/bold",
+          "confidence": "high",
+          "note": ""
+        },
+        {
+          "kind": "qualification",
+          "field": "perks.DoorDash",
+          "current": "No activation/end dates",
+          "corrected": "Activate complimentary DashPass by December 31, 2027; quarterly nonrestaurant promotions run through that date.",
+          "sourceUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/bold",
+          "confidence": "high",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "barclays-jetblue-plus",
+      "findings": [
+        {
+          "field": "earning.category-name",
+          "current": "Paisly",
+          "corrected": "TrueBlue Travel (renamed Paisly).",
+          "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+          "confidence": "high",
+          "kind": "metadata",
+          "note": ""
+        },
+        {
+          "field": "credits.conditions",
+          "current": "Generic qualifyingVacations purchase;unknownreset",
+          "corrected": "Anniversarypoints are anniversary-linked; source exact vacation purchase minimum/reset before marking credit verified.",
+          "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+          "confidence": "medium",
+          "kind": "needs-verification",
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

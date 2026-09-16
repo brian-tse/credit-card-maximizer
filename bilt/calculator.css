@@ -1,0 +1,25 @@
+.bilt-page { max-width: 1080px; padding-bottom: 4rem; }
+.bilt-page .hero { text-align: left; padding-bottom: 2rem; }
+.eyebrow { font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; color: var(--text-secondary); margin-bottom: .5rem; }
+.input-panel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; padding: 1.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+.input-panel label { display: block; margin-bottom: .5rem; font-weight: 600; }
+.input-panel input, .input-panel select { width: 100%; padding: .8rem; font: inherit; border: 1px solid var(--border); border-radius: 7px; color: var(--text); background: var(--bg); }
+.input-panel input:focus-visible, .input-panel select:focus-visible { outline: 3px solid var(--accent-purple, #8b5cf6); outline-offset: 2px; }
+.help { font-size: .85rem; color: var(--text-secondary); line-height: 1.55; margin-top: .5rem; }
+.comparison-summary { margin: 1.6rem 0; line-height: 1.6; }
+.option-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
+.option-panel, .method-panel { padding: 1.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+.option-panel h2 { font-size: 1.4rem; margin-bottom: 1rem; }
+.points { font-size: 2.5rem; line-height: 1.2; font-weight: 650; font-variant-numeric: tabular-nums; }
+.points > span:last-child { font-size: .95rem; font-weight: 400; color: var(--text-secondary); }
+.option-panel dl { margin-top: 1.5rem; }
+.option-panel dl div { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; border-bottom: 1px solid var(--border); padding: .65rem 0; }
+.option-panel dt { color: var(--text-secondary); font-size: .88rem; }
+.option-panel dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.method-panel { margin-top: 1.5rem; }
+.method-panel h2 { font-size: 1.25rem; margin-bottom: 1rem; }
+.method-panel p { line-height: 1.65; margin-bottom: .9rem; }
+.method-panel a { text-decoration: underline; }
+.catalog-link { margin-top: 1.5rem; }
+#input-error { margin-top: 1rem; color: #b42318; }
+@media (max-width: 660px) { .input-panel, .option-grid { grid-template-columns: 1fr; } .bilt-page .hero h1 { font-size: 2rem; } .option-panel, .method-panel, .input-panel { padding: 1.1rem; } }

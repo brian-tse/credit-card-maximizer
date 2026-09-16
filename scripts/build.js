@@ -58,6 +58,8 @@ function buildSite({ root = projectRoot, output = path.join(root, 'dist'), sha }
     const source = path.join(root, entry);
     if (fs.existsSync(source)) fs.cpSync(source, path.join(output, entry), { recursive: true });
   }
+  // Editorial source shards are compiled into cards.js, not published twice.
+  fs.rmSync(path.join(output, 'data', 'reviewed'), { recursive: true, force: true });
   versionOutputHtml(output, commit);
   fs.writeFileSync(path.join(output, 'version.json'), JSON.stringify({ commit, builtAt: new Date().toISOString() }) + '\n');
   return { output, commit };

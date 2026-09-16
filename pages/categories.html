@@ -513,7 +513,7 @@
         'Wells Fargo': 'WF',
         'US Bank': 'USB',
         'Discover': 'Disc',
-        'Cardless': 'Bilt'
+        'Column N.A.': 'Bilt'
       };
       const shortIssuer = shortIssuers[card.issuer] || card.issuer;
       const shortName = card.name
@@ -548,11 +548,13 @@
           effectiveReturn: baseEffectiveReturn,
           pointValue: pointValue,
           currencyName: currencyName,
-          description: 'Base earning rate'
+          description: 'Base earning rate',
+          terms: CardMaxModel.termsHtml(card.earning) + CardMaxModel.termsHtml({ termsNote: card.termsNote })
         });
 
         // Add bonus categories
-        card.earning.categories.forEach(cat => {
+        CardMaxModel.earningCategories(card).forEach(cat => {
+          if (!Number.isFinite(cat.multiplier) || cat.valuationEnabled === false) return;
           const categoryName = cat.category;
           if (!categories[categoryName]) {
             categories[categoryName] = [];
@@ -564,7 +566,8 @@
             effectiveReturn: effectiveReturn,
             pointValue: pointValue,
             currencyName: currencyName,
-            description: cat.description
+            description: cat.description,
+            terms: CardMaxModel.termsHtml(cat)
           });
         });
       });
@@ -607,7 +610,7 @@
           <div class="page-header">
             <div>
               <h2>Your Card Rankings by Category</h2>
-              <p>Based on the ${userCards.length} card${userCards.length > 1 ? 's' : ''} in your collection. Cards are ranked by <strong>effective return rate</strong> (multiplier × point value).</p>
+              <p>Based on the ${userCards.length} card${userCards.length > 1 ? 's' : ''} in your collection. Cards are ranked by <strong>effective return rate</strong> (multiplier × editable point value). These estimates assume eligibility and available category caps; spending limits, category choices and introductory periods still apply. Unverified rates are excluded. Crypto percentages reflect reward value at purchase, not future asset value.</p>
             </div>
             <button class="settings-btn" onclick="openValuationsModal()">
               <span>⚙️</span> Point Values
@@ -644,11 +647,11 @@
                 <div class="card-ranking-name">
                   ${getShortName(item.card)}
                 </div>
-                <div class="card-ranking-description">${item.description}</div>
+                <div class="card-ranking-description">${item.description}${item.terms || ''}</div>
               </div>
               <div class="multiplier-badge">
                 <div class="effective-return">${item.effectiveReturn.toFixed(1)}%</div>
-                <div class="multiplier-raw">${item.multiplier}x @ ${item.pointValue.toFixed(2)}¢</div>
+                <div class="multiplier-raw">${CardMaxModel.earningLabel(item.card, {multiplier:item.multiplier})} @ ${item.pointValue.toFixed(2)}¢</div>
               </div>
             </li>
           `;

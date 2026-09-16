@@ -1,0 +1,3324 @@
+[
+  {
+    "id": "atmos-rewards-summit",
+    "name": "Atmos Rewards Summit",
+    "issuer": "Bank of America",
+    "network": "Visa",
+    "annualFee": 395,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/"
+    },
+    "earning": {
+      "base": 1,
+      "categories": [
+        {
+          "category": "Alaska/Hawaiian Airlines",
+          "multiplier": 3,
+          "description": "Flights and purchases",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/"
+        },
+        {
+          "category": "Dining",
+          "multiplier": 3,
+          "description": "Restaurants worldwide",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/"
+        },
+        {
+          "category": "Foreign Transactions",
+          "multiplier": 3,
+          "description": "Purchases made abroad",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/"
+        }
+      ]
+    },
+    "transferPartners": [
+      {
+        "name": "Marriott Bonvoy",
+        "ratio": "1:1",
+        "type": "hotel",
+        "kind": "loyalty-conversion",
+        "sourceUrl": "https://www.marriott.com/loyalty/earn/miles/miles-to-points/terms.mi",
+        "termsNote": "Atmos-to-Marriott conversion; not airline award booking. Eligibility and transfer minimums apply."
+      }
+    ],
+    "credits": [
+      {
+        "name": "Global Companion Award (25k)",
+        "amount": 1,
+        "frequency": "annual",
+        "type": "travel",
+        "description": "Anniversary award reducing eligible companion award travel by up to 25,000 points; taxes, fees and booking restrictions apply.",
+        "id": "global-companion-award-25k",
+        "unit": "certificates",
+        "pointLimit": 25000,
+        "resetPeriod": "anniversary",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Delay Voucher",
+        "amount": 50,
+        "frequency": "per occurrence",
+        "type": "travel",
+        "description": "Restricted Alaska travel voucher for a qualifying delay or cancellation.",
+        "id": "delay-voucher",
+        "unit": "voucher",
+        "resetPeriod": "per-use",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "trackingEnabled": false,
+        "valuationEnabled": false,
+        "verificationStatus": "needs-review",
+        "termsNote": "Current bank page says departure delay of two hours or more. Exact qualifying itinerary and redemption deadline must be checked in current voucher terms."
+      },
+      {
+        "id": "global-companion-award-100k",
+        "name": "Global Companion Award (100k)",
+        "amount": 1,
+        "unit": "certificates",
+        "frequency": "annual",
+        "resetPeriod": "anniversary",
+        "description": "Companion award of up to 100,000 points after $60,000 in eligible purchases during the anniversary year.",
+        "type": "travel",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "pointLimit": 100000,
+        "conditional": true,
+        "eligibility": "Requires $60,000 anniversary-year spend.",
+        "spendRequirement": {
+          "amount": 60000,
+          "currency": "USD",
+          "period": "anniversary"
+        }
+      },
+      {
+        "id": "global-entry-tsa-precheck",
+        "name": "Global Entry / TSA PreCheck",
+        "amount": 120,
+        "unit": "USD",
+        "frequency": "every 4 years",
+        "resetPeriod": "rolling",
+        "description": "Up to $120 for an eligible application fee paid with the card.",
+        "type": "travel",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "perks": [
+      {
+        "name": "Alaska Lounge Passes",
+        "description": "8 passes per year (2 per quarter)",
+        "type": "lounge",
+        "id": "alaska-lounge-passes",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Free Checked Bags",
+        "description": "First checked bag for the cardholder and up to six companions on the same eligible itinerary paid with the card.",
+        "type": "travel",
+        "id": "free-checked-bags",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Priority Boarding",
+        "description": "Early group boarding on Alaska flights",
+        "type": "travel",
+        "id": "priority-boarding",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "No Same-Day Change Fees",
+        "description": "Free same-day changes on Alaska flights",
+        "type": "travel",
+        "id": "no-same-day-change-fees",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Status Points Earning",
+        "description": "1 status point per $2 spent, 10,000 annually",
+        "type": "status",
+        "id": "status-points-earning",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "airline-award-redemptions",
+        "name": "Airline award redemptions",
+        "description": "Atmos points can book eligible Alaska, Hawaiian and partner awards; this is redemption access, not a transfer into every airline program.",
+        "type": "redemption",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "bank-relationship-bonus",
+        "name": "Bank relationship bonus",
+        "description": "10% bonus on purchase points with an eligible Bank of America account.",
+        "type": "rewards",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "partner-award-fee-waiver",
+        "name": "Partner award fee waiver and point sharing",
+        "description": "Eligible partner redemption booking fees are waived; eligible point sharing is free. Consult Atmos terms.",
+        "type": "redemption",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "color": "#00274C",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+      "https://news.alaskaair.com/loyalty/alaska-airlines-and-bank-of-america-present-a-new-premium-credit-card/",
+      "https://www.marriott.com/loyalty/earn/miles/miles-to-points/terms.mi"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "Exact complete hotel-transfer list not established; Marriott1:1 confirmed separately."
+    ],
+    "fieldSources": {
+      "perks.free-checked-bag": {
+        "sourceUrl": "https://news.alaskaair.com/loyalty/alaska-airlines-and-bank-of-america-present-a-new-premium-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Cardholder plus 6 companions; eligible paid-with-card itinerary."
+      },
+      "transferPartners": {
+        "sourceUrl": "https://news.alaskaair.com/loyalty/alaska-airlines-and-bank-of-america-present-a-new-premium-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Separate award redemption from outbound transfers; replace placeholders with exact eligible hotel programs/ratios."
+      },
+      "credits/perks": {
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Add $120 airport-security credit/four years; 100k companion award after $60k anniversary-year spend; eligible-bank 10% bonus."
+      },
+      "credits.delay-voucher": {
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "needs-review",
+        "note": "Qualifying Alaska delay/cancellation voucher with a short redemption window; current bank page says departure delay of 2 hours or more. Exact eligibility/48-hour expiry requires reconciliation with current terms."
+      }
+    }
+  },
+  {
+    "id": "bofa-business-advantage-unlimited",
+    "name": "Bank of America Business Advantage Unlimited Cash Rewards",
+    "issuer": "Bank of America",
+    "network": "Visa",
+    "cardType": "business",
+    "annualFee": 0,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards"
+    },
+    "earning": {
+      "base": 1.5,
+      "categories": [
+        {
+          "category": "All Purchases",
+          "multiplier": 1.5,
+          "description": "Unlimited 1.5% cash back (up to 2.62% with Preferred Rewards)",
+          "sourceUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [],
+    "perks": [
+      {
+        "name": "No Annual Fee",
+        "description": "No annual fee ever",
+        "type": "fee",
+        "id": "no-annual-fee",
+        "sourceUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Preferred Rewards for Business",
+        "description": "Eligible business banking tiers increase the 1.5% base return up to 2.62%; consumer BofA Rewards tiers do not apply.",
+        "type": "redemption",
+        "id": "preferred-rewards-bonus",
+        "sourceUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards",
+        "reviewedAt": "2026-09-16",
+        "legacyNames": [
+          "Preferred Rewards Bonus"
+        ]
+      },
+      {
+        "name": "Employee Cards",
+        "description": "Free employee cards at no extra cost",
+        "type": "business",
+        "id": "employee-cards",
+        "sourceUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Cash Flow Management",
+        "description": "Tools to manage business cash flow",
+        "type": "business",
+        "id": "cash-flow-management",
+        "sourceUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "color": "#012169",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards",
+      "https://business.bankofamerica.com/en/credit-cards/cash-back"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "rewardCurrency": "cashback",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "Nine-billing-cycle intro APR did not resolve in public page; dynamic placeholder prevents confirmation.",
+      "Do not apply consumer BofA Rewards tiers to business program."
+    ],
+    "fieldSources": {
+      "signUpBonus (hidden)": {
+        "sourceUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Current public page advertises500 after5000/90days; retain per-offer eligibility."
+      }
+    },
+    "retiredPerks": [
+      {
+        "name": "0% Intro APR",
+        "description": "0% for 9 billing cycles on purchases",
+        "type": "apr",
+        "id": "0-intro-apr",
+        "sourceUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards",
+        "reviewedAt": "2026-09-16",
+        "status": "unsupported",
+        "retiredAt": "2026-09-16",
+        "retirementReason": "Removed during issuer audit; current terms do not support this claim."
+      }
+    ]
+  },
+  {
+    "id": "bank-of-america-customized-cash-rewards",
+    "name": "Bank of America Customized Cash Rewards",
+    "issuer": "Bank of America",
+    "network": "Visa",
+    "cardType": "personal",
+    "annualFee": 0,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/"
+    },
+    "earning": {
+      "base": 1,
+      "categories": [
+        {
+          "category": "Choice Category (Year 1)",
+          "multiplier": 6,
+          "description": "Gas/EV charging, online shopping, dining, travel, drugstores, or home improvement",
+          "cap": {
+            "amount": 2500,
+            "period": "calendar quarter",
+            "sharedGroup": "choice-grocery-wholesale",
+            "afterCap": 1
+          },
+          "termsNote": "Shared $2,500 quarterly cap; 1% thereafter. The extra 3% first-year bonus does not receive a relationship bonus.",
+          "introductory": true,
+          "eligibility": "Eligible new accounts during the first year",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/"
+        },
+        {
+          "category": "Choice Category (After Year 1)",
+          "multiplier": 3,
+          "description": "Gas/EV charging, online shopping, dining, travel, drugstores, or home improvement",
+          "cap": {
+            "amount": 2500,
+            "period": "calendar quarter",
+            "sharedGroup": "choice-grocery-wholesale",
+            "afterCap": 1
+          },
+          "termsNote": "Shared $2,500 quarterly cap; 1% thereafter. The extra 3% first-year bonus does not receive a relationship bonus.",
+          "introductory": true,
+          "eligibility": "After the first year",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/"
+        },
+        {
+          "category": "Grocery & Wholesale",
+          "multiplier": 2,
+          "description": "Grocery stores and wholesale clubs",
+          "cap": {
+            "amount": 2500,
+            "period": "calendar quarter",
+            "sharedGroup": "choice-grocery-wholesale",
+            "afterCap": 1
+          },
+          "termsNote": "Shared $2,500 quarterly cap; 1% thereafter. The extra 3% first-year bonus does not receive a relationship bonus.",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [],
+    "perks": [
+      {
+        "name": "0% Intro APR",
+        "description": "0% for 15 billing cycles on purchases and balance transfers (within first 60 days)",
+        "type": "apr",
+        "id": "0-intro-apr",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Quarterly Spending Cap",
+        "description": "$2,500 combined per calendar quarter in the choice and grocery/wholesale categories, including the introductory 6% category; 1% after the cap.",
+        "type": "rewards",
+        "id": "quarterly-spending-cap",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Monthly Category Changes",
+        "description": "Change choice category up to once per calendar month",
+        "type": "rewards",
+        "id": "monthly-category-changes",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "BofA Rewards bonus",
+        "description": "Eligible consumer tiers add 10%, 25%, 50% or 75% to eligible rewards. Legacy bonus extensions depend on the account. Introductory extra rewards are excluded.",
+        "type": "rewards",
+        "id": "preferred-rewards-boost",
+        "sourceUrl": "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+        "reviewedAt": "2026-09-16",
+        "legacyNames": [
+          "Preferred Rewards Boost"
+        ]
+      },
+      {
+        "name": "Foreign Transaction Fee",
+        "description": "3% of the U.S. dollar amount of transactions made in a foreign currency.",
+        "type": "fee",
+        "id": "no-foreign-transaction-fees",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "legacyNames": [
+          "No Foreign Transaction Fees"
+        ]
+      }
+    ],
+    "color": "#E31837",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+      "https://secure.bankofamerica.com/apply-now-services/credit-cards/rest/get-disclosures/v1/usa/show-in-browser?cId=4079158&isMobile=true&locale=en_US&poCd=4V",
+      "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+      "https://www.privatebank.bankofamerica.com/solutions/credit-cards.html"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "rewardCurrency": "cashback",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified."
+    ],
+    "fieldSources": {
+      "perks.no-foreign-transaction-fees": {
+        "sourceUrl": "https://secure.bankofamerica.com/apply-now-services/credit-cards/rest/get-disclosures/v1/usa/show-in-browser?cId=4079158&isMobile=true&locale=en_US&poCd=4V",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "3% of USD amount of foreign-currency transactions."
+      },
+      "perks.preferred-rewards": {
+        "sourceUrl": "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "BofA Rewards:10/25/50/75%; preserve applicable grandfathered benefits."
+      },
+      "earning.cap/intro": {
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Combined cap includes first-year6%; relationship bonus excludes extra3% introductory portion."
+      }
+    }
+  },
+  {
+    "id": "boa-atmos-ascent",
+    "name": "Atmos Rewards Ascent",
+    "issuer": "Bank of America",
+    "network": "Visa",
+    "cardType": "personal",
+    "annualFee": 95,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/"
+    },
+    "earning": {
+      "base": 1,
+      "categories": [
+        {
+          "category": "Alaska Airlines",
+          "multiplier": 3,
+          "description": "Alaska Airlines purchases",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/"
+        },
+        {
+          "category": "Hawaiian Airlines",
+          "multiplier": 3,
+          "description": "Hawaiian Airlines purchases",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/"
+        },
+        {
+          "category": "Gas Stations",
+          "multiplier": 2,
+          "description": "At the pump",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/"
+        },
+        {
+          "category": "EV Charging",
+          "multiplier": 2,
+          "description": "Electric vehicle charging stations",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/"
+        },
+        {
+          "category": "Transit & Rideshare",
+          "multiplier": 2,
+          "description": "Local transit, Uber, Lyft",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/"
+        },
+        {
+          "category": "Cable & Streaming",
+          "multiplier": 2,
+          "description": "Cable and select streaming services",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [
+      {
+        "name": "Alaska Lounge+ Discount",
+        "amount": 100,
+        "frequency": "annual",
+        "type": "travel",
+        "description": "$100 discount on a qualifying annual Alaska Lounge+ membership; current membership prices vary.",
+        "id": "alaska-lounge-discount",
+        "unit": "USD",
+        "resetPeriod": "unknown",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "annualValueExcluded": true,
+        "trackingEnabled": false,
+        "termsNote": "Purchase discount. Confirm membership eligibility and renewal timing; excluded from recurring cash caps."
+      },
+      {
+        "name": "Inflight Purchase Credit",
+        "amount": 20,
+        "frequency": "per transaction",
+        "type": "travel",
+        "description": "20% back on Alaska/Hawaiian inflight purchases",
+        "id": "inflight-purchase-credit",
+        "unit": "percent",
+        "resetPeriod": "per-use",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "perks": [
+      {
+        "name": "Free Checked Bag",
+        "description": "1 free bag for you + up to 6 companions on same reservation",
+        "type": "travel",
+        "id": "free-checked-bag",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Preferred Boarding",
+        "description": "Priority boarding on Alaska and Hawaiian flights",
+        "type": "travel",
+        "id": "preferred-boarding",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "$99 Companion Fare",
+        "description": "Earn after $6,000 eligible purchases in an anniversary year. Base fare $99 plus taxes and fees; older accounts may have different qualifying terms.",
+        "type": "travel",
+        "id": "99-companion-fare",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "No Foreign Transaction Fee",
+        "description": "Use abroad with no extra fees",
+        "type": "travel",
+        "id": "no-foreign-transaction-fee",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Status Points",
+        "description": "Earn 1 status point per $3 spent (no cap starting 2026)",
+        "type": "status",
+        "id": "status-points",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "bank-relationship-bonus",
+        "name": "Bank relationship bonus",
+        "description": "10% bonus on purchase points with an eligible Bank of America account.",
+        "type": "rewards",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "color": "#E31837",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+      "https://news.alaskaair.com/loyalty/atmos-rewards-2026-expanded-status-earning-bew-partnerships-and-exclusive-perks-announced/"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "Status-earning1/$3 has official2026 announcement support; exact account-specific grandfathered companion conditions need cardholder agreement."
+    ],
+    "fieldSources": {
+      "perks.bank-relationship-bonus": {
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "10% bonus on purchase points with eligible Bank of America account."
+      },
+      "credits.lounge-discount": {
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Describe100 off qualifying annual membership without hardcoding undiscounted price; companion spend uses anniversary year."
+      }
+    }
+  },
+  {
+    "id": "bofa-air-france-klm",
+    "name": "Air France KLM Visa Signature",
+    "issuer": "Bank of America",
+    "network": "Visa",
+    "annualFee": 89,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/"
+    },
+    "earning": {
+      "base": 1.5,
+      "categories": [
+        {
+          "category": "Air France/KLM/SkyTeam",
+          "multiplier": 3,
+          "description": "Bookings with Air France, KLM, and SkyTeam airlines",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/"
+        },
+        {
+          "category": "Dining",
+          "multiplier": 3,
+          "description": "Restaurants worldwide",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [],
+    "perks": [
+      {
+        "name": "Flying Blue Elite Status",
+        "description": "Earn up to 160 XP/year toward Silver, Gold, Platinum status",
+        "type": "status",
+        "id": "flying-blue-elite-status",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Anniversary Bonus",
+        "description": "20 XP at each anniversary independently of spending. Receive 5,000 anniversary miles after at least $50 in eligible anniversary-year purchases.",
+        "type": "rewards",
+        "id": "anniversary-bonus",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Spend Bonuses",
+        "description": "Earn 80 extra XP after $15,000 and another 60 XP after $25,000 in eligible anniversary-year purchases.",
+        "type": "status",
+        "id": "spend-bonuses",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "No Foreign Transaction Fee",
+        "description": "Use abroad with no extra fees",
+        "type": "travel",
+        "id": "no-foreign-transaction-fee",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Visa Signature Benefits",
+        "description": "Premium Visa benefits package",
+        "type": "travel",
+        "id": "visa-signature-benefits",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "color": "#00205B",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "Generic Visa Signature protections require actual benefit guide."
+    ],
+    "fieldSources": {
+      "perks.anniversary": {
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "50spend requirement attaches to5000miles;20XP awarded each anniversary independently. Additional80XP at15k and60XP at25k anniversary-year spend."
+      }
+    }
+  },
+  {
+    "id": "bofa-premium-rewards",
+    "name": "Bank of America Premium Rewards",
+    "issuer": "Bank of America",
+    "network": "Visa",
+    "annualFee": 95,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/"
+    },
+    "earning": {
+      "base": 1.5,
+      "categories": [
+        {
+          "category": "Travel",
+          "multiplier": 2,
+          "description": "Airlines, hotels, car rentals",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/"
+        },
+        {
+          "category": "Dining",
+          "multiplier": 2,
+          "description": "Restaurants worldwide",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [
+      {
+        "name": "Airline Incidental Credit",
+        "amount": 100,
+        "frequency": "annual",
+        "type": "travel",
+        "description": "Seat upgrades, baggage fees, lounge access",
+        "id": "airline-incidental-credit",
+        "unit": "USD",
+        "resetPeriod": "calendar",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Global Entry/TSA PreCheck",
+        "amount": 100,
+        "frequency": "every 4 years",
+        "type": "travel",
+        "description": "Statement credit for application fee",
+        "id": "global-entry-tsa-precheck",
+        "unit": "USD",
+        "resetPeriod": "rolling",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "perks": [
+      {
+        "name": "BofA Rewards bonus",
+        "description": "Eligible consumer tiers add 10%, 25%, 50% or 75% to eligible rewards. Legacy bonus extensions depend on the account. Introductory extra rewards are excluded.",
+        "type": "rewards",
+        "id": "preferred-rewards-bonus",
+        "sourceUrl": "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+        "reviewedAt": "2026-09-16",
+        "legacyNames": [
+          "Preferred Rewards Bonus"
+        ]
+      },
+      {
+        "name": "No Foreign Transaction Fee",
+        "description": "Use abroad with no extra fees",
+        "type": "travel",
+        "id": "no-foreign-transaction-fee",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Trip Delay Insurance",
+        "description": "Reimbursement for delays over 12 hours",
+        "type": "insurance",
+        "id": "trip-delay-insurance",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Coverage requires eligible payment and a covered claim; consult the current benefit guide for exclusions and limits."
+      },
+      {
+        "name": "Trip Cancellation Insurance",
+        "description": "Coverage for non-refundable expenses",
+        "type": "insurance",
+        "id": "trip-cancellation-insurance",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Coverage requires eligible payment and a covered claim; consult the current benefit guide for exclusions and limits."
+      },
+      {
+        "name": "Baggage Insurance",
+        "description": "Lost or delayed luggage coverage",
+        "type": "insurance",
+        "id": "baggage-insurance",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Coverage requires eligible payment and a covered claim; consult the current benefit guide for exclusions and limits."
+      },
+      {
+        "name": "Purchase Protection",
+        "description": "Repair or replacement for 90 days, up to $10,000",
+        "type": "protection",
+        "id": "purchase-protection",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Coverage requires eligible payment and a covered claim; consult the current benefit guide for exclusions and limits."
+      },
+      {
+        "name": "Extended Warranty",
+        "description": "Extra year on manufacturer warranties",
+        "type": "protection",
+        "id": "extended-warranty",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Coverage requires eligible payment and a covered claim; consult the current benefit guide for exclusions and limits."
+      }
+    ],
+    "color": "#E31837",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
+      "https://www.privatebank.bankofamerica.com/solutions/credit-cards.html",
+      "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+      "https://www.bankofamerica.com/credit-cards/premium-benefits/"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "Regular Premium Rewards airport-security credit remains100 in current issuer materials; do not automatically change to120."
+    ],
+    "fieldSources": {
+      "perks.preferred-rewards": {
+        "sourceUrl": "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "BofA Rewards10/25/50/75%; verify extended legacy bonus per account."
+      },
+      "credits.resetPeriod": {
+        "sourceUrl": "https://www.privatebank.bankofamerica.com/solutions/credit-cards.html",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "The airline incidental credit resets by calendar year."
+      }
+    }
+  },
+  {
+    "id": "bofa-premium-rewards-elite",
+    "name": "Bank of America Premium Rewards Elite",
+    "issuer": "Bank of America",
+    "network": "Visa",
+    "annualFee": 550,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/"
+    },
+    "earning": {
+      "base": 1.5,
+      "categories": [
+        {
+          "category": "Travel",
+          "multiplier": 2,
+          "description": "Airlines, hotels, car rentals",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/"
+        },
+        {
+          "category": "Dining",
+          "multiplier": 2,
+          "description": "Restaurants worldwide",
+          "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [
+      {
+        "name": "Airline Incidental Credit",
+        "amount": 300,
+        "frequency": "annual",
+        "type": "travel",
+        "description": "Seat upgrades, baggage fees, lounge fees",
+        "id": "airline-incidental-credit",
+        "unit": "USD",
+        "resetPeriod": "calendar",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Lifestyle Credit",
+        "amount": 150,
+        "frequency": "annual",
+        "type": "lifestyle",
+        "description": "Streaming, food delivery, fitness, rideshare",
+        "id": "lifestyle-credit",
+        "unit": "USD",
+        "resetPeriod": "calendar",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Global Entry/TSA PreCheck",
+        "amount": 120,
+        "frequency": "every 4 years",
+        "type": "travel",
+        "description": "Statement credit for application fee",
+        "id": "global-entry-tsa-precheck",
+        "unit": "USD",
+        "resetPeriod": "rolling",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "perks": [
+      {
+        "name": "Priority Pass Select",
+        "description": "4 complimentary memberships with lounge access",
+        "type": "lounge",
+        "id": "priority-pass-select",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "BofA Rewards bonus",
+        "description": "Eligible consumer tiers add 10%, 25%, 50% or 75% to eligible rewards. Legacy bonus extensions depend on the account. Introductory extra rewards are excluded.",
+        "type": "rewards",
+        "id": "preferred-rewards-bonus",
+        "sourceUrl": "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+        "reviewedAt": "2026-09-16",
+        "legacyNames": [
+          "Preferred Rewards Bonus"
+        ]
+      },
+      {
+        "name": "20% Airfare Savings",
+        "description": "20% off when paying with points through Travel Center",
+        "type": "travel",
+        "id": "20-airfare-savings",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "No Foreign Transaction Fee",
+        "description": "Use abroad with no extra fees",
+        "type": "travel",
+        "id": "no-foreign-transaction-fee",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Trip Delay Insurance",
+        "description": "Reimbursement for delays",
+        "type": "insurance",
+        "id": "trip-delay-insurance",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Coverage requires eligible payment and a covered claim; consult the current benefit guide for exclusions and limits."
+      },
+      {
+        "name": "Trip Cancellation Insurance",
+        "description": "Coverage for non-refundable expenses",
+        "type": "insurance",
+        "id": "trip-cancellation-insurance",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Coverage requires eligible payment and a covered claim; consult the current benefit guide for exclusions and limits."
+      },
+      {
+        "name": "Purchase Protection",
+        "description": "Repair or replacement for eligible items",
+        "type": "protection",
+        "id": "purchase-protection",
+        "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Coverage requires eligible payment and a covered claim; consult the current benefit guide for exclusions and limits."
+      }
+    ],
+    "color": "#E31837",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+      "https://www.privatebank.bankofamerica.com/solutions/credit-cards.html",
+      "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+      "https://www.bankofamerica.com/credit-cards/premium-elite-benefits/"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified."
+    ],
+    "fieldSources": {
+      "perks.preferred-rewards": {
+        "sourceUrl": "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "BofA Rewards10/25/50/75%; verify extended legacy bonus per account."
+      },
+      "credits.resetPeriod": {
+        "sourceUrl": "https://www.privatebank.bankofamerica.com/solutions/credit-cards.html",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Airline and applicable lifestyle credits reset by calendar year."
+      }
+    }
+  },
+  {
+    "id": "bilt-blue",
+    "name": "Bilt Blue Card",
+    "issuer": "Column N.A.",
+    "network": "Mastercard",
+    "annualFee": 0,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.bilt.com/card"
+    },
+    "earning": {
+      "base": 1,
+      "categories": [
+        {
+          "category": "Rent/Mortgage",
+          "multiplier": null,
+          "description": "Housing-only option: at least 25%, 50%, 75% or 100% of the housing payment in everyday spend earns 0.5x, 0.75x, 1x or 1.25x housing points; If the ratio is below 25% and at least one eligible housing payment is made, receive 250 housing points for that billing cycle. Flexible option: redeem Bilt Cash at $3 per 100 points, up to 1x housing points. Neither option charges a Bilt housing transaction fee.",
+          "displayRate": "Up to 1.25x",
+          "valuationEnabled": false,
+          "conditional": true,
+          "sourceUrl": "https://www.bilt.com/card"
+        },
+        {
+          "category": "Bilt Travel Hotels",
+          "multiplier": 3,
+          "description": "Eligible hotel bookings through Bilt Travel.",
+          "sourceUrl": "https://www.bilt.com/card"
+        },
+        {
+          "category": "Bilt Travel Flights",
+          "multiplier": 2,
+          "description": "Eligible flight bookings through Bilt Travel.",
+          "sourceUrl": "https://www.bilt.com/card"
+        },
+        {
+          "category": "Linked Lyft",
+          "multiplier": 3,
+          "description": "Requires linked Bilt and Lyft accounts.",
+          "sourceUrl": "https://www.bilt.com/card"
+        }
+      ]
+    },
+    "transferPartners": [
+      {
+        "name": "United Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Southwest Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Atmos Rewards",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Air Canada Aeroplan",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Turkish Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Air France/KLM",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "British Airways",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Emirates",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Spirit Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Aer Lingus",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Avianca LifeMiles",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Cathay Pacific",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Etihad",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Iberia",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Japan Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Qatar Airways",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "TAP Portugal",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Virgin Atlantic",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Hyatt",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "IHG",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Marriott",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Hilton",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Accor",
+        "ratio": "3:2",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Wyndham Rewards",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Virgin Red",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "I Prefer Hotel Rewards",
+        "ratio": "1:2",
+        "type": "hotel",
+        "sourceUrl": "https://newsroom.biltrewards.com/preferred-hotels-resorts"
+      }
+    ],
+    "credits": [],
+    "perks": [
+      {
+        "name": "10% Intro APR",
+        "description": "Introductory purchase APR for the first 12 billing cycles; subsequent APR and other transaction terms are in the application disclosures.",
+        "type": "apr",
+        "id": "10-intro-apr",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Bilt Cash Earning",
+        "description": "The Flexible option earns 4% Bilt Cash on eligible everyday purchases. Bilt Cash has restricted redemption options and expiry rules; it is not unrestricted cash back.",
+        "type": "rewards",
+        "id": "bilt-cash-earning",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Bilt Cash expires at calendar year end, with up to $100 carried into the next year. Oldest cash is redeemed first."
+      },
+      {
+        "name": "No Foreign Transaction Fee",
+        "description": "Use abroad with no extra fees",
+        "type": "travel",
+        "id": "no-foreign-transaction-fee",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Housing rewards options",
+        "description": "Housing-only option: at least 25%, 50%, 75% or 100% of the housing payment in everyday spend earns 0.5x, 0.75x, 1x or 1.25x housing points; If the ratio is below 25% and at least one eligible housing payment is made, receive 250 housing points for that billing cycle. Flexible option: redeem Bilt Cash at $3 per 100 points, up to 1x housing points. Neither option charges a Bilt housing transaction fee.",
+        "type": "rewards",
+        "id": "rent-rewards",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "legacyNames": [
+          "Rent Rewards"
+        ]
+      }
+    ],
+    "color": "#000000",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.bilt.com/card",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.bilt.com/card",
+      "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+      "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+      "https://newsroom.biltrewards.com/preferred-hotels-resorts",
+      "https://www.biltrewards.com/terms/bilt-cash"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "Detailed insurance limits and partner transfer minimums not fully checked.",
+      "Bilt Cash is restricted ecosystem value, not unrestricted cash back."
+    ],
+    "fieldSources": {
+      "issuer": {
+        "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Column N.A. issues Bilt cards; Cardless services them."
+      },
+      "earning.housing": {
+        "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Replace with Housing-only tiers up to1.25x or Flexible Bilt Cash redemption up to1x; neither has a Bilt housing transaction fee."
+      },
+      "transferPartners.Hilton": {
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "1:1"
+      },
+      "transferPartners": {
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Add Wyndham1:1,VirginRed1:1,IPrefer1:2; rename Alaska toAtmos."
+      },
+      "earning.dining/travel": {
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "1x ordinary purchases. Portal hotels3x,flights2x; linked Lyft3x."
+      },
+      "perks.bilt-cash": {
+        "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "4% Bilt Cash only with Flexible option."
+      }
+    },
+    "brand": "Bilt",
+    "servicer": "Cardless",
+    "rewardCurrency": "bilt",
+    "retiredPerks": []
+  },
+  {
+    "id": "bilt-obsidian",
+    "name": "Bilt Obsidian Card",
+    "issuer": "Column N.A.",
+    "network": "Mastercard",
+    "annualFee": 95,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.bilt.com/card"
+    },
+    "earning": {
+      "base": 1,
+      "categories": [
+        {
+          "category": "Dining OR Grocery",
+          "multiplier": 3,
+          "description": "Choose dining or grocery for 3x. Grocery bonus applies to the first $25,000 per calendar year; other purchases earn 1x.",
+          "eligibility": "Only the selected category receives 3x.",
+          "cap": {
+            "amount": 25000,
+            "period": "calendar year",
+            "appliesTo": "grocery only",
+            "afterCap": 1
+          },
+          "sourceUrl": "https://www.bilt.com/card"
+        },
+        {
+          "category": "Travel",
+          "multiplier": 2,
+          "description": "Eligible travel purchases.",
+          "sourceUrl": "https://www.bilt.com/card"
+        },
+        {
+          "category": "Rent/Mortgage",
+          "multiplier": null,
+          "description": "Housing-only option: at least 25%, 50%, 75% or 100% of the housing payment in everyday spend earns 0.5x, 0.75x, 1x or 1.25x housing points; If the ratio is below 25% and at least one eligible housing payment is made, receive 250 housing points for that billing cycle. Flexible option: redeem Bilt Cash at $3 per 100 points, up to 1x housing points. Neither option charges a Bilt housing transaction fee.",
+          "displayRate": "Up to 1.25x",
+          "valuationEnabled": false,
+          "conditional": true,
+          "sourceUrl": "https://www.bilt.com/card"
+        },
+        {
+          "category": "Bilt Travel Hotels",
+          "multiplier": 4,
+          "description": "Eligible hotel bookings through Bilt Travel.",
+          "sourceUrl": "https://www.bilt.com/card"
+        },
+        {
+          "category": "Bilt Travel Flights",
+          "multiplier": 3,
+          "description": "Eligible flight bookings through Bilt Travel.",
+          "sourceUrl": "https://www.bilt.com/card"
+        },
+        {
+          "category": "Linked Lyft",
+          "multiplier": 3,
+          "description": "Requires linked Bilt and Lyft accounts.",
+          "sourceUrl": "https://www.bilt.com/card"
+        }
+      ]
+    },
+    "transferPartners": [
+      {
+        "name": "United Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Southwest Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Atmos Rewards",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Air Canada Aeroplan",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Turkish Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Air France/KLM",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "British Airways",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Emirates",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Spirit Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Aer Lingus",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Avianca LifeMiles",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Cathay Pacific",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Etihad",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Iberia",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Japan Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Qatar Airways",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "TAP Portugal",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Virgin Atlantic",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Hyatt",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "IHG",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Marriott",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Hilton",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Accor",
+        "ratio": "3:2",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Wyndham Rewards",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Virgin Red",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "I Prefer Hotel Rewards",
+        "ratio": "1:2",
+        "type": "hotel",
+        "sourceUrl": "https://newsroom.biltrewards.com/preferred-hotels-resorts"
+      }
+    ],
+    "credits": [
+      {
+        "name": "Bilt Travel Hotel Credit",
+        "amount": 100,
+        "frequency": "semiannual",
+        "type": "travel",
+        "description": "Up to $50 January\u2013June and $50 July\u2013December for eligible Bilt Travel hotel stays of at least two nights.",
+        "id": "bilt-travel-hotel-credit",
+        "unit": "USD",
+        "resetPeriod": "calendar",
+        "verifiedAt": "2026-09-15",
+        "sourceUrl": "https://www.bilt.com/card",
+        "semiannualAmount": 50,
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "perks": [
+      {
+        "name": "10% Intro APR",
+        "description": "Introductory purchase APR for the first 12 billing cycles; subsequent APR and other transaction terms are in the application disclosures.",
+        "type": "apr",
+        "id": "10-intro-apr",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Bilt Cash Earning",
+        "description": "The Flexible option earns 4% Bilt Cash on eligible everyday purchases. Bilt Cash has restricted redemption options and expiry rules; it is not unrestricted cash back.",
+        "type": "rewards",
+        "id": "bilt-cash-earning",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Bilt Cash expires at calendar year end, with up to $100 carried into the next year. Oldest cash is redeemed first."
+      },
+      {
+        "name": "No Foreign Transaction Fee",
+        "description": "Use abroad with no extra fees",
+        "type": "travel",
+        "id": "no-foreign-transaction-fee",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Housing rewards options",
+        "description": "Housing-only option: at least 25%, 50%, 75% or 100% of the housing payment in everyday spend earns 0.5x, 0.75x, 1x or 1.25x housing points; If the ratio is below 25% and at least one eligible housing payment is made, receive 250 housing points for that billing cycle. Flexible option: redeem Bilt Cash at $3 per 100 points, up to 1x housing points. Neither option charges a Bilt housing transaction fee.",
+        "type": "rewards",
+        "id": "rent-rewards",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "legacyNames": [
+          "Rent Rewards"
+        ]
+      }
+    ],
+    "color": "#1C1C1C",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.bilt.com/card",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.bilt.com/card",
+      "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+      "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+      "https://newsroom.biltrewards.com/preferred-hotels-resorts",
+      "https://www.biltrewards.com/terms/bilt-cash"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "Detailed insurance limits and partner transfer minimums not fully checked.",
+      "Bilt Cash is restricted ecosystem value, not unrestricted cash back."
+    ],
+    "fieldSources": {
+      "issuer": {
+        "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Column N.A. issues Bilt cards; Cardless services them."
+      },
+      "earning.housing": {
+        "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Replace with Housing-only tiers up to1.25x or Flexible Bilt Cash redemption up to1x; neither has a Bilt housing transaction fee."
+      },
+      "transferPartners.Hilton": {
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "1:1"
+      },
+      "transferPartners": {
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Add Wyndham1:1,VirginRed1:1,IPrefer1:2; rename Alaska toAtmos."
+      },
+      "earning.categories": {
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Choose dining OR grocery3x; grocery capped25k/year. Portal hotels4x,flights3x."
+      },
+      "perks.lyft-credits": {
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Linked Lyft earns3x; any Bilt Cash redemption is conditional, not a guaranteed separate card credit."
+      },
+      "perks.bilt-cash": {
+        "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Requires Flexible option."
+      }
+    },
+    "brand": "Bilt",
+    "servicer": "Cardless",
+    "rewardCurrency": "bilt",
+    "retiredPerks": [
+      {
+        "name": "Lyft Credits",
+        "description": "Credits for Lyft rides",
+        "type": "rideshare",
+        "id": "lyft-credits",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "status": "unsupported",
+        "retiredAt": "2026-09-16",
+        "retirementReason": "Removed during issuer audit; current terms do not support this claim."
+      }
+    ]
+  },
+  {
+    "id": "bilt-palladium",
+    "name": "Bilt Palladium Card",
+    "issuer": "Column N.A.",
+    "network": "Mastercard",
+    "annualFee": 495,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.bilt.com/card"
+    },
+    "earning": {
+      "base": 2,
+      "categories": [
+        {
+          "category": "Rent/Mortgage",
+          "multiplier": null,
+          "description": "Housing-only option: at least 25%, 50%, 75% or 100% of the housing payment in everyday spend earns 0.5x, 0.75x, 1x or 1.25x housing points; If the ratio is below 25% and at least one eligible housing payment is made, receive 250 housing points for that billing cycle. Flexible option: redeem Bilt Cash at $3 per 100 points, up to 1x housing points. Neither option charges a Bilt housing transaction fee.",
+          "displayRate": "Up to 1.25x",
+          "valuationEnabled": false,
+          "conditional": true,
+          "sourceUrl": "https://www.bilt.com/card"
+        },
+        {
+          "category": "Bilt Travel Hotels",
+          "multiplier": 4,
+          "description": "Eligible hotel bookings through Bilt Travel.",
+          "sourceUrl": "https://www.bilt.com/card"
+        },
+        {
+          "category": "Bilt Travel Flights",
+          "multiplier": 3,
+          "description": "Eligible flight bookings through Bilt Travel.",
+          "sourceUrl": "https://www.bilt.com/card"
+        },
+        {
+          "category": "Linked Lyft",
+          "multiplier": 4,
+          "description": "Requires linked Bilt and Lyft accounts.",
+          "sourceUrl": "https://www.bilt.com/card"
+        }
+      ]
+    },
+    "transferPartners": [
+      {
+        "name": "United Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Southwest Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Atmos Rewards",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Air Canada Aeroplan",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Turkish Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Air France/KLM",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "British Airways",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Emirates",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Spirit Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Aer Lingus",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Avianca LifeMiles",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Cathay Pacific",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Etihad",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Iberia",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Japan Airlines",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Qatar Airways",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "TAP Portugal",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Virgin Atlantic",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Hyatt",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "IHG",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Marriott",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Hilton",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Accor",
+        "ratio": "3:2",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Wyndham Rewards",
+        "ratio": "1:1",
+        "type": "hotel",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "Virgin Red",
+        "ratio": "1:1",
+        "type": "airline",
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners"
+      },
+      {
+        "name": "I Prefer Hotel Rewards",
+        "ratio": "1:2",
+        "type": "hotel",
+        "sourceUrl": "https://newsroom.biltrewards.com/preferred-hotels-resorts"
+      }
+    ],
+    "credits": [
+      {
+        "name": "Bilt Travel Hotel Credit",
+        "amount": 400,
+        "frequency": "semiannual",
+        "type": "travel",
+        "description": "Up to $200 January\u2013June and $200 July\u2013December for eligible Bilt Travel hotel stays of at least two nights.",
+        "id": "bilt-travel-hotel-credit",
+        "unit": "USD",
+        "resetPeriod": "calendar",
+        "verifiedAt": "2026-09-15",
+        "sourceUrl": "https://www.bilt.com/card",
+        "semiannualAmount": 200,
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "annual-bilt-cash",
+        "name": "Annual Bilt Cash",
+        "amount": 200,
+        "unit": "Bilt Cash",
+        "frequency": "annual",
+        "resetPeriod": "calendar",
+        "description": "Receive $200 in Bilt Cash at account opening and on January 1 of each following year while the account is in good standing. Restricted redemption options apply.",
+        "type": "travel",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Bilt Cash is excluded from USD cash totals. Calendar-year expiry; up to $100 carries into the next year."
+      }
+    ],
+    "perks": [
+      {
+        "name": "10% Intro APR",
+        "description": "Introductory purchase APR for the first 12 billing cycles; subsequent APR and other transaction terms are in the application disclosures.",
+        "type": "apr",
+        "id": "10-intro-apr",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Welcome Gold Status",
+        "description": "Welcome status requires $4,000 eligible purchases in 90 days. Status lasts through the qualifying year, the following year and January 15 of the next year.",
+        "type": "status",
+        "id": "bilt-gold-status",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "conditional": true,
+        "legacyNames": [
+          "Bilt Gold Status"
+        ]
+      },
+      {
+        "name": "2x Everyday Points",
+        "description": "2 Bilt points per dollar on all purchases except rent",
+        "type": "rewards",
+        "id": "2x-everyday-points",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "No Foreign Transaction Fee",
+        "description": "Use abroad with no extra fees",
+        "type": "travel",
+        "id": "no-foreign-transaction-fee",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Housing rewards options",
+        "description": "Housing-only option: at least 25%, 50%, 75% or 100% of the housing payment in everyday spend earns 0.5x, 0.75x, 1x or 1.25x housing points; If the ratio is below 25% and at least one eligible housing payment is made, receive 250 housing points for that billing cycle. Flexible option: redeem Bilt Cash at $3 per 100 points, up to 1x housing points. Neither option charges a Bilt housing transaction fee.",
+        "type": "rewards",
+        "id": "rent-rewards",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "legacyNames": [
+          "Rent Rewards"
+        ]
+      },
+      {
+        "id": "bilt-cash-earning",
+        "name": "Bilt Cash Earning",
+        "description": "The Flexible option earns 4% Bilt Cash on eligible everyday purchases. Bilt Cash has restricted redemption options and expiry rules; it is not unrestricted cash back.",
+        "type": "rewards",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Bilt Cash expires at calendar year end, with up to $100 carried into the next year. Oldest cash is redeemed first."
+      },
+      {
+        "id": "priority-pass",
+        "name": "Priority Pass",
+        "description": "Priority Pass membership includes participating lounge access for the member and two guests. Enrollment, visit and location restrictions apply.",
+        "type": "lounge",
+        "sourceUrl": "https://www.biltrewards.com/terms/bilt-cash",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "color": "#C0C0C0",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.bilt.com/card",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.bilt.com/card",
+      "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+      "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+      "https://newsroom.biltrewards.com/preferred-hotels-resorts",
+      "https://www.biltrewards.com/terms/bilt-cash"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "Detailed insurance limits and partner transfer minimums not fully checked.",
+      "Bilt Cash is restricted ecosystem value, not unrestricted cash back."
+    ],
+    "fieldSources": {
+      "issuer": {
+        "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Column N.A. issues Bilt cards; Cardless services them."
+      },
+      "earning.housing": {
+        "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Replace with Housing-only tiers up to1.25x or Flexible Bilt Cash redemption up to1x; neither has a Bilt housing transaction fee."
+      },
+      "transferPartners.Hilton": {
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "1:1"
+      },
+      "transferPartners": {
+        "sourceUrl": "https://support.biltrewards.com/hc/en-us/articles/19086448638989-Bilt-s-Transfer-Partners",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Add Wyndham1:1,VirginRed1:1,IPrefer1:2; rename Alaska toAtmos."
+      },
+      "perks.gold-status": {
+        "sourceUrl": "https://www.biltrewards.com/terms/bilt-card-offer-terms",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Welcome status requires4k eligible spend/90days; finite status duration."
+      },
+      "credits/perks": {
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Add200 annual Bilt Cash and PriorityPass; portal hotels4x,flights3x,linked Lyft4x."
+      },
+      "perks.dining/lyft-credits": {
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Do not imply separate unconditional card credits; specify conditional Bilt Cash options."
+      }
+    },
+    "brand": "Bilt",
+    "servicer": "Cardless",
+    "rewardCurrency": "bilt",
+    "retiredPerks": [
+      {
+        "name": "Premium Lyft Credits",
+        "description": "Enhanced credits for Lyft rides",
+        "type": "rideshare",
+        "id": "premium-lyft-credits",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "status": "unsupported",
+        "retiredAt": "2026-09-16",
+        "retirementReason": "Removed during issuer audit; current terms do not support this claim."
+      },
+      {
+        "name": "Dining Credits",
+        "description": "Credits at select Bilt partner restaurants",
+        "type": "dining",
+        "id": "dining-credits",
+        "sourceUrl": "https://www.bilt.com/card",
+        "reviewedAt": "2026-09-16",
+        "status": "unsupported",
+        "retiredAt": "2026-09-16",
+        "retirementReason": "Removed during issuer audit; current terms do not support this claim."
+      }
+    ]
+  },
+  {
+    "id": "cardless-qatar-infinite",
+    "name": "Qatar Airways Privilege Club Infinite",
+    "issuer": "First Electronic Bank",
+    "network": "Visa",
+    "annualFee": 499,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.cardless.com/cards/qatar/premium"
+    },
+    "earning": {
+      "base": 1,
+      "categories": [
+        {
+          "category": "Qatar Airways",
+          "multiplier": null,
+          "description": "Issuer page conflicts: the headline shows 5x while the explanatory text says 4x. Confirm current card rewards agreement.",
+          "displayRate": "Check current terms",
+          "valuationEnabled": false,
+          "verificationStatus": "needs-review",
+          "sourceUrl": "https://www.cardless.com/cards/qatar/premium"
+        },
+        {
+          "category": "Restaurants",
+          "multiplier": 3,
+          "description": "Dining worldwide",
+          "sourceUrl": "https://www.cardless.com/cards/qatar/premium"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [],
+    "perks": [
+      {
+        "name": "Privilege Club Gold Status",
+        "description": "First year automatic Gold status with lounge access",
+        "type": "status",
+        "id": "privilege-club-gold-status",
+        "sourceUrl": "https://www.cardless.com/cards/qatar/premium",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Oneworld Sapphire benefits",
+        "description": "Privilege Club Gold provides eligible oneworld Sapphire benefits during the status period. Lounge and itinerary exclusions apply; this is not permanent card status.",
+        "type": "status",
+        "id": "oneworld-sapphire-status",
+        "sourceUrl": "https://www.cardless.com/cards/qatar/premium",
+        "reviewedAt": "2026-09-16",
+        "legacyNames": [
+          "Oneworld Sapphire Status"
+        ]
+      },
+      {
+        "name": "Qpoints Earning",
+        "description": "2 Qpoints per 1,500 Avios earned",
+        "type": "status",
+        "id": "qpoints-earning",
+        "sourceUrl": "https://www.cardless.com/cards/qatar/premium",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "No Foreign Transaction Fee",
+        "description": "Use abroad with no extra fees",
+        "type": "travel",
+        "id": "no-foreign-transaction-fee",
+        "sourceUrl": "https://www.cardless.com/cards/qatar/premium",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Points Never Expire",
+        "description": "Avios don't expire as long as you use your card",
+        "type": "rewards",
+        "id": "points-never-expire",
+        "sourceUrl": "https://www.cardless.com/cards/qatar/premium",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Visa Infinite Benefits",
+        "description": "Premium Visa benefits package",
+        "type": "travel",
+        "id": "visa-infinite-benefits",
+        "sourceUrl": "https://www.cardless.com/cards/qatar/premium",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "color": "#5C0632",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.cardless.com/cards/qatar/premium",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.cardless.com/cards/qatar/premium",
+      "https://www.cardless.com/qatar-cardholder-agreement",
+      "https://www.qatarairways.com/en-us/Privilege-Club/membership-tiers.html"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "Official page conflicts: prose says4xQatar while headline5x; resolve with current rewards agreement before certifying rate.",
+      "Listed Avios intra-program transfers and exact Gold/oneworld lounge exceptions not fully validated."
+    ],
+    "fieldSources": {
+      "issuer": {
+        "sourceUrl": "https://www.cardless.com/qatar-cardholder-agreement",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "First Electronic Bank; Cardless is servicer."
+      },
+      "perks.award-fee-waiver": {
+        "sourceUrl": "https://www.cardless.com/cards/qatar/premium",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "No supporting current benefit found; do not publish as confirmed without exact terms."
+      }
+    },
+    "servicer": "Cardless",
+    "rewardCurrency": "avios",
+    "retiredPerks": [
+      {
+        "name": "Award Fee Waiver",
+        "description": "Waived award fees when meeting spend thresholds",
+        "type": "travel",
+        "id": "award-fee-waiver",
+        "sourceUrl": "https://www.cardless.com/cards/qatar/premium",
+        "reviewedAt": "2026-09-16",
+        "status": "unsupported",
+        "retiredAt": "2026-09-16",
+        "retirementReason": "Removed during issuer audit; current terms do not support this claim."
+      }
+    ],
+    "unresolvedTransferPartners": [
+      {
+        "name": "British Airways",
+        "termsNote": "Avios program linkage/transfer conditions need a current program source; no ratio certified."
+      },
+      {
+        "name": "Iberia",
+        "termsNote": "Avios program linkage/transfer conditions need a current program source; no ratio certified."
+      },
+      {
+        "name": "Aer Lingus",
+        "termsNote": "Avios program linkage/transfer conditions need a current program source; no ratio certified."
+      },
+      {
+        "name": "Finnair",
+        "termsNote": "Avios program linkage/transfer conditions need a current program source; no ratio certified."
+      }
+    ]
+  },
+  {
+    "id": "discover-it-cash-back",
+    "name": "Discover it Cash Back",
+    "issuer": "Capital One",
+    "network": "Discover",
+    "annualFee": 0,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.discover.com/credit-cards/cash-back/it-card/"
+    },
+    "earning": {
+      "base": 1,
+      "categories": [
+        {
+          "category": "Rotating Categories",
+          "multiplier": 5,
+          "description": "Up to $1,500/quarter when activated",
+          "cap": {
+            "amount": 1500,
+            "period": "calendar quarter",
+            "afterCap": 1
+          },
+          "requiresActivation": true,
+          "termsNote": "Activate each quarter; 5% on up to $1,500 combined qualifying purchases, then 1%. Categories change quarterly.",
+          "sourceUrl": "https://www.discover.com/credit-cards/cash-back/it-card/"
+        },
+        {
+          "category": "All Other Purchases",
+          "multiplier": 1,
+          "description": "Unlimited 1% cash back",
+          "sourceUrl": "https://www.discover.com/credit-cards/cash-back/it-card/"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [],
+    "perks": [
+      {
+        "name": "Cashback Match",
+        "description": "Discover matches all cash back earned in first year",
+        "type": "bonus",
+        "id": "cashback-match",
+        "sourceUrl": "https://www.discover.com/credit-cards/cash-back/it-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "No Annual Fee",
+        "description": "No annual fee ever",
+        "type": "fee",
+        "id": "no-annual-fee",
+        "sourceUrl": "https://www.discover.com/credit-cards/cash-back/it-card/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "No Foreign Transaction Fee",
+        "description": "Use abroad with no extra fees",
+        "type": "travel",
+        "id": "no-foreign-transaction-fee",
+        "sourceUrl": "https://www.discover.com/credit-cards/cash-back/it-card/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "needs-review",
+        "termsNote": "Historically supported by issuer materials; confirm the current account fee agreement during migration."
+      },
+      {
+        "name": "CreditWise FICO Score",
+        "description": "Current product materials offer FICO Score 8 through CreditWise; statement delivery may differ during account migration.",
+        "type": "credit",
+        "id": "free-fico-score",
+        "sourceUrl": "https://www.discover.com/credit-cards/cash-back/it-card/",
+        "reviewedAt": "2026-09-16",
+        "legacyNames": [
+          "Free FICO Score"
+        ]
+      }
+    ],
+    "color": "#FF6000",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.discover.com/credit-cards/cash-back/it-card/",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.discover.com/credit-cards/cash-back/it-card/",
+      "https://www.discover.com/",
+      "https://www.capitalone.com/updates/discover/card-faqs/"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "rewardCurrency": "cashback",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "No-foreign-transaction-fee agreement for current acquisition flow still requires final direct fee-table verification."
+    ],
+    "fieldSources": {
+      "perks.fico": {
+        "sourceUrl": "https://www.discover.com/credit-cards/cash-back/it-card/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "needs-review",
+        "note": "Current page promotes CreditWise FICO8; statement delivery may depend on migration cohort."
+      },
+      "issuer/application metadata": {
+        "sourceUrl": "https://www.capitalone.com/updates/discover/card-faqs/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Preserve Discover branding but record Capital One migration and working current product/application URL."
+      }
+    },
+    "brand": "Discover",
+    "termsNote": "Discover branding continues during the Capital One migration. Account transition timing and account-specific disclosures apply."
+  },
+  {
+    "id": "gemini-credit-card",
+    "name": "Gemini Credit Card",
+    "issuer": "WebBank",
+    "network": "Mastercard",
+    "cardType": "personal",
+    "annualFee": 0,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.gemini.com/credit-card"
+    },
+    "earning": {
+      "base": 1,
+      "categories": [
+        {
+          "category": "Gas & EV Charging",
+          "multiplier": 4,
+          "description": "First $300/month, then 1%",
+          "cap": {
+            "amount": 300,
+            "period": "calendar month",
+            "sharedGroup": "gas-ev-transit",
+            "afterCap": 1
+          },
+          "termsNote": "4% applies to the first $300 combined gas, EV charging and transit spending per calendar month; 1% thereafter.",
+          "sourceUrl": "https://www.gemini.com/credit-card"
+        },
+        {
+          "category": "Transit & Rideshare",
+          "multiplier": 4,
+          "description": "First $300/month combined with gas",
+          "cap": {
+            "amount": 300,
+            "period": "calendar month",
+            "sharedGroup": "gas-ev-transit",
+            "afterCap": 1
+          },
+          "termsNote": "4% applies to the first $300 combined gas, EV charging and transit spending per calendar month; 1% thereafter.",
+          "sourceUrl": "https://www.gemini.com/credit-card"
+        },
+        {
+          "category": "Dining",
+          "multiplier": 3,
+          "description": "Restaurants worldwide",
+          "sourceUrl": "https://www.gemini.com/credit-card"
+        },
+        {
+          "category": "Groceries",
+          "multiplier": 2,
+          "description": "Supermarkets",
+          "sourceUrl": "https://www.gemini.com/credit-card"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [],
+    "perks": [
+      {
+        "name": "Crypto Rewards",
+        "description": "Rewards are paid in eligible cryptocurrency, usually at purchase; excluded transaction types receive rewards when posted. Asset values can change after rewards are credited.",
+        "type": "service",
+        "id": "real-time-crypto-rewards",
+        "sourceUrl": "https://www.gemini.com/credit-card",
+        "reviewedAt": "2026-09-16",
+        "legacyNames": [
+          "Real-Time Crypto Rewards"
+        ]
+      },
+      {
+        "name": "No Foreign Transaction Fees",
+        "description": "No fees on international purchases",
+        "type": "travel",
+        "id": "no-foreign-transaction-fees",
+        "sourceUrl": "https://www.gemini.com/credit-card",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "No Exchange Fees",
+        "description": "No fees on crypto reward deposits",
+        "type": "service",
+        "id": "no-exchange-fees",
+        "sourceUrl": "https://www.gemini.com/credit-card",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Mastercard World Elite Benefits",
+        "description": "World Elite benefit eligibility and exclusions are governed by the current card benefit guide.",
+        "type": "protection",
+        "id": "mastercard-world-benefits",
+        "sourceUrl": "https://www.gemini.com/credit-card",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Coverage requires eligible payment and a covered claim; consult the current benefit guide for exclusions and limits.",
+        "legacyNames": [
+          "Mastercard World Benefits"
+        ]
+      }
+    ],
+    "color": "#00DCFA",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.gemini.com/credit-card",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.gemini.com/credit-card"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "rewardCurrency": "crypto",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "Exact current coin count, finishes and every WorldElite protection not independently confirmed.",
+      "Time-limited merchant Vault offers should be separate from stable base earn."
+    ],
+    "fieldSources": {
+      "perks.mastercard-world": {
+        "sourceUrl": "https://www.gemini.com/credit-card",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Current product lists World Elite."
+      },
+      "rewardCurrency": {
+        "sourceUrl": "https://www.gemini.com/credit-card",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Represent crypto rewards distinctly; return at purchase differs from subsequent asset value."
+      },
+      "perks.instant-rewards": {
+        "sourceUrl": "https://www.gemini.com/credit-card",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Some excluded transactions pay when posted."
+      }
+    },
+    "retiredPerks": [
+      {
+        "name": "Metal Card Design",
+        "description": "Black, silver, or rose gold options",
+        "type": "service",
+        "id": "metal-card-design",
+        "sourceUrl": "https://www.gemini.com/credit-card",
+        "reviewedAt": "2026-09-16",
+        "status": "unsupported",
+        "retiredAt": "2026-09-16",
+        "retirementReason": "Removed during issuer audit; current terms do not support this claim."
+      },
+      {
+        "name": "Security Design",
+        "description": "No card number on physical card",
+        "type": "protection",
+        "id": "security-design",
+        "sourceUrl": "https://www.gemini.com/credit-card",
+        "reviewedAt": "2026-09-16",
+        "status": "unsupported",
+        "retiredAt": "2026-09-16",
+        "retirementReason": "Removed during issuer audit; current terms do not support this claim."
+      }
+    ]
+  },
+  {
+    "id": "synchrony-virgin-red",
+    "name": "Virgin Red Rewards Mastercard",
+    "issuer": "Synchrony",
+    "network": "Mastercard",
+    "annualFee": 99,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits"
+    },
+    "earning": {
+      "base": 1,
+      "categories": [
+        {
+          "category": "Virgin Atlantic/Hotels/Voyages",
+          "multiplier": 3,
+          "description": "Virgin brand purchases",
+          "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits"
+        },
+        {
+          "category": "Dining",
+          "multiplier": 2,
+          "description": "Restaurants",
+          "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits"
+        },
+        {
+          "category": "Grocery Stores",
+          "multiplier": 2,
+          "description": "Supermarkets",
+          "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits"
+        },
+        {
+          "category": "Streaming Services",
+          "multiplier": 2,
+          "description": "Entertainment subscriptions",
+          "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits"
+        },
+        {
+          "category": "EV Charging",
+          "multiplier": 2,
+          "description": "Electric vehicle charging",
+          "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [
+      {
+        "name": "Anniversary Points",
+        "amount": 5000,
+        "frequency": "annual",
+        "type": "points",
+        "description": "5,000 Virgin Points upon card renewal",
+        "id": "anniversary-points",
+        "unit": "points",
+        "resetPeriod": "anniversary",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Third Night Free",
+        "amount": 1,
+        "frequency": "annual",
+        "type": "hotel",
+        "description": "Book 2 nights, get 3rd free at Virgin Hotels",
+        "id": "third-night-free",
+        "unit": "nights",
+        "resetPeriod": "unknown",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits",
+        "reviewedAt": "2026-09-16",
+        "termsNote": "Participating Virgin Hotels only; eligible paid booking, booking window and expiry restrictions apply."
+      }
+    ],
+    "perks": [
+      {
+        "name": "Personal Perks",
+        "description": "Select one perk after $15,000 and another after $30,000 eligible anniversary-year spend. Companion reward voucher: up to 75,000 points for Red or 150,000 for Silver/Gold; taxes and surcharges extra. Selection and use deadlines apply.",
+        "type": "rewards",
+        "id": "personal-perks",
+        "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Flying Club Tier Points",
+        "description": "25 Tier Points per $2,500 monthly spend (max 50/month)",
+        "type": "status",
+        "id": "flying-club-tier-points",
+        "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Authorized User Bonus",
+        "description": "2,500 points per added user (up to 10,000)",
+        "type": "rewards",
+        "id": "authorized-user-bonus",
+        "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "No Foreign Transaction Fee",
+        "description": "Use abroad with no extra fees",
+        "type": "travel",
+        "id": "no-foreign-transaction-fee",
+        "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Points Never Expire",
+        "description": "Virgin Points don't expire while card is active",
+        "type": "rewards",
+        "id": "points-never-expire",
+        "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Mastercard World Elite Benefits",
+        "description": "Premium Mastercard benefits",
+        "type": "travel",
+        "id": "mastercard-world-elite-benefits",
+        "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "linked-virgin-points",
+        "name": "Linked Virgin Points balance",
+        "description": "Link Virgin Red and Flying Club to use the shared points balance; this is not a separate 1:1 card transfer program.",
+        "type": "redemption",
+        "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "color": "#E10A0A",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.synchrony.com/partner/virgin-red-rewards-card/benefits",
+      "https://virginredrewardscard.syf.com/essimages/cs/groups/ess_webasset/dualcard/@virgin/en/html/ess075414.html",
+      "https://www.synchrony.com/partner/virgin-red-rewards-card",
+      "https://membersupport.red.virgin.com/hc/en-gb/articles/360013786277-What-is-the-difference-between-Flying-Club-Virgin-Red"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "Third-night booking/expiry restrictions require fuller terms than headline; do not value as unrestricted free night."
+    ],
+    "fieldSources": {
+      "credits.resetPeriod": {
+        "sourceUrl": "https://virginredrewardscard.syf.com/essimages/cs/groups/ess_webasset/dualcard/@virgin/en/html/ess075414.html",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Renewalpoints and spend thresholds use cardholder anniversary year."
+      },
+      "perks.personal-perks": {
+        "sourceUrl": "https://virginredrewardscard.syf.com/essimages/cs/groups/ess_webasset/dualcard/@virgin/en/html/ess075414.html",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Voucher value75kRed/150kSilverGold; taxes/surcharges extra; selection/expiry deadlines."
+      },
+      "transferPartners.VirginAtlantic": {
+        "sourceUrl": "https://membersupport.red.virgin.com/hc/en-gb/articles/360013786277-What-is-the-difference-between-Flying-Club-Virgin-Red",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "Linked Virgin Red/Flying Club share balance; describe linkage instead of ordinarytransfer."
+      }
+    }
+  },
+  {
+    "id": "barclays-jetblue-plus",
+    "name": "JetBlue Plus Card",
+    "issuer": "Barclays",
+    "network": "Mastercard",
+    "annualFee": 99,
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison"
+    },
+    "earning": {
+      "base": 1,
+      "categories": [
+        {
+          "category": "JetBlue and TrueBlue Travel",
+          "multiplier": 6,
+          "description": "Eligible JetBlue, JetBlue Vacations, and TrueBlue Travel purchases",
+          "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison"
+        },
+        {
+          "category": "Restaurants",
+          "multiplier": 2,
+          "description": "Dining purchases",
+          "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison"
+        },
+        {
+          "category": "Grocery Stores",
+          "multiplier": 2,
+          "description": "Eligible grocery purchases",
+          "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [
+      {
+        "name": "Anniversary Points",
+        "amount": 5000,
+        "frequency": "annual",
+        "type": "points",
+        "description": "5,000 TrueBlue points after account anniversary",
+        "id": "anniversary-points",
+        "unit": "points",
+        "resetPeriod": "anniversary",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "JetBlue Vacations Credit",
+        "amount": 100,
+        "frequency": "annual",
+        "type": "travel",
+        "description": "Statement credit after a qualifying JetBlue Vacations package purchase",
+        "id": "jetblue-vacations-credit",
+        "unit": "USD",
+        "resetPeriod": "unknown",
+        "verifiedAt": null,
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "needs-review",
+        "trackingEnabled": false,
+        "valuationEnabled": false,
+        "termsNote": "Headline amount is supported; the qualifying package minimum and reset period require current Barclays rewards terms."
+      }
+    ],
+    "perks": [
+      {
+        "name": "First Checked Bag Free",
+        "description": "First checked bag for cardmember and up to 3 companions on JetBlue-operated flights",
+        "type": "travel",
+        "id": "first-checked-bag-free",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "10% Points Back",
+        "description": "10% of points back after redeeming for JetBlue-operated award flights",
+        "type": "redemption",
+        "id": "10-points-back",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "50% In-Flight Savings",
+        "description": "Savings on eligible food and drink purchases aboard JetBlue-operated flights",
+        "type": "travel",
+        "id": "50-in-flight-savings",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "No Foreign Transaction Fee",
+        "description": "Use abroad with no extra fees",
+        "type": "travel",
+        "id": "no-foreign-transaction-fee",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Points Payback",
+        "description": "Redeem points for statement credits on eligible purchases",
+        "type": "redemption",
+        "id": "points-payback",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "name": "Mosaic Status Path",
+        "description": "Earn tiles through eligible card spend toward TrueBlue perks and Mosaic status",
+        "type": "status",
+        "id": "mosaic-status-path",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "color": "#003876",
+    "lastUpdated": "2026-09-16",
+    "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+    "sourceScope": "product-terms",
+    "sourceUrls": [
+      "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison"
+    ],
+    "verifiedAt": null,
+    "reviewedAt": "2026-09-16",
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "reviewNotes": "Issuer sources reviewed September 16, 2026. See individual conditions and unresolved terms. Account-specific offers and insurance exclusions are not fully certified.",
+    "applicationStatus": "open",
+    "reviewUncertainties": [
+      "Personalized welcome offer eligibility is not certified; hidden historical offer values must not be treated as current.",
+      "Full insurance exclusions, claims rules and account-specific grandfathered terms are not exhaustively verified.",
+      "Barclays product fetch failed; airline comparison confirms core, not full benefit terms.",
+      "Exact companion baggage payment/reservation conditions and Vacation credit minimum remain unverified."
+    ],
+    "fieldSources": {
+      "earning.category-name": {
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "verified",
+        "note": "TrueBlue Travel (renamed Paisly)."
+      },
+      "credits.conditions": {
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "needs-review",
+        "note": "Anniversarypoints are anniversary-linked; source exact vacation purchase minimum/reset before marking credit verified."
+      }
+    }
+  },
+  {
+    "id": "fidelity-rewards-visa",
+    "name": "Fidelity Rewards Visa Signature",
+    "issuer": "Elan Financial Services",
+    "network": "Visa",
+    "annualFee": 0,
+    "earning": {
+      "base": 2,
+      "categories": []
+    },
+    "transferPartners": [],
+    "credits": [],
+    "perks": [
+      {
+        "id": "no-foreign-transaction-fee",
+        "name": "No Foreign Transaction Fee",
+        "description": "No foreign transaction fee.",
+        "type": "fee",
+        "sourceUrl": "https://www.fidelity.com/spend-save/visa-signature-card",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "sourceUrl": "https://www.fidelity.com/spend-save/visa-signature-card",
+    "sourceUrls": [
+      "https://www.fidelity.com/spend-save/visa-signature-card"
+    ],
+    "sourceScope": "product-terms",
+    "lastUpdated": "2026-09-16",
+    "reviewedAt": "2026-09-16",
+    "verifiedAt": null,
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "applicationStatus": "open",
+    "rewardCurrency": "cashback",
+    "color": "#243755",
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.fidelity.com/spend-save/visa-signature-card"
+    },
+    "reviewNotes": "Core product terms reviewed; account-specific offers, insurance exclusions and any noted unresolved conditions require issuer confirmation.",
+    "termsNote": "2% value requires rewards redemption into an eligible Fidelity account; other redemption methods may have different values."
+  },
+  {
+    "id": "robinhood-gold-card",
+    "name": "Robinhood Gold Card",
+    "issuer": "Coastal Community Bank",
+    "network": "Visa",
+    "annualFee": 0,
+    "earning": {
+      "base": 3,
+      "categories": [
+        {
+          "category": "Robinhood Travel",
+          "multiplier": 5,
+          "description": "Eligible travel booked through the Robinhood travel portal.",
+          "sourceUrl": "https://robinhood.com/us/en/support/articles/robinhood-gold-card-get-started/"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [],
+    "perks": [],
+    "sourceUrl": "https://robinhood.com/us/en/support/articles/robinhood-gold-card-get-started/",
+    "sourceUrls": [
+      "https://robinhood.com/us/en/support/articles/robinhood-gold-card-get-started/",
+      "https://robinhood.com/us/en/support/articles/robinhood-gold-card-waitlist/"
+    ],
+    "sourceScope": "product-terms",
+    "lastUpdated": "2026-09-16",
+    "reviewedAt": "2026-09-16",
+    "verifiedAt": null,
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "applicationStatus": "limited",
+    "rewardCurrency": "cashback",
+    "color": "#BBA56B",
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://robinhood.com/us/en/support/articles/robinhood-gold-card-get-started/"
+    },
+    "reviewNotes": "Core product terms reviewed; account-specific offers, insurance exclusions and any noted unresolved conditions require issuer confirmation.",
+    "requiredAnnualMembershipFee": 50,
+    "termsNote": "Requires a $50 annual Robinhood Gold subscription. Application access is subject to availability; foreign transaction fees depend on account-opening date. 3% assumes eligible redemptions at 1 cent per point; some redemption options pay less."
+  },
+  {
+    "id": "wyndham-earner-business",
+    "name": "Wyndham Rewards Earner Business",
+    "issuer": "Barclays",
+    "network": "Visa",
+    "annualFee": 149,
+    "earning": {
+      "base": 1,
+      "categories": [
+        {
+          "category": "Wyndham Hotels",
+          "multiplier": 8,
+          "description": "Eligible Hotels by Wyndham purchases.",
+          "sourceUrl": "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/"
+        },
+        {
+          "category": "Gas & EV Charging",
+          "multiplier": 5,
+          "description": "Eligible gas and EV charging purchases.",
+          "sourceUrl": "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/"
+        },
+        {
+          "category": "Advertising & Marketing",
+          "multiplier": 5,
+          "description": "Eligible advertising and marketing purchases.",
+          "sourceUrl": "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/"
+        },
+        {
+          "category": "Office Supplies & Shipping",
+          "multiplier": 5,
+          "description": "Eligible office supply store and shipping purchases.",
+          "sourceUrl": "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [
+      {
+        "id": "anniversary-points",
+        "name": "Anniversary Points",
+        "amount": 15000,
+        "unit": "points",
+        "frequency": "annual",
+        "resetPeriod": "anniversary",
+        "description": "15,000 points at anniversary after payment of the annual fee.",
+        "type": "points",
+        "sourceUrl": "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "warehouse-membership-credit",
+        "name": "Warehouse Membership Credit",
+        "amount": 65,
+        "unit": "USD",
+        "frequency": "annual",
+        "resetPeriod": "unknown",
+        "description": "Headline annual credit advertised; eligible providers and reset terms need the account rewards agreement.",
+        "type": "travel",
+        "sourceUrl": "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "needs-review",
+        "trackingEnabled": false,
+        "valuationEnabled": false
+      },
+      {
+        "id": "accounting-software-credit",
+        "name": "Accounting Software Credit",
+        "amount": 50,
+        "unit": "USD",
+        "frequency": "annual",
+        "resetPeriod": "unknown",
+        "description": "Headline annual credit advertised; eligible providers and reset terms need the account rewards agreement.",
+        "type": "travel",
+        "sourceUrl": "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/",
+        "reviewedAt": "2026-09-16",
+        "verificationStatus": "needs-review",
+        "trackingEnabled": false,
+        "valuationEnabled": false
+      }
+    ],
+    "perks": [
+      {
+        "id": "diamond-status",
+        "name": "Wyndham Diamond",
+        "description": "Wyndham Rewards Diamond membership.",
+        "type": "status",
+        "sourceUrl": "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "award-discount",
+        "name": "Award discount",
+        "description": "20% discount on eligible free night redemptions.",
+        "type": "redemption",
+        "sourceUrl": "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "national-executive",
+        "name": "National Executive",
+        "description": "National Emerald Club Executive status; enrollment required.",
+        "type": "status",
+        "sourceUrl": "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "sourceUrl": "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/",
+    "sourceUrls": [
+      "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/"
+    ],
+    "sourceScope": "product-terms",
+    "lastUpdated": "2026-09-16",
+    "reviewedAt": "2026-09-16",
+    "verifiedAt": null,
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "applicationStatus": "open",
+    "rewardCurrency": "wyndham",
+    "color": "#243755",
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://corporate.wyndhamhotels.com/news-releases/wyndham-and-barclays-launch-updated-credit-card-suite-introduce-new-premier-card-with-complimentary-insider-membership-and-no-points-expiration/"
+    },
+    "reviewNotes": "Core product terms reviewed; account-specific offers, insurance exclusions and any noted unresolved conditions require issuer confirmation.",
+    "cardType": "business",
+    "cohort": "Current product announced June 17, 2026. Legacy cards may have different fees and categories. Vacation Club down payments do not earn the ordinary 1x."
+  },
+  {
+    "id": "barclays-jetblue-premier",
+    "name": "JetBlue Premier Card",
+    "issuer": "Barclays",
+    "network": "Mastercard",
+    "annualFee": 499,
+    "earning": {
+      "base": 1,
+      "categories": [
+        {
+          "category": "JetBlue & TrueBlue Travel",
+          "multiplier": 6,
+          "description": "Eligible JetBlue, JetBlue Vacations and TrueBlue Travel purchases.",
+          "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison"
+        },
+        {
+          "category": "Dining & Grocery",
+          "multiplier": 2,
+          "description": "Eligible restaurant and grocery purchases.",
+          "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison"
+        }
+      ]
+    },
+    "transferPartners": [],
+    "credits": [
+      {
+        "id": "anniversary-points",
+        "name": "Anniversary Points",
+        "amount": 5000,
+        "unit": "points",
+        "frequency": "annual",
+        "resetPeriod": "anniversary",
+        "description": "Anniversary bonus points.",
+        "type": "points",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "global-entry-tsa-precheck",
+        "name": "Global Entry / TSA PreCheck",
+        "amount": 120,
+        "unit": "USD",
+        "frequency": "every 4 years",
+        "resetPeriod": "rolling",
+        "description": "Eligible application fee reimbursement.",
+        "type": "travel",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "trueblue-travel-credit",
+        "name": "TrueBlue Travel Credit",
+        "amount": 300,
+        "unit": "USD",
+        "frequency": "annual",
+        "resetPeriod": "unknown",
+        "description": "Earn up to the advertised amount after qualifying activity; spending, booking and reset rules require current Barclays terms.",
+        "type": "travel",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16",
+        "conditional": true,
+        "verificationStatus": "needs-review",
+        "trackingEnabled": false,
+        "valuationEnabled": false
+      },
+      {
+        "id": "companion-credit",
+        "name": "Companion Pass Credits",
+        "amount": 2000,
+        "unit": "USD",
+        "frequency": "annual",
+        "resetPeriod": "unknown",
+        "description": "Earn up to the advertised amount after qualifying activity; spending, booking and reset rules require current Barclays terms.",
+        "type": "travel",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16",
+        "conditional": true,
+        "verificationStatus": "needs-review",
+        "trackingEnabled": false,
+        "valuationEnabled": false
+      }
+    ],
+    "perks": [
+      {
+        "id": "bluehouse",
+        "name": "BlueHouse access",
+        "description": "Eligible BlueHouse lounge access; guest and itinerary restrictions apply.",
+        "type": "lounge",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "priority-pass",
+        "name": "Priority Pass",
+        "description": "Eligible participating lounge access; enrollment and guest conditions apply.",
+        "type": "lounge",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "annual-tile-bonus",
+        "name": "Annual Tile Bonus",
+        "description": "25 bonus tiles annually.",
+        "type": "status",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "award-rebate",
+        "name": "Award Rebate",
+        "description": "15% points rebate on eligible award redemptions.",
+        "type": "redemption",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "no-foreign-transaction-fee",
+        "name": "No Foreign Transaction Fee",
+        "description": "No foreign transaction fee.",
+        "type": "fee",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "inflight-savings",
+        "name": "Inflight Savings",
+        "description": "50% on qualifying inflight purchases.",
+        "type": "travel",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      },
+      {
+        "id": "checked-bag",
+        "name": "First Checked Bag",
+        "description": "First checked bag on eligible travel; reservation and payment conditions apply.",
+        "type": "travel",
+        "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+        "reviewedAt": "2026-09-16"
+      }
+    ],
+    "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison",
+    "sourceUrls": [
+      "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison"
+    ],
+    "sourceScope": "product-terms",
+    "lastUpdated": "2026-09-16",
+    "reviewedAt": "2026-09-16",
+    "verifiedAt": null,
+    "verificationStatus": "partially-verified",
+    "verifiedFields": [
+      "annualFee",
+      "earning"
+    ],
+    "applicationStatus": "open",
+    "rewardCurrency": "jetblue",
+    "color": "#243755",
+    "signUpBonus": {
+      "offerStatus": "unverified",
+      "verifiedAt": null,
+      "sourceUrl": "https://www.jetblue.com/trueblue/credit-cards/jetblue-card-comparison"
+    },
+    "reviewNotes": "Core product terms reviewed; account-specific offers, insurance exclusions and any noted unresolved conditions require issuer confirmation.",
+    "authorizedUserFee": 150,
+    "termsNote": "$150 annual fee per authorized user. Lounge access and companion/portal credits have qualifying conditions."
+  }
+]

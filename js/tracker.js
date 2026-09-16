@@ -20,7 +20,7 @@ function loadUserData() {
 }
 
 function trackerBenefits(card, now = new Date()) {
-  return (card.credits || []).filter(credit => (!credit.effectiveFrom || credit.effectiveFrom <= CardMaxPeriods.dateKey(now)) && (!credit.effectiveUntil || credit.effectiveUntil >= CardMaxPeriods.dateKey(now))).map(credit => {
+  return (card.credits || []).filter(credit => credit.trackingEnabled !== false && (!credit.effectiveFrom || credit.effectiveFrom <= CardMaxPeriods.dateKey(now)) && (!credit.effectiveUntil || credit.effectiveUntil >= CardMaxPeriods.dateKey(now))).map(credit => {
     const period = CardMaxPeriods.periodFor(card, credit, now, trackerSnapshot);
     const entry = { card, credit, period, record: trackedBenefits[period.key] };
     trackerEntries.set(period.key, entry);
@@ -47,7 +47,7 @@ function benefitRow(entry) {
     <label style="display:flex;align-items:flex-start;gap:0.75rem;flex:1;min-width:220px;cursor:pointer">
       <input type="checkbox" ${checked ? 'checked' : ''} aria-label="${trackerEscape(label)}" data-benefit="${key}" style="width:20px;height:20px;margin-top:3px;flex-shrink:0">
       <span class="benefit-content"><span class="benefit-text" style="display:block">${trackerEscape(credit.name)}</span>
-        <span class="benefit-description" style="display:block">${trackerEscape(credit.description)}</span>
+        <span class="benefit-description" style="display:block">${trackerEscape(credit.description)}${CardMaxModel.termsHtml(credit)}</span>
         <span class="text-muted" style="display:block;font-size:0.75rem;margin-top:0.25rem">${trackerEscape(period.label)}${trackerDateRange(period) ? ` · ${trackerEscape(trackerDateRange(period))}` : ''}</span>
         ${period.warning ? `<span style="display:block;color:var(--text-secondary);font-size:0.8rem;margin-top:0.25rem">${trackerEscape(period.warning)}</span>` : ''}
       </span>
@@ -64,8 +64,8 @@ function benefitRow(entry) {
 
 function trackerCard(card, entries, showAnnual = false) {
   const completed = entries.filter(entry => entry.record?.completed).length;
-  const cashTotal = entries.reduce((sum, entry) => sum + entry.period.cashValue, 0);
-  const used = entries.reduce((sum, entry) => sum + (entry.record?.completed && entry.record.unit === 'USD' ? entry.record.cashValue || 0 : 0), 0);
+  const cashTotal = entries.reduce((sum, entry) => sum + (CardMaxModel.includedCashCap(entry.credit) ? entry.period.cashValue : 0), 0);
+  const used = entries.reduce((sum, entry) => sum + (CardMaxModel.includedCashCap(entry.credit) && entry.record?.completed && entry.record.unit === 'USD' ? entry.record.cashValue || 0 : 0), 0);
   const captured = CardMaxPeriods.capturedThisYear(trackedBenefits, new Date(), card.id);
   return `<div class="tracker-card" style="margin-bottom:1.5rem"><div class="tracker-header"><div>
     <div class="tracker-title">${trackerEscape(card.name)}</div>
@@ -73,7 +73,8 @@ function trackerCard(card, entries, showAnnual = false) {
     ${showAnnual ? `<div class="text-muted" style="font-size:0.875rem">${trackerMoney(captured.value)} cash captured this year${captured.estimated ? ' (includes imported estimates)' : ''}</div>` : ''}
     </div>${cashTotal ? `<div class="tracker-progress">${trackerMoney(used)} / ${trackerMoney(cashTotal)}<div style="font-size:0.7rem">Current cash allowances</div></div>` : ''}</div>
     <ul class="benefit-checklist">${entries.map(benefitRow).join('')}</ul>
-    ${showAnnual && card.perks?.length ? `<details style="margin-top:1rem"><summary>Other card benefits</summary><ul>${card.perks.map(perk => `<li><strong>${trackerEscape(perk.name)}</strong> — ${trackerEscape(perk.description)}</li>`).join('')}</ul></details>` : ''}
+    ${showAnnual && card.credits?.some(credit => credit.trackingEnabled === false) ? `<details><summary>Benefits requiring term confirmation</summary>${card.credits.filter(credit => credit.trackingEnabled === false).map(credit => `<p><strong>${trackerEscape(credit.name)}</strong> — ${trackerEscape(credit.description)}${CardMaxModel.termsHtml(credit)}</p>`).join('')}</details>` : ''}
+    ${showAnnual && card.perks?.length ? `<details style="margin-top:1rem"><summary>Other card benefits</summary><ul>${card.perks.map(perk => `<li><strong>${trackerEscape(perk.name)}</strong> — ${trackerEscape(perk.description)}${CardMaxModel.termsHtml(perk)}</li>`).join('')}</ul></details>` : ''}
     </div>`;
 }
 
@@ -122,8 +123,8 @@ function updateStats() {
   const now = new Date();
   const entries = userCards.map(id => CARDS_DATABASE.find(card => card.id === id)).filter(Boolean).flatMap(card => trackerBenefits(card, now));
   const monthly = entries.filter(entry => entry.period.frequency === 'monthly');
-  const used = monthly.reduce((sum, entry) => sum + (entry.record?.completed && entry.record.unit === 'USD' ? entry.record.cashValue || 0 : 0), 0);
-  const total = monthly.reduce((sum, entry) => sum + entry.period.cashValue, 0);
+  const used = monthly.reduce((sum, entry) => sum + (CardMaxModel.includedCashCap(entry.credit) && entry.record?.completed && entry.record.unit === 'USD' ? entry.record.cashValue || 0 : 0), 0);
+  const total = monthly.reduce((sum, entry) => sum + (CardMaxModel.includedCashCap(entry.credit) ? entry.period.cashValue : 0), 0);
   const captured = CardMaxPeriods.capturedThisYear(trackedBenefits, now);
   const stats = { 'credits-used': trackerMoney(used), 'credits-remaining': trackerMoney(Math.max(0, total - used)), 'annual-value': trackerMoney(captured.value), 'completion-rate': entries.length ? `${Math.round(entries.filter(entry => entry.record?.completed).length / entries.length * 100)}%` : '0%' };
   for (const [id, value] of Object.entries(stats)) { const element = document.getElementById(id); if (element) element.textContent = value; }

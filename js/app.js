@@ -92,11 +92,11 @@ function renderCards(filter = 'all') {
 
   // Apply category filter
   if (filter === 'premium') {
-    filteredCards = CARDS_DATABASE.filter(card => card.annualFee >= 400);
+    filteredCards = CARDS_DATABASE.filter(card => CardMaxModel.annualFeeForCard(card) !== null && CardMaxModel.annualFeeForCard(card) >= 400);
   } else if (filter === 'midtier') {
-    filteredCards = CARDS_DATABASE.filter(card => card.annualFee >= 100 && card.annualFee < 400);
+    filteredCards = CARDS_DATABASE.filter(card => CardMaxModel.annualFeeForCard(card) !== null && CardMaxModel.annualFeeForCard(card) >= 100 && CardMaxModel.annualFeeForCard(card) < 400);
   } else if (filter === 'nofee') {
-    filteredCards = CARDS_DATABASE.filter(card => card.annualFee === 0);
+    filteredCards = CARDS_DATABASE.filter(card => CardMaxModel.annualFeeForCard(card) === 0);
   } else if (filter === 'business') {
     filteredCards = CARDS_DATABASE.filter(card => card.cardType === 'business');
   } else if (filter === 'personal') {
@@ -147,15 +147,15 @@ function renderCards(filter = 'all') {
       <div class="card-body">
         <div class="card-fee">
           <span class="fee-label">Annual Fee</span>
-          <span class="fee-value">$${card.annualFee}</span>
+          <span class="fee-value">${CardMaxModel.feeLabel(card)}</span>
         </div>
 
         <div class="earning-rates">
           <h4>Top Earning Categories</h4>
-          ${card.earning.categories.slice(0, 3).map(cat => `
+          ${CardMaxModel.earningCategories(card).slice(0, 3).map(cat => `
             <div class="rate-item">
               <span class="rate-category">${cat.category}</span>
-              <span class="rate-multiplier">${cat.multiplier}x</span>
+              <span class="rate-multiplier">${CardMaxModel.earningLabel(card, cat)}</span>
             </div>
           `).join('')}
         </div>
@@ -164,8 +164,8 @@ function renderCards(filter = 'all') {
           <h4 style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Key Credits</h4>
           ${card.credits.slice(0, 2).map(credit => `
             <div class="credit-item">
-              <span class="credit-name">${credit.name}</span>
-              <span class="credit-value">${CardMaxModel.formatCredit(credit)}</span>
+              <span class="credit-name">${credit.name}${credit.conditional || credit.annualValueExcluded ? '<small class="terms-note">Eligibility conditions apply</small>' : ''}</span>
+              <span class="credit-value">${credit.verificationStatus === 'needs-review' ? 'Terms unconfirmed' : CardMaxModel.formatCredit(credit)}</span>
             </div>
           `).join('')}
         </div>
@@ -252,7 +252,7 @@ function renderModalContent(tabName) {
         <div style="display: grid; gap: 1rem;">
           <div class="stat-card">
             <div class="stat-label">Annual Fee</div>
-            <div class="stat-value" style="color: var(--accent-orange);">$${card.annualFee}</div>
+            <div class="stat-value" style="color: var(--accent-orange);">${CardMaxModel.feeLabel(card)}</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Welcome Offer</div>
@@ -261,7 +261,7 @@ function renderModalContent(tabName) {
           </div>
           <div class="stat-card">
             <div class="stat-label">Base Earning</div>
-            <div class="stat-value">${card.earning.base}x</div>
+            <div class="stat-value">${CardMaxModel.earningLabel(card)}</div>
             <div class="text-muted" style="font-size: 0.875rem;">on all other purchases</div>
           </div>
           <div class="stat-card">
@@ -276,18 +276,18 @@ function renderModalContent(tabName) {
       content = `
         <div class="earning-rates">
           <h4 style="margin-bottom: 1rem;">Bonus Categories</h4>
-          ${card.earning.categories.map(cat => `
+          ${CardMaxModel.earningCategories(card).map(cat => `
             <div class="rate-item" style="padding: 1rem; background: var(--bg-card); border-radius: 8px; margin-bottom: 0.5rem;">
               <div>
                 <div class="rate-category" style="font-weight: 600;">${cat.category}</div>
-                <div class="text-muted" style="font-size: 0.75rem; margin-top: 0.25rem;">${cat.description}</div>
+                <div class="text-muted" style="font-size: 0.75rem; margin-top: 0.25rem;">${cat.description}${CardMaxModel.termsHtml(cat)}</div>
               </div>
-              <span class="rate-multiplier">${cat.multiplier}x</span>
+              <span class="rate-multiplier">${CardMaxModel.earningLabel(card, cat)}</span>
             </div>
           `).join('')}
           <div class="rate-item" style="padding: 1rem; background: var(--bg-card); border-radius: 8px; opacity: 0.7;">
             <div class="rate-category">Everything Else</div>
-            <span class="rate-multiplier" style="background: rgba(148, 163, 184, 0.2); color: var(--text-secondary);">${card.earning.base}x</span>
+            <span class="rate-multiplier" style="background: rgba(148, 163, 184, 0.2); color: var(--text-secondary);">${CardMaxModel.earningLabel(card)}</span>
           </div>
         </div>
       `;
@@ -303,7 +303,7 @@ function renderModalContent(tabName) {
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
               ${airlines.map(p => `
                 <span style="padding: 0.5rem 1rem; background: var(--bg-card); border-radius: 20px; font-size: 0.875rem;">
-                  ${p.name} <span style="color: var(--accent-green);">${p.ratio}</span>${p.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(p.description)}</span>` : ''}${CardMaxModel.termsHtml(p)}
+                  ${p.name} <span style="color: var(--accent-green);">${CardMaxModel.escapeHtml(CardMaxModel.transferLabel(p))}</span>${p.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(p.description)}</span>` : ''}${CardMaxModel.termsHtml(p)}
                 </span>
               `).join('')}
             </div>
@@ -313,7 +313,7 @@ function renderModalContent(tabName) {
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
               ${hotels.map(p => `
                 <span style="padding: 0.5rem 1rem; background: var(--bg-card); border-radius: 20px; font-size: 0.875rem;">
-                  ${p.name} <span style="color: var(--accent-green);">${p.ratio}</span>${p.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(p.description)}</span>` : ''}${CardMaxModel.termsHtml(p)}
+                  ${p.name} <span style="color: var(--accent-green);">${CardMaxModel.escapeHtml(CardMaxModel.transferLabel(p))}</span>${p.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(p.description)}</span>` : ''}${CardMaxModel.termsHtml(p)}
                 </span>
               `).join('')}
             </div>
@@ -328,8 +328,8 @@ function renderModalContent(tabName) {
         <div style="margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-card); border-radius: 8px;">
           <div class="text-muted" style="font-size: 0.875rem;">Annualized cash credit caps</div>
           <div style="font-size: 2rem; font-weight: 700; color: var(--accent-green);">${CardMaxModel.money(totalDollarCredits)}</div>
-          <div class="text-muted" style="font-size: 0.875rem;">Cash caps minus ${CardMaxModel.money(card.annualFee)} fee: <strong>${CardMaxModel.money(totalDollarCredits - card.annualFee)}</strong></div>
-          <p class="terms-note">Assumes every eligible credit is used. Multi-year reimbursements are spread over their full period; points, nights, certificates and per-use benefits are excluded. This is not guaranteed savings.</p>
+          <div class="text-muted" style="font-size: 0.875rem;">Cash caps minus ${CardMaxModel.money(CardMaxModel.annualCostForCard(card))} annual cost: <strong>${CardMaxModel.money(CardMaxModel.annualCostForCard(card) === null ? null : totalDollarCredits - CardMaxModel.annualCostForCard(card))}</strong></div>
+          <p class="terms-note">Assumes every eligible credit is used. Multi-year reimbursements are spread over their full period; points, restricted rewards, nights, certificates, unverified terms and conditional or per-use benefits are excluded. Required membership costs are included. This is not guaranteed savings.</p>
         </div>
         <div>
           ${card.credits.map(credit => `
@@ -374,7 +374,7 @@ function renderModalContent(tabName) {
               ${perks.map(perk => `
                 <div style="padding: 1rem; background: var(--bg-card); border-radius: 8px; margin-bottom: 0.5rem;">
                   <div style="font-weight: 600;">${perk.name}</div>
-                  <div class="text-muted" style="font-size: 0.875rem; margin-top: 0.25rem;">${perk.description}</div>
+                  <div class="text-muted" style="font-size: 0.875rem; margin-top: 0.25rem;">${perk.description}${CardMaxModel.termsHtml(perk)}</div>
                 </div>
               `).join('')}
             </div>
@@ -392,7 +392,10 @@ function updateStats() {
   const totalCards = CARDS_DATABASE.length;
   const totalPartners = new Set(CARDS_DATABASE.flatMap(c => c.transferPartners.map(p => p.name))).size;
   const maxCredits = Math.max(0, ...CARDS_DATABASE.map(card => CardMaxModel.annualCashValue(card)));
-  const reviewed = CARDS_DATABASE.filter(card => card.verifiedAt && !CardMaxModel.verificationText(card).includes('overdue')).length;
+  const reviewed = CARDS_DATABASE.filter(card => {
+    const date = card.reviewedAt || card.verifiedAt;
+    return date && (Date.now() - Date.parse(date)) / 86400000 <= 90;
+  }).length;
   document.getElementById('total-cards').textContent = totalCards;
   document.getElementById('total-partners').textContent = totalPartners + '+';
   document.getElementById('total-credits').textContent = CardMaxModel.money(maxCredits);

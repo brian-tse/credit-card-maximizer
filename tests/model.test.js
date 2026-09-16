@@ -73,3 +73,41 @@ test('verification labels use familiar terms rather than schema field names', ()
   assert.match(html, /Annual fee, Lounge access, Hyatt transfers/);
   assert.doesNotMatch(html, /annualFee|perks\.lounge/);
 });
+
+test('restricted rewards and unresolved or spend-gated credits cannot inflate annual cash totals', () => {
+  const credit = { amount: 120, unit: 'USD', frequency: 'annual' };
+  for (const flags of [{ conditional: true }, { annualValueExcluded: true }, { trackingEnabled: false }, { valuationEnabled: false }, { verificationStatus: 'needs-review' }]) {
+    assert.equal(model.annualCashValue({ ...credit, ...flags }), 0);
+  }
+  for (const unit of ['Bilt Cash', 'voucher', 'crypto']) assert.equal(model.annualCashValue({ ...credit, unit }), 0);
+  assert.equal(model.formatCredit({ amount: 200, unit: 'Bilt Cash' }), '$200 Bilt Cash');
+  assert.equal(model.periodLabel({ amount: 12, quarterlyAmount: 3, unit: 'visits', frequency: 'quarterly' }), '3 visits/quarter; annual cap shown');
+});
+
+test('mandatory membership costs count and unknown fees do not become zero', () => {
+  const card = { id: 'membership', annualFee: 0, requiredAnnualMembershipFee: 50 };
+  assert.equal(model.annualCostForCard(card), 50);
+  assert.match(model.feeLabel(card), /\$50 required membership/);
+  card.annualFeeStatus = 'unverified';
+  assert.equal(model.annualCostForCard(card), null);
+  assert.equal(model.annualCostForCard(card, { membership: 20 }), 70);
+  assert.equal(model.money(null), 'Not verified');
+});
+
+test('scheduled earning changes take effect at the date boundary without selecting an account cohort', () => {
+  const card = { earning: { base: 1, categories: [{ category: 'Dining', multiplier: 3, terms: [
+    { multiplier: 3, effectiveUntil: '2026-12-31' }, { multiplier: 2, effectiveFrom: '2027-01-01' }
+  ] }] } };
+  assert.equal(model.earningCategories(card, new Date('2026-12-31T12:00:00Z'))[0].multiplier, 3);
+  assert.equal(model.earningCategories(card, new Date('2027-01-01T12:00:00Z'))[0].multiplier, 2);
+  card.earning.categories[0].terms[1].cohort = 'Some accounts only';
+  assert.equal(model.earningCategories(card, new Date('2027-01-01T12:00:00Z'))[0].multiplier, 3);
+  assert.equal(model.transferLabel({ ratio: '1:1', terms: [{ ratio: '4:3' }] }), 'Varies by account/date');
+});
+
+test('benefit expiry follows the same local calendar date as the tracker', () => {
+  const { execFileSync } = require('node:child_process');
+  const script = `const model = require(${JSON.stringify(require.resolve('../js/card-model'))}); const benefit = {effectiveUntil:'2027-09-30'}; console.log(JSON.stringify([model.activeBenefit(benefit,new Date('2027-10-01T03:00:00Z')),model.activeBenefit(benefit,new Date('2027-10-01T07:00:00Z'))]));`;
+  const result = execFileSync(process.execPath, ['-e', script], { encoding: 'utf8', env: { ...process.env, TZ: 'America/Los_Angeles' } });
+  assert.deepEqual(JSON.parse(result), [true, false]);
+});

@@ -5,6 +5,19 @@ const card = { id: 'example' };
 const credit = { id: 'dining', name: 'Dining', amount: 400, quarterlyAmount: 100, unit: 'USD', frequency: 'quarterly', resetPeriod: 'calendar' };
 const at = value => P.parseDate(value);
 
+test('a corrected voucher unit preserves saved history without retaining false cash value', () => {
+  const key = 'benefit|example|delay|2026-01-01';
+  const snapshot = { benefits: { [key]: { cardId: 'example', creditId: 'delay', completed: true, usedAt: '2026-09-10', unit: 'USD', cashValue: 50 } } };
+  const cards = [{ id: 'example', credits: [{ id: 'delay', name: 'Delay Voucher', amount: 50, unit: 'voucher', frequency: 'per occurrence', resetPeriod: 'per-use' }] }];
+  const result = P.migrateLegacy(cards, snapshot, at('2026-09-16'));
+  assert.equal(result[key].usedAt, '2026-09-10');
+  assert.equal(result[key].originalCashValue, 50);
+  assert.equal(result[key].unit, 'voucher');
+  assert.equal(P.capturedThisYear(result, at('2026-09-16')).value, 0);
+  assert.deepEqual(P.migrateLegacy(cards, { benefits: result }, at('2026-09-16')), result);
+  assert.equal(snapshot.benefits[key].unit, 'USD');
+});
+
 test('quarterly, monthly, semiannual boundaries are exclusive and do not overlap', () => {
   assert.equal(P.periodFor(card, credit, at('2026-03-31')).key, 'benefit|example|dining|2026-01-01');
   assert.equal(P.periodFor(card, credit, at('2026-04-01')).start, '2026-04-01');
