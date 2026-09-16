@@ -162,7 +162,7 @@ function renderCards(filter = 'all') {
 
         <div class="credits-section">
           <h4 style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Key Credits</h4>
-          ${card.credits.slice(0, 2).map(credit => `
+          ${card.credits.filter(credit => CardMaxModel.activeBenefit(credit)).slice(0, 2).map(credit => `
             <div class="credit-item">
               <span class="credit-name">${credit.name}${credit.conditional || credit.annualValueExcluded ? '<small class="terms-note">Eligibility conditions apply</small>' : ''}</span>
               <span class="credit-value">${credit.verificationStatus === 'needs-review' ? 'Terms unconfirmed' : CardMaxModel.formatCredit(credit)}</span>

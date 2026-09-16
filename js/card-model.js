@@ -28,7 +28,7 @@
     return amount;
   }
   function includedCashCap(credit) {
-    return credit.valuationEnabled !== false && credit.trackingEnabled !== false && credit.annualValueExcluded !== true && credit.conditional !== true && credit.verificationStatus !== 'needs-review';
+    return !String(credit.frequency || '').startsWith('per ') && credit.valuationEnabled !== false && credit.trackingEnabled !== false && credit.annualValueExcluded !== true && credit.conditional !== true && credit.verificationStatus !== 'needs-review';
   }
   function contrastText(hex) {
     if (!/^#[a-f\d]{6}$/i.test(hex || '')) return '#000000';

@@ -29,6 +29,7 @@ test('monthly/quarterly amounts are annual caps and per-use benefits have no ass
   assert.equal(model.annualCashValue({ amount: 400, unit: 'USD', frequency: 'quarterly', quarterlyAmount: 100 }), 400);
   assert.equal(model.annualCashValue({ amount: 120, unit: 'USD', frequency: 'every 4.5 years' }), 120 / 4.5);
   assert.equal(model.annualCashValue({ amount: 100, unit: 'USD', frequency: 'per stay' }), 0);
+  assert.equal(model.includedCashCap({ amount: 100, unit: 'USD', frequency: 'per stay' }), false);
   assert.equal(model.annualCashValue({ amount: 100, unit: 'USD', frequency: 'every 0 years' }), 0);
 });
 
