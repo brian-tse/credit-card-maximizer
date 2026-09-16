@@ -13,9 +13,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
   <style>
     /* Card Selection Grid */
     .card-picker {
@@ -225,7 +225,7 @@
       cursor: pointer;
       font-size: 1rem;
       margin-top: 0.5rem;
-      opacity: 0.6;
+      opacity: 1;
       transition: opacity 0.2s;
     }
 
@@ -302,7 +302,7 @@
 
     .perk-item.no {
       color: var(--text-secondary);
-      opacity: 0.5;
+      opacity: 1;
     }
 
     .credit-list {
@@ -374,7 +374,7 @@
         <div class="card-picker-title">Select Cards to Compare</div>
         <div class="card-picker-count"><span id="selected-count">0</span> selected</div>
       </div>
-      <input type="text" class="search-box" id="card-search" placeholder="Search cards..." oninput="filterCards()">
+      <input type="text" class="search-box" id="card-search" aria-label="Search cards" placeholder="Search cards..." oninput="filterCards()">
       <div class="card-picker-grid" id="card-picker-grid">
         <!-- Cards will be inserted here -->
       </div>
@@ -399,6 +399,9 @@
   </div>
 
   <script src="../data/cards.js"></script>
+  <script src="../js/card-model.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/dialogs.js"></script>
   <script src="../js/card-visuals.js"></script>
   <script src="../js/save-code.js"></script>
   <script src="../js/firebase-config.js"></script>

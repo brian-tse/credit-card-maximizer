@@ -1,142 +1,166 @@
-// CardMax - Authentication & Cloud Sync
-// Handles Google sign-in and Firestore data sync
-
-// Current user state
+// CardMax authentication and conflict-aware sync. No whole-snapshot last-writer wins.
 let currentUser = null;
+let authInitialized = false;
+let authGeneration = 0;
+let explicitSignIn = false;
+let unsubscribeCloud = null;
+let syncPromise = null;
+let syncAgain = false;
+let syncStatus = 'Saved in this browser';
 
-// Initialize auth state listener
+function setSyncStatus(message) {
+  syncStatus = message;
+  const node = document.getElementById('cardmax-sync-status');
+  if (node) node.textContent = message;
+  window.dispatchEvent(new CustomEvent('cardmax-sync-status', { detail: message }));
+}
+
 function initAuth() {
-  auth.onAuthStateChanged(async (user) => {
-    currentUser = user;
-    updateAuthUI();
-
-    // Don't auto-sync on page load - only sync when user explicitly signs in
-    // This prevents reload loops
+  if (authInitialized || typeof auth === 'undefined' || typeof CardMaxStorage === 'undefined') return;
+  authInitialized = true;
+  auth.onAuthStateChanged(async user => {
+    const generation = ++authGeneration;
+    clearTimeout(window.syncTimeout);
+    if (unsubscribeCloud) unsubscribeCloud();
+    unsubscribeCloud = null;
+    try {
+      CardMaxStorage.switchAccount(user?.uid || null, explicitSignIn);
+      currentUser = user;
+      explicitSignIn = false;
+      updateAuthUI();
+      if (!user) { setSyncStatus('Saved in this browser'); return; }
+      setSyncStatus('Syncing…');
+      await syncToCloud();
+      if (generation !== authGeneration || !currentUser || !ownsAccount(user.uid)) return;
+      unsubscribeCloud = db.collection('users').doc(user.uid).onSnapshot(snapshot => {
+        if (generation !== authGeneration || currentUser?.uid !== user.uid || !ownsAccount(user.uid) || snapshot.metadata?.hasPendingWrites) return;
+        try {
+          const local = CardMaxStorage.captureChanges(user.uid);
+          const merged = CardMaxStorage.mergeState(local, CardMaxStorage.cloudState(snapshot.exists ? snapshot.data() : {}));
+          if (JSON.stringify(local) !== JSON.stringify(merged)) CardMaxStorage.applyState(merged, true, { expectedOwner: user.uid });
+          setSyncStatus('Synced');
+        } catch (_) { setSyncStatus('Sync failed — your local data is saved'); }
+      }, () => setSyncStatus('Offline or sync unavailable — saved locally'));
+    } catch (_) { currentUser = null; explicitSignIn = false; updateAuthUI(); setSyncStatus('Could not open this account — browser data remains saved'); }
+  });
+  window.addEventListener('online', () => syncToCloud());
+  window.addEventListener('focus', () => { if (!guardActiveAccount()) return; if (currentUser) syncToCloud(); });
+  for (const type of ['click', 'input', 'change', 'submit', 'keydown', 'beforeinput']) document.addEventListener(type, event => {
+    if (ownsAccount() || event.target.closest?.('[data-cardmax-reload], #navbar-auth')) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    guardActiveAccount();
+  }, true);
+  window.addEventListener('storage', event => {
+    if (event.key?.startsWith('cardmax_') && event.key !== 'cardmax_last_rollback') {
+      // Other tabs share the account owner; never write another account's data.
+      if (!guardActiveAccount()) return;
+      window.dispatchEvent(new Event('cardmax-data-changed'));
+    }
   });
 }
 
-// Sign in with Google
 async function signInWithGoogle() {
   try {
+    explicitSignIn = true;
     const result = await auth.signInWithPopup(googleProvider);
-    const user = result.user;
-    const isNewUser = result.additionalUserInfo?.isNewUser;
-
-    if (isNewUser) {
-      // First time sign in - upload localStorage to cloud
-      await syncToCloud();
-      showAuthToast('Account created! Your data is now synced.');
-    } else {
-      // Returning user - sync from cloud and reload to show synced data
-      await syncFromCloud(true);
-      showAuthToast('Welcome back! Data synced from your account.');
-    }
-
-    return user;
+    return result.user;
   } catch (error) {
-    console.error('Sign in error:', error);
-    if (error.code === 'auth/popup-blocked') {
-      showAuthToast('Please allow popups to sign in.');
-    } else if (error.code === 'auth/cancelled-popup-request') {
-      // User closed popup, ignore
-    } else {
-      showAuthToast('Sign in failed. Please try again.');
-    }
+    explicitSignIn = false;
+    if (error.code === 'auth/popup-blocked') showAuthToast('Please allow popups to sign in.');
+    else if (!['auth/cancelled-popup-request', 'auth/popup-closed-by-user'].includes(error.code)) showAuthToast('Sign in failed. Your local data is unchanged.');
     return null;
   }
 }
 
-// Sign out
 async function signOutUser() {
   try {
-    await auth.signOut();
-    showAuthToast('Signed out successfully.');
-  } catch (error) {
-    console.error('Sign out error:', error);
-    showAuthToast('Sign out failed.');
-  }
-}
-
-// Sync local data to Firestore
-async function syncToCloud() {
-  if (!currentUser) return false;
-
-  try {
-    const userData = {
-      selectedCards: JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]'),
-      cardSignupDates: JSON.parse(localStorage.getItem('cardmax_signup_dates') || '{}'),
-      trackedBenefits: JSON.parse(localStorage.getItem('cardmax_tracked_benefits') || '{}'),
-      sortPreference: localStorage.getItem('cardmax_sort_option') || 'issuer',
-      lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-    };
-
-    await db.collection('users').doc(currentUser.uid).set(userData, { merge: true });
-    console.log('Data synced to cloud');
-    return true;
-  } catch (error) {
-    console.error('Sync to cloud failed:', error);
-    return false;
-  }
-}
-
-// Sync data from Firestore to local
-async function syncFromCloud(shouldReload = false) {
-  if (!currentUser) return false;
-
-  try {
-    const doc = await db.collection('users').doc(currentUser.uid).get();
-
-    if (doc.exists) {
-      const data = doc.data();
-
-      // Update localStorage with cloud data
-      if (data.selectedCards) {
-        localStorage.setItem('cardmax_user_cards', JSON.stringify(data.selectedCards));
-      }
-      if (data.cardSignupDates) {
-        localStorage.setItem('cardmax_signup_dates', JSON.stringify(data.cardSignupDates));
-      }
-      if (data.trackedBenefits) {
-        localStorage.setItem('cardmax_tracked_benefits', JSON.stringify(data.trackedBenefits));
-      }
-      if (data.sortPreference) {
-        localStorage.setItem('cardmax_sort_option', data.sortPreference);
-      }
-
-      console.log('Data synced from cloud');
-
-      // Only reload if explicitly requested (e.g., after sign-in)
-      if (shouldReload) {
-        window.location.reload();
-      }
-    } else {
-      // No cloud data exists - upload local data
-      await syncToCloud();
-    }
-
-    return true;
-  } catch (error) {
-    console.error('Sync from cloud failed:', error);
-    return false;
-  }
-}
-
-// Auto-sync when data changes (call this after any data modification)
-async function autoSyncToCloud() {
-  if (!currentUser) return;
-
-  // Debounce to avoid too many writes - wait 3 seconds of inactivity
-  clearTimeout(window.syncTimeout);
-  window.syncTimeout = setTimeout(async () => {
-    console.log('Auto-syncing to cloud...');
     await syncToCloud();
-  }, 3000);
+    await auth.signOut();
+    showAuthToast('Signed out. Account data remains separate from this browser’s guest data.');
+  } catch (_) { showAuthToast('Sign out failed. Please try again.'); }
+}
+
+function ownsAccount(uid = currentUser?.uid || 'anonymous') { return CardMaxStorage.owner() === uid; }
+
+// Older tabs must not write stale form/card state into another account's
+// shared browser keys. Capture-phase blocking runs before page event handlers.
+function guardActiveAccount() {
+  const matching = ownsAccount();
+  document.querySelectorAll?.('.container, [role="dialog"]').forEach(element => { element.inert = !matching; });
+  const existing = document.getElementById('cardmax-account-changed');
+  if (matching) { existing?.remove(); return true; }
+  if (!existing && document.body) {
+    const banner = document.createElement('div');
+    banner.id = 'cardmax-account-changed';
+    banner.setAttribute('role', 'alert');
+    banner.style.cssText = 'position:sticky;top:0;z-index:20000;padding:1rem;background:#fff4d6;color:#402900;display:flex;gap:1rem;align-items:center;justify-content:center';
+    const message = document.createElement('span');
+    message.textContent = 'Account changed in another tab. Reload before editing cards or restoring data.';
+    const button = document.createElement('button');
+    button.className = 'btn btn-primary'; button.textContent = 'Reload account'; button.dataset.cardmaxReload = 'true';
+    button.addEventListener('click', () => window.location.reload());
+    banner.append(message, button); document.body.prepend(banner);
+  }
+  setSyncStatus('Account changed in another tab — reload before editing');
+  return false;
+}
+
+async function syncToCloud() {
+  if (typeof CardMaxStorage === 'undefined' || !ownsAccount()) return false;
+  try { CardMaxStorage.captureChanges(currentUser?.uid || 'anonymous'); } catch (_) { setSyncStatus('Could not save changes — check browser storage'); return false; }
+  if (!currentUser) { setSyncStatus('Saved in this browser'); return false; }
+  if (syncPromise) { syncAgain = true; return syncPromise; }
+  const uid = currentUser.uid, generation = authGeneration;
+  if (localStorage.getItem('cardmax_state_owner') !== uid) return false;
+  setSyncStatus('Syncing…');
+  syncPromise = (async () => {
+    try {
+      const ref = db.collection('users').doc(uid);
+      const local = CardMaxStorage.captureChanges(uid);
+      const merged = await db.runTransaction(async transaction => {
+        if (!ownsAccount(uid) || generation !== authGeneration || currentUser?.uid !== uid) throw new Error('Account changed');
+        const snapshot = await transaction.get(ref);
+        if (!ownsAccount(uid) || generation !== authGeneration || currentUser?.uid !== uid) throw new Error('Account changed');
+        const state = CardMaxStorage.mergeState(local, CardMaxStorage.cloudState(snapshot.exists ? snapshot.data() : {}));
+        transaction.set(ref, { stateV3: state, schemaVersion: 3, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { mergeFields: ['stateV3', 'schemaVersion', 'lastUpdated'] });
+        return state;
+      });
+      if (generation !== authGeneration || currentUser?.uid !== uid || localStorage.getItem('cardmax_state_owner') !== uid) return false;
+      // Include changes made while the network request was running.
+      const latest = CardMaxStorage.captureChanges(uid);
+      const combined = CardMaxStorage.mergeState(merged, latest);
+      if (JSON.stringify(latest) !== JSON.stringify(combined)) CardMaxStorage.applyState(combined, true, { expectedOwner: uid });
+      if (JSON.stringify(merged) !== JSON.stringify(combined)) syncAgain = true;
+      setSyncStatus('Synced');
+      return true;
+    } catch (_) { setSyncStatus('Sync failed — your local data is saved'); return false; }
+    finally { syncPromise = null; if (syncAgain) { syncAgain = false; autoSyncToCloud(); } }
+  })();
+  return syncPromise;
+}
+
+async function syncFromCloud() { return syncToCloud(); }
+
+function autoSyncToCloud() {
+  if (!ownsAccount()) { setSyncStatus('Account changed in another tab — refresh before editing'); return; }
+  try { CardMaxStorage.captureChanges(currentUser?.uid || 'anonymous'); } catch (_) { setSyncStatus('Could not save changes — check browser storage'); return; }
+  clearTimeout(window.syncTimeout);
+  if (!currentUser) { setSyncStatus('Saved in this browser'); return; }
+  setSyncStatus('Changes saved locally; sync pending');
+  window.syncTimeout = setTimeout(syncToCloud, 400);
 }
 
 // Update UI based on auth state
 function updateAuthUI() {
+  guardActiveAccount();
   updateNavbarAuth();
   updateAuthContainer();
+  renderLegacyRecovery();
+  let status = document.getElementById('cardmax-sync-status');
+  const navbar = document.getElementById('navbar-auth');
+  if (!status && navbar) { status = document.createElement('span'); status.id = 'cardmax-sync-status'; status.setAttribute('role', 'status'); status.style.cssText = 'font-size:0.7rem;display:block;max-width:210px'; navbar.appendChild(status); }
+  if (status) status.textContent = syncStatus;
   // Update quick save button visibility (hide when signed in)
   if (typeof updateQuickSaveVisibility === 'function') {
     updateQuickSaveVisibility();
@@ -149,8 +173,8 @@ function updateNavbarAuth() {
   if (!navbarAuth) return;
 
   if (currentUser) {
-    const displayName = currentUser.displayName || currentUser.email;
-    const photoURL = currentUser.photoURL;
+    const displayName = escapeAuthText(currentUser.displayName || currentUser.email || 'Account');
+    const photoURL = /^https:\/\//.test(currentUser.photoURL || '') ? escapeAuthText(currentUser.photoURL) : null;
 
     navbarAuth.innerHTML = `
       <div class="navbar-auth-user">
@@ -174,7 +198,7 @@ function updateAuthContainer() {
   if (currentUser) {
     // Signed in state
     const email = currentUser.email;
-    const displayName = currentUser.displayName || email;
+    const displayName = escapeAuthText(currentUser.displayName || email || 'Account');
 
     authContainer.innerHTML = `
       <div class="auth-signed-in">
@@ -191,6 +215,41 @@ function updateAuthContainer() {
       </div>
     `;
   }
+}
+
+// Pre-upgrade data has no reliable account owner. Keep it available without
+// silently uploading it to whichever account happens to be remembered.
+function renderLegacyRecovery() {
+  const existing = document.getElementById('cardmax-data-recovery');
+  const recovery = CardMaxStorage.legacyRecovery();
+  if (!currentUser || !recovery) { existing?.remove(); return; }
+  const host = document.querySelector?.('.container') || document.getElementById('navbar-auth');
+  if (!host) return;
+  const panel = existing || document.createElement('div');
+  panel.id = 'cardmax-data-recovery';
+  panel.style.cssText = 'padding:1rem;margin:1rem 0;border:1px solid var(--border-color);border-radius:8px;font-size:0.875rem';
+  panel.innerHTML = `<details><summary>Saved browser data from before this update</summary><p>This older data was saved without an account owner. Download it to review, or add its missing items to ${escapeAuthText(currentUser.displayName || currentUser.email || 'this account')}. Existing account choices will be kept.</p>
+    <button class="btn btn-secondary" type="button" onclick="downloadLegacyBrowserData()">Download saved browser data</button>
+    ${recovery.imported ? '<p>Saved data has been imported. The original recovery copy remains available to download.</p>' : '<button class="btn btn-primary" type="button" onclick="importLegacyBrowserData()">Import saved data into this account</button>'}</details>`;
+  if (!existing) host.prepend(panel);
+}
+
+function downloadLegacyBrowserData() {
+  const recovery = CardMaxStorage.legacyRecovery();
+  if (!recovery) return;
+  const backup = { version: 3, exportedAt: new Date().toISOString(), snapshot: CardMaxStorage.materialize(recovery.state), stateV3: recovery.state };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' }));
+  const link = document.createElement('a'); link.href = url; link.download = 'cardmax-before-update-backup.json'; link.click(); URL.revokeObjectURL(url);
+}
+
+function importLegacyBrowserData() {
+  if (!currentUser || !ownsAccount()) return;
+  try {
+    CardMaxStorage.importLegacy(currentUser.uid);
+    autoSyncToCloud();
+    renderLegacyRecovery();
+    showAuthToast('Saved browser data imported. Existing account choices were kept.');
+  } catch (_) { showAuthToast('Could not import saved data. The original recovery copy is unchanged.'); }
 }
 
 // Show toast notification for auth events
@@ -239,5 +298,11 @@ window.CardMaxAuth = {
   syncFromCloud,
   autoSync: autoSyncToCloud,
   isSignedIn,
-  getCurrentUser
+  getCurrentUser,
+  importLegacyBrowserData,
+  downloadLegacyBrowserData
 };
+
+function escapeAuthText(value) { return String(value).replace(/[&<>\"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '\"':'&quot;', "'":'&#39;'}[c])); }
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAuth);
+else initAuth();

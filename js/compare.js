@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const cards = urlParams.get('cards');
   if (cards) {
-    cards.split(',').forEach(id => {
+    CardMaxModel.normalizeCardIds(cards.split(',')).forEach(id => {
       if (CARDS_DATABASE.find(c => c.id === id)) {
         selectedCards.add(id);
       }
@@ -38,15 +38,15 @@ function renderCardPicker(filter = '') {
       ? CardVisuals.generate(card)
       : `<div class="card-dot" style="background: ${card.color}"></div>`;
     return `
-    <div class="card-pick-item ${selectedCards.has(card.id) ? 'selected' : ''}"
+    <button type="button" class="card-pick-item ${selectedCards.has(card.id) ? 'selected' : ''}" aria-pressed="${selectedCards.has(card.id)}" aria-label="Compare ${CardMaxModel.escapeHtml(card.name)}"
          onclick="toggleCardSelection('${card.id}')">
       ${cardVisual}
       <div class="card-info">
         <div class="card-name">${card.name}</div>
         <div class="card-fee">$${card.annualFee}/year</div>
       </div>
-      <div class="check-icon">${selectedCards.has(card.id) ? '✓' : ''}</div>
-    </div>
+      <span class="check-icon" aria-hidden="true">${selectedCards.has(card.id) ? '✓' : ''}</span>
+    </button>
   `}).join('');
 
   updateSelectedCount();
@@ -60,6 +60,7 @@ function filterCards() {
 
 // Toggle card selection
 function toggleCardSelection(cardId) {
+  if (!CARDS_DATABASE.some(card => card.id === cardId)) return;
   if (selectedCards.has(cardId)) {
     selectedCards.delete(cardId);
   } else {
@@ -155,9 +156,7 @@ function renderComparison() {
   const fees = cards.map(c => c.annualFee);
   const minFee = Math.min(...fees);
 
-  const totalCredits = cards.map(c =>
-    c.credits.reduce((sum, cr) => sum + (typeof cr.amount === 'number' ? cr.amount : 0), 0)
-  );
+  const totalCredits = cards.map(card => CardMaxModel.annualCashValue(card));
   const maxCredits = Math.max(...totalCredits);
 
   const netValues = cards.map((c, i) => totalCredits[i] - c.annualFee);
@@ -173,8 +172,10 @@ function renderComparison() {
     : [];
 
   container.innerHTML = `
+    <p class="terms-note">Cash totals are annualized credit caps, assuming full eligible use. Multi-year reimbursements are spread over their full period. Points, nights, certificates and per-use benefits are shown separately and excluded from cash totals. Terms and eligibility may differ for existing cardholders.</p>
     <div class="comparison-table-wrapper">
       <table class="comparison-table">
+        <caption class="sr-only">Selected credit cards, fees, benefits, and earning rates</caption>
         <thead>
           <tr>
             <th></th>
@@ -182,7 +183,8 @@ function renderComparison() {
               <th class="card-column-header" style="border-color: ${card.color}">
                 <div class="issuer">${card.issuer}</div>
                 <div class="name">${card.name}</div>
-                <button class="remove-btn" onclick="removeCard('${card.id}')" title="Remove from comparison">✕</button>
+                ${CardMaxModel.statusHtml(card)}${CardMaxModel.termsHtml(card)}
+                <button class="remove-btn" onclick="removeCard('${card.id}')" aria-label="Remove ${CardMaxModel.escapeHtml(card.name)} from comparison">✕</button>
               </th>
             `).join('')}
           </tr>
@@ -200,34 +202,32 @@ function renderComparison() {
 
           <!-- Total Credits -->
           <tr>
-            <td class="row-label">Total Credits Value</td>
+            <td class="row-label">Annualized cash caps</td>
             ${cards.map((card, i) => `
               <td class="value-cell">
-                <div class="value-big ${totalCredits[i] === maxCredits ? 'value-best' : ''}">\$${totalCredits[i]}</div>
+                <div class="value-big ${totalCredits[i] === maxCredits ? 'value-best' : ''}">${CardMaxModel.money(totalCredits[i])}</div>
               </td>
             `).join('')}
           </tr>
 
           <!-- Net Value -->
           <tr>
-            <td class="row-label">Net Value<br><span style="font-size: 0.7rem; font-weight: 400;">(Credits − Fee)</span></td>
+            <td class="row-label">Cash caps minus fee<br><span style="font-size: 0.7rem; font-weight: 400;">(Assumes full use)</span></td>
             ${cards.map((card, i) => `
               <td class="value-cell">
                 <div class="value-big ${netValues[i] === maxNet ? 'value-best' : ''}" style="${netValues[i] < 0 ? 'color: var(--accent-orange)' : ''}">
-                  ${netValues[i] >= 0 ? '+' : ''}\$${netValues[i]}
+                  ${CardMaxModel.money(netValues[i])}
                 </div>
               </td>
             `).join('')}
           </tr>
 
-          <!-- Sign-Up Bonus -->
           <tr>
-            <td class="row-label">Sign-Up Bonus</td>
+            <td class="row-label">Welcome offer</td>
             ${cards.map(card => `
               <td class="value-cell">
-                <div class="value-big">${card.signUpBonus.amount.toLocaleString()}</div>
-                <div class="value-note">${card.signUpBonus.currency}</div>
-                <div class="value-note">\$${card.signUpBonus.spendRequirement.toLocaleString()} in ${card.signUpBonus.timeframe}</div>
+                ${CardMaxModel.sourceLink(card, 'Check current issuer offer')}
+                <div class="value-note">Offers and eligibility change.</div>
               </td>
             `).join('')}
           </tr>
@@ -268,8 +268,8 @@ function renderComparison() {
                 <ul class="credit-list">
                   ${card.credits.map(credit => `
                     <li>
-                      <span>${credit.name}</span>
-                      <span class="amount">${typeof credit.amount === 'number' ? (credit.type === 'points' ? credit.amount.toLocaleString() + ' pts' : '\$' + credit.amount.toLocaleString()) : credit.amount}</span>
+                      <span>${credit.name}<small class="terms-note">${CardMaxModel.periodLabel(credit)}</small>${CardMaxModel.termsHtml(credit)}</span>
+                      <span class="amount">${CardMaxModel.formatCredit(credit)}</span>
                     </li>
                   `).join('')}
                 </ul>
@@ -284,7 +284,7 @@ function renderComparison() {
               <td>
                 <div class="partner-tags">
                   ${card.transferPartners.map(p => `
-                    <span class="partner-tag ${sharedPartners.includes(p.name) ? 'shared' : ''}">${p.name}</span>
+                    <span class="partner-tag ${sharedPartners.includes(p.name) ? 'shared' : ''}">${p.name} ${p.ratio}${p.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(p.description)}</span>` : ''}${CardMaxModel.termsHtml(p)}</span>
                   `).join('')}
                 </div>
               </td>
@@ -299,7 +299,7 @@ function renderComparison() {
               return `
                 <td>
                   ${lounges.length > 0 ? lounges.map(l => `
-                    <div class="perk-item has">✓ ${l.name}</div>
+                    <div class="perk-item has">✓ ${l.name}<span class="terms-note">${l.description}</span></div>
                   `).join('') : '<div class="perk-item no">✗ None</div>'}
                 </td>
               `;
@@ -314,7 +314,7 @@ function renderComparison() {
               return `
                 <td>
                   ${status.length > 0 ? status.map(s => `
-                    <div class="perk-item has">✓ ${s.name}</div>
+                    <div class="perk-item has">✓ ${s.name}<span class="terms-note">${s.description}</span></div>
                   `).join('') : '<div class="perk-item no">✗ None</div>'}
                 </td>
               `;
@@ -329,7 +329,7 @@ function renderComparison() {
               return `
                 <td>
                   ${insurance.length > 0 ? insurance.slice(0, 3).map(i => `
-                    <div class="perk-item has">✓ ${i.name}</div>
+                    <div class="perk-item has">✓ ${i.name}<span class="terms-note">${i.description}</span></div>
                   `).join('') : '<div class="perk-item no">✗ None</div>'}
                 </td>
               `;

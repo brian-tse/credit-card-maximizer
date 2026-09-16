@@ -1,79 +1,44 @@
-// CardMax - Save Code System
-// Allows users to save/restore their data via a self-contained code string
-
+// Complete, validated backups. Restore keeps a rollback snapshot before changing data.
 const SAVE_CODE_PREFIX = 'CARDMAX_';
 
-// Generate a backup code that contains ALL user data (Base64 encoded)
-function generateBackupCode() {
-  const data = {
-    v: 2, // version
-    c: JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]'),
-    b: JSON.parse(localStorage.getItem('cardmax_tracked_benefits') || '{}'),
-    r: JSON.parse(localStorage.getItem('cardmax_renewal_dates') || '{}'),
-    d: JSON.parse(localStorage.getItem('cardmax_signup_dates') || '{}')
-  };
-
-  // Compress by removing empty objects
-  if (Object.keys(data.b).length === 0) delete data.b;
-  if (Object.keys(data.r).length === 0) delete data.r;
-  if (Object.keys(data.d).length === 0) delete data.d;
-
-  const jsonStr = JSON.stringify(data);
-  const base64 = btoa(unescape(encodeURIComponent(jsonStr)));
-  return SAVE_CODE_PREFIX + base64;
-}
-
-// Restore data from a backup code
-function restoreFromCode(code) {
-  if (!code || !code.startsWith(SAVE_CODE_PREFIX)) {
-    throw new Error('Invalid backup code format');
-  }
-
-  try {
-    const base64 = code.substring(SAVE_CODE_PREFIX.length);
-    const jsonStr = decodeURIComponent(escape(atob(base64)));
-    const data = JSON.parse(jsonStr);
-
-    if (!data.c || !Array.isArray(data.c)) {
-      throw new Error('Invalid data structure');
-    }
-
-    localStorage.setItem('cardmax_user_cards', JSON.stringify(data.c));
-    localStorage.setItem('cardmax_tracked_benefits', JSON.stringify(data.b || {}));
-    localStorage.setItem('cardmax_renewal_dates', JSON.stringify(data.r || {}));
-    localStorage.setItem('cardmax_signup_dates', JSON.stringify(data.d || {}));
-
-    return true;
-  } catch (err) {
-    throw new Error('Could not decode backup code: ' + err.message);
-  }
-}
-
-// Legacy: Export user data as JSON (for file backup)
 function exportUserData() {
-  const data = {
-    version: 2,
-    exportedAt: new Date().toISOString(),
-    cards: JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]'),
-    benefits: JSON.parse(localStorage.getItem('cardmax_tracked_benefits') || '{}'),
-    renewalDates: JSON.parse(localStorage.getItem('cardmax_renewal_dates') || '{}'),
-    signupDates: JSON.parse(localStorage.getItem('cardmax_signup_dates') || '{}')
-  };
-  return data;
+  const stateV3 = CardMaxStorage.captureChanges();
+  return { version: 3, exportedAt: new Date().toISOString(), snapshot: CardMaxStorage.materialize(stateV3), stateV3 };
 }
 
-// Legacy: Import user data from JSON file
-function importUserData(data) {
-  if (!data || !data.cards) {
-    throw new Error('Invalid data format');
+function generateBackupCode() {
+  return SAVE_CODE_PREFIX + btoa(unescape(encodeURIComponent(JSON.stringify(exportUserData()))));
+}
+
+function backupSnapshot(data) {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Invalid backup data');
+  const version = data.version ?? data.v ?? 1;
+  if (![1, 2, 3].includes(version)) throw new Error('Unsupported backup version');
+  if (version === 3) {
+    const snapshot = CardMaxStorage.validateSnapshot(data.snapshot);
+    if (data.stateV3) {
+      CardMaxStorage.validateState(data.stateV3);
+      if (JSON.stringify(CardMaxStorage.materialize(data.stateV3)) !== JSON.stringify(snapshot)) throw new Error('Backup state and snapshot do not match');
+    }
+    return snapshot;
   }
+  return CardMaxStorage.validateSnapshot({ cards: data.cards ?? data.c, benefits: data.benefits ?? data.b ?? {}, renewalDates: data.renewalDates ?? data.r ?? {}, signupDates: data.signupDates ?? data.d ?? {}, annualFees: data.annualFees || {}, settings: data.settings || { sortPreference: data.sortPreference || 'issuer', pointValuations: data.pointValuations || {} } });
+}
 
-  localStorage.setItem('cardmax_user_cards', JSON.stringify(data.cards));
-  localStorage.setItem('cardmax_tracked_benefits', JSON.stringify(data.benefits || {}));
-  localStorage.setItem('cardmax_renewal_dates', JSON.stringify(data.renewalDates || {}));
-  localStorage.setItem('cardmax_signup_dates', JSON.stringify(data.signupDates || {}));
-
+function importUserData(data, expectedOwner) {
+  // Validation is complete before a single active storage key is written.
+  const snapshot = backupSnapshot(data);
+  CardMaxStorage.restore(snapshot, expectedOwner);
+  if (typeof CardMaxAuth !== 'undefined') CardMaxAuth.autoSync();
   return true;
+}
+
+function restoreFromCode(code) {
+  if (typeof code !== 'string' || !code.startsWith(SAVE_CODE_PREFIX) || code.length > 10000000) throw new Error('Invalid backup code format');
+  let data;
+  try { data = JSON.parse(decodeURIComponent(escape(atob(code.slice(SAVE_CODE_PREFIX.length))))); }
+  catch (_) { throw new Error('Could not decode backup code'); }
+  return importUserData(data);
 }
 
 // Copy backup code to clipboard
@@ -104,6 +69,8 @@ function downloadData() {
 
 // Show file picker to import data from JSON file
 function uploadData() {
+  const expectedOwner = CardMaxStorage.owner();
+  CardMaxStorage.assertOwner(typeof CardMaxAuth !== 'undefined' ? CardMaxAuth.getCurrentUser()?.uid || 'anonymous' : expectedOwner);
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = '.json';
@@ -114,7 +81,7 @@ function uploadData() {
     try {
       const text = await file.text();
       const data = JSON.parse(text);
-      importUserData(data);
+      importUserData(data, expectedOwner);
       showToast('Data restored successfully!');
       setTimeout(() => window.location.reload(), 1000);
     } catch (err) {
@@ -138,7 +105,7 @@ function showToast(message, type = 'success') {
     left: 50%;
     transform: translateX(-50%);
     padding: 1rem 2rem;
-    background: ${type === 'error' ? '#ef4444' : '#22c55e'};
+    background: ${type === 'error' ? '#b91c1c' : '#15803d'};
     color: white;
     border-radius: 8px;
     font-weight: 500;
@@ -171,7 +138,9 @@ function showToast(message, type = 'success') {
 function setRenewalDate(cardId, date) {
   const dates = JSON.parse(localStorage.getItem('cardmax_renewal_dates') || '{}');
   dates[cardId] = date;
+  CardMaxStorage.validateSnapshot({ ...CardMaxStorage.readSnapshot(), renewalDates: dates });
   localStorage.setItem('cardmax_renewal_dates', JSON.stringify(dates));
+  if (typeof CardMaxAuth !== 'undefined') CardMaxAuth.autoSync();
 }
 
 // Get renewal date for a card
@@ -249,12 +218,13 @@ function renderSaveRestoreUI(containerId) {
         <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
           <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Restore from Backup</div>
           <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0.75rem;">
-            Paste a backup code to restore your cards and settings.
+            Restoring replaces this account’s cards, history and settings. A recovery snapshot is saved in this browser before changes are applied.
           </p>
           <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-start;">
             <input
               type="text"
               id="restore-code-input"
+              aria-label="Backup code"
               placeholder="Paste backup code here (starts with CARDMAX_)"
               style="flex: 1; min-width: 200px; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-primary); font-family: monospace; font-size: 0.875rem;"
             >
@@ -320,7 +290,7 @@ function renderQuickSaveButton() {
   `;
 
   fab.onclick = () => {
-    if (!hasData) {
+    if (!CardMaxStorage.readSnapshot().cards.length) {
       showToast('Add some cards first to create a backup', 'error');
       return;
     }

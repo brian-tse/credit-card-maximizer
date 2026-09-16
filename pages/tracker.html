@@ -13,9 +13,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
   <!-- Navigation -->
@@ -61,19 +61,19 @@
     <section class="stats-bar" id="tracker-stats">
       <div class="stat-card">
         <div class="stat-value" id="credits-used">$0</div>
-        <div class="stat-label">Credits Used This Month</div>
+        <div class="stat-label">Monthly cash credits used</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="credits-remaining">$0</div>
-        <div class="stat-label">Credits Remaining</div>
+        <div class="stat-label">Monthly cash remaining</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="annual-value">$0</div>
-        <div class="stat-label">Annual Value Captured</div>
+        <div class="stat-label">Cash captured this year</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="completion-rate">0%</div>
-        <div class="stat-label">Completion Rate</div>
+        <div class="stat-label">Current benefits completed</div>
       </div>
     </section>
 
@@ -86,6 +86,11 @@
       <div id="monthly-benefits-container">
         <!-- Monthly benefit trackers will be inserted here -->
       </div>
+    </section>
+
+    <section id="quarterly-tracker" style="margin-top: 3rem;">
+      <h2 style="margin-bottom: 1.5rem;">Quarterly Credits</h2>
+      <div id="quarterly-benefits-container"></div>
     </section>
 
     <!-- Semiannual Benefits -->
@@ -106,7 +111,7 @@
 
     <!-- One-Time Benefits -->
     <section id="onetime-tracker" style="margin-top: 3rem;">
-      <h2 style="margin-bottom: 1.5rem;">One-Time Perks</h2>
+      <h2 style="margin-bottom: 1.5rem;">Multi-year and other benefits</h2>
       <div id="onetime-benefits-container">
         <!-- One-time benefit trackers will be inserted here -->
       </div>
@@ -122,11 +127,15 @@
   </div>
 
   <script src="../data/cards.js"></script>
+  <script src="../js/card-model.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/dialogs.js"></script>
   <script src="../data/valuations.js"></script>
   <script src="../js/save-code.js"></script>
   <script src="../js/card-visuals.js"></script>
   <script src="../js/firebase-config.js"></script>
   <script src="../js/auth.js"></script>
+  <script src="../js/benefit-periods.js"></script>
   <script src="../js/tracker.js"></script>
   <script src="../js/feedback.js"></script>
 </body>

@@ -1,1009 +1,207 @@
-// CardMax - Benefit Tracker Logic
-
-// Helper to sanitize credit names for use as keys (remove spaces, apostrophes, special chars)
-const sanitizeCreditName = (name) => name.replace(/[\s'"/\\]+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
-
-// Date-based benefits configuration
-// Benefits that vary based on when the user signed up for the card
-const DATE_BASED_BENEFITS = {
-  'ihg-one-rewards-premier': {
-    'Anniversary Free Night': {
-      cutoffDate: '2018-05-01',
-      before: {
-        description: 'Unrestricted free night at any IHG hotel (grandfathered)',
-        badge: 'Grandfathered'
-      },
-      after: {
-        description: 'Free night up to 40,000 points (can top up with points)',
-        badge: null
-      }
-    }
-  },
-  'chase-sapphire-reserve': {
-    'Travel Credit': {
-      cutoffDate: '2017-05-21',
-      before: {
-        description: '$300 annual travel credit (calendar year - grandfathered)',
-        badge: 'Calendar Year'
-      },
-      after: {
-        description: '$300 annual travel credit (cardmember year)',
-        badge: null
-      }
-    }
-  }
-};
-
-// Get user's signup date for a card (returns Date object or null)
-function getCardSignupDate(cardId) {
-  const signupDates = JSON.parse(localStorage.getItem('cardmax_signup_dates') || '{}');
-  const dateInfo = signupDates[cardId];
-
-  if (!dateInfo || !dateInfo.year || !dateInfo.month) {
-    return null;
-  }
-
-  // Month is 1-indexed in our storage, Date expects 0-indexed
-  const day = dateInfo.day || 1;
-  return new Date(dateInfo.year, dateInfo.month - 1, day);
-}
-
-// Check if user is grandfathered for a specific benefit
-function isGrandfathered(cardId, benefitName) {
-  const cardRules = DATE_BASED_BENEFITS[cardId];
-  if (!cardRules || !cardRules[benefitName]) {
-    return null; // No date-based rules for this benefit
-  }
-
-  const signupDate = getCardSignupDate(cardId);
-  if (!signupDate) {
-    return null; // No signup date recorded, can't determine
-  }
-
-  const cutoff = new Date(cardRules[benefitName].cutoffDate);
-  return signupDate < cutoff;
-}
-
-// Get the appropriate benefit info based on signup date
-function getDateBasedBenefitInfo(cardId, benefitName) {
-  const cardRules = DATE_BASED_BENEFITS[cardId];
-  if (!cardRules || !cardRules[benefitName]) {
-    return null;
-  }
-
-  const grandfathered = isGrandfathered(cardId, benefitName);
-  if (grandfathered === null) {
-    return { unknown: true, rules: cardRules[benefitName] };
-  }
-
-  return grandfathered
-    ? cardRules[benefitName].before
-    : cardRules[benefitName].after;
-}
-
-// Estimated point values for free night awards (in points)
-const FREE_NIGHT_POINT_VALUES = {
-  'world-of-hyatt': 12000,      // Cat 1-4 avg ~12,000 pts
-  'marriott-bonvoy-boundless': 35000,
-  'marriott-bonvoy-bold': 35000,
-  'marriott-bonvoy-bountiful': 35000,
-  'hilton-honors-aspire': 80000, // Uncapped, avg ~80k value
-  'hilton-honors-surpass': 60000, // After $15k spend
-  'ihg-one-rewards-premier': 40000
-};
-
-// Calculate estimated dollar value for points-based benefits
-function getEstimatedBenefitValue(card, benefit) {
-  if (typeof Valuations === 'undefined') return null;
-
-  // For points-type benefits (anniversary bonuses, etc.)
-  if (benefit.type === 'points' && typeof benefit.amount === 'number') {
-    const pointValue = Valuations.getCardPointValue(card);
-    return (benefit.amount * pointValue / 100).toFixed(0);
-  }
-
-  // For hotel free night awards
-  if (benefit.type === 'hotel' && benefit.amount === 1) {
-    const pointEstimate = FREE_NIGHT_POINT_VALUES[card.id];
-    if (pointEstimate) {
-      const valuationKey = Valuations.getCardValuationKey(card);
-      const valuations = Valuations.getValuations();
-      const pointValue = valuations[valuationKey]?.value || 0.50;
-      return (pointEstimate * pointValue / 100).toFixed(0);
-    }
-  }
-
-  return null;
-}
-
-// State
+// All tracker views use the same benefit IDs, periods, completion records and cash units.
 let userCards = [];
 let trackedBenefits = {};
-let cardSignupDates = {};
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-  loadUserData();
-  renderBenefitTrackers();
-  updateStats();
-  setCurrentMonth();
-
-  // Initialize save/restore UI if available
-  if (typeof CardMaxSave !== 'undefined') {
-    CardMaxSave.renderSaveRestoreUI('save-restore-ui');
-  }
-
-  // Default to "By Card" view
-  switchView('card');
-});
-
-// Load saved data from localStorage
-function loadUserData() {
-  const savedCards = localStorage.getItem('cardmax_user_cards');
-  const savedBenefits = localStorage.getItem('cardmax_tracked_benefits');
-  const savedSignupDates = localStorage.getItem('cardmax_signup_dates');
-
-  if (savedCards) {
-    userCards = JSON.parse(savedCards);
-  }
-
-  if (savedBenefits) {
-    trackedBenefits = JSON.parse(savedBenefits);
-  }
-
-  if (savedSignupDates) {
-    cardSignupDates = JSON.parse(savedSignupDates);
-  }
-
-  // Clean up old month data
-  cleanupOldData();
-}
-
-// Save data to localStorage
-function saveUserData() {
-  localStorage.setItem('cardmax_user_cards', JSON.stringify(userCards));
-  localStorage.setItem('cardmax_tracked_benefits', JSON.stringify(trackedBenefits));
-}
-
-// Clean up data from previous months
-function cleanupOldData() {
-  const currentMonth = getCurrentMonthKey();
-  const currentYear = new Date().getFullYear();
-
-  // Keep only current month's monthly data and all annual/onetime data
-  Object.keys(trackedBenefits).forEach(key => {
-    if (key.startsWith('monthly_') && !key.includes(currentMonth)) {
-      delete trackedBenefits[key];
-    }
-  });
-
-  saveUserData();
-}
-
-// Get current month key (e.g., "2026-01")
-function getCurrentMonthKey() {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-}
-
-// Set current month display
-function setCurrentMonth() {
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                      'July', 'August', 'September', 'October', 'November', 'December'];
-  const now = new Date();
-  document.getElementById('current-month').textContent = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
-}
-
-
-// Render all benefit trackers
-function renderBenefitTrackers() {
-  renderMonthlyBenefits();
-  renderSemiannualBenefits();
-  renderAnnualBenefits();
-  renderOnetimeBenefits();
-}
-
-// Render monthly benefits
-function renderMonthlyBenefits() {
-  const container = document.getElementById('monthly-benefits-container');
-  if (!container) return;
-
-  if (userCards.length === 0) {
-    container.innerHTML = `
-      <div class="tracker-card" style="text-align: center; padding: 3rem;">
-        <h3 style="margin-bottom: 0.5rem;">No cards selected</h3>
-        <p class="text-muted">Select cards above to start tracking your benefits</p>
-      </div>
-    `;
-    return;
-  }
-
-  const monthKey = getCurrentMonthKey();
-  let html = '';
-
-  userCards.forEach(cardId => {
-    const card = CARDS_DATABASE.find(c => c.id === cardId);
-    if (!card) return;
-
-    const monthlyCredits = card.credits.filter(c => c.monthlyAmount);
-    if (monthlyCredits.length === 0) return;
-
-    const cardBenefits = monthlyCredits.map(credit => {
-      const benefitKey = `monthly_${monthKey}_${cardId}_${sanitizeCreditName(credit.name)}`;
-      const isCompleted = trackedBenefits[benefitKey] || false;
-      return { ...credit, benefitKey, isCompleted };
-    });
-
-    const completedCount = cardBenefits.filter(b => b.isCompleted).length;
-    const totalValue = cardBenefits.reduce((sum, b) => sum + b.monthlyAmount, 0);
-    const usedValue = cardBenefits.filter(b => b.isCompleted).reduce((sum, b) => sum + b.monthlyAmount, 0);
-
-    html += `
-      <div class="tracker-card">
-        <div class="tracker-header">
-          <div>
-            <div class="tracker-title" style="display: flex; align-items: center; gap: 0.5rem;">
-              <span style="width: 12px; height: 12px; border-radius: 50%; background: ${card.color};"></span>
-              ${card.name}
-            </div>
-            <div class="text-muted" style="font-size: 0.875rem; margin-top: 0.25rem;">
-              ${completedCount} of ${cardBenefits.length} credits used
-            </div>
-          </div>
-          <div class="tracker-progress" style="color: var(--accent-green);">$${usedValue} / $${totalValue}</div>
-        </div>
-
-        <ul class="benefit-checklist">
-          ${cardBenefits.map(benefit => `
-            <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                onclick="toggleBenefit('${benefit.benefitKey}', event)">
-              <div class="benefit-checkbox"></div>
-              <div class="benefit-content">
-                <div class="benefit-text">${benefit.name}</div>
-                <div class="benefit-description">${benefit.description}</div>
-              </div>
-              <div class="benefit-value" style="color: var(--accent-green);">$${benefit.monthlyAmount}</div>
-            </li>
-          `).join('')}
-        </ul>
-
-        <div class="progress-container">
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: ${(usedValue / totalValue) * 100}%"></div>
-          </div>
-          <div class="progress-text">
-            <span>${Math.round((usedValue / totalValue) * 100)}% used</span>
-            <span style="color: var(--accent-green);">$${totalValue - usedValue} remaining</span>
-          </div>
-        </div>
-      </div>
-    `;
-  });
-
-  container.innerHTML = html || `
-    <div class="tracker-card" style="text-align: center; padding: 2rem;">
-      <p class="text-muted">No monthly credits for selected cards</p>
-    </div>
-  `;
-}
-
-// Render semiannual benefits (like Saks $50 every 6 months)
-function renderSemiannualBenefits() {
-  const container = document.getElementById('semiannual-benefits-container');
-  if (!container) return;
-
-  if (userCards.length === 0) {
-    container.innerHTML = '';
-    return;
-  }
-
-  const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth(); // 0-11
-  // H1 = Jan-Jun (months 0-5), H2 = Jul-Dec (months 6-11)
-  const currentHalf = currentMonth < 6 ? 'H1' : 'H2';
-  let html = '';
-
-  userCards.forEach(cardId => {
-    const card = CARDS_DATABASE.find(c => c.id === cardId);
-    if (!card) return;
-
-    const semiannualCredits = card.credits.filter(c => c.frequency === 'semiannual');
-    if (semiannualCredits.length === 0) return;
-
-    const cardBenefits = semiannualCredits.map(credit => {
-      const benefitKey = `semiannual_${currentYear}_${currentHalf}_${cardId}_${sanitizeCreditName(credit.name)}`;
-      const isCompleted = trackedBenefits[benefitKey] || false;
-      const periodValue = credit.semiannualAmount || (credit.amount / 2);
-      return { ...credit, benefitKey, isCompleted, periodValue };
-    });
-
-    const completedCount = cardBenefits.filter(b => b.isCompleted).length;
-    const totalValue = cardBenefits.reduce((sum, b) => sum + b.periodValue, 0);
-    const usedValue = cardBenefits.filter(b => b.isCompleted).reduce((sum, b) => sum + b.periodValue, 0);
-
-    html += `
-      <div class="tracker-card">
-        <div class="tracker-header">
-          <div>
-            <div class="tracker-title" style="display: flex; align-items: center; gap: 0.5rem;">
-              <span style="width: 12px; height: 12px; border-radius: 50%; background: ${card.color};"></span>
-              ${card.name}
-            </div>
-            <div class="text-muted" style="font-size: 0.875rem; margin-top: 0.25rem;">
-              ${completedCount} of ${cardBenefits.length} credits used this half
-            </div>
-          </div>
-          <div class="tracker-progress" style="color: var(--accent-green);">$${usedValue} / $${totalValue}</div>
-        </div>
-
-        <ul class="benefit-checklist">
-          ${cardBenefits.map(benefit => `
-            <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                onclick="toggleBenefit('${benefit.benefitKey}', event)">
-              <div class="benefit-checkbox"></div>
-              <div class="benefit-content">
-                <div class="benefit-text">${benefit.name}</div>
-                <div class="benefit-description">${benefit.description}</div>
-                <div style="font-size: 0.75rem; color: var(--accent-purple); margin-top: 0.25rem;">
-                  ${currentHalf === 'H1' ? 'Jan-Jun' : 'Jul-Dec'} ${currentYear}
-                </div>
-              </div>
-              <div class="benefit-value" style="color: var(--accent-green);">$${benefit.periodValue}</div>
-            </li>
-          `).join('')}
-        </ul>
-
-        <div class="progress-container">
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: ${totalValue > 0 ? (usedValue / totalValue) * 100 : 0}%"></div>
-          </div>
-          <div class="progress-text">
-            <span>${totalValue > 0 ? Math.round((usedValue / totalValue) * 100) : 0}% used</span>
-            <span>$${totalValue - usedValue} remaining</span>
-          </div>
-        </div>
-      </div>
-    `;
-  });
-
-  container.innerHTML = html || '';
-}
-
-// Render annual benefits
-function renderAnnualBenefits() {
-  const container = document.getElementById('annual-benefits-container');
-  if (!container) return;
-
-  if (userCards.length === 0) {
-    container.innerHTML = '';
-    return;
-  }
-
-  const currentYear = new Date().getFullYear();
-  let html = '';
-
-  userCards.forEach(cardId => {
-    const card = CARDS_DATABASE.find(c => c.id === cardId);
-    if (!card) return;
-
-    const annualCredits = card.credits.filter(c => c.frequency === 'annual' && !c.monthlyAmount);
-    if (annualCredits.length === 0) return;
-
-    const cardBenefits = annualCredits.map(credit => {
-      const benefitKey = `annual_${currentYear}_${cardId}_${sanitizeCreditName(credit.name)}`;
-      const isCompleted = trackedBenefits[benefitKey] || false;
-      return { ...credit, benefitKey, isCompleted };
-    });
-
-    const completedCount = cardBenefits.filter(b => b.isCompleted).length;
-
-    // Separate dollar credits from points credits
-    const dollarCredits = cardBenefits.filter(b => b.type !== 'points' && b.type !== 'hotel' && typeof b.amount === 'number');
-    const pointsCredits = cardBenefits.filter(b => b.type === 'points' && typeof b.amount === 'number');
-
-    const totalDollarValue = dollarCredits.reduce((sum, b) => sum + b.amount, 0);
-    const usedDollarValue = dollarCredits.filter(b => b.isCompleted).reduce((sum, b) => sum + b.amount, 0);
-    const totalPointsValue = pointsCredits.reduce((sum, b) => sum + b.amount, 0);
-    const usedPointsValue = pointsCredits.filter(b => b.isCompleted).reduce((sum, b) => sum + b.amount, 0);
-
-    // Build progress display
-    let progressDisplay = '';
-    if (totalDollarValue > 0 && totalPointsValue > 0) {
-      progressDisplay = `$${usedDollarValue.toLocaleString()} / $${totalDollarValue.toLocaleString()} + ${usedPointsValue.toLocaleString()} / ${totalPointsValue.toLocaleString()} pts`;
-    } else if (totalDollarValue > 0) {
-      progressDisplay = `$${usedDollarValue.toLocaleString()} / $${totalDollarValue.toLocaleString()}`;
-    } else if (totalPointsValue > 0) {
-      progressDisplay = `${usedPointsValue.toLocaleString()} / ${totalPointsValue.toLocaleString()} pts`;
-    } else {
-      progressDisplay = `${completedCount} / ${cardBenefits.length}`;
-    }
-
-    html += `
-      <div class="tracker-card">
-        <div class="tracker-header">
-          <div>
-            <div class="tracker-title" style="display: flex; align-items: center; gap: 0.5rem;">
-              <span style="width: 12px; height: 12px; border-radius: 50%; background: ${card.color};"></span>
-              ${card.name}
-            </div>
-            <div class="text-muted" style="font-size: 0.875rem; margin-top: 0.25rem;">
-              ${completedCount} of ${cardBenefits.length} annual credits used
-            </div>
-          </div>
-          <div class="tracker-progress" style="color: var(--accent-green);">${progressDisplay}</div>
-        </div>
-
-        <ul class="benefit-checklist">
-          ${cardBenefits.map(benefit => {
-            // Determine display value - special handling for Free Night Awards
-            let displayValue;
-            const estimatedValue = getEstimatedBenefitValue(card, benefit);
-
-            if (benefit.type === 'hotel' && benefit.amount === 1) {
-              displayValue = estimatedValue
-                ? `<span style="color: var(--accent-green);">~$${estimatedValue}</span><br><span style="font-size: 0.7rem; color: var(--text-secondary);">1 night</span>`
-                : '1 night';
-            } else if (typeof benefit.amount === 'number') {
-              if (benefit.type === 'points') {
-                displayValue = estimatedValue
-                  ? `<span style="color: var(--accent-green);">~$${estimatedValue}</span><br><span style="font-size: 0.7rem; color: var(--text-secondary);">${benefit.amount.toLocaleString()} pts</span>`
-                  : benefit.amount.toLocaleString() + ' pts';
-              } else {
-                displayValue = '<span style="color: var(--accent-green);">$' + benefit.amount.toLocaleString() + '</span>';
-              }
-            } else {
-              displayValue = benefit.amount;
-            }
-
-            // Check for date-based benefit info
-            const dateBasedInfo = getDateBasedBenefitInfo(cardId, benefit.name);
-            let description = benefit.description;
-            let badgeHtml = '';
-
-            if (dateBasedInfo) {
-              if (dateBasedInfo.unknown) {
-                // User hasn't set signup date - show hint
-                badgeHtml = '<span style="display: inline-block; padding: 0.15rem 0.4rem; background: var(--accent-purple); color: white; border-radius: 4px; font-size: 0.65rem; margin-left: 0.5rem;">Set signup date for details</span>';
-              } else if (dateBasedInfo.badge) {
-                // User is grandfathered - show badge and use grandfathered description
-                description = dateBasedInfo.description;
-                badgeHtml = `<span style="display: inline-block; padding: 0.15rem 0.4rem; background: var(--accent-green); color: white; border-radius: 4px; font-size: 0.65rem; margin-left: 0.5rem;">${dateBasedInfo.badge}</span>`;
-              } else {
-                // User is NOT grandfathered - use current description
-                description = dateBasedInfo.description;
-              }
-            }
-
-            return `
-            <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                onclick="toggleBenefit('${benefit.benefitKey}', event)">
-              <div class="benefit-checkbox"></div>
-              <div class="benefit-content">
-                <div class="benefit-text">${benefit.name}${badgeHtml}</div>
-                <div class="benefit-description">${description}</div>
-              </div>
-              <div class="benefit-value" style="text-align: right;">${displayValue}</div>
-            </li>
-          `}).join('')}
-        </ul>
-      </div>
-    `;
-  });
-
-  container.innerHTML = html || '';
-}
-
-// Render one-time benefits
-function renderOnetimeBenefits() {
-  const container = document.getElementById('onetime-benefits-container');
-  if (!container) return;
-
-  if (userCards.length === 0) {
-    container.innerHTML = '';
-    return;
-  }
-
-  let html = '';
-
-  userCards.forEach(cardId => {
-    const card = CARDS_DATABASE.find(c => c.id === cardId);
-    if (!card) return;
-
-    const onetimeCredits = card.credits.filter(c => c.frequency.includes('every'));
-    if (onetimeCredits.length === 0) return;
-
-    const cardBenefits = onetimeCredits.map(credit => {
-      const benefitKey = `onetime_${cardId}_${sanitizeCreditName(credit.name)}`;
-      const isCompleted = trackedBenefits[benefitKey] || false;
-      return { ...credit, benefitKey, isCompleted };
-    });
-
-    html += `
-      <div class="tracker-card">
-        <div class="tracker-header">
-          <div class="tracker-title" style="display: flex; align-items: center; gap: 0.5rem;">
-            <span style="width: 12px; height: 12px; border-radius: 50%; background: ${card.color};"></span>
-            ${card.name}
-          </div>
-        </div>
-
-        <ul class="benefit-checklist">
-          ${cardBenefits.map(benefit => {
-            // Determine display value - special handling for Free Night Awards
-            let displayValue;
-            if (benefit.type === 'hotel' && benefit.amount === 1) {
-              displayValue = '1 night';
-            } else if (typeof benefit.amount === 'number') {
-              displayValue = benefit.type === 'points'
-                ? benefit.amount.toLocaleString() + ' pts'
-                : '<span style="color: var(--accent-green);">$' + benefit.amount.toLocaleString() + '</span>';
-            } else {
-              displayValue = benefit.amount;
-            }
-            return `
-            <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                onclick="toggleBenefit('${benefit.benefitKey}', event)">
-              <div class="benefit-checkbox"></div>
-              <div class="benefit-content">
-                <div class="benefit-text">${benefit.name}</div>
-                <div class="benefit-description">${benefit.description}</div>
-                <div style="font-size: 0.75rem; color: var(--accent-purple); margin-top: 0.25rem;">
-                  Renews ${benefit.frequency}
-                </div>
-              </div>
-              <div class="benefit-value">${displayValue}</div>
-            </li>
-          `}).join('')}
-        </ul>
-      </div>
-    `;
-  });
-
-  container.innerHTML = html || '';
-}
-
-// Toggle benefit completion
-function toggleBenefit(benefitKey, event) {
-  // Prevent event bubbling issues
-  if (event) {
-    event.stopPropagation();
-    event.preventDefault();
-  }
-
-  // Explicit toggle to handle undefined vs false properly
-  if (trackedBenefits[benefitKey] === true) {
-    trackedBenefits[benefitKey] = false;
-  } else {
-    trackedBenefits[benefitKey] = true;
-  }
-
-  saveUserData();
-  renderBenefitTrackers();
-  if (currentView === 'card') {
-    renderByCardView();
-  }
-  updateStats();
-}
-
-// Update summary stats
-function updateStats() {
-  const monthKey = getCurrentMonthKey();
-  const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth();
-  const currentHalf = currentMonth < 6 ? 'H1' : 'H2';
-
-  let monthlyUsed = 0;
-  let monthlyTotal = 0;
-  let semiannualUsed = 0;
-  let annualUsed = 0;
-  let totalBenefits = 0;
-  let completedBenefits = 0;
-
-  userCards.forEach(cardId => {
-    const card = CARDS_DATABASE.find(c => c.id === cardId);
-    if (!card) return;
-
-    // Monthly credits
-    card.credits.filter(c => c.monthlyAmount).forEach(credit => {
-      const benefitKey = `monthly_${monthKey}_${cardId}_${sanitizeCreditName(credit.name)}`;
-      monthlyTotal += credit.monthlyAmount;
-      totalBenefits++;
-      if (trackedBenefits[benefitKey]) {
-        monthlyUsed += credit.monthlyAmount;
-        completedBenefits++;
-      }
-    });
-
-    // Semiannual credits
-    card.credits.filter(c => c.frequency === 'semiannual').forEach(credit => {
-      const benefitKey = `semiannual_${currentYear}_${currentHalf}_${cardId}_${sanitizeCreditName(credit.name)}`;
-      const periodValue = credit.semiannualAmount || (credit.amount / 2);
-      totalBenefits++;
-      if (trackedBenefits[benefitKey]) {
-        semiannualUsed += periodValue;
-        completedBenefits++;
-      }
-    });
-
-    // Annual credits
-    card.credits.filter(c => c.frequency === 'annual' && !c.monthlyAmount).forEach(credit => {
-      const benefitKey = `annual_${currentYear}_${cardId}_${sanitizeCreditName(credit.name)}`;
-      totalBenefits++;
-      if (trackedBenefits[benefitKey]) {
-        annualUsed += typeof credit.amount === 'number' ? credit.amount : 0;
-        completedBenefits++;
-      }
-    });
-  });
-
-  document.getElementById('credits-used').textContent = '$' + monthlyUsed;
-  document.getElementById('credits-remaining').textContent = '$' + (monthlyTotal - monthlyUsed);
-  document.getElementById('annual-value').textContent = '$' + (monthlyUsed + semiannualUsed + annualUsed);
-  document.getElementById('completion-rate').textContent = totalBenefits > 0
-    ? Math.round((completedBenefits / totalBenefits) * 100) + '%'
-    : '0%';
-}
-
-
-// Current view state
+let trackerSnapshot = {};
 let currentView = 'card';
+let trackerEntries = new Map();
+const trackerEscape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+const trackerMoney = value => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(value);
 
-// Switch between views
-function switchView(view) {
-  currentView = view;
+function loadUserData() {
+  trackerSnapshot = CardMaxStorage.readSnapshot();
+  userCards = CardMaxModel.normalizeCardIds(trackerSnapshot.cards);
+  trackedBenefits = CardMaxPeriods.migrateLegacy(CARDS_DATABASE, trackerSnapshot, new Date(), typeof CARD_ID_ALIASES === 'undefined' ? {} : CARD_ID_ALIASES);
+  if (JSON.stringify(trackedBenefits) !== JSON.stringify(trackerSnapshot.benefits) || JSON.stringify(userCards) !== JSON.stringify(trackerSnapshot.cards)) {
+    localStorage.setItem('cardmax_user_cards', JSON.stringify(userCards));
+    localStorage.setItem('cardmax_tracked_benefits', JSON.stringify(trackedBenefits));
+    CardMaxAuth.autoSync();
+  }
+  trackerSnapshot.benefits = trackedBenefits;
+}
 
-  // Update button states
-  document.querySelectorAll('.filter-btn[data-view]').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.view === view);
+function trackerBenefits(card, now = new Date()) {
+  return (card.credits || []).filter(credit => (!credit.effectiveFrom || credit.effectiveFrom <= CardMaxPeriods.dateKey(now)) && (!credit.effectiveUntil || credit.effectiveUntil >= CardMaxPeriods.dateKey(now))).map(credit => {
+    const period = CardMaxPeriods.periodFor(card, credit, now, trackerSnapshot);
+    const entry = { card, credit, period, record: trackedBenefits[period.key] };
+    trackerEntries.set(period.key, entry);
+    return entry;
   });
+}
 
-  // Show/hide sections
-  const frequencyElements = ['tracker-stats', 'monthly-tracker', 'semiannual-tracker', 'annual-tracker', 'onetime-tracker'];
-  const byCardElements = ['by-card-view'];
+function trackerDateRange(period) {
+  if (period.dateUnknown) return '';
+  const start = CardMaxPeriods.parseDate(period.start), end = CardMaxPeriods.parseDate(period.end);
+  if (!start || !end || end.getFullYear() >= 2200) return '';
+  end.setDate(end.getDate() - 1);
+  const format = date => date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', ...(start.getFullYear() === end.getFullYear() ? {} : { year: 'numeric' }) });
+  return `${format(start)}–${format(end)}${start.getFullYear() === end.getFullYear() ? `, ${end.getFullYear()}` : ''}`;
+}
 
-  if (view === 'frequency') {
-    frequencyElements.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = '';
-    });
-    byCardElements.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
-  } else if (view === 'card') {
-    frequencyElements.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
-    byCardElements.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = '';
-    });
-    renderByCardView();
+function benefitRow(entry) {
+  const { card, credit, period, record } = entry;
+  const checked = record?.completed === true;
+  const key = trackerEscape(period.key);
+  const amount = CardMaxModel.formatCredit({ ...credit, amount: period.amount });
+  const label = `${credit.name} for ${card.name}, ${period.label}`;
+  return `<li class="benefit-item ${checked ? 'completed' : ''}" style="align-items:flex-start;flex-wrap:wrap">
+    <label style="display:flex;align-items:flex-start;gap:0.75rem;flex:1;min-width:220px;cursor:pointer">
+      <input type="checkbox" ${checked ? 'checked' : ''} aria-label="${trackerEscape(label)}" data-benefit="${key}" style="width:20px;height:20px;margin-top:3px;flex-shrink:0">
+      <span class="benefit-content"><span class="benefit-text" style="display:block">${trackerEscape(credit.name)}</span>
+        <span class="benefit-description" style="display:block">${trackerEscape(credit.description)}</span>
+        <span class="text-muted" style="display:block;font-size:0.75rem;margin-top:0.25rem">${trackerEscape(period.label)}${trackerDateRange(period) ? ` · ${trackerEscape(trackerDateRange(period))}` : ''}</span>
+        ${period.warning ? `<span style="display:block;color:var(--text-secondary);font-size:0.8rem;margin-top:0.25rem">${trackerEscape(period.warning)}</span>` : ''}
+      </span>
+    </label>
+    <span class="benefit-value">${trackerEscape(amount)}</span>
+    ${checked ? `<div style="width:100%;display:flex;flex-wrap:wrap;gap:1rem;margin-left:2rem;font-size:0.8rem">
+      <label>Used on <input type="date" data-used-date="${key}" value="${trackerEscape(record.usedAt || '')}" ${['monthly', 'quarterly', 'semiannual', 'annual'].includes(period.frequency) ? `min="${period.start}"` : ''} max="${CardMaxPeriods.dateKey(new Date())}" aria-label="Date used for ${trackerEscape(credit.name)}"></label>
+      <span data-date-error role="alert" style="color:var(--text-secondary)"></span>
+      ${CardMaxPeriods.unit(credit) === 'USD' ? `<label>Cash used ($) <input type="number" min="0" max="${period.cashValue}" step="0.01" data-cash-used="${key}" value="${record.cashValue ?? period.cashValue}" style="width:6rem" aria-label="Cash used for ${trackerEscape(credit.name)}"></label>` : ''}
+      ${record.dateEstimated ? '<span class="text-muted">Imported date/value estimate — enter your actual use.</span>' : ''}
+    </div>` : ''}
+  </li>`;
+}
+
+function trackerCard(card, entries, showAnnual = false) {
+  const completed = entries.filter(entry => entry.record?.completed).length;
+  const cashTotal = entries.reduce((sum, entry) => sum + entry.period.cashValue, 0);
+  const used = entries.reduce((sum, entry) => sum + (entry.record?.completed && entry.record.unit === 'USD' ? entry.record.cashValue || 0 : 0), 0);
+  const captured = CardMaxPeriods.capturedThisYear(trackedBenefits, new Date(), card.id);
+  return `<div class="tracker-card" style="margin-bottom:1.5rem"><div class="tracker-header"><div>
+    <div class="tracker-title">${trackerEscape(card.name)}</div>
+    <div class="text-muted" style="font-size:0.875rem;margin-top:0.25rem">${completed} of ${entries.length} current benefits completed</div>
+    ${showAnnual ? `<div class="text-muted" style="font-size:0.875rem">${trackerMoney(captured.value)} cash captured this year${captured.estimated ? ' (includes imported estimates)' : ''}</div>` : ''}
+    </div>${cashTotal ? `<div class="tracker-progress">${trackerMoney(used)} / ${trackerMoney(cashTotal)}<div style="font-size:0.7rem">Current cash allowances</div></div>` : ''}</div>
+    <ul class="benefit-checklist">${entries.map(benefitRow).join('')}</ul>
+    ${showAnnual && card.perks?.length ? `<details style="margin-top:1rem"><summary>Other card benefits</summary><ul>${card.perks.map(perk => `<li><strong>${trackerEscape(perk.name)}</strong> — ${trackerEscape(perk.description)}</li>`).join('')}</ul></details>` : ''}
+    </div>`;
+}
+
+function renderBenefitTrackers() {
+  const groups = { monthly: 'monthly', quarterly: 'quarterly', semiannual: 'semiannual', annual: 'annual', other: 'onetime' };
+  for (const [group, containerId] of Object.entries(groups)) {
+    const container = document.getElementById(`${containerId}-benefits-container`);
+    if (!container) continue;
+    const html = userCards.map(id => CARDS_DATABASE.find(card => card.id === id)).filter(Boolean).map(card => {
+      const entries = trackerBenefits(card).filter(entry => (['monthly', 'quarterly', 'semiannual', 'annual'].includes(entry.period.frequency) ? entry.period.frequency : 'other') === group);
+      return entries.length ? trackerCard(card, entries) : '';
+    }).join('');
+    container.innerHTML = html || '<p class="text-muted">No current benefits in this group.</p>';
   }
 }
 
-// Helper: Check if a credit is "actionable" (requires user action to redeem)
-function isActionableCredit(credit) {
-  const nameLower = credit.name.toLowerCase();
-
-  // If it's a points-type credit with "anniversary" or "bonus" it's passive
-  if (credit.type === 'points' && (nameLower.includes('anniversary') || nameLower.includes('bonus'))) {
-    return false;
-  }
-
-  // Free night awards ARE actionable - user needs to book/redeem them
-  // Even though they're posted automatically, user must USE them
-  if (nameLower.includes('free night')) {
-    return true;
-  }
-
-  // Everything else is actionable
-  return true;
-}
-
-// Render full checklist by card view
 function renderByCardView() {
   const container = document.getElementById('by-card-container');
   if (!container) return;
-
-  if (userCards.length === 0) {
-    container.innerHTML = `
-      <div class="tracker-card" style="text-align: center; padding: 3rem;">
-        <h3 style="margin-bottom: 0.5rem;">No cards selected</h3>
-        <p class="text-muted">Go to the <a href="../index.html" style="color: var(--accent-blue);">Dashboard</a> to add cards to your collection</p>
-      </div>
-    `;
-    return;
-  }
-
-  const monthKey = getCurrentMonthKey();
-  const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth();
-  let html = '';
-
-  // Sort userCards by total benefits count (most benefits first)
-  const sortedUserCards = [...userCards].sort((a, b) => {
-    const cardA = CARDS_DATABASE.find(c => c.id === a);
-    const cardB = CARDS_DATABASE.find(c => c.id === b);
-    if (!cardA || !cardB) return 0;
-
-    const countA = cardA.credits.length + cardA.perks.length;
-    const countB = cardB.credits.length + cardB.perks.length;
-    return countB - countA;  // Descending order (most benefits first)
-  });
-
-  sortedUserCards.forEach(cardId => {
-    const card = CARDS_DATABASE.find(c => c.id === cardId);
-    if (!card) return;
-
-    // ===== CATEGORIZE CREDITS =====
-
-    // Monthly credits (all actionable)
-    const monthlyCredits = card.credits.filter(c => c.monthlyAmount).map(credit => ({
-      ...credit,
-      benefitKey: `monthly_${monthKey}_${cardId}_${sanitizeCreditName(credit.name)}`,
-      isCompleted: trackedBenefits[`monthly_${monthKey}_${cardId}_${sanitizeCreditName(credit.name)}`] || false,
-      displayValue: `<span style="color: var(--accent-green);">$${credit.monthlyAmount}/mo</span>`
-    }));
-
-    // Semiannual credits - create TWO checkboxes (H1 and H2)
-    const semiannualCreditsRaw = card.credits.filter(c => c.frequency === 'semiannual');
-    const semiannualCredits = [];
-    semiannualCreditsRaw.forEach(credit => {
-      const periodValue = credit.semiannualAmount || (credit.amount / 2);
-      // H1: Jan-Jun
-      const h1Key = `semiannual_${currentYear}_H1_${cardId}_${sanitizeCreditName(credit.name)}`;
-      semiannualCredits.push({
-        ...credit,
-        benefitKey: h1Key,
-        isCompleted: trackedBenefits[h1Key] || false,
-        period: 'Jan-Jun',
-        periodValue: periodValue,
-        displayValue: `<span style="color: var(--accent-green);">$${periodValue}</span>`
-      });
-      // H2: Jul-Dec
-      const h2Key = `semiannual_${currentYear}_H2_${cardId}_${sanitizeCreditName(credit.name)}`;
-      semiannualCredits.push({
-        ...credit,
-        benefitKey: h2Key,
-        isCompleted: trackedBenefits[h2Key] || false,
-        period: 'Jul-Dec',
-        periodValue: periodValue,
-        displayValue: `<span style="color: var(--accent-green);">$${periodValue}</span>`
-      });
-    });
-
-    // Annual credits - separate actionable from passive
-    const annualCreditsRaw = card.credits.filter(c => c.frequency === 'annual' && !c.monthlyAmount);
-    const actionableAnnual = [];
-    const passiveAnnual = [];
-
-    annualCreditsRaw.forEach(credit => {
-      // Calculate estimated value for points-based benefits
-      const estimatedValue = getEstimatedBenefitValue(card, credit);
-
-      // Special display value for Free Night Awards (type === 'hotel' and amount === 1)
-      let displayValue;
-      if (credit.type === 'hotel' && credit.amount === 1) {
-        displayValue = estimatedValue
-          ? `<span style="color: var(--accent-green);">~$${estimatedValue}</span><br><span style="font-size: 0.7rem; color: var(--text-secondary);">1 night</span>`
-          : '1 night';
-      } else if (typeof credit.amount === 'number') {
-        if (credit.type === 'points') {
-          displayValue = estimatedValue
-            ? `<span style="color: var(--accent-green);">~$${estimatedValue}</span><br><span style="font-size: 0.7rem; color: var(--text-secondary);">${credit.amount.toLocaleString()} pts</span>`
-            : credit.amount.toLocaleString() + ' pts';
-        } else {
-          displayValue = `<span style="color: var(--accent-green);">$${credit.amount.toLocaleString()}</span>`;
-        }
-      } else {
-        displayValue = credit.amount;
-      }
-
-      // Check for date-based benefit info
-      const dateBasedInfo = getDateBasedBenefitInfo(cardId, credit.name);
-      let description = credit.description;
-      let badgeHtml = '';
-
-      if (dateBasedInfo) {
-        if (dateBasedInfo.unknown) {
-          badgeHtml = '<span style="display: inline-block; padding: 0.15rem 0.4rem; background: var(--accent-purple); color: white; border-radius: 4px; font-size: 0.65rem; margin-left: 0.5rem;">Set signup date</span>';
-        } else if (dateBasedInfo.badge) {
-          description = dateBasedInfo.description;
-          badgeHtml = `<span style="display: inline-block; padding: 0.15rem 0.4rem; background: var(--accent-green); color: white; border-radius: 4px; font-size: 0.65rem; margin-left: 0.5rem;">${dateBasedInfo.badge}</span>`;
-        } else {
-          description = dateBasedInfo.description;
-        }
-      }
-
-      const creditData = {
-        ...credit,
-        benefitKey: `annual_${currentYear}_${cardId}_${sanitizeCreditName(credit.name)}`,
-        isCompleted: trackedBenefits[`annual_${currentYear}_${cardId}_${sanitizeCreditName(credit.name)}`] || false,
-        displayValue: displayValue,
-        description: description,
-        badgeHtml: badgeHtml
-      };
-
-      if (isActionableCredit(credit)) {
-        actionableAnnual.push(creditData);
-      } else {
-        passiveAnnual.push(creditData);
-      }
-    });
-
-    // Multi-year credits (like Global Entry) - all actionable
-    const multiYearCredits = card.credits.filter(c => c.frequency && c.frequency.includes('every')).map(credit => ({
-      ...credit,
-      benefitKey: `multiyear_${cardId}_${sanitizeCreditName(credit.name)}`,
-      isCompleted: trackedBenefits[`multiyear_${cardId}_${sanitizeCreditName(credit.name)}`] || false,
-      displayValue: typeof credit.amount === 'number'
-        ? (credit.type === 'points' ? credit.amount.toLocaleString() + ' pts' : `<span style="color: var(--accent-green);">$${credit.amount.toLocaleString()}</span>`)
-        : credit.amount
-    }));
-
-    // All actionable credits for counting
-    const allActionable = [...monthlyCredits, ...semiannualCredits, ...actionableAnnual, ...multiYearCredits];
-    const completedCount = allActionable.filter(b => b.isCompleted).length;
-
-    // Calculate dollar values (excluding points)
-    const dollarCredits = allActionable.filter(b => b.type !== 'points' && b.type !== 'hotel' && typeof b.amount === 'number');
-    const totalDollarValue = dollarCredits.reduce((sum, b) => {
-      if (b.monthlyAmount) return sum + (b.monthlyAmount * 12);
-      if (b.periodValue) return sum + b.periodValue;
-      return sum + (b.amount || 0);
-    }, 0);
-    const usedDollarValue = dollarCredits.filter(b => b.isCompleted).reduce((sum, b) => {
-      if (b.monthlyAmount) return sum + b.monthlyAmount;
-      if (b.periodValue) return sum + b.periodValue;
-      return sum + (b.amount || 0);
-    }, 0);
-
-    // Generate card visual if available
-    const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : `<span style="width: 16px; height: 16px; border-radius: 50%; background: ${card.color};"></span>`;
-
-    html += `
-      <div class="tracker-card" style="margin-bottom: 1.5rem;">
-        <div class="tracker-header">
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            ${cardVisual}
-            <div>
-              <div class="tracker-title">${card.name}</div>
-              <div class="text-muted" style="font-size: 0.875rem; margin-top: 0.25rem;">
-                ${completedCount} of ${allActionable.length} credits used · $${card.annualFee}/year
-              </div>
-            </div>
-          </div>
-          ${totalDollarValue > 0 ? `<div class="tracker-progress" style="color: var(--accent-green);">$${usedDollarValue.toLocaleString()} / $${totalDollarValue.toLocaleString()}</div>` : ''}
-        </div>
-
-        ${monthlyCredits.length > 0 ? `
-          <div style="margin-top: 1rem;">
-            <h4 style="font-size: 0.75rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">📅 Monthly Credits</h4>
-            <ul class="benefit-checklist">
-              ${monthlyCredits.map(benefit => `
-                <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                    onclick="toggleBenefit('${benefit.benefitKey}', event)">
-                  <div class="benefit-checkbox"></div>
-                  <div class="benefit-content">
-                    <div class="benefit-text">${benefit.name}</div>
-                    <div class="benefit-description">${benefit.description}</div>
-                  </div>
-                  <div class="benefit-value">${benefit.displayValue}</div>
-                </li>
-              `).join('')}
-            </ul>
-          </div>
-        ` : ''}
-
-        ${semiannualCredits.length > 0 ? `
-          <div style="margin-top: 1rem;">
-            <h4 style="font-size: 0.75rem; color: var(--accent-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">📆 Semiannual Credits</h4>
-            <ul class="benefit-checklist">
-              ${semiannualCredits.map(benefit => `
-                <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                    onclick="toggleBenefit('${benefit.benefitKey}', event)">
-                  <div class="benefit-checkbox"></div>
-                  <div class="benefit-content">
-                    <div class="benefit-text">${benefit.name} <span style="color: var(--accent-orange); font-size: 0.8rem;">(${benefit.period})</span></div>
-                    <div class="benefit-description">${benefit.description}</div>
-                  </div>
-                  <div class="benefit-value">${benefit.displayValue}</div>
-                </li>
-              `).join('')}
-            </ul>
-          </div>
-        ` : ''}
-
-        ${actionableAnnual.length > 0 ? `
-          <div style="margin-top: 1rem;">
-            <h4 style="font-size: 0.75rem; color: var(--accent-green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">📆 Annual Credits</h4>
-            <ul class="benefit-checklist">
-              ${actionableAnnual.map(benefit => `
-                <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                    onclick="toggleBenefit('${benefit.benefitKey}', event)">
-                  <div class="benefit-checkbox"></div>
-                  <div class="benefit-content">
-                    <div class="benefit-text">${benefit.name}${benefit.badgeHtml || ''}</div>
-                    <div class="benefit-description">${benefit.description}</div>
-                  </div>
-                  <div class="benefit-value" style="text-align: right;">${benefit.displayValue}</div>
-                </li>
-              `).join('')}
-            </ul>
-          </div>
-        ` : ''}
-
-        ${multiYearCredits.length > 0 ? `
-          <div style="margin-top: 1rem;">
-            <h4 style="font-size: 0.75rem; color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">⏱️ Multi-Year Credits</h4>
-            <ul class="benefit-checklist">
-              ${multiYearCredits.map(benefit => `
-                <li class="benefit-item ${benefit.isCompleted ? 'completed' : ''}"
-                    onclick="toggleBenefit('${benefit.benefitKey}', event)"
-                    title="Statement credit ${benefit.frequency}">
-                  <div class="benefit-checkbox"></div>
-                  <div class="benefit-content">
-                    <div class="benefit-text">${benefit.name}</div>
-                    <div class="benefit-description">${benefit.description}</div>
-                    <div style="font-size: 0.7rem; color: var(--accent-purple); margin-top: 0.25rem;">ℹ️ Statement credit ${benefit.frequency}</div>
-                  </div>
-                  <div class="benefit-value">${benefit.displayValue}</div>
-                </li>
-              `).join('')}
-            </ul>
-          </div>
-        ` : ''}
-
-        ${passiveAnnual.length > 0 || card.perks.length > 0 ? `
-          <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed var(--border-color);">
-            <h4 style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem;">🎁 Automatic Benefits (No Action Needed)</h4>
-
-            ${passiveAnnual.length > 0 ? `
-              <div style="margin-bottom: 0.75rem;">
-                ${passiveAnnual.map(benefit => `
-                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem; background: var(--bg-card); border-radius: 6px; margin-bottom: 0.5rem;">
-                    <div>
-                      <span style="font-weight: 500;">${benefit.name}</span>
-                      <span class="text-muted" style="font-size: 0.8rem; margin-left: 0.5rem;">${benefit.description}</span>
-                    </div>
-                    <span style="color: var(--accent-green); font-weight: 600;">${benefit.displayValue}</span>
-                  </div>
-                `).join('')}
-              </div>
-            ` : ''}
-
-            ${card.perks.length > 0 ? `
-              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                ${card.perks.map(perk => `
-                  <span style="padding: 0.4rem 0.75rem; background: var(--bg-card); border-radius: 20px; font-size: 0.8rem;" title="${perk.description}">
-                    ${perk.name}
-                  </span>
-                `).join('')}
-              </div>
-            ` : ''}
-          </div>
-        ` : ''}
-
-        ${totalDollarValue > 0 ? `
-        <div class="progress-container" style="margin-top: 1rem;">
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: ${(usedDollarValue / totalDollarValue) * 100}%"></div>
-          </div>
-          <div class="progress-text">
-            <span>${Math.round((usedDollarValue / totalDollarValue) * 100)}% captured</span>
-            <span style="color: var(--accent-green);">$${(totalDollarValue - usedDollarValue).toLocaleString()} remaining</span>
-          </div>
-        </div>
-        ` : ''}
-      </div>
-    `;
-  });
-
-  container.innerHTML = html || `
-    <div class="tracker-card" style="text-align: center; padding: 2rem;">
-      <p class="text-muted">No benefits to track for selected cards</p>
-    </div>
-  `;
+  const cards = userCards.map(id => CARDS_DATABASE.find(card => card.id === id)).filter(Boolean);
+  container.innerHTML = cards.length ? cards.map(card => trackerCard(card, trackerBenefits(card), true)).join('') : '<div class="tracker-card"><h3>No cards selected</h3><p><a href="../index.html">Add cards on your dashboard</a> to start tracking benefits.</p></div>';
+  const history = Object.entries(trackedBenefits).filter(([key, value]) => key.startsWith('benefit|') && value?.completed).sort(([, a], [, b]) => (b.usedAt || '').localeCompare(a.usedAt || ''));
+  if (history.length) container.innerHTML += `<details class="tracker-card"><summary>Saved benefit history (${history.length} records)</summary><p class="text-muted">History is kept across months and years. Points, nights, visits and certificates are excluded from cash totals.</p><ul>${history.map(([, record]) => {
+    const card = CARDS_DATABASE.find(item => item.id === record.cardId);
+    const credit = [...(card?.credits || []), ...(card?.retiredBenefits || [])].find(item => CardMaxPeriods.creditId(item) === record.creditId);
+    return `<li>${trackerEscape(record.usedAt || 'Date unknown')} · ${trackerEscape(card?.name || record.cardId)} · ${trackerEscape(credit?.name || record.creditId)}${record.unit === 'USD' ? ` · ${trackerMoney(record.cashValue || 0)}` : ''}${record.dateEstimated ? ' (imported estimate)' : ''}</li>`;
+  }).join('')}</ul></details>`;
 }
+
+function saveUserData() {
+  localStorage.setItem('cardmax_tracked_benefits', JSON.stringify(trackedBenefits));
+  trackerSnapshot.benefits = trackedBenefits;
+  CardMaxAuth.autoSync();
+}
+
+function toggleBenefit(benefitKey, event) {
+  if (event) event.stopPropagation();
+  const entry = trackerEntries.get(benefitKey);
+  if (!entry) return;
+  trackedBenefits[benefitKey] = CardMaxPeriods.makeRecord(entry.card, entry.credit, entry.period, !trackedBenefits[benefitKey]?.completed);
+  saveUserData();
+  refreshTracker();
+}
+
+function updateStats() {
+  const now = new Date();
+  const entries = userCards.map(id => CARDS_DATABASE.find(card => card.id === id)).filter(Boolean).flatMap(card => trackerBenefits(card, now));
+  const monthly = entries.filter(entry => entry.period.frequency === 'monthly');
+  const used = monthly.reduce((sum, entry) => sum + (entry.record?.completed && entry.record.unit === 'USD' ? entry.record.cashValue || 0 : 0), 0);
+  const total = monthly.reduce((sum, entry) => sum + entry.period.cashValue, 0);
+  const captured = CardMaxPeriods.capturedThisYear(trackedBenefits, now);
+  const stats = { 'credits-used': trackerMoney(used), 'credits-remaining': trackerMoney(Math.max(0, total - used)), 'annual-value': trackerMoney(captured.value), 'completion-rate': entries.length ? `${Math.round(entries.filter(entry => entry.record?.completed).length / entries.length * 100)}%` : '0%' };
+  for (const [id, value] of Object.entries(stats)) { const element = document.getElementById(id); if (element) element.textContent = value; }
+  const annual = document.getElementById('annual-value');
+  if (annual) annual.title = captured.estimated ? 'Includes imported history estimated from current benefit terms. Enter actual dates and amounts to refine.' : 'Cash amounts recorded as used this calendar year. Excludes points and certificates.';
+}
+
+function switchView(view, redraw = true) {
+  currentView = view === 'frequency' ? 'frequency' : 'card';
+  // Input events persist edits without replacing the focused control. Rebuild
+  // both views before revealing one so its hidden markup never shows old values.
+  if (redraw) {
+    trackerEntries.clear();
+    renderBenefitTrackers();
+    renderByCardView();
+    updateStats();
+  }
+  document.querySelectorAll('.filter-btn[data-view]').forEach(button => { button.classList.toggle('active', button.dataset.view === currentView); button.setAttribute('aria-pressed', String(button.dataset.view === currentView)); });
+  for (const id of ['monthly-tracker', 'quarterly-tracker', 'semiannual-tracker', 'annual-tracker', 'onetime-tracker']) { const element = document.getElementById(id); if (element) element.style.display = currentView === 'frequency' ? '' : 'none'; }
+  const byCard = document.getElementById('by-card-view');
+  if (byCard) byCard.style.display = currentView === 'card' ? '' : 'none';
+}
+
+function refreshTracker() {
+  loadUserData();
+  trackerEntries.clear();
+  renderBenefitTrackers();
+  renderByCardView();
+  updateStats();
+  switchView(currentView, false);
+  const month = document.getElementById('current-month');
+  if (month) month.textContent = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  refreshTracker();
+  CardMaxSave.renderSaveRestoreUI('save-restore-ui');
+  const handleEdit = event => {
+    const target = event.target;
+    if (target.dataset.benefit) {
+      if (event.type === 'change') toggleBenefit(target.dataset.benefit, event);
+      return;
+    }
+    const key = target.dataset.usedDate || target.dataset.cashUsed;
+    const record = trackedBenefits[key], entry = trackerEntries.get(key);
+    if (!record || !entry) return;
+    if (target.dataset.usedDate) {
+      const error = CardMaxPeriods.usedDateError(entry.period, target.value);
+      const message = target.closest('.benefit-item')?.querySelector('[data-date-error]');
+      if (error) {
+        if (event.type === 'change') {
+          target.value = record.usedAt || '';
+          target.setAttribute('aria-invalid', 'true');
+          if (message) message.textContent = error + (trackerDateRange(entry.period) ? ` ${trackerDateRange(entry.period)}.` : '');
+        }
+        return;
+      }
+      target.removeAttribute('aria-invalid');
+      if (message) message.textContent = '';
+      record.usedAt = target.value;
+      record.dateEstimated = false;
+    } else {
+      if (target.value === '' && event.type === 'input') return;
+      const amount = Number(target.value);
+      if (!Number.isFinite(amount) || amount < 0 || amount > entry.period.cashValue) {
+        if (event.type === 'change') target.value = record.cashValue;
+        return;
+      }
+      record.cashValue = amount;
+    }
+    saveUserData();
+    // Persist each valid edit immediately without replacing the focused input.
+    // The change event redraws both views once editing is complete.
+    if (event.type === 'change') refreshTracker();
+    else updateStats();
+  };
+  document.addEventListener('input', handleEdit);
+  document.addEventListener('change', handleEdit);
+});
+window.addEventListener('cardmax-data-changed', () => { if (document.readyState !== 'loading') refreshTracker(); });
+window.refreshTracker = refreshTracker;

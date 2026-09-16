@@ -2,7 +2,7 @@
 // Floating button to report inaccuracies
 
 (function() {
-  // Web3Forms key (same as card suggestions)
+  // Public Web3Forms form identifier for inaccuracy reports.
   const WEB3FORMS_KEY = '9295b1da-e117-4432-bc64-658ab416d2aa';
 
   // Inject the HTML
@@ -15,11 +15,11 @@
     </button>
 
     <!-- Feedback Modal -->
-    <div class="feedback-modal-overlay" id="feedback-modal">
-      <div class="feedback-modal">
+    <div class="feedback-modal-overlay modal-overlay" id="feedback-modal">
+      <div class="feedback-modal" role="dialog" aria-labelledby="feedback-title">
         <div class="feedback-modal-header">
-          <h3>Report an Inaccuracy</h3>
-          <button class="feedback-modal-close" id="feedback-close">&times;</button>
+          <h3 id="feedback-title">Report an Inaccuracy</h3>
+          <button class="feedback-modal-close" id="feedback-close" aria-label="Close report">&times;</button>
         </div>
         <form id="feedback-form">
           <div class="feedback-modal-body">
@@ -29,7 +29,7 @@
 
             <div class="feedback-form-group">
               <label for="feedback-card">Card Name</label>
-              <input type="text" id="feedback-card" name="card" placeholder="e.g., Amex Platinum" required>
+              <input type="text" id="feedback-card" name="card" placeholder="e.g., Amex Platinum" maxlength="150" required>
             </div>
 
             <div class="feedback-form-group">
@@ -46,13 +46,14 @@
 
             <div class="feedback-form-group">
               <label for="feedback-details">Details</label>
-              <textarea id="feedback-details" name="details" placeholder="Please describe what's incorrect and what the correct information should be..." required></textarea>
+              <textarea id="feedback-details" name="details" placeholder="Please describe what's incorrect and what the correct information should be..." maxlength="3000" required></textarea>
             </div>
 
             <div class="feedback-form-group">
               <label for="feedback-source">Source (optional)</label>
-              <input type="text" id="feedback-source" name="source" placeholder="Link to official source if available">
+              <input type="url" id="feedback-source" name="source" placeholder="Link to official source if available" maxlength="1000">
             </div>
+            <p class="text-small text-muted">Your report is sent to CardMax through Web3Forms. Please leave out personal and account information.</p>
           </div>
           <div class="feedback-modal-footer">
             <button type="button" class="btn btn-secondary" id="feedback-cancel">Cancel</button>
@@ -79,12 +80,12 @@
 
     // Open modal
     fab.addEventListener('click', () => {
-      modal.classList.add('active');
+      window.CardMaxDialogs.open('feedback-modal');
     });
 
     // Close modal
     function closeModal() {
-      modal.classList.remove('active');
+      window.CardMaxDialogs.close('feedback-modal');
       form.reset();
     }
 

@@ -1,37 +1,43 @@
 // CardMax - Main Application Logic
 
 // State
-let selectedCards = [];
 let activeFilter = 'all';
 let currentModalCard = null;
 let currentSearchQuery = '';
 
 // Get user's cards from localStorage
 function getUserCards() {
-  return JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
+  return CardMaxModel.loadCardIds();
 }
 
 // Quick add card to collection
 function quickAddCard(cardId, event) {
-  event.stopPropagation();
+  event?.stopPropagation();
+  const card = CARDS_DATABASE.find(c => c.id === cardId);
+  if (!card) return false;
   const userCards = getUserCards();
-
   if (!userCards.includes(cardId)) {
     userCards.push(cardId);
-    localStorage.setItem('cardmax_user_cards', JSON.stringify(userCards));
-
-    // Auto-sync to cloud if signed in
-    if (typeof CardMaxAuth !== 'undefined' && CardMaxAuth.isSignedIn()) {
-      CardMaxAuth.autoSync();
-    }
-
-    // Show feedback
-    const card = CARDS_DATABASE.find(c => c.id === cardId);
+    try { localStorage.setItem('cardmax_user_cards', JSON.stringify(userCards)); }
+    catch (_) { showQuickAddToast('Could not save this card. Please try again.'); return false; }
+    if (typeof CardMaxAuth !== 'undefined') CardMaxAuth.autoSync();
     showQuickAddToast(`${card.name} added to My Cards`);
-
-    // Re-render to update button state
     renderCards(activeFilter);
   }
+  updateAddButton();
+  return true;
+}
+
+function updateAddButton() {
+  const btn = document.getElementById('add-to-collection-btn');
+  if (!btn) return;
+  const added = !!currentModalCard && getUserCards().includes(currentModalCard.id);
+  btn.textContent = added ? 'In My Cards' : 'Add to My Cards';
+  btn.disabled = !currentModalCard || added;
+}
+
+function addToCollection() {
+  if (currentModalCard) quickAddCard(currentModalCard.id);
 }
 
 // Show toast notification
@@ -41,6 +47,7 @@ function showQuickAddToast(message) {
 
   const toast = document.createElement('div');
   toast.className = 'quick-add-toast';
+  toast.setAttribute('role', 'status');
   toast.textContent = message;
   toast.style.cssText = `
     position: fixed;
@@ -124,8 +131,8 @@ function renderCards(filter = 'all') {
     const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : '';
     const isInCollection = userCards.includes(card.id);
     return `
-    <div class="credit-card fade-in" style="animation-delay: ${index * 0.1}s" onclick="openCardModal('${card.id}')">
-      <div class="card-header" style="background: ${card.color}">
+    <div class="credit-card fade-in" style="animation-delay: ${index * 0.03}s">
+      <div class="card-header" style="background: ${card.color}; color: ${CardMaxModel.contrastText(card.color)};">
         <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;">
           <div>
             <div class="card-issuer">${card.issuer}${card.cardType === 'business' ? ' <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem;">BUSINESS</span>' : ''}</div>
@@ -133,7 +140,7 @@ function renderCards(filter = 'all') {
           </div>
           ${cardVisual}
         </div>
-        <button class="quick-add-btn ${isInCollection ? 'added' : ''}" onclick="quickAddCard('${card.id}', event)" title="${isInCollection ? 'In My Cards' : 'Add to My Cards'}">
+        <button class="quick-add-btn ${isInCollection ? 'added' : ''}" onclick="quickAddCard('${card.id}', event)" aria-label="${CardMaxModel.escapeHtml(isInCollection ? `${card.name} is in My Cards` : `Add ${card.name} to My Cards`)}" ${isInCollection ? 'disabled' : ''}>
           ${isInCollection ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '+'}
         </button>
       </div>
@@ -158,12 +165,13 @@ function renderCards(filter = 'all') {
           ${card.credits.slice(0, 2).map(credit => `
             <div class="credit-item">
               <span class="credit-name">${credit.name}</span>
-              <span class="credit-value">${typeof credit.amount === 'number' ? '$' + credit.amount : credit.amount}</span>
+              <span class="credit-value">${CardMaxModel.formatCredit(credit)}</span>
             </div>
           `).join('')}
         </div>
 
-        <button class="btn btn-primary btn-full">View Full Details</button>
+        ${CardMaxModel.statusHtml(card)}
+        <button class="btn btn-primary btn-full" onclick="openCardModal('${card.id}')" aria-label="View ${CardMaxModel.escapeHtml(card.name)} details">View Full Details</button>
       </div>
     </div>
   `}).join('');
@@ -200,12 +208,14 @@ function openCardModal(cardId) {
 
   currentModalCard = card;
   document.getElementById('modal-card-name').textContent = card.name;
-  document.getElementById('card-modal').classList.add('active');
+  document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.tab === 'overview'));
   renderModalContent('overview');
+  updateAddButton();
+  CardMaxDialogs.open('card-modal');
 }
 
 function closeModal() {
-  document.getElementById('card-modal').classList.remove('active');
+  CardMaxDialogs.close('card-modal');
   currentModalCard = null;
 }
 
@@ -226,10 +236,7 @@ function setupModalListeners() {
     });
   });
 
-  // Close on Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
+
 }
 
 function renderModalContent(tabName) {
@@ -248,11 +255,9 @@ function renderModalContent(tabName) {
             <div class="stat-value" style="color: var(--accent-orange);">$${card.annualFee}</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Sign-Up Bonus</div>
-            <div class="stat-value">${card.signUpBonus.amount.toLocaleString()}</div>
-            <div class="text-muted" style="font-size: 0.875rem;">
-              ${card.signUpBonus.currency} after $${card.signUpBonus.spendRequirement.toLocaleString()} in ${card.signUpBonus.timeframe}
-            </div>
+            <div class="stat-label">Welcome Offer</div>
+            <p>Offers change and may depend on eligibility.</p>
+            <p>${CardMaxModel.sourceLink(card, 'Check the current issuer offer')}</p>
           </div>
           <div class="stat-card">
             <div class="stat-label">Base Earning</div>
@@ -298,7 +303,7 @@ function renderModalContent(tabName) {
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
               ${airlines.map(p => `
                 <span style="padding: 0.5rem 1rem; background: var(--bg-card); border-radius: 20px; font-size: 0.875rem;">
-                  ${p.name} <span style="color: var(--accent-green);">${p.ratio}</span>
+                  ${p.name} <span style="color: var(--accent-green);">${p.ratio}</span>${p.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(p.description)}</span>` : ''}${CardMaxModel.termsHtml(p)}
                 </span>
               `).join('')}
             </div>
@@ -308,7 +313,7 @@ function renderModalContent(tabName) {
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
               ${hotels.map(p => `
                 <span style="padding: 0.5rem 1rem; background: var(--bg-card); border-radius: 20px; font-size: 0.875rem;">
-                  ${p.name} <span style="color: var(--accent-green);">${p.ratio}</span>
+                  ${p.name} <span style="color: var(--accent-green);">${p.ratio}</span>${p.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(p.description)}</span>` : ''}${CardMaxModel.termsHtml(p)}
                 </span>
               `).join('')}
             </div>
@@ -318,16 +323,13 @@ function renderModalContent(tabName) {
       break;
 
     case 'credits':
-      const dollarCredits = card.credits.filter(c => c.type !== 'points' && c.type !== 'hotel');
-      const pointsCredits = card.credits.filter(c => c.type === 'points');
-      const hotelCredits = card.credits.filter(c => c.type === 'hotel');
-      const totalDollarCredits = dollarCredits.reduce((sum, c) => sum + (typeof c.amount === 'number' ? c.amount : 0), 0);
-      const totalPointsCredits = pointsCredits.reduce((sum, c) => sum + (typeof c.amount === 'number' ? c.amount : 0), 0);
+      const totalDollarCredits = CardMaxModel.annualCashValue(card);
       content = `
         <div style="margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-card); border-radius: 8px;">
-          <div class="text-muted" style="font-size: 0.875rem;">Total Annual Credit Value</div>
-          <div style="font-size: 2rem; font-weight: 700; color: var(--accent-green);">$${totalDollarCredits}${totalPointsCredits > 0 ? ` <span style="font-size: 1rem; color: var(--accent-purple);">+ ${totalPointsCredits.toLocaleString()} pts</span>` : ''}${hotelCredits.length > 0 ? ` <span style="font-size: 1rem; color: var(--accent-blue);">+ ${hotelCredits.reduce((sum, c) => sum + c.amount, 0)} night${hotelCredits.reduce((sum, c) => sum + c.amount, 0) > 1 ? 's' : ''}</span>` : ''}</div>
-          <div class="text-muted" style="font-size: 0.875rem;">Net after $${card.annualFee} fee: <strong style="color: ${totalDollarCredits - card.annualFee >= 0 ? 'var(--accent-green)' : 'var(--accent-orange)'}">${totalDollarCredits - card.annualFee >= 0 ? '+' : ''}$${totalDollarCredits - card.annualFee}</strong></div>
+          <div class="text-muted" style="font-size: 0.875rem;">Annualized cash credit caps</div>
+          <div style="font-size: 2rem; font-weight: 700; color: var(--accent-green);">${CardMaxModel.money(totalDollarCredits)}</div>
+          <div class="text-muted" style="font-size: 0.875rem;">Cash caps minus ${CardMaxModel.money(card.annualFee)} fee: <strong>${CardMaxModel.money(totalDollarCredits - card.annualFee)}</strong></div>
+          <p class="terms-note">Assumes every eligible credit is used. Multi-year reimbursements are spread over their full period; points, nights, certificates and per-use benefits are excluded. This is not guaranteed savings.</p>
         </div>
         <div>
           ${card.credits.map(credit => `
@@ -336,10 +338,10 @@ function renderModalContent(tabName) {
                 <div class="benefit-text">${credit.name}</div>
                 <div class="benefit-description">${credit.description}</div>
                 <div style="font-size: 0.75rem; color: var(--accent-purple); margin-top: 0.25rem;">
-                  ${credit.frequency}${credit.monthlyAmount ? ` ($${credit.monthlyAmount}/month)` : ''}
+                  ${CardMaxModel.periodLabel(credit)}${CardMaxModel.termsHtml(credit)}
                 </div>
               </div>
-              <div class="benefit-value">${credit.type === 'points' ? credit.amount.toLocaleString() + ' pts' : (credit.type === 'hotel' ? (credit.amount === 1 ? '1 night' : credit.amount + ' nights') : (typeof credit.amount === 'number' ? '$' + credit.amount : credit.amount))}</div>
+              <div class="benefit-value">${CardMaxModel.formatCredit(credit)}</div>
             </div>
           `).join('')}
         </div>
@@ -382,20 +384,20 @@ function renderModalContent(tabName) {
       break;
   }
 
-  container.innerHTML = content;
+  container.innerHTML = CardMaxModel.statusHtml(card) + CardMaxModel.termsHtml(card) + content;
 }
 
 // Update stats
 function updateStats() {
   const totalCards = CARDS_DATABASE.length;
   const totalPartners = new Set(CARDS_DATABASE.flatMap(c => c.transferPartners.map(p => p.name))).size;
-  const totalCredits = CARDS_DATABASE.reduce((sum, card) => {
-    return sum + card.credits.reduce((s, c) => s + (typeof c.amount === 'number' ? c.amount : 0), 0);
-  }, 0);
-
+  const maxCredits = Math.max(0, ...CARDS_DATABASE.map(card => CardMaxModel.annualCashValue(card)));
+  const reviewed = CARDS_DATABASE.filter(card => card.verifiedAt && !CardMaxModel.verificationText(card).includes('overdue')).length;
   document.getElementById('total-cards').textContent = totalCards;
   document.getElementById('total-partners').textContent = totalPartners + '+';
-  document.getElementById('total-credits').textContent = '$' + totalCredits.toLocaleString() + '+';
+  document.getElementById('total-credits').textContent = CardMaxModel.money(maxCredits);
+  document.getElementById('last-updated').textContent = `${reviewed}/${totalCards}`;
+
 }
 
 // Utility functions for other pages
@@ -413,3 +415,5 @@ window.CardMax = {
   formatCurrency,
   CARDS_DATABASE
 };
+
+window.addEventListener('cardmax-data-changed', () => { renderCards(activeFilter); updateAddButton(); });

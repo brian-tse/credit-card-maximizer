@@ -13,9 +13,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
   <style>
     .category-grid {
       display: grid;
@@ -294,7 +294,7 @@
       font-size: 0.75rem;
       padding: 0.25rem 0.5rem;
       border-radius: 4px;
-      opacity: 0;
+      opacity: 1;
       transition: opacity 0.2s;
     }
 
@@ -437,10 +437,10 @@
 
   <!-- Valuations Modal -->
   <div id="valuations-modal" class="modal-overlay" onclick="closeValuationsModal(event)">
-    <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="modal-content" role="dialog" aria-labelledby="valuations-title" onclick="event.stopPropagation()">
       <div class="modal-header">
-        <h2>Point Valuations</h2>
-        <button class="modal-close" onclick="closeValuationsModal()">&times;</button>
+        <h2 id="valuations-title">Point Valuations</h2>
+        <button class="modal-close" aria-label="Close point valuations" onclick="closeValuationsModal()">&times;</button>
       </div>
       <div class="modal-body" id="valuations-list">
         <!-- Populated by JavaScript -->
@@ -453,6 +453,9 @@
   </div>
 
   <script src="../data/cards.js"></script>
+  <script src="../js/card-model.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/dialogs.js"></script>
   <script src="../data/valuations.js"></script>
   <script src="../js/card-visuals.js"></script>
   <script src="../js/save-code.js"></script>
@@ -460,8 +463,8 @@
   <script src="../js/auth.js"></script>
   <script>
     // Get user's cards
-    const userCardIds = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
-    const userCards = userCardIds.map(id => CARDS_DATABASE.find(c => c.id === id)).filter(Boolean);
+    let userCardIds = CardMaxModel.loadCardIds();
+    let userCards = userCardIds.map(id => CARDS_DATABASE.find(c => c.id === id)).filter(Boolean);
 
     // Category icons
     const categoryIcons = {
@@ -693,7 +696,7 @@
               <div class="valuation-item ${item.isModified ? 'valuation-modified' : ''}">
                 <span class="valuation-name">${item.name}</span>
                 <div class="valuation-input-group">
-                  <input type="number"
+                  <input type="number" aria-label="${item.name} value in cents per point"
                          class="valuation-input"
                          id="val-${item.key}"
                          value="${item.value.toFixed(2)}"
@@ -702,7 +705,7 @@
                          max="10"
                          onchange="updateValuation('${item.key}', this.value)">
                   <span class="valuation-unit">¢</span>
-                  <button class="valuation-reset" onclick="resetSingleValuation('${item.key}')" title="Reset to default">↺</button>
+                  <button class="valuation-reset" onclick="resetSingleValuation('${item.key}')" aria-label="Reset ${item.name} to default">↺</button>
                 </div>
               </div>
             `).join('')}
@@ -711,13 +714,13 @@
       });
 
       list.innerHTML = html;
-      modal.classList.add('active');
+      CardMaxDialogs.open('valuations-modal');
     }
 
     // Close valuations modal
     function closeValuationsModal(event) {
       if (event && event.target !== event.currentTarget) return;
-      document.getElementById('valuations-modal').classList.remove('active');
+      CardMaxDialogs.close('valuations-modal');
       render(); // Re-render with updated valuations
     }
 
@@ -726,6 +729,8 @@
       const numValue = parseFloat(value);
       if (!isNaN(numValue) && numValue >= 0 && numValue <= 10) {
         Valuations.saveValuation(key, numValue);
+        CardMaxAuth.autoSync();
+        render();
         // Update the modified state
         const item = document.getElementById('val-' + key).closest('.valuation-item');
         item.classList.add('valuation-modified');
@@ -735,6 +740,8 @@
     // Reset a single valuation to default
     function resetSingleValuation(key) {
       Valuations.resetValuation(key);
+      CardMaxAuth.autoSync();
+      render();
       const input = document.getElementById('val-' + key);
       input.value = Valuations.DEFAULT[key].value.toFixed(2);
       input.closest('.valuation-item').classList.remove('valuation-modified');
@@ -744,12 +751,19 @@
     function resetAllValuations() {
       if (confirm('Reset all point valuations to their default values?')) {
         Valuations.resetAllValuations();
+        CardMaxAuth.autoSync();
+        render();
         openValuationsModal(); // Refresh the modal
       }
     }
 
     // Initialize
     document.addEventListener('DOMContentLoaded', render);
+    window.addEventListener('cardmax-data-changed', () => {
+      userCardIds = CardMaxModel.loadCardIds();
+      userCards = userCardIds.map(id => CARDS_DATABASE.find(card => card.id === id)).filter(Boolean);
+      render();
+    });
   </script>
   <script src="../js/feedback.js"></script>
 </body>

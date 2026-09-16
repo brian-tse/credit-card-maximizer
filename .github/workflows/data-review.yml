@@ -1,0 +1,31 @@
+name: Weekly issuer review
+on:
+  schedule:
+    - cron: '0 16 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/cache/restore@v4
+        with:
+          path: .cache/issuer-sources.json
+          key: issuer-review-${{ github.run_id }}
+          restore-keys: issuer-review-
+      - run: node scripts/review-data.mjs --fetch
+      - uses: actions/cache/save@v4
+        with:
+          path: .cache/issuer-sources.json
+          key: issuer-review-${{ github.run_id }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: issuer-review-${{ github.run_id }}
+          path: reports/
+          retention-days: 90
