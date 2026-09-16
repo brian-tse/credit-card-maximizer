@@ -14,9 +14,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
   <style>
     /* My Cards Page Specific Styles */
     .my-cards-header {
@@ -199,7 +199,7 @@
       right: 0.5rem;
       display: flex;
       gap: 0.25rem;
-      opacity: 0;
+      opacity: 1;
       transition: opacity 0.15s ease;
     }
 
@@ -461,6 +461,7 @@
     <section class="hero">
       <h1>Your Cards</h1>
       <p>Track benefits and maximize rewards</p>
+      <a class="btn btn-primary" id="first-card-cta" href="#add-cards" style="display:none; margin-top:1rem;">Add your first card</a>
     </section>
 
     <!-- Quick Stats -->
@@ -475,13 +476,15 @@
       </div>
       <div class="quick-stat-card">
         <div class="quick-stat-value" id="stat-total-credits">$0</div>
-        <div class="quick-stat-label">Credits Available</div>
+        <div class="quick-stat-label">Annualized cash caps</div>
       </div>
       <div class="quick-stat-card">
         <div class="quick-stat-value" id="stat-net-value">$0</div>
-        <div class="quick-stat-label">Net Value</div>
+        <div class="quick-stat-label">Cash caps minus fee</div>
       </div>
     </div>
+
+    <p class="terms-note" id="cash-caps-note">Fees use your entered amount when set, otherwise the listed fee. Cash caps assume full eligible use. Multi-year credits are annualized; points, certificates, nights and per-use benefits are excluded.</p>
 
     <!-- My Cards Section -->
     <section class="my-cards-section" id="my-cards-section">
@@ -499,10 +502,10 @@
       </div>
       <div class="save-actions">
         <div>
-          <span class="save-status" id="save-status">Changes not saved</span>
-          <p class="text-muted" style="font-size: 0.75rem; margin-top: 0.25rem;">Saving generates a backup code that's copied to your clipboard. Store it to restore your data later.</p>
+          <span class="save-status" id="save-status" role="status">Saved on this device</span>
+          <p class="text-muted" style="font-size: 0.75rem; margin-top: 0.25rem;">Changes save automatically on this device. Copy a backup to restore them later.</p>
         </div>
-        <button class="btn btn-primary" id="save-btn" onclick="saveMyCards()">Save Changes</button>
+        <button class="btn btn-primary" id="save-btn" onclick="saveMyCards()">Copy Backup</button>
       </div>
 
       <!-- Save/Restore Data (moved here from bottom) -->
@@ -513,12 +516,12 @@
     </section>
 
     <!-- Add Cards Section -->
-    <section>
+    <section id="add-cards">
       <div class="my-cards-header">
         <h2 style="margin: 0;">Add Cards</h2>
         <div class="search-container">
           <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          <input type="text" class="search-input" id="card-search" placeholder="Search cards..." oninput="filterCardSelector()">
+          <input type="text" class="search-input" id="card-search" aria-label="Search cards" placeholder="Search cards..." oninput="filterCardSelector()">
         </div>
       </div>
 
@@ -536,6 +539,9 @@
   </div>
 
   <script src="data/cards.js"></script>
+  <script src="js/card-model.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/dialogs.js"></script>
   <script src="js/save-code.js"></script>
   <script src="js/card-visuals.js"></script>
   <script src="js/firebase-config.js"></script>
@@ -545,6 +551,7 @@
     // State
     let selectedCards = [];
     let cardSignupDates = {};
+    let actualAnnualFees = {};
     let hasUnsavedChanges = false;
     let expandedCardId = null; // Track which card's settings are open
     let currentSortOption = 'issuer'; // Sort option: 'issuer', 'fee', 'date'
@@ -555,6 +562,7 @@
       renderCardSelector();
       renderMyCards();
       updateQuickStats();
+      updateSaveStatus();
 
       // Initialize save/restore UI
       if (typeof CardMaxSave !== 'undefined') {
@@ -569,13 +577,12 @@
 
     // Load saved data
     function loadSavedData() {
-      const saved = localStorage.getItem('cardmax_user_cards');
+      try { actualAnnualFees = JSON.parse(localStorage.getItem('cardmax_annual_fees') || '{}'); }
+      catch (_) { actualAnnualFees = {}; }
       const savedDates = localStorage.getItem('cardmax_signup_dates');
       const savedSort = localStorage.getItem('cardmax_sort_option');
 
-      if (saved) {
-        selectedCards = JSON.parse(saved);
-      }
+      selectedCards = CardMaxModel.loadCardIds();
 
       if (savedDates) {
         cardSignupDates = JSON.parse(savedDates);
@@ -634,7 +641,7 @@
         status.textContent = '● Changes not saved';
         status.classList.remove('saved');
       } else {
-        status.textContent = '✓ All changes saved';
+        status.textContent = '✓ Saved on this device';
         status.classList.add('saved');
       }
     }
@@ -746,7 +753,7 @@
         const shortIssuer = getShortIssuer(card.issuer);
         const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : `<div class="card-color-bar" style="background: ${card.color}"></div>`;
         return `
-          <div class="card-selector-item"
+          <button type="button" class="card-selector-item" aria-label="Add ${CardMaxModel.escapeHtml(card.name)} to My Cards"
                data-id="${card.id}"
                data-name="${card.name}"
                data-issuer="${card.issuer}"
@@ -757,8 +764,8 @@
               <div class="card-issuer">${card.issuer}</div>
               <div class="card-fee">$${card.annualFee}/year</div>
             </div>
-            <div class="card-checkbox"></div>
-          </div>
+            <span class="card-checkbox" aria-hidden="true">+</span>
+          </button>
         `;
       }).join('');
     }
@@ -796,6 +803,7 @@
 
     // Toggle card selection
     function toggleCardSelection(cardId) {
+      if (!CARDS_DATABASE.some(card => card.id === cardId)) return;
       const index = selectedCards.indexOf(cardId);
       if (index > -1) {
         selectedCards.splice(index, 1);
@@ -842,8 +850,7 @@
 
     // Toggle date picker for a card
     function toggleDatePicker(cardId, event) {
-      // Don't toggle if clicking on the remove button or date inputs
-      if (event.target.closest('.action-btn') || event.target.closest('.date-row')) return;
+      // Settings toggle is its own keyboard-accessible button.
 
       if (expandedCardId === cardId) {
         expandedCardId = null;
@@ -851,6 +858,7 @@
         expandedCardId = cardId;
       }
       renderMyCards();
+      document.getElementById(`settings-${cardId}`)?.focus();
     }
 
     // Render my cards list
@@ -863,7 +871,8 @@
         container.innerHTML = `
           <div class="empty-state">
             <h3>No cards selected yet</h3>
-            <p>Click on cards below to add them to your collection</p>
+            <p>Add the cards you hold to start tracking their benefits.</p>
+            <a class="btn btn-primary" href="#add-cards">Add your first card</a>
           </div>
         `;
         return;
@@ -890,6 +899,7 @@
         if (!card) return '';
 
         const signupDate = cardSignupDates[cardId] || {};
+        const annualFee = CardMaxModel.annualFeeForCard(card, actualAnnualFees);
         const shortIssuer = getShortIssuer(card.issuer);
         const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : `<div class="card-color-bar" style="background: ${card.color}"></div>`;
         const hasDate = signupDate.month || signupDate.day || signupDate.year;
@@ -899,29 +909,34 @@
         const isExpanded = expandedCardId === cardId;
 
         return `
-          <div class="my-card-item ${isExpanded ? 'expanded' : ''}" onclick="toggleDatePicker('${cardId}', event)">
+          <div class="my-card-item ${isExpanded ? 'expanded' : ''}">
             <div class="card-actions">
-              <button class="action-btn remove" onclick="removeCard('${cardId}')" title="Remove">×</button>
+              <button class="action-btn remove" onclick="removeCard('${cardId}')" aria-label="Remove ${CardMaxModel.escapeHtml(card.name)} from My Cards">×</button>
             </div>
             ${cardVisual}
             <div class="card-details">
               <div class="card-name">${shortIssuer} ${getShortCardName(card.name)}</div>
               <div class="card-meta">
-                <span>$${card.annualFee}/yr</span>
+                <span>${CardMaxModel.money(annualFee)}/yr${Object.hasOwn(actualAnnualFees, cardId) ? ' · your fee' : ' · listed fee'}</span>
                 ${dateDisplay ? `<span>${dateDisplay}</span>` : '<span class="add-date-hint">+ Add date</span>'}
               </div>
             </div>
+            <button class="card-settings-toggle" id="settings-${cardId}" aria-expanded="${isExpanded}" onclick="toggleDatePicker('${cardId}', event)">Card settings<span class="sr-only"> for ${card.name}</span></button>
             <div class="date-row" style="display: ${isExpanded ? 'flex' : 'none'};">
               <label>Opened:</label>
-              <select onchange="updateSignupDate('${cardId}', 'month', this.value)">
+              <select id="opened-${cardId}-month" aria-label="${CardMaxModel.escapeHtml(card.name)} opened month" onchange="updateSignupDate('${cardId}', 'month', this.value)">
                 ${months.map((m, i) => `<option value="${i}" ${signupDate.month === i ? 'selected' : ''}>${m || 'Mo'}</option>`).join('')}
               </select>
-              <select onchange="updateSignupDate('${cardId}', 'day', this.value)">
+              <select id="opened-${cardId}-day" aria-label="${CardMaxModel.escapeHtml(card.name)} opened day" onchange="updateSignupDate('${cardId}', 'day', this.value)">
                 ${days.map(d => `<option value="${d}" ${signupDate.day == d ? 'selected' : ''}>${d || 'Day'}</option>`).join('')}
               </select>
-              <select onchange="updateSignupDate('${cardId}', 'year', this.value)">
+              <select id="opened-${cardId}-year" aria-label="${CardMaxModel.escapeHtml(card.name)} opened year" onchange="updateSignupDate('${cardId}', 'year', this.value)">
                 ${years.map(y => `<option value="${y}" ${signupDate.year == y ? 'selected' : ''}>${y || 'Yr'}</option>`).join('')}
               </select>
+              <label class="fee-override-label" for="fee-${cardId}">Your annual fee ($)
+                <input type="number" id="fee-${cardId}" min="0" max="10000" step="0.01" value="${actualAnnualFees[cardId] ?? ''}" placeholder="${card.annualFee}" onchange="updateAnnualFee('${cardId}', this.value)">
+              </label>
+              <span class="terms-note">Optional: enter your billed fee. Leave blank to use the listed fee.</span>
             </div>
           </div>
         `;
@@ -948,6 +963,19 @@
 
       // Re-render to update date display in subtitle
       renderMyCards();
+      document.getElementById(`opened-${cardId}-${field}`)?.focus();
+    }
+
+    function updateAnnualFee(cardId, rawValue) {
+      if (!CARDS_DATABASE.some(card => card.id === cardId)) return;
+      const value = Number(rawValue);
+      if (rawValue.trim() !== '' && (!Number.isFinite(value) || value < 0 || value > 10000)) return;
+      if (rawValue.trim() === '') delete actualAnnualFees[cardId];
+      else actualAnnualFees[cardId] = value;
+      localStorage.setItem('cardmax_annual_fees', JSON.stringify(actualAnnualFees));
+      if (typeof CardMaxAuth !== 'undefined') CardMaxAuth.autoSync();
+      renderMyCards(); updateQuickStats(); updateSaveStatus();
+      document.getElementById(`fee-${cardId}`)?.focus();
     }
 
     // Update quick stats
@@ -959,23 +987,25 @@
         const card = CARDS_DATABASE.find(c => c.id === cardId);
         if (!card) return;
 
-        totalFees += card.annualFee;
+        totalFees += CardMaxModel.annualFeeForCard(card, actualAnnualFees);
 
-        card.credits.forEach(credit => {
-          if (typeof credit.amount === 'number' && credit.type !== 'points') {
-            totalCredits += credit.amount;
-          }
-        });
+        totalCredits += CardMaxModel.annualCashValue(card);
       });
 
       const netValue = totalCredits - totalFees;
 
       document.getElementById('stat-my-cards').textContent = selectedCards.length;
+      document.getElementById('first-card-cta').style.display = selectedCards.length ? 'none' : 'inline-flex';
+      document.getElementById('quick-stats').hidden = !selectedCards.length;
+      document.getElementById('cash-caps-note').hidden = !selectedCards.length;
       document.getElementById('stat-annual-fees').textContent = '$' + totalFees.toLocaleString();
-      document.getElementById('stat-total-credits').textContent = '$' + totalCredits.toLocaleString();
-      document.getElementById('stat-net-value').textContent = (netValue >= 0 ? '+$' : '-$') + Math.abs(netValue).toLocaleString();
+      document.getElementById('stat-total-credits').textContent = CardMaxModel.money(totalCredits);
+      document.getElementById('stat-net-value').textContent = CardMaxModel.money(netValue);
       document.getElementById('stat-net-value').style.color = netValue >= 0 ? 'var(--accent)' : 'var(--warning)';
     }
+    window.addEventListener('cardmax-data-changed', () => {
+      loadSavedData(); renderCardSelector(); renderMyCards(); updateQuickStats(); updateSaveStatus();
+    });
   </script>
 </body>
 </html>

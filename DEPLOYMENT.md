@@ -1,53 +1,30 @@
-# CardMax Deployment Guide
+# Production and rollback
 
-## Deploy to cards.briantse.com
+Production is **https://cardmax.cc**, Cloudflare Pages project **cardmax**. The suggestion endpoint is **https://cardmax-suggestions.briantse.workers.dev**. Keep the existing domains and services; do not create or change DNS to release a code fix. The previous Netlify/Vercel and `cards.briantse.com` instructions were obsolete.
 
-### Step 1: Deploy to Netlify
+## Release
 
-1. Go to https://netlify.com and sign up (free)
-2. From dashboard, drag & drop the `credit-card-tracker` folder
-3. Netlify gives you a URL like `random-name-123.netlify.app`
+1. Use Node 24, run `npm ci`, `npm run check`, `npm test`, `npm audit --audit-level=high`, `npx wrangler deploy --dry-run --config workers/wrangler.jsonc`, and `npm run build`.
+2. Check mobile/desktop UI, card addition, consistent comparison totals, quarterly and anniversary benefit periods, backup restore, and two-session sync.
+3. Merge a checked pull request into `main`. GitHub Actions deploys the suggestion Worker before the Pages assets, then verifies `/version.json` against the commit and checks `/health` on the Worker.
+4. Keep the previous deployment available for rollback. Do not purge stored user history when changing the catalog.
 
-### Step 2: Add Custom Domain in Netlify
+The release workflow disables duplicate automatic production builds in the existing Cloudflare Pages Git integration. Preview integration settings remain unchanged. An existing Netlify preview integration may still post checks; it does not host cardmax.cc.
 
-1. Site settings → Domain management → Add custom domain
-2. Enter: `cards.briantse.com`
-3. Note the Netlify URL for Step 3
+GitHub Actions uses the existing `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` secrets. The token needs access to Pages and the suggestion Worker; never print or export it. The Worker retains its existing server-side `GITHUB_TOKEN` secret. For manual maintenance use `npx wrangler login` and local authentication; never write credentials into project files.
 
-### Step 3: Configure Squarespace DNS
+A manual workflow dispatch on a feature branch deploys a Pages preview only. The Worker must be separately dry-run tested before its production deployment. Running `node scripts/verify-production.mjs` checks HTTPS, the deployed commit when `GITHUB_SHA` is supplied, required scripts, non-email suggestion UI, and Worker health without submitting a real issue.
 
-1. Squarespace → Settings → Domains → briantse.com → DNS Settings
-2. Add new CNAME record:
-   - Host: `cards`
-   - Type: `CNAME`
-   - Value: `your-site-name.netlify.app`
+## Rollback
 
-### Step 4: Enable HTTPS
+Revert the faulty commit on `main` and let the checked workflow redeploy, or select the previous successful deployment in Cloudflare Pages. For an urgent Worker rollback, inspect `npx wrangler deployments list --config workers/wrangler.jsonc` and use `npx wrangler rollback <version-id> --config workers/wrangler.jsonc`. Do not roll back to an email-publishing Worker version. The static build excludes repository configuration, tests, tooling and secrets.
 
-1. Wait 5-30 minutes for DNS propagation
-2. In Netlify, click "Provision SSL certificate"
+## Firebase
 
----
+Account sync uses `users/{uid}` with per-item state stored in the owner's document. The required security contract is authenticated access only when `request.auth.uid == uid`; unauthenticated access and access to another user's document must be denied. The active server rules are managed outside this repository and must be inspected and emulator-tested before changing them. Public Firebase web configuration is not a server authorization mechanism.
 
-## Alternative: Vercel Deployment
+The application initializes authentication on each supported page and merges changes in Firestore transactions. Real account smoke testing should use designated test accounts, never overwrite user data. Local regressions cover merge conflicts, deletions, account isolation and backup rollback; they do not certify deployed Firestore rules.
 
-1. Go to https://vercel.com and sign up
-2. Import your project (drag & drop or GitHub)
-3. Add custom domain: `cards.briantse.com`
-4. Add CNAME record in Squarespace pointing to `cname.vercel-dns.com`
+## Scheduled maintenance
 
----
-
-## Updating Your Site
-
-**If using drag & drop:** Re-upload the folder to Netlify
-
-**If using GitHub:** Push changes to your repo, Netlify auto-deploys
-
----
-
-## Troubleshooting
-
-- **DNS not working:** Wait up to 48 hours, check CNAME spelling
-- **SSL error:** Ensure DNS is verified first, then provision certificate
-- **404 errors:** Make sure index.html is in the root folder
+`data-review.yml` checks issuer sources weekly and retains reports for 90 days. It creates a review queue, not automatic fact changes. A first-run baseline, a source change, an unavailable source and an actual verified benefit change are different states. Review the job summary/artifact and apply source-backed edits through a checked PR. No external “Clawd” scheduler is assumed.

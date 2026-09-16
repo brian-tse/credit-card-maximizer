@@ -1,66 +1,16 @@
-# CardMax Workers
+# CardMax suggestion Worker
 
-Cloudflare Workers for CardMax automation.
+`card-suggestion.js` creates a public GitHub issue with card issuer, name and optional notes. It never reads or forwards the legacy email field, redacts pasted email addresses, limits field/body size, suppresses mention pings, and uses the Cloudflare rate limiter (three requests per minute per connecting IP per location). Rate limiting is abuse mitigation, not user authentication.
 
-## card-suggestion.js
+Deployment config is `wrangler.jsonc`. The existing endpoint is `https://cardmax-suggestions.briantse.workers.dev`; no DNS changes are needed. `GET /health` returns only the release marker and `collectsEmail: false`.
 
-Handles card suggestion form submissions and creates GitHub Issues.
+The server-side `GITHUB_TOKEN` secret must have permission to create issues in `brian-tse/credit-card-maximizer`. Preserve that secret; do not copy it into local files or logs. Use local Wrangler authentication for manual maintenance. The main GitHub deployment workflow also deploys this Worker using the existing Cloudflare secrets.
 
-### Setup
-
-1. Install Wrangler CLI:
-   ```bash
-   npm install -g wrangler
-   ```
-
-2. Login to Cloudflare:
-   ```bash
-   wrangler login
-   ```
-
-3. Create a GitHub Personal Access Token:
-   - Go to https://github.com/settings/tokens
-   - Create token with `repo` scope
-   - Copy the token
-
-4. Add the secret to Cloudflare:
-   ```bash
-   cd workers
-   wrangler secret put GITHUB_TOKEN
-   # Paste your token when prompted
-   ```
-
-5. Deploy:
-   ```bash
-   wrangler deploy
-   ```
-
-### Worker URL
-
-After deployment, the worker will be available at:
-```
-https://cardmax-suggestions.briantse.workers.dev
+```sh
+npx wrangler deploy --dry-run --config workers/wrangler.jsonc
+npx wrangler dev --config workers/wrangler.jsonc
 ```
 
-### How It Works
+Unit tests mock GitHub and the rate limiter so they cannot publish test issues. Do not send valid production test submissions. A missing rate-limiter binding or GitHub secret returns 503 rather than disabling protection. A blocked origin, malformed input or oversized request fails without creating an issue.
 
-1. User submits card suggestion form on cardmax.cc
-2. Form POSTs to this worker
-3. Worker creates a GitHub Issue with label `card-suggestion`
-4. Clawd polls for new issues 3x daily (9am, 2pm, 7pm)
-5. Clawd researches the card and adds it to the database
-6. If user provided email, they get notified when done
-
-### Testing Locally
-
-```bash
-wrangler dev
-```
-
-Then POST to `http://localhost:8787`:
-```bash
-curl -X POST http://localhost:8787 \
-  -H "Content-Type: application/json" \
-  -H "Origin: http://localhost:3000" \
-  -d '{"issuer":"Chase","cardName":"Test Card","notes":"Testing"}'
-```
+The form now offers a GitHub issue link for following progress. No automatic email notification or external polling service is claimed. Legacy public issue body redaction and removal of old email-containing edit-history revisions are separate tasks.

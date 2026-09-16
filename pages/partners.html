@@ -13,9 +13,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
   <style>
     .partner-grid {
       display: grid;
@@ -243,7 +243,7 @@
     <div class="partner-detail" id="partner-detail" style="display: none;">
       <div class="partner-detail-header">
         <div class="partner-detail-title" id="partner-detail-title">Partner Name</div>
-        <button class="close-detail-btn" onclick="closePartnerDetail()">×</button>
+        <button class="close-detail-btn" aria-label="Close transfer partner details" onclick="closePartnerDetail()">×</button>
       </div>
       <ul class="cards-that-transfer" id="cards-that-transfer">
         <!-- Cards will be inserted here -->
@@ -264,14 +264,17 @@
   </div>
 
   <script src="../data/cards.js"></script>
+  <script src="../js/card-model.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/dialogs.js"></script>
   <script src="../js/card-visuals.js"></script>
   <script src="../js/save-code.js"></script>
   <script src="../js/firebase-config.js"></script>
   <script src="../js/auth.js"></script>
   <script>
     // Get user's cards
-    const userCardIds = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
-    const userCards = userCardIds.map(id => CARDS_DATABASE.find(c => c.id === id)).filter(Boolean);
+    let userCardIds = CardMaxModel.loadCardIds();
+    let userCards = userCardIds.map(id => CARDS_DATABASE.find(c => c.id === id)).filter(Boolean);
 
     // Build partner list from user's cards
     function buildPartnerList() {
@@ -291,7 +294,8 @@
           }
           partners[key].cards.push({
             card: card,
-            ratio: partner.ratio
+            ratio: partner.ratio,
+            partner: partner
           });
         });
       });
@@ -350,6 +354,9 @@
         return;
       }
 
+      container.style.display = '';
+      pageIntro.style.display = '';
+      noCardsMsg.style.display = 'none';
       const partners = buildPartnerList();
       const partnerList = Object.values(partners);
 
@@ -376,7 +383,7 @@
       }
 
       container.innerHTML = filteredPartners.map(partner => `
-        <div class="partner-card ${selectedPartner === partner.name ? 'selected' : ''}"
+        <button type="button" class="partner-card ${selectedPartner === partner.name ? 'selected' : ''}"
              data-type="${partner.type}"
              onclick="selectPartner('${partner.name.replace(/'/g, "\\'")}')">
           <div class="partner-header">
@@ -387,7 +394,7 @@
             </div>
           </div>
           <div class="partner-cards-count">${partner.cards.length} card${partner.cards.length > 1 ? 's' : ''} transfer here</div>
-        </div>
+        </button>
       `).join('');
     }
 
@@ -418,7 +425,7 @@
             <div class="card-name">${getShortIssuer(item.card.issuer)} ${getShortCardName(item.card.name)}</div>
             <div class="card-issuer">${item.card.issuer}</div>
           </div>
-          <div class="transfer-ratio">${item.ratio}</div>
+          <div class="transfer-ratio">${item.ratio}${item.partner.description ? `<span class="terms-note">${CardMaxModel.escapeHtml(item.partner.description)}</span>` : ''}${CardMaxModel.termsHtml(item.partner)}</div>
         </li>
       `}).join('');
 
@@ -447,6 +454,11 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', renderPartners);
+    window.addEventListener('cardmax-data-changed', () => {
+      userCardIds = CardMaxModel.loadCardIds();
+      userCards = userCardIds.map(id => CARDS_DATABASE.find(card => card.id === id)).filter(Boolean);
+      closePartnerDetail();
+    });
   </script>
   <script src="../js/feedback.js"></script>
 </body>

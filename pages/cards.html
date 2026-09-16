@@ -13,9 +13,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
   <!-- Navigation -->
@@ -51,17 +51,17 @@
       </div>
       <div class="stat-card">
         <div class="stat-value" id="total-credits">$0</div>
-        <div class="stat-label">Max Annual Credits</div>
+        <div class="stat-label">Max annualized cash caps</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" id="last-updated">Jan 2026</div>
-        <div class="stat-label">Last Updated</div>
+        <div class="stat-value" id="last-updated">0</div>
+        <div class="stat-label">Verified within 90 days</div>
       </div>
     </section>
 
     <!-- Search Bar -->
     <div style="margin-bottom: 1rem;">
-      <input type="text" id="card-search" class="search-box" placeholder="Search cards by name, issuer, or benefits..." oninput="searchCards()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.9rem; font-family: inherit;">
+      <input type="text" id="card-search" aria-label="Search cards" class="search-box" placeholder="Search cards by name, issuer, or benefits..." oninput="searchCards()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.9rem; font-family: inherit;">
     </div>
 
     <!-- Filter Bar -->
@@ -93,10 +93,10 @@
 
   <!-- Card Suggestion Modal -->
   <div class="modal-overlay" id="suggestion-modal">
-    <div class="modal" style="max-width: 500px;">
+    <div class="modal" role="dialog" aria-labelledby="suggestion-title" aria-describedby="suggestion-disclosure" style="max-width: 500px;">
       <div class="modal-header">
-        <h2>Suggest a Card</h2>
-        <button class="modal-close" onclick="closeSuggestionModal()">&times;</button>
+        <h2 id="suggestion-title">Suggest a Card</h2>
+        <button class="modal-close" aria-label="Close suggestion form" onclick="closeSuggestionModal()">&times;</button>
       </div>
       <form id="card-suggestion-form" onsubmit="submitCardSuggestion(event)">
         <div style="padding: 1.5rem;">
@@ -115,12 +115,8 @@
             <textarea name="notes" placeholder="Any additional info about the card..."
                       style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.9rem; min-height: 80px; resize: vertical; font-family: inherit;"></textarea>
           </label>
-          <label style="display: block; margin-bottom: 1rem;">
-            <span style="font-weight: 600; display: block; margin-bottom: 0.5rem;">Email (Optional)</span>
-            <input type="email" name="email" placeholder="Get notified when this card is added"
-                   style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.9rem; font-family: inherit;">
-            <span style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; display: block;">We'll email you when the card is added to our database</span>
-          </label>
+          <p class="terms-note" id="suggestion-disclosure">Your suggestion will be published in a public GitHub issue. Do not include your name, email, account numbers, or other personal information.</p>
+          <p id="suggestion-result" role="status"></p>
         </div>
         <div style="padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 1rem;">
           <button type="button" class="btn btn-secondary" onclick="closeSuggestionModal()">Cancel</button>
@@ -132,10 +128,10 @@
 
   <!-- Card Detail Modal -->
   <div class="modal-overlay" id="card-modal">
-    <div class="modal">
+    <div class="modal" role="dialog" aria-labelledby="modal-card-name">
       <div class="modal-header">
         <h2 id="modal-card-name">Card Name</h2>
-        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <button class="modal-close" aria-label="Close card details" onclick="closeModal()">&times;</button>
       </div>
       <div class="tabs">
         <button class="tab active" data-tab="overview">Overview</button>
@@ -155,6 +151,9 @@
   </div>
 
   <script src="../data/cards.js"></script>
+  <script src="../js/card-model.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/dialogs.js"></script>
   <script src="../js/app.js"></script>
   <script src="../js/card-visuals.js"></script>
   <script src="../js/save-code.js"></script>
@@ -162,82 +161,18 @@
   <script src="../js/auth.js"></script>
   <script src="../js/feedback.js"></script>
   <script>
-    // Override the card click to also offer "add to collection"
-    let currentModalCardId = null;
-
-    // Extend the openModal function
-    const originalOpenModal = window.openModal;
-    window.openModal = function(cardId) {
-      currentModalCardId = cardId;
-      originalOpenModal(cardId);
-      updateAddButton();
-    };
-
-    function updateAddButton() {
-      const btn = document.getElementById('add-to-collection-btn');
-      const userCards = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
-
-      if (userCards.includes(currentModalCardId)) {
-        btn.textContent = 'In My Cards';
-        btn.disabled = true;
-        btn.classList.add('btn-secondary');
-        btn.classList.remove('btn-primary');
-      } else {
-        btn.textContent = 'Add to My Cards';
-        btn.disabled = false;
-        btn.classList.remove('btn-secondary');
-        btn.classList.add('btn-primary');
-      }
-    }
-
-    function addToCollection() {
-      const userCards = JSON.parse(localStorage.getItem('cardmax_user_cards') || '[]');
-
-      if (!userCards.includes(currentModalCardId)) {
-        userCards.push(currentModalCardId);
-        localStorage.setItem('cardmax_user_cards', JSON.stringify(userCards));
-        updateAddButton();
-
-        // Show confirmation
-        const card = CARDS_DATABASE.find(c => c.id === currentModalCardId);
-        alert(`${card.name} added to your collection!`);
-      }
-    }
-
-    // Update stats on load
-    document.addEventListener('DOMContentLoaded', () => {
-      // Update total cards count
-      document.getElementById('total-cards').textContent = CARDS_DATABASE.length;
-
-      // Calculate max credits
-      let maxCredits = 0;
-      CARDS_DATABASE.forEach(card => {
-        let cardCredits = 0;
-        card.credits.forEach(credit => {
-          if (typeof credit.amount === 'number' && credit.type !== 'points') {
-            cardCredits += credit.amount;
-          }
-        });
-        if (cardCredits > maxCredits) maxCredits = cardCredits;
-      });
-      document.getElementById('total-credits').textContent = '$' + maxCredits.toLocaleString() + '+';
-    });
-
     // Card Suggestion Functions
     function openSuggestionForm() {
-      document.getElementById('suggestion-modal').classList.add('active');
+      CardMaxDialogs.open('suggestion-modal');
     }
 
     function closeSuggestionModal() {
-      document.getElementById('suggestion-modal').classList.remove('active');
+      CardMaxDialogs.close('suggestion-modal');
       document.getElementById('card-suggestion-form').reset();
     }
 
     // Cloudflare Worker endpoint for card suggestions
     const SUGGESTION_API = 'https://cardmax-suggestions.briantse.workers.dev';
-    // Web3Forms for email notification to Brian
-    const WEB3FORMS_KEY = '9295b1da-e117-4432-bc64-658ab416d2aa';
-
     async function submitCardSuggestion(event) {
       event.preventDefault();
       const form = event.target;
@@ -250,51 +185,33 @@
       const formData = {
         issuer: form.issuer.value,
         cardName: form.cardName.value,
-        notes: form.notes.value || '',
-        email: form.email.value || ''
+        notes: form.notes.value || ''
       };
 
       try {
-        // Submit to both endpoints in parallel
-        const [workerResponse, web3Response] = await Promise.all([
-          // 1. Cloudflare Worker → GitHub Issue
-          fetch(SUGGESTION_API, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-          }),
-          // 2. Web3Forms → Email notification to Brian
-          fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              access_key: WEB3FORMS_KEY,
-              subject: `CardMax Card Suggestion: ${formData.issuer} ${formData.cardName}`,
-              from_name: 'CardMax Suggestions',
-              issuer: formData.issuer,
-              card_name: formData.cardName,
-              notes: formData.notes || 'None',
-              user_email: formData.email || 'Not provided'
-            })
-          })
-        ]);
-
+        const workerResponse = await fetch(SUGGESTION_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
         const result = await workerResponse.json();
-        console.log('Suggestion API response:', result);
-
-        if (result.success) {
-          const message = form.email.value 
-            ? 'Thanks! We\'ll notify you at ' + form.email.value + ' when this card is added.'
-            : 'Thanks! Your suggestion has been submitted.';
-          alert(message);
-          closeSuggestionModal();
+        if (workerResponse.ok && result.success) {
+          const output = document.getElementById('suggestion-result');
+          output.textContent = 'Thanks! Your public suggestion has been submitted.';
+          if (/^https:\/\/github\.com\/brian-tse\/credit-card-maximizer\/issues\/\d+$/.test(result.issueUrl || '')) {
+            const link = document.createElement('a');
+            link.href = result.issueUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = ' View the issue for updates.';
+            output.appendChild(link);
+          }
           form.reset();
         } else {
           throw new Error(result.error || 'Submission failed');
         }
       } catch (error) {
-        console.error('Form error:', error);
-        alert('Error submitting suggestion. Please try again.');
+        document.getElementById('suggestion-result').textContent = 'Could not submit the suggestion. Please try again.';
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Suggestion';

@@ -1,6 +1,14 @@
 // Point/Mile Valuations Database
 // Values are in cents per point
-// Last updated: January 2026
+// Editorial starting assumptions, not issuer redemption guarantees or current market quotes.
+// Defaults were inherited from January 2026 and have not been independently revalued.
+
+const VALUATION_POLICY = Object.freeze({
+  kind: 'editorial-estimate',
+  assumptionsAsOf: '2026-01-01',
+  verifiedAt: null,
+  description: 'Editable estimates in cents per point. Actual redemption value varies; these are not issuer promises.'
+});
 
 const DEFAULT_VALUATIONS = {
   // Transferable Bank Points
@@ -12,7 +20,7 @@ const DEFAULT_VALUATIONS = {
   'wells-fargo': { name: 'Wells Fargo Rewards', category: 'Transferable Bank Points', value: 1.65 },
 
   // Airline Miles
-  'alaska': { name: 'Alaska Airlines Mileage Plan', category: 'Airline Miles', value: 1.48 },
+  'alaska': { name: 'Atmos Rewards', category: 'Airline Miles', value: 1.48 },
   'american': { name: 'American Airlines AAdvantage', category: 'Airline Miles', value: 1.52 },
   'delta': { name: 'Delta SkyMiles', category: 'Airline Miles', value: 1.18 },
   'united': { name: 'United MileagePlus', category: 'Airline Miles', value: 1.20 },
@@ -75,20 +83,27 @@ const CURRENCY_TO_VALUATION = {
   'SkyMiles': 'delta',
   'Delta SkyMiles': 'delta',
   'MileagePlus': 'united',
+  'MileagePlus Miles': 'united',
   'United MileagePlus': 'united',
   'Rapid Rewards': 'southwest',
+  'Rapid Rewards Points': 'southwest',
   'Southwest Rapid Rewards': 'southwest',
   'TrueBlue Points': 'jetblue',
   'Aeroplan Points': 'aeroplan',
   'Avios': 'avios',
   'Flying Blue Miles': 'flying-blue',
+  'Atmos Points': 'alaska',
+  'Atmos Rewards Points': 'alaska',
+  'Virgin Points': 'virgin-atlantic',
 
   // Hotels
   'World of Hyatt Points': 'hyatt',
   'Hyatt Points': 'hyatt',
   'Bonvoy Points': 'marriott',
   'Marriott Bonvoy Points': 'marriott',
+  'Marriott Points': 'marriott',
   'Hilton Honors Points': 'hilton',
+  'Hilton Points': 'hilton',
   'IHG Points': 'ihg',
   'IHG One Rewards Points': 'ihg',
   'Choice Privileges Points': 'choice',
@@ -97,11 +112,20 @@ const CURRENCY_TO_VALUATION = {
   // Cash Back
   'Cash Back': 'cashback',
   'Cashback': 'cashback',
-  'cash back': 'cashback'
+  'cash back': 'cashback',
+  'Cash Rewards': 'cashback',
+  'Cash Bonus': 'cashback',
+  'Cash Back Match': 'cashback',
+  'Cashback Match': 'cashback',
+  'Statement Credit': 'cashback',
+  'Amazon Gift Card': 'cashback',
+  'Crypto (USD value)': 'cashback'
 };
 
 // Determine valuation key for a card based on its properties
 function getCardValuationKey(card) {
+  if (!card || typeof card.id !== 'string') return 'cashback';
+  if (card.rewardCurrency && DEFAULT_VALUATIONS[card.rewardCurrency]) return card.rewardCurrency;
   // First check if signUpBonus currency is mapped
   if (card.signUpBonus && card.signUpBonus.currency) {
     const mappedKey = CURRENCY_TO_VALUATION[card.signUpBonus.currency];
@@ -121,7 +145,9 @@ function getCardValuationKey(card) {
   if (cardId.includes('delta')) return 'delta';
   if (cardId.includes('united')) return 'united';
   if (cardId.includes('southwest')) return 'southwest';
-  if (cardId.includes('alaska')) return 'alaska';
+  if (cardId.includes('alaska') || cardId.includes('atmos')) return 'alaska';
+  if (cardId.includes('aadvantage')) return 'american';
+  if (cardId.includes('qatar')) return 'avios';
   if (cardId.includes('american') && cardId.includes('airline')) return 'american';
   if (cardId.includes('jetblue')) return 'jetblue';
 
@@ -138,47 +164,54 @@ function getCardValuationKey(card) {
 }
 
 // Get user's custom valuations or defaults
-function getValuations() {
-  const customValuations = localStorage.getItem('cardmax_point_valuations');
-  if (customValuations) {
-    const custom = JSON.parse(customValuations);
-    // Merge custom with defaults (custom overrides default values)
-    const merged = {};
-    Object.keys(DEFAULT_VALUATIONS).forEach(key => {
-      merged[key] = {
-        ...DEFAULT_VALUATIONS[key],
-        value: custom[key] !== undefined ? custom[key] : DEFAULT_VALUATIONS[key].value
-      };
-    });
-    return merged;
+function readCustomValuations() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem('cardmax_point_valuations') || '{}');
+    if (!parsed || Array.isArray(parsed) || typeof parsed !== 'object') return {};
+    return Object.fromEntries(Object.entries(parsed).filter(([key, value]) =>
+      Object.prototype.hasOwnProperty.call(DEFAULT_VALUATIONS, key) &&
+      typeof value === 'number' && Number.isFinite(value) && value >= 0));
+  } catch (_) {
+    return {};
   }
-  return DEFAULT_VALUATIONS;
+}
+
+function getValuations() {
+  const custom = readCustomValuations();
+  return Object.fromEntries(Object.entries(DEFAULT_VALUATIONS).map(([key, entry]) =>
+    [key, { ...entry, value: custom[key] ?? entry.value }]));
 }
 
 // Save user's custom valuation
 function saveValuation(key, value) {
-  const customValuations = JSON.parse(localStorage.getItem('cardmax_point_valuations') || '{}');
+  if (!Object.prototype.hasOwnProperty.call(DEFAULT_VALUATIONS, key) ||
+      typeof value !== 'number' || !Number.isFinite(value) || value < 0) return false;
+  const customValuations = readCustomValuations();
   customValuations[key] = value;
   localStorage.setItem('cardmax_point_valuations', JSON.stringify(customValuations));
+  if (typeof CardMaxAuth !== 'undefined') CardMaxAuth.autoSync();
+  return true;
 }
 
 // Reset a valuation to default
 function resetValuation(key) {
-  const customValuations = JSON.parse(localStorage.getItem('cardmax_point_valuations') || '{}');
+  const customValuations = readCustomValuations();
   delete customValuations[key];
   localStorage.setItem('cardmax_point_valuations', JSON.stringify(customValuations));
+  if (typeof CardMaxAuth !== 'undefined') CardMaxAuth.autoSync();
 }
 
 // Reset all valuations to defaults
 function resetAllValuations() {
   localStorage.removeItem('cardmax_point_valuations');
+  if (typeof CardMaxAuth !== 'undefined') CardMaxAuth.autoSync();
 }
 
 // Get the point value for a specific card in cents per point
 function getCardPointValue(card) {
   const valuationKey = getCardValuationKey(card);
   const valuations = getValuations();
-  return valuations[valuationKey]?.value || 1.0;
+  return valuations[valuationKey]?.value ?? 1.0;
 }
 
 // Get the currency name for display
@@ -197,6 +230,7 @@ function calculateEffectiveReturn(multiplier, card) {
 
 // Export for use
 const Valuations = {
+  POLICY: VALUATION_POLICY,
   DEFAULT: DEFAULT_VALUATIONS,
   CURRENCY_MAP: CURRENCY_TO_VALUATION,
   getValuations,

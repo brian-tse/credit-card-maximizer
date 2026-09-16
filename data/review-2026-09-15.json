@@ -1,0 +1,260 @@
+{
+  "reviewedAt": "2026-09-15",
+  "scope": "Targeted issuer review following site audit; not a complete catalog certification.",
+  "deduplication": {
+    "previousRecords": 78,
+    "uniqueProducts": 76,
+    "retainedIds": [
+      "amex-blue-cash-preferred",
+      "discover-it-cash-back"
+    ],
+    "note": "Duplicate records already used the same product IDs; no saved-ID migration needed."
+  },
+  "limitations": [
+    "Unreviewed card and welcome-offer values remain explicitly unverified.",
+    "Issuer-directory source links on unchecked records are starting points, not evidence validating all terms.",
+    "Per-card verifiedAt remains null: field-level verification and reviewedAt record the narrower scope.",
+    "Editorial point valuations were inherited from January 2026 and are not market quotes."
+  ],
+  "cards": [
+    {
+      "id": "chase-sapphire-reserve",
+      "verifiedFields": [
+        "credits",
+        "perks.redemption"
+      ],
+      "sourceUrls": [
+        "https://www.chase.com/sapphire-cards/personal/reserve",
+        "https://www.chase.com/personal/credit-cards/offerdetails/chasesapphire",
+        "https://media.chase.com/news/the-most-rewarding-cards-are-here"
+      ]
+    },
+    {
+      "id": "amex-platinum",
+      "verifiedFields": [
+        "annualFee",
+        "credits",
+        "perks.lounge-access",
+        "transferPartners.Etihad-removed",
+        "transferPartners.Hawaiian-removed",
+        "transferPartners.Emirates"
+      ],
+      "sourceUrls": [
+        "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+        "https://www.thecenturionlounge.com/info/access/",
+        "https://www.americanexpress.com/en-us/benefits/membership/?searchresult=lounge+access",
+        "https://www.americanexpress.com/content/dam/amex/us/rewards/membership-rewards/mr-updates-final-june-2026.pdf",
+        "https://www.emirates.com/us/english/skywards/partners/amex/"
+      ]
+    },
+    {
+      "id": "capital-one-venture-x",
+      "verifiedFields": [
+        "annualFee",
+        "credits",
+        "perks.lounge-access",
+        "earning.categories"
+      ],
+      "sourceUrls": [
+        "https://www.capitalone.com/credit-cards/venture-x/",
+        "https://www.capitalone.com/learn-grow/more-than-money/all-about-venture-x/",
+        "https://capitalonetravel.com/lounge-access-guide"
+      ]
+    },
+    {
+      "id": "chase-sapphire-preferred",
+      "verifiedFields": [
+        "annualFee",
+        "earning",
+        "credits",
+        "transferPartners.Hyatt",
+        "perks.redemption",
+        "perks.anniversary-bonus",
+        "perks.apple-tv",
+        "perks.emergency-evacuation"
+      ],
+      "sourceUrls": [
+        "https://media.chase.com/news/Meet-the-New-Chase-Sapphire-Preferred"
+      ]
+    },
+    {
+      "id": "amex-gold",
+      "verifiedFields": [
+        "transferPartners.Etihad-removed",
+        "transferPartners.Hawaiian-removed",
+        "transferPartners.Emirates"
+      ],
+      "sourceUrls": [
+        "https://www.americanexpress.com/us/credit-cards/",
+        "https://www.americanexpress.com/content/dam/amex/us/rewards/membership-rewards/mr-updates-final-june-2026.pdf",
+        "https://www.emirates.com/us/english/skywards/partners/amex/"
+      ]
+    },
+    {
+      "id": "wells-fargo-autograph-journey",
+      "verifiedFields": [
+        "earning",
+        "credits",
+        "perks.cell-phone-protection",
+        "perks.trip-cancellation"
+      ],
+      "sourceUrls": [
+        "https://creditcards.wellsfargo.com/autograph-journey-visa-credit-card/"
+      ]
+    },
+    {
+      "id": "citi-strata-elite",
+      "verifiedFields": [
+        "credits.blacklane-credit",
+        "credits.splurge-credit"
+      ],
+      "sourceUrls": [
+        "https://www.citi.com/credit-cards",
+        "https://www.citi.com/credit-cards/credit-card-rewards/citi-strata-elite-travel-benefits",
+        "https://www.citi.com/credit-cards/citi-strata-all-cards"
+      ]
+    },
+    {
+      "id": "us-bank-altitude-reserve",
+      "verifiedFields": [
+        "applicationStatus"
+      ],
+      "sourceUrls": [
+        "https://www.usbank.com/credit-cards/benefits.html"
+      ]
+    },
+    {
+      "id": "amex-green",
+      "verifiedFields": [
+        "transferPartners.Etihad-removed",
+        "transferPartners.Hawaiian-removed",
+        "transferPartners.Emirates"
+      ],
+      "sourceUrls": [
+        "https://www.americanexpress.com/us/credit-cards/",
+        "https://www.americanexpress.com/content/dam/amex/us/rewards/membership-rewards/mr-updates-final-june-2026.pdf",
+        "https://www.emirates.com/us/english/skywards/partners/amex/"
+      ]
+    },
+    {
+      "id": "bilt-obsidian",
+      "verifiedFields": [
+        "credits.bilt-travel-hotel-credit"
+      ],
+      "sourceUrls": [
+        "https://www.cardless.com/",
+        "https://www.biltrewards.com/terms/bilt-card-offer-terms"
+      ]
+    },
+    {
+      "id": "bilt-palladium",
+      "verifiedFields": [
+        "credits.bilt-travel-hotel-credit"
+      ],
+      "sourceUrls": [
+        "https://www.cardless.com/",
+        "https://www.biltrewards.com/terms/bilt-card-offer-terms"
+      ]
+    },
+    {
+      "id": "chase-ink-business-preferred",
+      "verifiedFields": [
+        "transferPartners.Hyatt"
+      ],
+      "sourceUrls": [
+        "https://creditcards.chase.com/",
+        "https://media.chase.com/news/Meet-the-New-Chase-Sapphire-Preferred"
+      ]
+    },
+    {
+      "id": "amex-business-platinum",
+      "verifiedFields": [
+        "perks.centurion-lounges",
+        "perks.priority-pass-select",
+        "transferPartners.Etihad-removed",
+        "credits.dell-credit",
+        "credits.adobe-creative-cloud-credit",
+        "credits.indeed-credit",
+        "credits.global-entry-tsa-precheck",
+        "credits",
+        "earning",
+        "perks.35-percent-rebate",
+        "transferPartners.Hawaiian-removed",
+        "transferPartners.Emirates"
+      ],
+      "sourceUrls": [
+        "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-platinum-credit-card-amex/",
+        "https://www.thecenturionlounge.com/info/access/",
+        "https://www.americanexpress.com/en-us/benefits/membership/?searchresult=lounge+access",
+        "https://www.americanexpress.com/content/dam/amex/us/rewards/membership-rewards/mr-updates-final-june-2026.pdf",
+        "https://global.americanexpress.com/card-benefits/detail/shop-dell/business-platinum",
+        "https://global.americanexpress.com/card-benefits/detail/adobe-benefit/business-platinum",
+        "https://global.americanexpress.com/card-benefits/detail/indeed-benefit/business-platinum",
+        "https://www.emirates.com/us/english/skywards/partners/amex/"
+      ]
+    },
+    {
+      "id": "amex-business-gold",
+      "verifiedFields": [
+        "transferPartners.Etihad-removed",
+        "transferPartners.Hawaiian-removed",
+        "transferPartners.Emirates"
+      ],
+      "sourceUrls": [
+        "https://www.americanexpress.com/us/credit-cards/",
+        "https://www.americanexpress.com/content/dam/amex/us/rewards/membership-rewards/mr-updates-final-june-2026.pdf",
+        "https://www.emirates.com/us/english/skywards/partners/amex/"
+      ]
+    },
+    {
+      "id": "amex-blue-business-plus",
+      "verifiedFields": [
+        "transferPartners.Etihad-removed",
+        "transferPartners.Hawaiian-removed",
+        "transferPartners.Emirates"
+      ],
+      "sourceUrls": [
+        "https://www.americanexpress.com/us/credit-cards/",
+        "https://www.americanexpress.com/content/dam/amex/us/rewards/membership-rewards/mr-updates-final-june-2026.pdf",
+        "https://www.emirates.com/us/english/skywards/partners/amex/"
+      ]
+    },
+    {
+      "id": "amex-business-green",
+      "verifiedFields": [
+        "transferPartners.Etihad-removed",
+        "transferPartners.Hawaiian-removed",
+        "transferPartners.Emirates"
+      ],
+      "sourceUrls": [
+        "https://www.americanexpress.com/us/credit-cards/",
+        "https://www.americanexpress.com/content/dam/amex/us/rewards/membership-rewards/mr-updates-final-june-2026.pdf",
+        "https://www.emirates.com/us/english/skywards/partners/amex/"
+      ]
+    },
+    {
+      "id": "southwest-performance-business",
+      "verifiedFields": [
+        "annualFee",
+        "earning",
+        "credits",
+        "perks"
+      ],
+      "sourceUrls": [
+        "https://creditcards.chase.com/business-credit-cards/southwest/performance-business"
+      ]
+    },
+    {
+      "id": "southwest-premier-business",
+      "verifiedFields": [
+        "annualFee",
+        "earning",
+        "credits",
+        "perks"
+      ],
+      "sourceUrls": [
+        "https://creditcards.chase.com/business-credit-cards/southwest/premier-business"
+      ]
+    }
+  ]
+}
