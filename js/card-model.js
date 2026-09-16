@@ -118,7 +118,13 @@
     const labels = { annualFee: 'Annual fee', credits: 'Credits and awards', perks: 'Card benefits', earning: 'Earning rates', 'earning.categories': 'Bonus earning categories', applicationStatus: 'New application availability', 'perks.lounge-access': 'Lounge access', 'perks.redemption': 'Redemption benefits' };
     if (labels[field]) return labels[field];
     const [group, key] = String(field).split('.');
-    if (group === 'transferPartners' && key) return `${key.replace(/-removed$/, '')} ${key.endsWith('-removed') ? 'transfer availability' : 'transfers'}`;
+    if (group === 'transferPartners' && key) {
+      const slug = key.replace(/-removed$/, '');
+      const normalize = value => String(value).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const partner = card.transferPartners?.find(item => normalize(item.name) === slug || item.id === slug);
+      const name = partner?.name || slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+      return `${name} ${key.endsWith('-removed') ? 'transfer availability' : 'transfers'}`;
+    }
     if (['credits', 'perks'].includes(group) && key) {
       const benefit = card[group]?.find(item => item.id === key);
       if (benefit) return benefit.name;
@@ -126,11 +132,11 @@
     const words = (key || group).replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[-_]/g, ' ');
     return words.charAt(0).toUpperCase() + words.slice(1);
   }
-  function statusHtml(card) {
+  function statusHtml(card, options = {}) {
     const closed = ['closed', 'discontinued', 'legacy'].includes(card.availability) || card.acceptingApplications === false || card.applicationStatus === 'closed';
     const availability = closed ? 'Closed to new applications · Existing holders' : card.applicationStatus === 'unavailable' ? 'New application availability unconfirmed' : card.applicationStatus === 'limited' ? 'Applications subject to availability' : '';
     const unresolved = card.reviewUncertainties || card.unresolvedFields || [];
-    return `<div class="data-status">${availability ? `<strong>${escapeHtml(availability)}</strong><br>` : ''}${escapeHtml(verificationText(card))} · ${sourceLink(card)}${card.verifiedFields?.length && !card.verifiedAt ? `<br>Reviewed fields: ${escapeHtml(card.verifiedFields.map(field => reviewedFieldLabel(field, card)).join(', '))}` : ''}${unresolved.length ? `<details><summary>Review limitations</summary>${unresolved.map(item => `<p>${escapeHtml(typeof item === 'string' ? item : item.note || item.description || item.field)}</p>`).join('')}</details>` : ''}</div>`;
+    return `<div class="data-status">${availability ? `<strong class="availability-note">${escapeHtml(availability)}</strong>` : ''}<span class="review-badge">${escapeHtml(verificationText(card))}</span><details class="source-details"><summary>Source details</summary><p>${sourceLink(card)}</p>${card.verifiedFields?.length && !card.verifiedAt ? `<p><strong>Reviewed fields:</strong> ${escapeHtml(card.verifiedFields.map(field => reviewedFieldLabel(field, card)).join(', '))}</p>` : ''}${unresolved.length ? `<div class="review-limitations"><strong>Review limitations</strong>${unresolved.map(item => `<p>${escapeHtml(typeof item === 'string' ? item : item.note || item.description || item.field)}</p>`).join('')}</div>` : ''}${options.includeTerms ? termsHtml(card) : ''}</details></div>`;
   }
   function termsHtml(item) {
     const notes = [];

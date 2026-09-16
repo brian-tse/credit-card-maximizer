@@ -4,12 +4,20 @@
   const select = document.getElementById('card');
   const error = document.getElementById('input-error');
   const results = document.getElementById('results');
+  const mobileSummary = document.getElementById('mobile-results-summary');
+  const navbar = document.querySelector('.navbar');
+  if (navbar && typeof ResizeObserver !== 'undefined') {
+    const updateOffset = () => document.documentElement.style.setProperty('--bilt-nav-height', `${['sticky', 'fixed'].includes(getComputedStyle(navbar).position) ? navbar.getBoundingClientRect().height : 0}px`);
+    new ResizeObserver(updateOffset).observe(navbar);
+    window.addEventListener('resize', updateOffset);
+    updateOffset();
+  }
   const ids = ['bilt-blue', 'bilt-obsidian', 'bilt-palladium'];
   const cards = typeof CARDS_DATABASE === 'undefined' ? [] : ids.map(id => CARDS_DATABASE.find(card => card.id === id)).filter(Boolean);
   const integer = value => value.toLocaleString('en-US');
   const cash = value => `${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Bilt Cash`;
   const text = (id, value) => { document.getElementById(id).textContent = value; };
-  function fail(message) { error.textContent = message; error.hidden = false; results.hidden = true; }
+  function fail(message) { error.textContent = message; error.hidden = false; results.hidden = true; if (mobileSummary) mobileSummary.hidden = true; }
   if (!cards.length || typeof BiltCalculatorModel === 'undefined') {
     fail('The card catalog could not be loaded. Refresh this page or use the card catalog link below.');
     return;
@@ -32,6 +40,12 @@
     try {
       const value = BiltCalculatorModel.calculate({ housing: Number(inputs[0].value), spend: Number(inputs[1].value), availableCash: Number(inputs[2].value), baseRate: card.earning.base });
       error.hidden = true; results.hidden = false;
+      if (mobileSummary) {
+        mobileSummary.hidden = false;
+        text('mobile-housing-total', `${integer(value.housingTotal)} points`);
+        text('mobile-flexible-total', `${integer(value.flexibleTotal)} points`);
+        text('mobile-cash-remaining', `Flexible also leaves ${cash(value.remainingCash)} (restricted program value).`);
+      }
       text('card-details', `${card.earning.base}× base points · $${integer(card.annualFee)} listed annual fee. Category bonuses are not included.`);
       const issuer = document.getElementById('issuer-link');
       issuer.href = /^https:\/\//.test(card.sourceUrl) ? card.sourceUrl : 'https://www.bilt.com/card';

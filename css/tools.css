@@ -1,0 +1,64 @@
+/* Page-specific refinements for spending, transfers and the Bilt calculator. */
+.tool-help, .ranking-explainer { color: var(--text-secondary); font-size: .9rem; line-height: 1.6; }
+.categories-page .hero { margin-bottom: 1.5rem; }
+.categories-page .page-intro { margin-bottom: 1rem; background: none; padding: 0; border: 0; }
+.categories-page .page-intro h2 { font-size: 1.05rem; margin: 0; }
+.ranking-controls { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0 .65rem; }
+.ranking-controls .filter-btn, .partners-page .filter-btn { min-height: 44px; }
+.ranking-assumptions { margin-top: .6rem; font-size: .85rem; color: var(--text-secondary); max-width: 72ch; }
+.ranking-assumptions summary { cursor: pointer; padding: .6rem 0; }
+.ranking-assumptions p { line-height: 1.6; padding-bottom: .6rem; }
+.category-group { margin-top: 2rem; }
+.category-group h2 { font-size: 1.3rem; margin-bottom: .35rem; }
+.categories-page .category-grid { margin-top: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr)); }
+.categories-page .category-card { min-width: 0; padding: 1.1rem; }
+.categories-page .card-ranking-item { display: grid; grid-template-columns: 28px 45px minmax(0, 1fr); align-items: start; padding: .8rem; }
+.categories-page .card-ranking-info { grid-column: 3; }
+.categories-page .card-ranking-description { line-height: 1.55; }
+.categories-page .multiplier-badge { grid-column: 3; text-align: left; display: flex; flex-direction: column; align-items: flex-start; gap: .15rem; }
+.categories-page .multiplier-badge .effective-return, .categories-page .earning-rate { font-size: 1.15rem; }
+.categories-page .effective-return span { font-size: .75rem; font-weight: 500; }
+.categories-page .multiplier-badge .multiplier-raw { font-size: .75rem; }
+.categories-page .settings-btn, .categories-page .modal-close, .partners-page .close-detail-btn { min-height: 44px; min-width: 44px; }
+.categories-page .valuation-reset { min-height: 44px; min-width: 44px; }
+.partner-search { margin-bottom: 1rem; max-width: 36rem; }
+.partner-search label { display: block; font-weight: 600; margin-bottom: .5rem; }
+.partner-search input { width: 100%; min-height: 48px; padding: .8rem 1rem; font: inherit; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); }
+.partners-page .page-intro { padding: 1rem; margin-bottom: 1rem; }
+.partners-page .partner-grid { margin-top: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.partners-page .partner-card { text-align: left; font: inherit; color: var(--text); border-color: var(--border); }
+.partners-page .partner-card.selected { border-color: var(--accent); }
+.partners-page .partner-detail { scroll-margin-top: 140px; }
+.partners-page .partner-detail-header { gap: 1rem; }
+.partners-page .partner-detail-title { line-height: 1.4; }
+.transfer-columns, .partners-page .transfer-card-item { display: grid; grid-template-columns: minmax(180px, 1.15fr) minmax(115px, .65fr) minmax(200px, 1.6fr); gap: 1.25rem; align-items: start; }
+.transfer-columns { padding: .3rem 1rem .75rem; font-size: .75rem; font-weight: 600; color: var(--text-secondary); }
+.transfer-card-identity { display: flex; align-items: flex-start; gap: .75rem; min-width: 0; }
+.partners-page .transfer-card-item .card-info { min-width: 0; }
+.partners-page .transfer-card-item .card-name { font-size: .9rem; line-height: 1.5; }
+.partners-page .transfer-card-item .transfer-ratio { display: inline-block; line-height: 1.5; border-radius: 6px; padding: .3rem .55rem; }
+.transfer-conditions { color: var(--text-secondary); font-size: .85rem; line-height: 1.6; overflow-wrap: anywhere; }
+.transfer-conditions .terms-note { margin-top: .35rem; }
+.transfer-cell-label { display: none; }
+.mobile-results-summary { display: none; }
+.edit-calculator-inputs { color: var(--text); display: inline-block; margin-top: 1.2rem; font-size: .9rem; text-decoration: underline; padding: .5rem 0; }
+.bilt-page #calculator-form, .bilt-page #results { scroll-margin-top: calc(var(--bilt-nav-height, 80px) + 1rem); }
+@media (max-width: 700px) {
+  .transfer-columns { display: none; }
+  .partners-page .partner-detail { padding: 1rem; }
+  .partners-page .transfer-card-item { grid-template-columns: 1fr; gap: .8rem; }
+  .transfer-cell-label { display: block; font-size: .75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: .2rem; }
+  .partners-page .partner-grid { grid-template-columns: 1fr; }
+  .categories-page .category-card { padding: .85rem; }
+  .categories-page .card-ranking-item { grid-template-columns: 25px minmax(0, 1fr); gap: .6rem; }
+  .categories-page .card-ranking-item > .card-visual, .categories-page .card-ranking-item > .card-dot { display: none; }
+  .categories-page .card-ranking-info, .categories-page .multiplier-badge { grid-column: 2; }
+  .mobile-results-summary:not([hidden]) { display: block; position: sticky; top: var(--bilt-nav-height, 80px); z-index: 50; padding: .8rem 1rem; margin: 0 0 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 5px 16px #0000000c; }
+  .mobile-result-points { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .mobile-result-points span { display: block; font-size: .75rem; color: var(--text-secondary); }
+  .mobile-result-points strong { display: block; margin-top: .15rem; font-size: 1rem; font-variant-numeric: tabular-nums; }
+  .mobile-results-summary p { font-size: .72rem; line-height: 1.4; color: var(--text-secondary); margin-top: .35rem; }
+  .mobile-results-summary a { color: var(--text); display: inline-block; margin-top: .15rem; padding: .4rem 0; font-size: .8rem; text-decoration: underline; }
+  .bilt-page #calculator-form, .bilt-page #results { scroll-margin-top: calc(var(--bilt-nav-height, 80px) + 160px); }
+  .bilt-page .input-panel input, .bilt-page .input-panel select { scroll-margin-top: calc(var(--bilt-nav-height, 80px) + 160px); }
+}

@@ -345,6 +345,8 @@
       color: var(--text-secondary);
     }
   </style>
+  <link rel="stylesheet" href="../css/catalog.css">
+  <script src="../js/interface.js" defer></script>
 </head>
 <body>
   <!-- Navigation -->
@@ -365,35 +367,43 @@
     <!-- Header -->
     <section class="hero">
       <h1>Compare Cards</h1>
-      <p>Select cards to compare side-by-side</p>
+      <p>Choose up to four cards to compare fees, rewards, and benefits.</p>
     </section>
 
-    <!-- Card Picker -->
-    <div class="card-picker">
-      <div class="card-picker-header">
-        <div class="card-picker-title">Select Cards to Compare</div>
-        <div class="card-picker-count"><span id="selected-count">0</span> selected</div>
+    <section class="comparison-selection" aria-label="Selected cards">
+      <div class="comparison-selection-heading">
+        <h2>Your comparison <span id="selected-count">0</span><span class="text-muted"> / 4</span></h2>
+        <button class="btn btn-secondary" id="clear-selection" onclick="clearSelection()">Clear all</button>
       </div>
-      <input type="text" class="search-box" id="card-search" aria-label="Search cards" placeholder="Search cards..." oninput="filterCards()">
-      <div class="card-picker-grid" id="card-picker-grid">
-        <!-- Cards will be inserted here -->
+      <div id="selected-card-chips" class="selected-card-chips"></div>
+      <div class="comparison-selection-actions">
+        <a href="#comparison-container" class="btn btn-primary" id="compare-selected" onclick="showComparison(event)" aria-disabled="true">Compare selected</a>
+        <button class="btn btn-secondary" onclick="copyShareLink()" id="share-btn" disabled>Copy share link</button>
       </div>
-    </div>
+      <p id="comparison-status" class="terms-note" role="status"></p>
+    </section>
 
-    <!-- Quick Actions -->
-    <div class="actions-bar">
-      <button class="btn btn-secondary" onclick="quickSelect('premium')">Select Premium Cards</button>
-      <button class="btn btn-secondary" onclick="quickSelect('chase')">Select Chase</button>
-      <button class="btn btn-secondary" onclick="quickSelect('amex')">Select Amex</button>
-      <button class="btn btn-secondary" onclick="clearSelection()">Clear All</button>
-      <button class="btn btn-primary" onclick="copyShareLink()" id="share-btn" style="margin-left: auto;">Copy Share Link</button>
+    <section class="card-picker" aria-labelledby="picker-title">
+      <div class="card-picker-header">
+        <h2 class="card-picker-title" id="picker-title">Add cards</h2>
+        <span id="picker-result-count" class="card-picker-count"></span>
+      </div>
+      <input type="search" class="search-box" id="card-search" aria-label="Search cards to compare" placeholder="Search by card name or issuer…" oninput="filterCards()" aria-controls="card-picker-grid">
+      <p class="picker-hint" id="picker-hint">Start with a card below, or search the full catalog.</p>
+      <div class="card-picker-grid" id="card-picker-grid"></div>
+      <button class="catalog-text-button" id="browse-picker" onclick="togglePickerBrowse()" aria-expanded="false" aria-controls="card-picker-grid">Browse all cards</button>
+    </section>
+
+    <div class="comparison-controls">
+      <h2 id="comparison-heading">Side-by-side comparison</h2>
+      <label><input type="checkbox" id="differences-only" onchange="applyDifferenceFilter()"> Show differences only</label>
     </div>
 
     <!-- Comparison Table -->
-    <div id="comparison-container">
+    <div id="comparison-container" tabindex="-1" aria-labelledby="comparison-heading">
       <div class="empty-state">
         <h3>Select cards to compare</h3>
-        <p>Click on cards above to add them to your comparison table</p>
+        <p>Search for a card above, then select it to begin.</p>
       </div>
     </div>
   </div>

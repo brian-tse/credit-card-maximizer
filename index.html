@@ -13,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/wallet.css">
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
@@ -428,8 +429,9 @@
       font-weight: 500;
     }
   </style>
+  <script src="js/interface.js" defer></script>
 </head>
-<body>
+<body class="wallet-page">
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
@@ -456,14 +458,17 @@
   </nav>
 
   <!-- Main Content -->
-  <div class="container">
+  <div class="container wallet-content">
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero wallet-hero">
       <h1>Your Cards</h1>
-      <p>Track benefits and maximize rewards</p>
-      <a class="btn btn-primary" id="first-card-cta" href="#add-cards" style="display:none; margin-top:1rem;">Add your first card</a>
+      <p id="wallet-intro">Your next benefits, all in one place.</p>
     </section>
 
+    <section class="wallet-actions" id="wallet-actions" aria-labelledby="wallet-actions-title" hidden></section>
+
+    <details class="wallet-annual" id="wallet-annual" hidden>
+      <summary>Annual costs &amp; potential cash credits</summary>
     <!-- Quick Stats -->
     <div class="quick-stats" id="quick-stats">
       <div class="quick-stat-card">
@@ -486,6 +491,8 @@
 
     <p class="terms-note" id="cash-caps-note">Fees use your entered amount when set, otherwise the listed fee. Required membership costs are included. Cash caps assume full eligible use. Multi-year credits are annualized; points, restricted rewards, unverified terms and conditional or per-use benefits are excluded.</p>
 
+    </details>
+
     <!-- My Cards Section -->
     <section class="my-cards-section" id="my-cards-section">
       <h2>My Cards</h2>
@@ -500,31 +507,41 @@
       <div id="my-cards-list">
         <!-- User's selected cards will be shown here -->
       </div>
-      <div class="save-actions">
-        <div>
-          <span class="save-status" id="save-status" role="status">Saved on this device</span>
-          <p class="text-muted" style="font-size: 0.75rem; margin-top: 0.25rem;">Changes save automatically on this device. Copy a backup to restore them later.</p>
-        </div>
-        <button class="btn btn-primary" id="save-btn" onclick="saveMyCards()">Copy Backup</button>
-      </div>
-
-      <!-- Save/Restore Data (moved here from bottom) -->
-      <div id="save-restore-ui" style="margin-top: 1.5rem;"></div>
-
-      <!-- Auth Container -->
-      <div id="auth-container" class="auth-container"></div>
     </section>
+
+    <div class="wallet-data-tools">
+      <span class="save-status" id="save-status" role="status">Saved on this device</span>
+      <details class="wallet-backup">
+        <summary>Backup, restore &amp; account sync</summary>
+        <div class="wallet-backup-content">
+          <p>Changes save automatically in this browser. Keep a backup or sign in to sync across devices.</p>
+          <div class="wallet-backup-actions">
+            <button class="btn btn-secondary" type="button" id="save-btn" onclick="copyBackupCode()">Copy backup</button>
+            <button class="btn btn-secondary" type="button" id="download-backup-btn" onclick="downloadData()">Download backup</button>
+          </div>
+          <label for="restore-code-input">Restore a backup</label>
+          <p class="text-muted">Restoring replaces this account’s cards, history and settings. A recovery snapshot is saved first.</p>
+          <div class="wallet-restore">
+            <input type="text" id="restore-code-input" placeholder="Paste your CARDMAX_ backup code">
+            <button class="btn btn-secondary" type="button" onclick="handleRestoreFromCode()">Restore</button>
+            <button class="btn btn-secondary" type="button" onclick="uploadData()">Upload JSON</button>
+          </div>
+          <div id="auth-container" class="auth-container"></div>
+        </div>
+      </details>
+    </div>
 
     <!-- Add Cards Section -->
     <section id="add-cards">
       <div class="my-cards-header">
-        <h2 style="margin: 0;">Add Cards</h2>
+        <h2 id="add-cards-title" style="margin: 0;">Add Cards</h2>
         <div class="search-container">
           <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           <input type="text" class="search-input" id="card-search" aria-label="Search cards" placeholder="Search cards..." oninput="filterCardSelector()">
         </div>
       </div>
 
+      <p class="sr-only" role="status" id="card-search-status"></p>
       <div class="card-selector-grid" id="card-selector">
         <!-- All available cards will be listed here -->
       </div>
@@ -540,7 +557,10 @@
 
   <script src="data/cards.js"></script>
   <script src="js/card-model.js"></script>
+  <div class="wallet-undo" id="wallet-undo" hidden><span role="status" id="wallet-undo-message"></span><button type="button" onclick="undoRemoveCard()">Undo</button><button type="button" aria-label="Dismiss removal notice" onclick="dismissUndo()">×</button></div>
   <script src="js/storage.js"></script>
+  <script src="js/benefit-periods.js"></script>
+  <script src="js/wallet-summary.js"></script>
   <script src="js/dialogs.js"></script>
   <script src="js/save-code.js"></script>
   <script src="js/card-visuals.js"></script>
@@ -553,6 +573,7 @@
     let cardSignupDates = {};
     let actualAnnualFees = {};
     let hasUnsavedChanges = false;
+    let removedCard = null;
     let expandedCardId = null; // Track which card's settings are open
     let currentSortOption = 'issuer'; // Sort option: 'issuer', 'fee', 'date'
 
@@ -563,11 +584,6 @@
       renderMyCards();
       updateQuickStats();
       updateSaveStatus();
-
-      // Initialize save/restore UI
-      if (typeof CardMaxSave !== 'undefined') {
-        CardMaxSave.renderSaveRestoreUI('save-restore-ui');
-      }
 
       // Initialize auth
       if (typeof CardMaxAuth !== 'undefined') {
@@ -584,9 +600,7 @@
 
       selectedCards = CardMaxModel.loadCardIds();
 
-      if (savedDates) {
-        cardSignupDates = JSON.parse(savedDates);
-      }
+      cardSignupDates = savedDates ? JSON.parse(savedDates) : {};
 
       if (savedSort) {
         currentSortOption = savedSort;
@@ -594,39 +608,8 @@
       }
     }
 
-    // Save data
-    function saveMyCards() {
-      localStorage.setItem('cardmax_user_cards', JSON.stringify(selectedCards));
-      localStorage.setItem('cardmax_signup_dates', JSON.stringify(cardSignupDates));
-
-      hasUnsavedChanges = false;
-      updateSaveStatus();
-
-      // Sync to cloud if signed in
-      if (typeof CardMaxAuth !== 'undefined' && CardMaxAuth.isSignedIn()) {
-        CardMaxAuth.syncToCloud();
-      }
-
-      // Generate and copy backup code automatically
-      if (typeof CardMaxSave !== 'undefined' && selectedCards.length > 0) {
-        const code = CardMaxSave.generateBackupCode();
-        navigator.clipboard.writeText(code).then(() => {
-          CardMaxSave.showToast('Saved! Backup code copied to clipboard.');
-          // Reload after short delay so user sees the toast
-          setTimeout(() => window.location.reload(), 1500);
-        }).catch(() => {
-          // Fallback if clipboard fails
-          CardMaxSave.showToast('Cards saved! Reloading...');
-          setTimeout(() => window.location.reload(), 1000);
-        });
-      } else {
-        // No cards to backup, just reload
-        if (typeof CardMaxSave !== 'undefined') {
-          CardMaxSave.showToast('Cards saved! Reloading...');
-        }
-        setTimeout(() => window.location.reload(), 1000);
-      }
-    }
+    // Backups are secondary to automatic local saving and do not reload the page.
+    function saveMyCards() { copyBackupCode(); }
 
     // Mark changes as unsaved
     function markUnsaved() {
@@ -658,6 +641,7 @@
     function updateSortButtons() {
       const buttons = document.querySelectorAll('.sort-btn');
       buttons.forEach(btn => {
+        btn.setAttribute('aria-pressed', String(btn.dataset.sort === currentSortOption));
         if (btn.dataset.sort === currentSortOption) {
           btn.classList.add('active');
         } else {
@@ -720,15 +704,18 @@
       const query = document.getElementById('card-search').value.toLowerCase();
       const items = document.querySelectorAll('.card-selector-item');
 
+      let matches = 0;
       items.forEach(item => {
         const name = item.dataset.name.toLowerCase();
         const issuer = item.dataset.issuer.toLowerCase();
         if (name.includes(query) || issuer.includes(query)) {
           item.style.display = '';
+          matches++;
         } else {
           item.style.display = 'none';
         }
       });
+      document.getElementById('card-search-status').textContent = `${matches} cards available${query ? ' matching your search' : ''}.`;
     }
 
     // Render card selector grid (only cards NOT in collection)
@@ -755,12 +742,12 @@
         return `
           <button type="button" class="card-selector-item" aria-label="Add ${CardMaxModel.escapeHtml(card.name)} to My Cards"
                data-id="${card.id}"
-               data-name="${card.name}"
-               data-issuer="${card.issuer}"
+               data-name="${CardMaxModel.escapeHtml(card.name)}"
+               data-issuer="${CardMaxModel.escapeHtml(card.issuer)}"
                onclick="toggleCardSelection('${card.id}')">
             ${cardVisual}
             <div class="card-details">
-              <div class="card-name">${shortIssuer} ${getShortCardName(card.name)}</div>
+              <div class="card-name">${CardMaxModel.escapeHtml(card.name)}</div>
               <div class="card-issuer">${card.issuer}</div>
               <div class="card-fee">${CardMaxModel.feeLabel(card)}/year</div>
             </div>
@@ -768,6 +755,7 @@
           </button>
         `;
       }).join('');
+      filterCardSelector();
     }
 
     // Get short issuer name
@@ -801,51 +789,52 @@
         .replace(/^Bilt /, '');
     }
 
-    // Toggle card selection
-    function toggleCardSelection(cardId) {
-      if (!CARDS_DATABASE.some(card => card.id === cardId)) return;
-      const index = selectedCards.indexOf(cardId);
-      if (index > -1) {
-        selectedCards.splice(index, 1);
-        delete cardSignupDates[cardId];
-      } else {
-        selectedCards.push(cardId);
-      }
-
-      // AUTO-SAVE immediately to localStorage
+    function persistWallet() {
       localStorage.setItem('cardmax_user_cards', JSON.stringify(selectedCards));
-      localStorage.setItem('cardmax_signup_dates', JSON.stringify(cardSignupDates));
+      // Dates, billed fees and benefit history survive removal and re-addition.
       hasUnsavedChanges = false;
-
-      // Auto-sync to cloud if signed in
       if (typeof CardMaxAuth !== 'undefined') CardMaxAuth.autoSync();
-
-      renderCardSelector();
-      renderMyCards();
-      updateQuickStats();
-      updateSaveStatus();
+      renderCardSelector(); renderMyCards(); updateQuickStats(); updateSaveStatus();
     }
 
-    // Remove card from my cards
+    function toggleCardSelection(cardId) {
+      if (!CARDS_DATABASE.some(card => card.id === cardId)) return;
+      if (selectedCards.includes(cardId)) { removeCard(cardId); return; }
+      const available = [...document.querySelectorAll('.card-selector-item')].filter(item => item.style.display !== 'none');
+      const position = available.findIndex(item => item.dataset.id === cardId);
+      const nextId = available[position + 1]?.dataset.id || available[position - 1]?.dataset.id;
+      selectedCards.push(cardId);
+      persistWallet();
+      document.getElementById('card-search-status').textContent = `${CARDS_DATABASE.find(card => card.id === cardId).name} added to your cards.`;
+      (document.querySelector(`.card-selector-item[data-id="${nextId}"]`) || document.getElementById('card-search'))?.focus({ preventScroll: true });
+    }
+
     function removeCard(cardId) {
       const index = selectedCards.indexOf(cardId);
-      if (index > -1) {
-        selectedCards.splice(index, 1);
-        delete cardSignupDates[cardId];
-      }
+      if (index < 0) return;
+      removedCard = { id: cardId, index, owner: CardMaxStorage.owner() };
+      selectedCards.splice(index, 1);
+      persistWallet();
+      const card = CARDS_DATABASE.find(card => card.id === cardId);
+      document.getElementById('wallet-undo-message').textContent = `${card.name} removed. Its saved dates, fees and benefit history are kept.`;
+      document.getElementById('wallet-undo').hidden = false;
+      document.querySelector('#wallet-undo button').focus({ preventScroll: true });
+    }
 
-      // AUTO-SAVE immediately to localStorage
-      localStorage.setItem('cardmax_user_cards', JSON.stringify(selectedCards));
-      localStorage.setItem('cardmax_signup_dates', JSON.stringify(cardSignupDates));
-      hasUnsavedChanges = false;
+    function undoRemoveCard() {
+      if (!removedCard || removedCard.owner !== CardMaxStorage.owner()) { dismissUndo(); return; }
+      const { id, index } = removedCard;
+      if (!selectedCards.includes(id)) selectedCards.splice(Math.min(index, selectedCards.length), 0, id);
+      removedCard = null;
+      document.getElementById('wallet-undo').hidden = true;
+      persistWallet();
+      document.getElementById(`settings-${id}`)?.focus({ preventScroll: true });
+    }
 
-      // Auto-sync to cloud if signed in
-      if (typeof CardMaxAuth !== 'undefined') CardMaxAuth.autoSync();
-
-      renderCardSelector();
-      renderMyCards();
-      updateQuickStats();
-      updateSaveStatus();
+    function dismissUndo() {
+      removedCard = null;
+      document.getElementById('wallet-undo').hidden = true;
+      document.getElementById('card-search')?.focus({ preventScroll: true });
     }
 
     // Toggle date picker for a card
@@ -868,13 +857,7 @@
 
       if (selectedCards.length === 0) {
         sortSelector.style.display = 'none';
-        container.innerHTML = `
-          <div class="empty-state">
-            <h3>No cards selected yet</h3>
-            <p>Add the cards you hold to start tracking their benefits.</p>
-            <a class="btn btn-primary" href="#add-cards">Add your first card</a>
-          </div>
-        `;
+        container.innerHTML = '';
         return;
       }
 
@@ -915,7 +898,7 @@
             </div>
             ${cardVisual}
             <div class="card-details">
-              <div class="card-name">${shortIssuer} ${getShortCardName(card.name)}</div>
+              <div class="card-name">${CardMaxModel.escapeHtml(card.name)}</div>
               <div class="card-meta">
                 <span>${CardMaxModel.money(annualFee)}/yr${Object.hasOwn(actualAnnualFees, cardId) ? ' · your fee' : ' · listed fee'}${card.requiredAnnualMembershipFee ? ` + ${CardMaxModel.money(card.requiredAnnualMembershipFee)} membership` : ''}</span>
                 ${dateDisplay ? `<span>${dateDisplay}</span>` : '<span class="add-date-hint">+ Add date</span>'}
@@ -963,7 +946,8 @@
 
       // Re-render to update date display in subtitle
       renderMyCards();
-      document.getElementById(`opened-${cardId}-${field}`)?.focus();
+      updateQuickStats();
+      document.getElementById(`opened-${cardId}-${field}`)?.focus({ preventScroll: true });
     }
 
     function updateAnnualFee(cardId, rawValue) {
@@ -997,7 +981,14 @@
       const netValue = totalCredits - totalFees;
 
       document.getElementById('stat-my-cards').textContent = selectedCards.length;
-      document.getElementById('first-card-cta').style.display = selectedCards.length ? 'none' : 'inline-flex';
+      document.body.classList.toggle('empty-wallet', !selectedCards.length);
+      document.getElementById('my-cards-section').hidden = !selectedCards.length;
+      document.getElementById('wallet-annual').hidden = !selectedCards.length;
+      document.getElementById('wallet-intro').textContent = selectedCards.length ? 'Your next benefits, all in one place.' : 'Find a card you hold to start tracking its benefits. Your choices save automatically.';
+      document.getElementById('add-cards-title').textContent = selectedCards.length ? 'Add Cards' : 'Find your first card';
+      document.getElementById('save-btn').disabled = !selectedCards.length;
+      document.getElementById('download-backup-btn').disabled = !selectedCards.length;
+      renderWalletActions();
       document.getElementById('quick-stats').hidden = !selectedCards.length;
       document.getElementById('cash-caps-note').hidden = !selectedCards.length;
       document.getElementById('stat-annual-fees').textContent = unknownFees ? 'Enter missing fee' : CardMaxModel.money(totalFees);
@@ -1005,7 +996,23 @@
       document.getElementById('stat-net-value').textContent = CardMaxModel.money(unknownFees ? null : netValue);
       document.getElementById('stat-net-value').style.color = netValue >= 0 ? 'var(--accent)' : 'var(--warning)';
     }
+    function renderWalletActions() {
+      const section = document.getElementById('wallet-actions');
+      section.hidden = !selectedCards.length;
+      if (!selectedCards.length) return;
+      const snapshot = CardMaxStorage.readSnapshot();
+      const summary = CardMaxWallet.summarize(CardMaxWallet.currentEntries(CARDS_DATABASE, snapshot));
+      const entries = summary.dueThisMonth.length ? summary.dueThisMonth : summary.outstanding;
+      const renewals = CardMaxWallet.renewals(CARDS_DATABASE, snapshot);
+      const escape = CardMaxModel.escapeHtml;
+      section.innerHTML = `<div class="wallet-actions-header"><div><h2 id="wallet-actions-title">${summary.dueThisMonth.length ? 'Use before this month ends' : 'Your next benefits'}</h2><p>${summary.dueThisMonth.length ? `${CardMaxModel.money(summary.dueCash)} in tracked cash allowances left this month` : `${summary.outstanding.length} current benefits to review`}</p></div><a href="pages/tracker.html" class="btn btn-primary">Track benefits →</a></div>
+        ${entries.length ? `<ul class="wallet-action-list">${entries.slice(0, 4).map(entry => `<li><div><strong>${escape(entry.credit.name)}</strong><span class="action-meta">${escape(entry.card.name)} · ${escape(CardMaxWallet.expiryLabel(entry))}</span>${entry.credit.requiresEnrollment || entry.credit.enrollmentRequired ? '<span class="action-meta">Enrollment required</span>' : ''}${entry.credit.conditional || entry.credit.eligibility ? '<span class="action-meta">Eligibility conditions apply · check benefit details</span>' : ''}</div><div class="wallet-action-amount"><strong>${escape(CardMaxModel.formatCredit({ ...entry.credit, amount: typeof entry.credit.amount === 'number' ? entry.remaining : entry.credit.amount }))}</strong><span class="action-meta">${entry.cash ? 'remaining' : 'available'}</span></div></li>`).join('')}</ul>${entries.length > 4 ? `<p class="wallet-action-note"><a href="pages/tracker.html">See all ${entries.length} ${summary.dueThisMonth.length ? 'benefits due this month' : 'current benefits'} →</a></p>` : ''}` : '<p>Your current checklist is complete, or these cards have no trackable credits. Explore earning categories for everyday spending.</p>'}
+        ${renewals.length ? `<details class="wallet-action-note"><summary>Upcoming anniversaries (${renewals.length})</summary><ul>${renewals.map(item => `<li>${escape(item.card.name)} · ${escape(CardMaxPeriods.parseDate(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))}${item.estimated ? ' (from opening date; confirm billing date)' : ''}</li>`).join('')}</ul></details>` : ''}
+        <p class="wallet-action-note">Based on your recorded use. Confirm purchases and deadlines with your issuer. Conditional benefits and uncertain reset dates are excluded from the cash total.</p>`;
+    }
+
     window.addEventListener('cardmax-data-changed', () => {
+      if (removedCard && removedCard.owner !== CardMaxStorage.owner()) { removedCard = null; document.getElementById('wallet-undo').hidden = true; }
       loadSavedData(); renderCardSelector(); renderMyCards(); updateQuickStats(); updateSaveStatus();
     });
   </script>

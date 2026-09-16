@@ -22,7 +22,13 @@ function quickAddCard(cardId, event) {
     catch (_) { showQuickAddToast('Could not save this card. Please try again.'); return false; }
     if (typeof CardMaxAuth !== 'undefined') CardMaxAuth.autoSync();
     showQuickAddToast(`${card.name} added to My Cards`);
-    renderCards(activeFilter);
+    // Update only this action so keyboard focus and open source disclosures survive.
+    document.querySelectorAll(`[data-add-card="${cardId}"]`).forEach(button => {
+      button.classList.add('added');
+      button.setAttribute('aria-disabled', 'true');
+      button.setAttribute('aria-label', `${card.name} is in My Cards`);
+      button.textContent = '✓ In My Cards';
+    });
   }
   updateAddButton();
   return true;
@@ -33,7 +39,10 @@ function updateAddButton() {
   if (!btn) return;
   const added = !!currentModalCard && getUserCards().includes(currentModalCard.id);
   btn.textContent = added ? 'In My Cards' : 'Add to My Cards';
+  const moveFocus = added && document.activeElement === btn;
   btn.disabled = !currentModalCard || added;
+  btn.setAttribute('aria-disabled', String(added));
+  if (moveFocus) document.querySelector('#card-modal .modal-close')?.focus({ preventScroll: true });
 }
 
 function addToCollection() {
@@ -131,7 +140,7 @@ function renderCards(filter = 'all') {
     const cardVisual = typeof CardVisuals !== 'undefined' ? CardVisuals.generate(card) : '';
     const isInCollection = userCards.includes(card.id);
     return `
-    <div class="credit-card fade-in" style="animation-delay: ${index * 0.03}s">
+    <article class="credit-card fade-in" style="animation-delay: ${Math.min(index, 8) * 0.03}s">
       <div class="card-header" style="background: ${card.color}; color: ${CardMaxModel.contrastText(card.color)};">
         <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;">
           <div>
@@ -140,9 +149,6 @@ function renderCards(filter = 'all') {
           </div>
           ${cardVisual}
         </div>
-        <button class="quick-add-btn ${isInCollection ? 'added' : ''}" onclick="quickAddCard('${card.id}', event)" aria-label="${CardMaxModel.escapeHtml(isInCollection ? `${card.name} is in My Cards` : `Add ${card.name} to My Cards`)}" ${isInCollection ? 'disabled' : ''}>
-          ${isInCollection ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '+'}
-        </button>
       </div>
       <div class="card-body">
         <div class="card-fee">
@@ -171,10 +177,15 @@ function renderCards(filter = 'all') {
         </div>
 
         ${CardMaxModel.statusHtml(card)}
-        <button class="btn btn-primary btn-full" onclick="openCardModal('${card.id}')" aria-label="View ${CardMaxModel.escapeHtml(card.name)} details">View Full Details</button>
+        <div class="catalog-card-actions">
+          <button class="btn btn-primary" onclick="openCardModal('${card.id}')" aria-label="View ${CardMaxModel.escapeHtml(card.name)} details">View details</button>
+          <button class="btn btn-secondary ${isInCollection ? 'added' : ''}" data-add-card="${card.id}" onclick="quickAddCard('${card.id}', event)" aria-label="${CardMaxModel.escapeHtml(isInCollection ? `${card.name} is in My Cards` : `Add ${card.name} to My Cards`)}" aria-disabled="${isInCollection}">${isInCollection ? '✓ In My Cards' : '+ My Cards'}</button>
+        </div>
       </div>
-    </div>
+    </article>
   `}).join('');
+  const count = document.getElementById('catalog-result-count');
+  if (count) count.textContent = `${filteredCards.length} ${filteredCards.length === 1 ? 'card' : 'cards'}${currentSearchQuery ? ` matching “${currentSearchQuery}”` : ''}`;
 
   // Show "no results" message if empty
   if (filteredCards.length === 0) {
@@ -192,9 +203,11 @@ function renderCards(filter = 'all') {
 function setupFilterListeners() {
   const filterBtns = document.querySelectorAll('.filter-btn');
   filterBtns.forEach(btn => {
+    btn.setAttribute('aria-pressed', String(btn.classList.contains('active')));
     btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
+      filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       activeFilter = btn.dataset.filter;
       renderCards(activeFilter);
     });
@@ -208,8 +221,7 @@ function openCardModal(cardId) {
 
   currentModalCard = card;
   document.getElementById('modal-card-name').textContent = card.name;
-  document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.tab === 'overview'));
-  renderModalContent('overview');
+  activateModalTab('overview');
   updateAddButton();
   CardMaxDialogs.open('card-modal');
 }
@@ -228,15 +240,30 @@ function setupModalListeners() {
   });
 
   // Tab switching
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      renderModalContent(tab.dataset.tab);
+  const tabs = [...document.querySelectorAll('#card-modal .tab')];
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activateModalTab(tab.dataset.tab));
+    tab.addEventListener('keydown', event => {
+      const next = event.key === 'ArrowRight' ? (index + 1) % tabs.length : event.key === 'ArrowLeft' ? (index + tabs.length - 1) % tabs.length : event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : null;
+      if (next === null) return;
+      event.preventDefault();
+      activateModalTab(tabs[next].dataset.tab);
+      tabs[next].focus();
     });
   });
+}
 
-
+function activateModalTab(name) {
+  document.querySelectorAll('#card-modal .tab').forEach(tab => {
+    const active = tab.dataset.tab === name;
+    tab.classList.toggle('active', active);
+    tab.setAttribute('aria-selected', String(active));
+    tab.tabIndex = active ? 0 : -1;
+  });
+  renderModalContent(name);
+  const panel = document.getElementById('modal-content');
+  panel.setAttribute('aria-labelledby', `tab-${name}`);
+  panel.scrollTop = 0;
 }
 
 function renderModalContent(tabName) {
@@ -249,7 +276,7 @@ function renderModalContent(tabName) {
   switch (tabName) {
     case 'overview':
       content = `
-        <div style="display: grid; gap: 1rem;">
+        <div class="overview-facts">
           <div class="stat-card">
             <div class="stat-label">Annual Fee</div>
             <div class="stat-value" style="color: var(--accent-orange);">${CardMaxModel.feeLabel(card)}</div>
@@ -384,22 +411,14 @@ function renderModalContent(tabName) {
       break;
   }
 
-  container.innerHTML = CardMaxModel.statusHtml(card) + CardMaxModel.termsHtml(card) + content;
+  container.innerHTML = content + (card.id.startsWith('bilt-') ? '<a class="btn btn-secondary bilt-calculator-link" href="../bilt/">Explore Bilt housing rewards →</a>' : '') + CardMaxModel.statusHtml(card, { includeTerms: true });
 }
 
 // Update stats
 function updateStats() {
   const totalCards = CARDS_DATABASE.length;
-  const totalPartners = new Set(CARDS_DATABASE.flatMap(c => c.transferPartners.map(p => p.name))).size;
-  const maxCredits = Math.max(0, ...CARDS_DATABASE.map(card => CardMaxModel.annualCashValue(card)));
-  const reviewed = CARDS_DATABASE.filter(card => {
-    const date = card.reviewedAt || card.verifiedAt;
-    return date && (Date.now() - Date.parse(date)) / 86400000 <= 90;
-  }).length;
   document.getElementById('total-cards').textContent = totalCards;
-  document.getElementById('total-partners').textContent = totalPartners + '+';
-  document.getElementById('total-credits').textContent = CardMaxModel.money(maxCredits);
-  document.getElementById('last-updated').textContent = `${reviewed}/${totalCards}`;
+  // The catalog leads with discovery; database-wide marketing totals are omitted.
 
 }
 

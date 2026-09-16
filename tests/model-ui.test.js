@@ -49,7 +49,7 @@ test('modal add failure preserves the actionable button and reports save failure
 });
 
 test('dashboard migrates invalid saved IDs and starts with an honest saved state', t => {
-  const dom = page('index.html', ['data/cards.js', 'js/card-model.js'], [null, 'missing', 'capital-one-venture-x', 'capital-one-venture-x']);
+  const dom = page('index.html', ['data/cards.js', 'js/card-model.js', 'js/storage.js', 'js/benefit-periods.js', 'js/wallet-summary.js'], [null, 'missing', 'capital-one-venture-x', 'capital-one-venture-x']);
   t.after(() => dom.window.close());
   const { window } = dom;
   assert.deepEqual(JSON.parse(window.localStorage.getItem('cardmax_user_cards')), ['capital-one-venture-x']);
@@ -81,7 +81,7 @@ test('public suggestion form contains no email input and discloses publication',
 });
 
 test('dashboard fee overrides persist zero and clear back to the listed fee', t => {
-  const dom = page('index.html', ['data/cards.js', 'js/card-model.js'], ['capital-one-venture-x']);
+  const dom = page('index.html', ['data/cards.js', 'js/card-model.js', 'js/storage.js', 'js/benefit-periods.js', 'js/wallet-summary.js'], ['capital-one-venture-x']);
   t.after(() => dom.window.close());
   const { window } = dom;
   window.updateAnnualFee('capital-one-venture-x', '0');
@@ -94,7 +94,7 @@ test('dashboard fee overrides persist zero and clear back to the listed fee', t 
 });
 
 test('new membership card shows its required cost in dashboard and comparison', t => {
-  const dom = page('index.html', ['data/cards.js', 'js/card-model.js'], ['robinhood-gold-card']);
+  const dom = page('index.html', ['data/cards.js', 'js/card-model.js', 'js/storage.js', 'js/benefit-periods.js', 'js/wallet-summary.js'], ['robinhood-gold-card']);
   t.after(() => dom.window.close());
   assert.equal(dom.window.document.getElementById('stat-annual-fees').textContent, '$50');
   assert.equal(dom.window.document.getElementById('stat-net-value').textContent, '-$50');

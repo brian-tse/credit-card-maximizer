@@ -1,117 +1,122 @@
-// CardMax - Card Comparison Logic (v2 - Multi-select)
-
-// State
+// CardMax — compact, keyboard-friendly card comparison.
 let selectedCards = new Set();
+let browseAllCards = false;
+const MAX_COMPARISON_CARDS = 4;
 
-// Initialize
 document.addEventListener('DOMContentLoaded', () => {
+  const cards = new URLSearchParams(window.location.search).get('cards');
+  if (cards) CardMaxModel.normalizeCardIds(cards.split(',')).slice(0, MAX_COMPARISON_CARDS).forEach(id => selectedCards.add(id));
   renderCardPicker();
-
-  // Check for URL params (for shareable links)
-  const urlParams = new URLSearchParams(window.location.search);
-  const cards = urlParams.get('cards');
-  if (cards) {
-    CardMaxModel.normalizeCardIds(cards.split(',')).forEach(id => {
-      if (CARDS_DATABASE.find(c => c.id === id)) {
-        selectedCards.add(id);
-      }
-    });
-    renderCardPicker();
-    renderComparison();
-  }
+  renderComparison();
 });
 
-// Render the card picker grid
-function renderCardPicker(filter = '') {
+function pickerQuery() { return document.getElementById('card-search')?.value || ''; }
+function announceComparison(message) { document.getElementById('comparison-status').textContent = message; }
+
+function renderCardPicker(filter = pickerQuery()) {
   const container = document.getElementById('card-picker-grid');
   if (!container) return;
-
-  const filterLower = filter.toLowerCase();
-  const filteredCards = CARDS_DATABASE.filter(card =>
-    filter === '' ||
-    card.name.toLowerCase().includes(filterLower) ||
-    card.issuer.toLowerCase().includes(filterLower)
-  );
-
-  container.innerHTML = filteredCards.map(card => {
-    const cardVisual = typeof CardVisuals !== 'undefined' && CardVisuals.hasImage(card.id)
-      ? CardVisuals.generate(card)
-      : `<div class="card-dot" style="background: ${card.color}"></div>`;
-    return `
-    <button type="button" class="card-pick-item ${selectedCards.has(card.id) ? 'selected' : ''}" aria-pressed="${selectedCards.has(card.id)}" aria-label="Compare ${CardMaxModel.escapeHtml(card.name)}"
-         onclick="toggleCardSelection('${card.id}')">
-      ${cardVisual}
-      <div class="card-info">
-        <div class="card-name">${card.name}</div>
-        <div class="card-fee">${CardMaxModel.feeLabel(card)}/year</div>
-      </div>
-      <span class="check-icon" aria-hidden="true">${selectedCards.has(card.id) ? '✓' : ''}</span>
-    </button>
-  `}).join('');
-
+  const query = filter.toLowerCase().trim();
+  const matches = CARDS_DATABASE.filter(card => !query || `${card.name} ${card.issuer}`.toLowerCase().includes(query));
+  // A short starting list keeps the comparison within reach. Browsing/searching uses a bounded region.
+  const visible = query || browseAllCards ? matches : [...CARDS_DATABASE.filter(card => selectedCards.has(card.id)), ...CARDS_DATABASE.filter(card => !selectedCards.has(card.id))].slice(0, 6);
+  container.innerHTML = visible.map(card => {
+    const selected = selectedCards.has(card.id);
+    const cardVisual = typeof CardVisuals !== 'undefined' && CardVisuals.hasImage(card.id) ? CardVisuals.generate(card) : `<div class="card-dot" style="background:${card.color}"></div>`;
+    return `<button type="button" class="card-pick-item ${selected ? 'selected' : ''}" data-pick-card="${card.id}" aria-pressed="${selected}" aria-label="Compare ${CardMaxModel.escapeHtml(card.name)}" onclick="toggleCardSelection('${card.id}')">
+      ${cardVisual}<span class="card-info"><span class="card-name">${CardMaxModel.escapeHtml(card.name)}</span><span class="card-fee">${CardMaxModel.feeLabel(card)}/year</span></span><span class="check-icon" aria-hidden="true">${selected ? '✓' : '+'}</span>
+    </button>`;
+  }).join('') || '<p class="picker-empty">No cards match. Try a card name or issuer.</p>';
+  document.getElementById('picker-result-count').textContent = query ? `${matches.length} matches` : browseAllCards ? `${matches.length} cards` : `${visible.length} suggestions`;
+  const browseButton = document.getElementById('browse-picker');
+  browseButton.hidden = !!query;
+  browseButton.textContent = browseAllCards ? 'Show fewer cards' : 'Browse all cards';
+  browseButton.setAttribute('aria-expanded', String(browseAllCards));
   updateSelectedCount();
 }
 
-// Filter cards based on search
-function filterCards() {
-  const searchValue = document.getElementById('card-search').value;
-  renderCardPicker(searchValue);
-}
+function filterCards() { renderCardPicker(); }
+function togglePickerBrowse() { browseAllCards = !browseAllCards; renderCardPicker(); }
 
-// Toggle card selection
-function toggleCardSelection(cardId) {
-  if (!CARDS_DATABASE.some(card => card.id === cardId)) return;
-  if (selectedCards.has(cardId)) {
-    selectedCards.delete(cardId);
-  } else {
-    selectedCards.add(cardId);
-  }
-
-  renderCardPicker(document.getElementById('card-search').value);
-  renderComparison();
-  updateUrl();
-}
-
-// Remove card from comparison (from table header)
-function removeCard(cardId) {
-  selectedCards.delete(cardId);
-  renderCardPicker(document.getElementById('card-search').value);
-  renderComparison();
-  updateUrl();
-}
-
-// Update selected count display
 function updateSelectedCount() {
   document.getElementById('selected-count').textContent = selectedCards.size;
+  document.getElementById('selected-card-chips').innerHTML = selectedCards.size ? [...selectedCards].map(id => {
+    const card = CARDS_DATABASE.find(item => item.id === id);
+    return `<div class="selected-card-chip"><span>${CardMaxModel.escapeHtml(card.name)}</span><button type="button" data-remove-card="${id}" onclick="removeCard('${id}')" aria-label="Remove ${CardMaxModel.escapeHtml(card.name)} from comparison">×</button></div>`;
+  }).join('') : '<p class="selection-placeholder">Your selected cards will stay here while you browse.</p>';
+  document.getElementById('compare-selected').setAttribute('aria-disabled', String(!selectedCards.size));
+  document.getElementById('share-btn').disabled = !selectedCards.size;
+  document.getElementById('clear-selection').setAttribute('aria-disabled', String(!selectedCards.size));
 }
 
-// Quick select presets
-function quickSelect(preset) {
-  selectedCards.clear();
-
-  switch (preset) {
-    case 'premium':
-      CARDS_DATABASE.filter(c => CardMaxModel.annualFeeForCard(c) !== null && CardMaxModel.annualFeeForCard(c) >= 300).forEach(c => selectedCards.add(c.id));
-      break;
-    case 'chase':
-      CARDS_DATABASE.filter(c => c.issuer === 'Chase').forEach(c => selectedCards.add(c.id));
-      break;
-    case 'amex':
-      CARDS_DATABASE.filter(c => c.issuer === 'American Express').forEach(c => selectedCards.add(c.id));
-      break;
-  }
-
-  renderCardPicker(document.getElementById('card-search').value);
+function toggleCardSelection(cardId) {
+  const card = CARDS_DATABASE.find(item => item.id === cardId);
+  if (!card) return;
+  const focusWasPicker = document.activeElement?.dataset.pickCard === cardId;
+  if (selectedCards.has(cardId)) selectedCards.delete(cardId);
+  else if (selectedCards.size < MAX_COMPARISON_CARDS) selectedCards.add(cardId);
+  else { announceComparison('Compare up to four cards. Remove one to add another.'); return; }
+  // Keep the same native button in place while its selected state changes.
+  document.querySelectorAll('[data-pick-card]').forEach(button => {
+    const selected = selectedCards.has(button.dataset.pickCard);
+    button.classList.toggle('selected', selected);
+    button.setAttribute('aria-pressed', String(selected));
+    button.querySelector('.check-icon').textContent = selected ? '✓' : '+';
+  });
+  updateSelectedCount();
   renderComparison();
   updateUrl();
+  announceComparison(`${card.name} ${selectedCards.has(cardId) ? 'added' : 'removed'}. ${selectedCards.size} of four cards selected.`);
+  // Programmatic callers may choose a card outside the short initial list.
+  if (!document.querySelector(`[data-pick-card="${cardId}"]`) && selectedCards.has(cardId)) renderCardPicker();
+  if (focusWasPicker) document.querySelector(`[data-pick-card="${cardId}"]`)?.focus({ preventScroll: true });
 }
 
-// Clear all selections
+function removeCard(cardId) {
+  const active = document.activeElement;
+  const restore = active?.dataset.removeCard === cardId || active?.closest('.card-column-header');
+  const ids = [...selectedCards], index = ids.indexOf(cardId);
+  selectedCards.delete(cardId);
+  renderCardPicker();
+  renderComparison();
+  updateUrl();
+  announceComparison(`${CARDS_DATABASE.find(card => card.id === cardId)?.name || 'Card'} removed. ${selectedCards.size} cards selected.`);
+  if (restore) {
+    const remaining = [...selectedCards];
+    const next = remaining[Math.min(Math.max(index, 0), remaining.length - 1)];
+    (document.querySelector(`[data-remove-card="${next}"]`) || document.getElementById('card-search')).focus({ preventScroll: true });
+  }
+}
+
+// Retained for existing links and integrations; selections always respect the readable four-card limit.
+function quickSelect(preset) {
+  const cards = CARDS_DATABASE.filter(card => preset === 'premium' ? CardMaxModel.annualFeeForCard(card) !== null && CardMaxModel.annualFeeForCard(card) >= 300 : card.issuer === (preset === 'chase' ? 'Chase' : 'American Express'));
+  selectedCards = new Set(cards.slice(0, MAX_COMPARISON_CARDS).map(card => card.id));
+  renderCardPicker(); renderComparison(); updateUrl();
+}
+
 function clearSelection() {
   selectedCards.clear();
-  renderCardPicker(document.getElementById('card-search').value);
-  renderComparison();
-  updateUrl();
+  renderCardPicker(); renderComparison(); updateUrl();
+  announceComparison('Comparison cleared. Search for cards to start again.');
+  document.getElementById('card-search').focus({ preventScroll: true });
+}
+
+function showComparison(event) {
+  event?.preventDefault();
+  if (!selectedCards.size) { document.getElementById('card-search').focus(); return; }
+  const comparison = document.getElementById('comparison-container');
+  comparison.scrollIntoView?.({ behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
+  comparison.focus({ preventScroll: true });
+}
+
+function applyDifferenceFilter() {
+  const enabled = document.getElementById('differences-only').checked;
+  document.querySelectorAll('.comparison-table tbody tr').forEach(row => {
+    const cells = [...row.querySelectorAll('td:not(.row-label)')];
+    const values = cells.map(cell => cell.textContent.replace(/\s+/g, ' ').trim());
+    row.hidden = enabled && values.length > 1 && values.every(value => value === values[0]);
+  });
 }
 
 // Update URL for sharing
@@ -132,7 +137,7 @@ function copyShareLink() {
     const originalText = btn.textContent;
     btn.textContent = '✓ Copied!';
     setTimeout(() => btn.textContent = originalText, 2000);
-  });
+  }).catch(() => announceComparison('Could not copy automatically. Copy the address from your browser to share this comparison.'));
 }
 
 // Render the comparison table
@@ -172,19 +177,19 @@ function renderComparison() {
     : [];
 
   container.innerHTML = `
-    <p class="terms-note">Cash totals are annualized credit caps, assuming full eligible use. Multi-year reimbursements are spread over their full period. Points, restricted rewards, nights, certificates, unverified terms and conditional or per-use benefits are excluded from cash totals. Required membership costs are included in net totals. Terms and eligibility may differ for existing cardholders.</p>
-    <div class="comparison-table-wrapper">
-      <table class="comparison-table">
+    <details class="comparison-assumptions"><summary>How to read these estimates</summary><p class="terms-note">Cash totals are annualized credit caps, assuming full eligible use. Multi-year reimbursements are spread over their full period. Points, restricted rewards, nights, certificates, unverified terms and conditional or per-use benefits are excluded from cash totals. Required membership costs are included in net totals. Terms and eligibility may differ for existing cardholders.</p></details>
+    <div class="comparison-table-wrapper" role="region" aria-label="Card comparison table; scroll for more benefits" tabindex="0">
+      <table class="comparison-table" style="min-width:${Math.max(660, cards.length * 240 + 140)}px">
         <caption class="sr-only">Selected credit cards, fees, benefits, and earning rates</caption>
         <thead>
           <tr>
-            <th></th>
+            <th scope="col">Card details</th>
             ${cards.map(card => `
-              <th class="card-column-header" style="border-color: ${card.color}">
+              <th scope="col" class="card-column-header" style="border-color: ${card.color}">
                 <div class="issuer">${card.issuer}</div>
                 <div class="name">${card.name}</div>
-                ${CardMaxModel.statusHtml(card)}${CardMaxModel.termsHtml(card)}
-                <button class="remove-btn" onclick="removeCard('${card.id}')" aria-label="Remove ${CardMaxModel.escapeHtml(card.name)} from comparison">✕</button>
+                <div class="comparison-review-status">${card.verifiedAt ? 'Verified' : card.reviewedAt ? 'Partial review · Check terms' : 'Not yet verified'}${card.acceptingApplications === false || card.applicationStatus === 'closed' ? '<br>Closed to new applications' : ''}</div>
+                <button class="remove-btn" data-remove-card="${card.id}" onclick="removeCard('${card.id}')" aria-label="Remove ${CardMaxModel.escapeHtml(card.name)} from comparison">✕</button>
               </th>
             `).join('')}
           </tr>
@@ -336,26 +341,13 @@ function renderComparison() {
             }).join('')}
           </tr>
 
+          <tr><td class="row-label">Source review</td>${cards.map(card => `<td>${CardMaxModel.statusHtml(card, { includeTerms: true })}</td>`).join('')}</tr>
         </tbody>
       </table>
     </div>
 
-    <!-- Summary Cards -->
-    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-      <div style="width: 140px; min-width: 140px; flex-shrink: 0;"></div>
-      <div style="display: grid; grid-template-columns: repeat(${cards.length}, 1fr); gap: 1rem; flex: 1;">
-        ${cards.map(card => {
-          const bestFor = getBestFor(card);
-          return `
-            <div style="background: var(--surface); border-radius: var(--radius); padding: 1.25rem; text-align: center; border-top: 4px solid ${card.color}; border: 1px solid var(--border);">
-              <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem;">${card.name}</h4>
-              <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Best for: ${bestFor}</p>
-            </div>
-          `;
-        }).join('')}
-      </div>
-    </div>
   `;
+  applyDifferenceFilter();
 }
 
 // Get "Best For" recommendation

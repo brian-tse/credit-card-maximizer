@@ -13,11 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/wallet.css">
   <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
+  <script src="../js/interface.js" defer></script>
 </head>
-<body>
+<body class="tracker-page">
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
@@ -48,15 +50,13 @@
     <!-- Header -->
     <section class="hero">
       <h1>Benefit Tracker</h1>
-      <p>Track your monthly and annual card benefits</p>
+      <p>Start with what is still available, then record what you use.</p>
     </section>
 
-    <!-- View Toggle -->
-    <div class="filter-bar" style="margin-bottom: 1.5rem;">
-      <button class="filter-btn active" data-view="frequency" onclick="switchView('frequency')">By Frequency</button>
-      <button class="filter-btn" data-view="card" onclick="switchView('card')">By Card (Full Checklist)</button>
-    </div>
+    <section id="due-benefits" class="due-benefits" aria-labelledby="due-benefits-title"></section>
 
+    <details class="tracker-summary">
+      <summary>Your tracking totals</summary>
     <!-- Summary Stats -->
     <section class="stats-bar" id="tracker-stats">
       <div class="stat-card">
@@ -76,6 +76,14 @@
         <div class="stat-label">Current benefits completed</div>
       </div>
     </section>
+
+    </details>
+
+    <!-- View Toggle -->
+    <div class="filter-bar" style="margin-bottom: 1.5rem;">
+      <button class="filter-btn active" data-view="frequency" onclick="switchView('frequency')">Group by period</button>
+      <button class="filter-btn" data-view="card" onclick="switchView('card')">Full checklist by card</button>
+    </div>
 
     <!-- Monthly Benefits -->
     <section id="monthly-tracker">
@@ -136,6 +144,7 @@
   <script src="../js/firebase-config.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/benefit-periods.js"></script>
+  <script src="../js/wallet-summary.js"></script>
   <script src="../js/tracker.js"></script>
   <script src="../js/feedback.js"></script>
 </body>

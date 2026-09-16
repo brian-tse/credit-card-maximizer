@@ -6,6 +6,7 @@
     if (!overlay) return;
     if (!overlay.classList.contains('active')) previousFocus.set(overlay, document.activeElement);
     overlay.classList.add('active');
+    document.body.classList.add('has-open-dialog');
     overlay.querySelector('[role="dialog"]')?.setAttribute('aria-modal', 'true');
     (overlay.querySelector('input, button, select, textarea, a[href]') || overlay).focus();
   }
@@ -13,9 +14,11 @@
     const overlay = document.getElementById(id);
     if (!overlay?.classList.contains('active')) return;
     overlay.classList.remove('active');
+    if (!document.querySelector('.modal-overlay.active')) document.body.classList.remove('has-open-dialog');
     overlay.querySelector('[role="dialog"]')?.removeAttribute('aria-modal');
     const previous = previousFocus.get(overlay);
     if (previous?.isConnected) previous.focus();
+    else if (previous?.id && document.getElementById(previous.id)) document.getElementById(previous.id).focus();
     else document.getElementById('card-search')?.focus();
   }
   document.addEventListener('keydown', event => {
